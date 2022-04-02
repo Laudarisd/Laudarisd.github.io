@@ -898,11 +898,11 @@ label{
 /* ( b ) Experience Section */
 
 .experience {
-    background: #00B796;
+    background: #fff;
 }
 
 .experience h2 {
-    color: #fff;
+    color: rgb(0, 0, 0);
 }
 
 .experience-container {
@@ -912,7 +912,7 @@ label{
 }
 
 .experience-container:before {
-    background: #fff;
+    background: #00B796;
     content: "";
     height: 96%;
     right: 50px;
@@ -922,8 +922,8 @@ label{
 }
 
 .experience-container .bullet {
-    background: #fff;
-    border: 5px solid #00B796;
+    background: #00B796;
+    border: 5px solid #fff;
     border-radius: 50%;
     height: 30px;
     right: 21px;
@@ -941,8 +941,8 @@ label{
 }
 
 .experience-content h3 {
-    background: #fff;
-    color: #00B796;
+    background: #00B796;
+    color: #fff;
     display: block;
     margin: 0;
     line-height: 1.42;
@@ -967,18 +967,18 @@ label{
 
 .experience-content p {
     padding: 15px 5px;
-    color: #fff;
+    color: #00B796;
 }
 
 /* research section */
 
 
 .research {
-    background: #00B796;
+    background: #fff;
 }
 
 .research h2 {
-    color: #fff;
+    color: #00B796;
 }
 
 .research-container {
@@ -988,7 +988,7 @@ label{
 }
 
 .research-container:before {
-    background: #fff;
+    background: #00B796;
     content: "";
     height: 96%;
     right: 50px;
@@ -998,8 +998,8 @@ label{
 }
 
 .research-container .bullet {
-    background: #fff;
-    border: 5px solid #00B796;
+    background: #00B796;
+    border: 5px solid #fff;
     border-radius: 50%;
     height: 30px;
     right: 21px;
@@ -1017,8 +1017,8 @@ label{
 }
 
 .research-content h3 {
-    background: #fff;
-    color: #00B796;
+    background: #00B796;
+    color: #fff;
     display: block;
     margin: 0;
     line-height: 1.42;
@@ -1043,7 +1043,7 @@ label{
 
 .research-content p {
     padding: 15px 5px;
-    color: #fff;
+    color: #00B796;
 }
 
 
