@@ -22,7 +22,7 @@
     
     /* Init Text Rotator */
     $(".description .sub").typed({
-        strings: ["AI Engineer ","Programmer "],
+        strings: ["AI Engineer ","Programmer ", "Data Analyst"],
         typeSpeed: 1,
         backSpeed: 1,
         backDelay: 1400,
