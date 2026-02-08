@@ -1658,6 +1658,119 @@ label{
     border-top-color: #343333;
 }
 
+
+/* =========================================================
+   PATCH: Dynamic text + better resume readability
+   (Paste at the END of style.css)
+   ========================================================= */
+
+/* --- Fix long text clipping in service cards (Profile + Skills) --- */
+.services {
+    height: auto !important;          /* if JS sets height, allow natural height */
+    overflow: visible !important;     /* prevent hidden text */
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+/* Make paragraphs & lists readable globally */
+p {
+    line-height: 1.65;                /* better than 1.42 for long resume content */
+}
+
+/* Resume timeline blocks: allow content to wrap nicely */
+.education-content,
+.experience-content,
+.award-content,
+.nonformal-content,
+.conference-content,
+.research-content {
+    width: calc(100% - 80px);         /* prevents overflow on smaller screens */
+    max-width: 100%;
+}
+
+/* Fix invisible bullets/lines due to long content */
+.education-content p,
+.experience-content p,
+.award-content p,
+.nonformal-content p {
+    color: #343333;                   /* your experience p is green; keep readable */
+    margin: 0;
+    padding: 12px 5px;
+}
+
+/* ✅ Experience bullets should not be forced green (hard to read) */
+.experience-content p {
+    color: #343333;
+}
+
+/* Make lists inside resume look clean */
+.resume-list {
+    margin: 10px 0 0 0;
+    padding-left: 18px;
+}
+.resume-list li {
+    margin-bottom: 6px;
+}
+
+/* --- Make "WHAT CAN I DO" titles look like links and clickable --- */
+.service-portfolio-link {
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(255,255,255,0.55);
+    padding-bottom: 2px;
+}
+.service-portfolio-link:hover {
+    color: #fff;
+    border-bottom-color: #fff;
+}
+
+/* --- Skill tags style (optional but makes it attractive) --- */
+.skill-tags {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+}
+.skill-tags span {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    background: rgba(255,255,255,0.18);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.22);
+}
+
+/* --- Responsive fixes for long H3 titles in resume (keeps header box nice) --- */
+.education-content h3,
+.experience-content h3,
+.award-content h3,
+.nonformal-content h3 {
+    line-height: 1.35;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+/* If the floated date spans cause wrapping issues, force them to behave on mobile */
+@media (max-width: 767px) {
+    .education-content h3 span,
+    .experience-content h3 span,
+    .award-content h3 span,
+    .nonformal-content h3 span {
+        float: none !important;
+        display: block;
+        margin-top: 6px;
+        opacity: 0.95;
+    }
+
+    .main-heading {
+        padding-left: 20px;
+    }
+}
+
+
+
                     /*-------------
                        11 ) Footer 
                       -------------*/

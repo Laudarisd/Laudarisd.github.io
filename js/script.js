@@ -121,6 +121,39 @@ $(document).ready(function () {
         $('.contact-page').fadeIn(1200);
     });
 
+    /*  ----------------------------------------------------------
+     "What can I do?" -> open Portfolio page + apply filter
+    ---------------------------------------------------------- */
+
+    $(document).on('click', '.service-portfolio-link', function (e) {
+        e.preventDefault();
+
+        var filter = $(this).attr('data-filter') || 'all';
+
+        // Open Portfolio page using same behavior as clicking the menu button
+        $('.menu div.portfolio-btn').trigger('click');
+
+        // Apply filter after portfolio page is visible
+        setTimeout(function () {
+
+            // 1) If you updated filter buttons to new categories, click that button
+            var $btn = $('.project-controls .filter[data-filter="' + filter + '"]');
+            if ($btn.length) {
+                $btn.trigger('click');
+                return;
+            }
+
+            // 2) Fallback: call MixItUp directly (works even without matching buttons)
+            try {
+                $('#projects').mixItUp('filter', filter === 'all' ? 'all' : filter);
+            } catch (err) {
+                // do nothing (keeps original behavior safe)
+            }
+
+        }, 600);
+    });
+
+
     // Close Button, Hide Menu
 
 
@@ -135,29 +168,28 @@ $(document).ready(function () {
     });
     
     /*  --------------------------------
-         Maximize Services Items Height
-        --------------------------------  */
-    
+     Maximize Services Items Height (DYNAMIC)
+    --------------------------------  */
+
     function maximizeHeight() {
-        
+
+        // Reset first so we measure natural height
+        $('.services').css('min-height', '0').css('height', 'auto');
+
         var minHeight = 0;
-        
+
         $('.services').each(function () {
-            
-            var maxHeight = $(this).height();
-            
-            if (maxHeight > minHeight) {
-                minHeight = maxHeight;
-            }
-            
+            var h = $(this).outerHeight(); // use outerHeight for safer measurement
+            if (h > minHeight) minHeight = h;
         });
-        
-        $('.services').height(minHeight);
+
+        // Use min-height instead of fixed height -> prevents text clipping
+        $('.services').css('min-height', minHeight + 'px').css('height', 'auto');
     }
-    
+
     maximizeHeight();
-    
     $(window).on('resize', maximizeHeight);
+
 
     /*  ----------------------------------------
          Tooltip Starter for Social Media Icons
