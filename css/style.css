@@ -1,16 +1,112 @@
 /* Design tokens: shared colors, spacing, and radii so the vintage look stays consistent site-wide. */
 :root {
+  --page-bg:
+    radial-gradient(circle at top left, rgba(40, 75, 82, 0.08), transparent 32%),
+    linear-gradient(180deg, #f8f4ee 0%, #f5f1ea 100%);
   --surface: #fffdf9;
+  --surface-muted: linear-gradient(180deg, rgba(255, 253, 249, 0.78), rgba(244, 237, 226, 0.66));
+  --header-bg: linear-gradient(180deg, rgba(255, 253, 249, 0.97), rgba(247, 242, 234, 0.95));
+  --footer-bg: linear-gradient(180deg, #e7ddd0 0%, #ddd0c0 100%);
+  --card-tint: linear-gradient(180deg, rgba(255, 253, 249, 0.95), rgba(239, 232, 220, 0.96));
   --text: #1f2933;
   --muted: #5b6670;
   --line: #d8cec0;
   --accent: #284b52;
+  --accent-strong: #1e3a40;
+  --button-text: #f7f6f2;
+  --chip-border: rgba(125, 109, 89, 0.28);
+  --link-accent: #007bff;
+  --toggle-bg: rgba(255, 253, 249, 0.84);
+  --toggle-text: #284b52;
+  --toggle-border: rgba(216, 206, 192, 0.95);
+  --toggle-active-bg: #284b52;
+  --toggle-active-text: #f7f6f2;
+  --tooltip-bg: #1f2933;
+  --tooltip-text: #fffdf9;
   --shadow: 0 20px 50px rgba(31, 41, 51, 0.08);
   --radius-lg: 28px;
   --radius-md: 18px;
   --radius-sm: 12px;
   --container: 1120px;
   --nav-container: 1320px;
+}
+
+html[data-theme="dark"] {
+  --page-bg:
+    radial-gradient(circle at top left, rgba(185, 158, 103, 0.1), transparent 28%),
+    linear-gradient(180deg, #15181c 0%, #1b1f24 100%);
+  --surface: #20252b;
+  --surface-muted: linear-gradient(180deg, rgba(32, 37, 43, 0.92), rgba(24, 28, 33, 0.9));
+  --header-bg: linear-gradient(180deg, rgba(24, 28, 33, 0.97), rgba(18, 21, 26, 0.96));
+  --footer-bg: linear-gradient(180deg, #1d2127 0%, #171b20 100%);
+  --card-tint: linear-gradient(180deg, rgba(36, 41, 48, 0.98), rgba(29, 34, 40, 0.96));
+  --text: #ece4d5;
+  --muted: #b7ae9d;
+  --line: #4c4a45;
+  --accent: #c8a96b;
+  --accent-strong: #e0bf84;
+  --button-text: #181c20;
+  --chip-border: rgba(200, 169, 107, 0.4);
+  --link-accent: #8dc3ff;
+  --toggle-bg: rgba(34, 39, 45, 0.95);
+  --toggle-text: #e7d9be;
+  --toggle-border: rgba(200, 169, 107, 0.36);
+  --toggle-active-bg: #c8a96b;
+  --toggle-active-text: #1b1f24;
+  --tooltip-bg: #ece4d5;
+  --tooltip-text: #1b1f24;
+  --shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+}
+
+html[data-theme="pure-vintage"] {
+  --page-bg:
+    radial-gradient(circle at top left, rgba(126, 86, 39, 0.08), transparent 30%),
+    linear-gradient(180deg, #efe2c7 0%, #e5d3b2 100%);
+  --surface: #f8eed8;
+  --surface-muted: linear-gradient(180deg, rgba(246, 235, 210, 0.9), rgba(230, 214, 182, 0.84));
+  --header-bg: linear-gradient(180deg, rgba(246, 235, 210, 0.97), rgba(234, 217, 183, 0.95));
+  --footer-bg: linear-gradient(180deg, #dcc29c 0%, #cdae84 100%);
+  --card-tint: linear-gradient(180deg, rgba(248, 238, 216, 0.98), rgba(232, 215, 181, 0.96));
+  --text: #3b2c20;
+  --muted: #66503a;
+  --line: #bea27d;
+  --accent: #7e5627;
+  --accent-strong: #613d19;
+  --button-text: #fff9ef;
+  --chip-border: rgba(126, 86, 39, 0.26);
+  --link-accent: #8d4e17;
+  --toggle-bg: rgba(248, 238, 216, 0.9);
+  --toggle-text: #7e5627;
+  --toggle-border: rgba(126, 86, 39, 0.24);
+  --toggle-active-bg: #7e5627;
+  --toggle-active-text: #fff5e4;
+  --tooltip-bg: #4b3421;
+  --tooltip-text: #f8eed8;
+}
+
+html[data-theme="simple"] {
+  --page-bg: linear-gradient(180deg, #f7f7f7 0%, #efefef 100%);
+  --surface: #ffffff;
+  --surface-muted: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(244, 244, 244, 0.94));
+  --header-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 245, 245, 0.96));
+  --footer-bg: linear-gradient(180deg, #ececec 0%, #e3e3e3 100%);
+  --card-tint: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 247, 247, 0.96));
+  --text: #222222;
+  --muted: #5c5c5c;
+  --line: #d8d8d8;
+  --accent: #2b4d7a;
+  --accent-strong: #183553;
+  --button-text: #ffffff;
+  --chip-border: rgba(43, 77, 122, 0.2);
+  --link-accent: #2f6db4;
+  --toggle-bg: rgba(255, 255, 255, 0.92);
+  --toggle-text: #2b4d7a;
+  --toggle-border: rgba(43, 77, 122, 0.18);
+  --toggle-active-bg: #2b4d7a;
+  --toggle-active-text: #ffffff;
+  --tooltip-bg: #222222;
+  --tooltip-text: #ffffff;
+  --shadow: 0 18px 40px rgba(34, 34, 34, 0.08);
 }
 
 /* Base layout: resets and global defaults for spacing, text, and the paper-like page background. */
@@ -26,9 +122,7 @@ body {
   margin: 0;
   font-family: "Manrope", sans-serif;
   color: var(--text);
-  background:
-    radial-gradient(circle at top left, rgba(40, 75, 82, 0.08), transparent 32%),
-    linear-gradient(180deg, #f8f4ee 0%, #f5f1ea 100%);
+  background: var(--page-bg);
   background-attachment: fixed;
   line-height: 1.65;
 }
@@ -69,8 +163,7 @@ ul {
   top: 0;
   z-index: 20;
   padding: 0;
-  background:
-    linear-gradient(180deg, rgba(255, 253, 249, 0.97), rgba(247, 242, 234, 0.95));
+  background: var(--header-bg);
   border-bottom: 1px solid rgba(216, 206, 192, 0.9);
   backdrop-filter: blur(12px);
 }
@@ -106,6 +199,115 @@ ul {
   justify-content: flex-end;
 }
 
+.theme-switcher-shell {
+  position: sticky;
+  top: 4.95rem;
+  z-index: 19;
+  width: calc(100% - 1rem);
+  margin: 0 0 0 auto;
+  padding-right: 0.2rem;
+  pointer-events: none;
+}
+
+.theme-switcher {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  width: fit-content;
+  margin-top: 0.7rem;
+  margin-left: auto;
+  padding: 0.45rem;
+  border: 1px solid var(--toggle-border);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  box-shadow: 0 10px 24px rgba(31, 41, 51, 0.09);
+  backdrop-filter: blur(10px);
+  pointer-events: auto;
+}
+
+.theme-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  padding: 0;
+  border: 1px solid var(--toggle-border);
+  border-radius: 14px;
+  background: var(--toggle-bg);
+  color: var(--toggle-text);
+  box-shadow: 0 5px 14px rgba(31, 41, 51, 0.08);
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  outline: none;
+}
+
+.theme-toggle.is-active {
+  background: var(--toggle-active-bg);
+  color: var(--toggle-active-text);
+  transform: translateX(-2px);
+}
+
+.theme-toggle::after {
+  content: attr(data-theme-label);
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 0.65rem);
+  transform: translateY(-50%);
+  padding: 0.35rem 0.55rem;
+  border-radius: 8px;
+  background: var(--tooltip-bg);
+  color: var(--tooltip-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+
+.theme-toggle:hover::after,
+.theme-toggle:focus-visible::after {
+  opacity: 1;
+}
+
+.theme-swatch {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.theme-toggle-dark .theme-swatch {
+  background: linear-gradient(135deg, #1a1e24 0%, #c8a96b 100%);
+}
+
+.theme-toggle-light-vintage .theme-swatch {
+  background: linear-gradient(135deg, #f5f1ea 0%, #284b52 100%);
+}
+
+.theme-toggle-pure-vintage .theme-swatch {
+  background: linear-gradient(135deg, #efe2c7 0%, #7e5627 100%);
+}
+
+.theme-toggle-simple .theme-swatch {
+  background: linear-gradient(135deg, #ffffff 0%, #2b4d7a 100%);
+}
+
 .site-nav a {
   color: var(--muted);
   font-size: 0.96rem;
@@ -137,7 +339,7 @@ ul {
 
 .hero-photo-card {
   padding: 1rem;
-  background: linear-gradient(180deg, rgba(255, 253, 249, 0.95), rgba(239, 232, 220, 0.96));
+  background: var(--card-tint);
   border: 1px solid rgba(216, 206, 192, 0.95);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
@@ -207,12 +409,12 @@ ul {
 
 .button-primary {
   background: var(--accent);
-  color: #f7f6f2;
+  color: var(--button-text);
 }
 
 .button-secondary {
   border-color: var(--line);
-  background: rgba(255, 253, 249, 0.7);
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
 }
 
 .hero-highlights li {
@@ -246,8 +448,7 @@ ul {
 }
 
 .section-muted {
-  background:
-    linear-gradient(180deg, rgba(255, 253, 249, 0.78), rgba(244, 237, 226, 0.66));
+  background: var(--surface-muted);
   border-top: 1px solid rgba(216, 206, 192, 0.75);
   border-bottom: 1px solid rgba(216, 206, 192, 0.75);
 }
@@ -365,7 +566,7 @@ ul {
   align-items: center;
   min-height: 2.4rem;
   padding: 0.5rem 0.8rem;
-  border: 1px solid rgba(125, 109, 89, 0.28);
+  border: 1px solid var(--chip-border);
   border-radius: 10px;
   background: transparent;
   margin-bottom: 0;
@@ -442,7 +643,7 @@ ul {
 
 .project-card a {
   margin-top: auto;
-  color: #007bff;
+  color: var(--link-accent);
   font-weight: 700;
 }
 
@@ -453,7 +654,7 @@ ul {
 }
 
 .projects-note a {
-  color: #007bff;
+  color: var(--link-accent);
   font-weight: 700;
   text-decoration: underline;
 }
@@ -461,8 +662,7 @@ ul {
 /* Footer: closes the page with contact links and a stronger vintage paper tone. */
 .site-footer {
   padding: 2rem 0 2.4rem;
-  background:
-    linear-gradient(180deg, #e7ddd0 0%, #ddd0c0 100%);
+  background: var(--footer-bg);
   border-top: 1px solid rgba(130, 109, 82, 0.18);
 }
 
@@ -546,9 +746,26 @@ ul {
   }
 
   .site-nav {
-    margin-left: 0;
     gap: 0.9rem 1rem;
     justify-content: flex-start;
+  }
+
+  .theme-switcher-shell {
+    top: 6.8rem;
+    width: calc(100% - 0.6rem);
+    padding-right: 0.1rem;
+  }
+
+  .theme-switcher {
+    flex-direction: row;
+    margin-top: 0.45rem;
+  }
+
+  .theme-toggle::after {
+    top: calc(100% + 0.45rem);
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
   }
 
   .hero {
@@ -581,11 +798,11 @@ ul {
 
 /* Link accents: use a conventional blue underline for thesis and publication links. */
 .thesis-link {
-  color: #007bff;
+  color: var(--link-accent);
   text-decoration: underline;
 }
 
 .publication-link {
-  color: #007bff;
+  color: var(--link-accent);
   text-decoration: underline;
 }

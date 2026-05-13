@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light-vintage">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -27,6 +27,50 @@
         </nav>
       </div>
     </header>
+    <div class="theme-switcher-shell">
+      <div class="theme-switcher" aria-label="Color modes">
+        <button
+          class="theme-toggle theme-toggle-dark"
+          type="button"
+          data-theme-target="dark"
+          data-theme-label="Midnight Archive"
+          aria-label="Switch to Midnight Archive theme"
+          title="Midnight Archive"
+        >
+          <span class="theme-swatch" aria-hidden="true"></span>
+        </button>
+        <button
+          class="theme-toggle theme-toggle-light-vintage is-active"
+          type="button"
+          data-theme-target="light-vintage"
+          data-theme-label="Paper Study"
+          aria-label="Switch to Paper Study theme"
+          title="Paper Study"
+        >
+          <span class="theme-swatch" aria-hidden="true"></span>
+        </button>
+        <button
+          class="theme-toggle theme-toggle-pure-vintage"
+          type="button"
+          data-theme-target="pure-vintage"
+          data-theme-label="Sepia Ledger"
+          aria-label="Switch to Sepia Ledger theme"
+          title="Sepia Ledger"
+        >
+          <span class="theme-swatch" aria-hidden="true"></span>
+        </button>
+        <button
+          class="theme-toggle theme-toggle-simple"
+          type="button"
+          data-theme-target="simple"
+          data-theme-label="Clean Draft"
+          aria-label="Switch to Clean Draft theme"
+          title="Clean Draft"
+        >
+          <span class="theme-swatch" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
 
     <main id="top">
       <section class="hero">
@@ -246,7 +290,7 @@
                   <a href="https://arxiv.org/abs/2603.14764" target="_blank" rel="noopener" class="publication-link">Topology-Preserving Data Augmentation for Ring-Type Polygon Annotations</a>
                   <ul class="record-sublist">
                     <li><strong>arXiv, 2026</strong></li>
-                    <li>Code: <a href="https://github.com/Laudarisd" target="_blank" rel="noopener" class="publication-link">View code</a></li>
+                    <li>Code: <a href="https://github.com/Laudarisd/polyaug" target="_blank" rel="noopener" class="publication-link">View code</a></li>
                   </ul>
                 </li>
                 <li>
@@ -492,5 +536,34 @@
         </div>
       </div>
     </footer>
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var toggles = document.querySelectorAll(".theme-toggle");
+        var storageKey = "portfolio-theme";
+        var defaultTheme = "light-vintage";
+        var savedTheme = localStorage.getItem(storageKey) || defaultTheme;
+
+        function applyTheme(theme) {
+          root.setAttribute("data-theme", theme);
+
+          toggles.forEach(function (toggle) {
+            var isActive = toggle.getAttribute("data-theme-target") === theme;
+            toggle.classList.toggle("is-active", isActive);
+            toggle.setAttribute("aria-pressed", isActive ? "true" : "false");
+          });
+        }
+
+        applyTheme(savedTheme);
+
+        toggles.forEach(function (toggle) {
+          toggle.addEventListener("click", function () {
+            var theme = toggle.getAttribute("data-theme-target");
+            localStorage.setItem(storageKey, theme);
+            applyTheme(theme);
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
