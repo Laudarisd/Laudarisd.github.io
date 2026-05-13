@@ -126,7 +126,7 @@ ul {
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.9fr) minmax(280px, 0.7fr);
+  grid-template-columns: minmax(0, 1.9fr) minmax(220px, 0.7fr);
   gap: 2rem;
   align-items: center;
 }
@@ -142,7 +142,9 @@ ul {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
   justify-self: end;
-  max-width: 380px;
+  width: 100%;
+  max-width: 320px;
+  margin-right: -0.5rem;
 }
 
 .eyebrow {
@@ -162,10 +164,11 @@ ul {
 }
 
 .hero h1 {
-  max-width: 120ch;
+  max-width: none;
   margin-bottom: 1.25rem;
-  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  font-size: clamp(1.9rem, 3.5vw, 3.25rem);
   line-height: 1.08;
+  white-space: nowrap;
 }
 
 .hero-text {
@@ -259,8 +262,8 @@ ul {
   margin-bottom: 0.75rem;
   font-size: clamp(2rem, 3.5vw, 3rem);
   line-height: 1.08;
-  white-space: nowrap;
-  overflow-wrap: normal;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .section-heading p,
@@ -429,10 +432,30 @@ ul {
   min-height: 100%;
 }
 
+.project-image {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  object-fit: cover;
+  border-radius: calc(var(--radius-md) - 4px);
+  border: 1px solid rgba(216, 206, 192, 0.95);
+}
+
 .project-card a {
   margin-top: auto;
-  color: var(--accent);
+  color: #007bff;
   font-weight: 700;
+}
+
+.projects-note {
+  margin-top: 1.5rem;
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+.projects-note a {
+  color: #007bff;
+  font-weight: 700;
+  text-decoration: underline;
 }
 
 /* Footer: closes the page with contact links and a stronger vintage paper tone. */
@@ -444,10 +467,10 @@ ul {
 }
 
 .footer-shell {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 1.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) auto;
+  align-items: center;
+  gap: 2rem;
   padding: 0;
 }
 
@@ -462,7 +485,7 @@ ul {
 
 .site-footer h2 {
   color: var(--text);
-  max-width: 14ch;
+  max-width: 18ch;
   margin-bottom: 0;
   font-size: clamp(1.35rem, 2.4vw, 2rem);
   line-height: 1.15;
@@ -470,9 +493,9 @@ ul {
 
 .footer-links {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 1rem 1.4rem;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.55rem;
 }
 
 .footer-links a {
@@ -509,7 +532,6 @@ ul {
   .footer-links {
     justify-content: flex-start;
   }
-
 }
 
 @media (max-width: 720px) {
@@ -535,6 +557,12 @@ ul {
 
   .hero h1 {
     max-width: none;
+    white-space: normal;
+  }
+
+  .section-heading h2,
+  .site-footer h2 {
+    overflow-wrap: break-word;
   }
 
   .section,
@@ -544,6 +572,10 @@ ul {
 
   .footer-shell {
     padding: 0;
+  }
+
+  .footer-links {
+    align-items: flex-start;
   }
 }
 
