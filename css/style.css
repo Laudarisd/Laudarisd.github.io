@@ -327,7 +327,7 @@ ul {
 
 /* Hero section: controls the intro layout, CTA buttons, and portrait framing. */
 .hero {
-  padding: 4.25rem 0 3rem;
+  padding: 2.6rem 0 3rem;
 }
 
 .hero-grid {
@@ -375,6 +375,11 @@ ul {
   font-size: clamp(1.9rem, 3.5vw, 3.25rem);
   line-height: 1.08;
   white-space: nowrap;
+}
+
+#resume .section-title-compact {
+  white-space: nowrap;
+  overflow-wrap: normal;
 }
 
 .hero-text {
@@ -772,12 +777,16 @@ ul {
   }
 
   .hero {
-    padding-top: 3.75rem;
+    padding-top: 2.1rem;
   }
 
   .hero h1 {
     max-width: none;
     white-space: normal;
+  }
+
+  #resume .section-title-compact {
+    font-size: clamp(1.5rem, 6vw, 2rem);
   }
 
   .section-heading h2,
