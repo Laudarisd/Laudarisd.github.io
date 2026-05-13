@@ -506,3 +506,9 @@ ul {
     padding: 0;
   }
 }
+
+/* Thesis link styling */
+.thesis-link {
+  color: #007bff;
+  text-decoration: underline;
+}
