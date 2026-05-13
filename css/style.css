@@ -1,13 +1,10 @@
-/* Design tokens */
+/* Design tokens: shared colors, spacing, and radii so the vintage look stays consistent site-wide. */
 :root {
-  --bg: #f8f8f7;
   --surface: #fffdf9;
-  --surface-alt: #efe8dc;
   --text: #1f2933;
   --muted: #5b6670;
   --line: #d8cec0;
   --accent: #284b52;
-  --accent-soft: #dbe5e2;
   --shadow: 0 20px 50px rgba(31, 41, 51, 0.08);
   --radius-lg: 28px;
   --radius-md: 18px;
@@ -16,7 +13,7 @@
   --nav-container: 1320px;
 }
 
-/* Base layout */
+/* Base layout: resets and global defaults for spacing, text, and the paper-like page background. */
 html {
   scroll-behavior: smooth;
 }
@@ -66,7 +63,7 @@ ul {
   margin: 0 auto;
 }
 
-/* Header and navigation */
+/* Header and navigation: keeps the top bar readable and anchored while scrolling. */
 .site-header {
   position: sticky;
   top: 0;
@@ -122,7 +119,7 @@ ul {
   color: var(--accent);
 }
 
-/* Hero section */
+/* Hero section: controls the intro layout, CTA buttons, and portrait framing. */
 .hero {
   padding: 4.25rem 0 3rem;
 }
@@ -240,8 +237,7 @@ ul {
   border-radius: calc(var(--radius-lg) - 6px);
 }
 
-
-/* Shared section blocks */
+/* Shared section blocks: reusable section spacing and muted band styling between content groups. */
 .section {
   padding: 3rem 0;
 }
@@ -276,7 +272,7 @@ ul {
   color: var(--muted);
 }
 
-/* Resume summary and card layouts */
+/* Card and grid layout: reusable panel shells for resume, publications, and project sections. */
 .summary-grid,
 .details-grid,
 .project-grid {
@@ -285,7 +281,7 @@ ul {
 }
 
 .summary-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.95fr);
 }
 
 .details-grid {
@@ -311,29 +307,72 @@ ul {
   font-size: 1.15rem;
 }
 
-.metric {
-  color: var(--text) !important;
-  font-size: 1.05rem;
-  font-weight: 700;
+.panel h4 {
+  margin-bottom: 0.45rem;
+  font-size: 0.98rem;
 }
 
-/* Skill tags */
-.tag-list {
+.panel-intro {
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+/* Wide panels: lets a section stretch horizontally when the content benefits from a landscape card. */
+.panel-wide {
+  margin-top: 1.25rem;
+}
+
+/* Skills panel: presents the skills as simple category rows with compact outlined chips. */
+.skills-panel {
+  padding: 1.65rem;
+}
+
+.skill-sections {
+  display: grid;
+  gap: 1rem;
+}
+
+.skill-section {
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(216, 206, 192, 0.9);
+}
+
+.skill-section:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.skill-section h4 {
+  margin-bottom: 0.75rem;
+  color: var(--accent);
+  font-family: "Spectral", serif;
+  font-size: 1.02rem;
+  letter-spacing: 0.01em;
+}
+
+.skill-chip-list {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
+  margin-top: 0.75rem;
 }
 
-.tag-list li {
-  padding: 0.55rem 0.9rem;
-  background: var(--accent-soft);
-  border-radius: 999px;
-  color: var(--accent);
+.skill-chip-list li {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.4rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid rgba(125, 109, 89, 0.28);
+  border-radius: 10px;
+  background: transparent;
+  margin-bottom: 0;
+  color: var(--text);
   font-size: 0.92rem;
-  font-weight: 700;
+  line-height: 1.35;
+  box-shadow: none;
 }
 
-/* Timeline panels */
+/* Timeline items: adds visual separation between experience entries. */
 .timeline-item + .timeline-item {
   margin-top: 1.25rem;
   padding-top: 1.25rem;
@@ -355,7 +394,7 @@ ul {
   font-size: 1rem;
 }
 
-/* Publication and patent lists */
+/* Record lists: restores bullet hierarchy for publications, degrees, and patents. */
 .record-list {
   padding-left: 1.1rem;
   list-style: disc;
@@ -382,7 +421,7 @@ ul {
   font-size: 0.95rem;
 }
 
-/* Project cards */
+/* Project cards: keeps links pinned neatly at the bottom of each project summary. */
 .project-card {
   display: flex;
   flex-direction: column;
@@ -396,7 +435,7 @@ ul {
   font-weight: 700;
 }
 
-/* Footer */
+/* Footer: closes the page with contact links and a stronger vintage paper tone. */
 .site-footer {
   padding: 2rem 0 2.4rem;
   background:
@@ -448,7 +487,7 @@ ul {
   text-underline-offset: 0.18em;
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments: collapse multi-column layouts for tablets and phones. */
 @media (max-width: 920px) {
   .hero-grid,
   .summary-grid,
@@ -470,6 +509,7 @@ ul {
   .footer-links {
     justify-content: flex-start;
   }
+
 }
 
 @media (max-width: 720px) {
@@ -507,7 +547,7 @@ ul {
   }
 }
 
-/* Thesis link styling */
+/* Link accents: use a conventional blue underline for thesis and publication links. */
 .thesis-link {
   color: #007bff;
   text-decoration: underline;
