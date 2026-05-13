@@ -205,8 +205,11 @@ ul {
   right: 0.6rem;
   z-index: 19;
   width: auto;
+  height: 0;
   margin: 0;
   padding-right: 0;
+  line-height: 0;
+  overflow: visible;
   pointer-events: none;
 }
 
@@ -215,7 +218,7 @@ ul {
   flex-direction: column;
   gap: 0.45rem;
   width: fit-content;
-  margin-top: 0.7rem;
+  margin: 0;
   margin-left: auto;
   padding: 0.45rem;
   border: 1px solid var(--toggle-border);
@@ -758,7 +761,7 @@ ul {
 
   .theme-switcher {
     flex-direction: row;
-    margin-top: 0.45rem;
+    margin-top: 0;
   }
 
   .theme-toggle::after {
