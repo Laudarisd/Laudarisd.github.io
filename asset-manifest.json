@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/aiml.github.io/static/css/main.ae42ac5f.css",
+    "main.js": "/aiml.github.io/static/js/main.afe38e1a.js",
+    "index.html": "/aiml.github.io/index.html",
+    "main.ae42ac5f.css.map": "/aiml.github.io/static/css/main.ae42ac5f.css.map",
+    "main.afe38e1a.js.map": "/aiml.github.io/static/js/main.afe38e1a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ae42ac5f.css",
+    "static/js/main.afe38e1a.js"
+  ]
+}
