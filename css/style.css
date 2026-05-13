@@ -233,14 +233,6 @@ ul {
   background: var(--accent);
 }
 
-.hero-photo-card {
-  padding: 1rem;
-  background: linear-gradient(180deg, rgba(255, 253, 249, 0.95), rgba(239, 232, 220, 0.96));
-  border: 1px solid rgba(216, 206, 192, 0.95);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
-}
-
 .hero-photo {
   aspect-ratio: 5 / 5;
   width: 100%;
@@ -271,6 +263,8 @@ ul {
   margin-bottom: 0.75rem;
   font-size: clamp(2rem, 3.5vw, 3rem);
   line-height: 1.08;
+  white-space: nowrap;
+  overflow-wrap: normal;
 }
 
 .section-heading p,
@@ -291,7 +285,7 @@ ul {
 }
 
 .summary-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .details-grid {
