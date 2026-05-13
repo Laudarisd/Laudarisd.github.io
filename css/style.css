@@ -1,6 +1,6 @@
 /* Design tokens */
 :root {
-  --bg: #f5f1ea;
+  --bg: #f7f5f2;
   --surface: #fffdf9;
   --surface-alt: #efe8dc;
   --text: #1f2933;
@@ -155,7 +155,7 @@ ul {
 }
 
 .hero h1 {
-  max-width: 12ch;
+  max-width: 120ch;
   margin-bottom: 1.25rem;
   font-size: clamp(2.2rem, 4.5vw, 3.8rem);
   line-height: 1.08;
@@ -232,19 +232,12 @@ ul {
 }
 
 .hero-photo {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 5 / 5;
   width: 100%;
   object-fit: cover;
   border-radius: calc(var(--radius-lg) - 6px);
 }
 
-.photo-caption {
-  display: grid;
-  gap: 0.35rem;
-  padding: 1rem 0.3rem 0.2rem;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
 
 /* Shared section blocks */
 .section {
