@@ -200,12 +200,13 @@ ul {
 }
 
 .theme-switcher-shell {
-  position: sticky;
-  top: 4.95rem;
+  position: fixed;
+  top: 5.15rem;
+  right: 0.6rem;
   z-index: 19;
-  width: calc(100% - 1rem);
-  margin: 0 0 0 auto;
-  padding-right: 0.2rem;
+  width: auto;
+  margin: 0;
+  padding-right: 0;
   pointer-events: none;
 }
 
@@ -751,9 +752,8 @@ ul {
   }
 
   .theme-switcher-shell {
-    top: 6.8rem;
-    width: calc(100% - 0.6rem);
-    padding-right: 0.1rem;
+    top: 6.9rem;
+    right: 0.4rem;
   }
 
   .theme-switcher {
