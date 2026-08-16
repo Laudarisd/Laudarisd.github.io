@@ -553,7 +553,8 @@ ul {
 .skills-panel,
 .experience-panel {
   width: 100%;
-  height: 32rem;
+  height: 24rem;
+  padding-right: 1.75rem;
   overflow-y: scroll;
   scrollbar-gutter: stable;
   scrollbar-color: var(--accent) transparent;
