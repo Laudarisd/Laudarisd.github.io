@@ -497,6 +497,14 @@ ul {
   grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.95fr);
 }
 
+.experience-skills-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: start;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
 .details-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -542,8 +550,16 @@ ul {
 }
 
 /* Skills panel: presents the skills as simple category rows with compact outlined chips. */
-.skills-panel {
-  padding: 1.65rem;
+.skills-panel,
+.experience-panel {
+  min-height: 100%;
+}
+
+.heading-note {
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.72em;
+  font-weight: 500;
 }
 
 .skill-sections {
@@ -740,6 +756,7 @@ ul {
 @media (max-width: 920px) {
   .hero-grid,
   .summary-grid,
+  .experience-skills-grid,
   .details-grid,
   .footer-shell {
     grid-template-columns: 1fr;
