@@ -15,12 +15,14 @@ The site presents my work as an applied mathematician and AI/ML researcher, with
 
 ## Selected projects
 
-The portfolio highlights work in six areas:
+The portfolio highlights work in eight areas:
 
 - [Computer Vision & ML](https://github.com/Laudarisd/Machine-Learning-Projects)
 - [Generative AI](https://github.com/Laudarisd/generative-ai)
 - [Agent Collection](https://github.com/Laudarisd/agent-collection)
+- [Vectra](https://github.com/Laudarisd/vectra)
 - [Research](https://github.com/Laudarisd/research)
+- [DMP & ESN](https://github.com/Laudarisd/dmp_esn)
 - [Data Science](https://github.com/Laudarisd/data-science)
 - [Digital Twin & Spatial AI](https://github.com/Laudarisd/digital-twin-and-spatial-ai)
 
