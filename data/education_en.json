@@ -1,0 +1,25 @@
+{
+  "degrees": [
+    {
+      "title": "PhD in Civil Engineering (2020-2024)",
+      "institution": "The University of Sydney, Australia",
+      "project": "AI-based material sorting and energy optimization in mining using computer vision and statistical modelling.",
+      "thesis_title": "Detecting Particles Properties From Their Kinematics in Granular Flows",
+      "thesis_url": "https://ses.library.usyd.edu.au/handle/2123/32885?show=full"
+    },
+    {
+      "title": "MSc in Mathematics (2016-2019)",
+      "institution": "Sungkyunkwan University, South Korea",
+      "project": "AI-based material sorting and energy optimization in mining using computer vision and statistical modelling.",
+      "thesis_title": "Application of machine learning knowledge and graph centrality pruning algorithm to echo state network",
+      "thesis_url": "https://lib.skku.edu/hsc/search/all/13110235"
+    }
+  ],
+  "honours": [
+    "Faculty of Engineering Scholarship, The University of Sydney",
+    "International Student Scholarship, Sungkyunkwan University",
+    "International Class Scholarship, Sungkyunkwan University",
+    "Graduate Assistant Tuition Waiver, Sungkyunkwan University",
+    "Excellent Manpower Training Scholarship, Sungkyunkwan University"
+  ]
+}

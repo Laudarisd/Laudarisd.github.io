@@ -1,0 +1,23 @@
+{
+  "heading_note": "5년 이상",
+  "items": [
+    {
+      "period": "2024년 2월 - 현재",
+      "role": "연구원 (Researcher)",
+      "organization": "위즈코어 (WIZCORE, CADian Inc.), 서울",
+      "description": "2D-to-3D CAD 생성, CAD Vectorisation, DWG Layer 표준화, 사내 RAG 시스템 등 엔지니어링 자동화에 바로 쓰이는 Mathematical Modelling과 AI Pipeline을 개발했어요."
+    },
+    {
+      "period": "2021 - 2022",
+      "role": "데이터 사이언티스트 (Data Scientist)",
+      "organization": "소울에너지 (Soul Energy), 서울",
+      "description": "통계와 Deep Learning을 활용해 Time-Series 예측, Anomaly Detection, GIS 기반 재생에너지 계획 모델을 만들었어요."
+    },
+    {
+      "period": "2019 - 2021",
+      "role": "AI/ML 엔지니어",
+      "organization": "인터마인즈 (InterMinds), 서울",
+      "description": "스마트 리테일 AI 프로토타입, REST API 연동 추론 서비스, 적응형 교통 제어를 위한 Reinforcement Learning 워크플로를 개발했어요."
+    }
+  ]
+}

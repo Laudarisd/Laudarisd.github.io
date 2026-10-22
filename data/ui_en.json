@@ -1,0 +1,41 @@
+{
+  "lang": "en",
+  "page_title": "Sudip Laudari: Researcher",
+  "meta_description": "Academic portfolio for research, teaching, publications, and projects.",
+  "brand": "Sudip Laudari",
+  "nav": {
+    "about": "About",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "themes": {
+    "dark": "Midnight Archive",
+    "light-vintage": "Paper Study",
+    "pure-vintage": "Sepia Ledger",
+    "simple": "Clean Draft",
+    "switch_to": "Switch to {name} theme"
+  },
+  "sections": {
+    "academic": "Academic Foundation",
+    "degrees": "Academic Degrees",
+    "honours": "Honours & Scholarships",
+    "experience_skills": "Experience & Skills",
+    "experience": "Experience",
+    "skills": "Skills",
+    "publications_patents": "Publications & Patents",
+    "publications": "Publications",
+    "patents": "Patents (Pending)",
+    "projects": "Selected Projects"
+  },
+  "labels": {
+    "project": "Project:",
+    "thesis": "Thesis:",
+    "code": "Code:",
+    "view_code": "View code",
+    "application_no": "Application No.",
+    "view_on_github": "View on GitHub",
+    "projects_note": "For other projects visit here:",
+    "projects_note_link": "GitHub profile",
+    "load_error": "Content could not be loaded. Please serve this site over HTTP (for example: python3 -m http.server) and reload."
+  }
+}

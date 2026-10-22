@@ -11,20 +11,45 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Spectral:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Spectral:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <!--
+      All text content on this page is loaded from the JSON files in /data
+      (one file per section, per language: *_en.json and *_kr.json).
+      Edit those files to add or change content; the markup below is only the layout.
+    -->
     <header class="site-header">
       <div class="nav-shell">
-        <a class="brand" href="#top">Sudip Laudari</a>
+        <a class="brand" id="brand" href="#top">Sudip Laudari</a>
         <nav class="site-nav" aria-label="Main navigation">
-          <a href="#resume">About</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact">Contact</a>
+          <a href="#resume" data-ui="nav.about">About</a>
+          <a href="#projects" data-ui="nav.projects">Projects</a>
+          <a href="#contact" data-ui="nav.contact">Contact</a>
         </nav>
+        <div class="lang-switcher" role="group" aria-label="Language">
+          <button
+            class="lang-toggle is-active"
+            type="button"
+            data-lang="en"
+            lang="en"
+            aria-pressed="true"
+          >
+            EN
+          </button>
+          <button
+            class="lang-toggle"
+            type="button"
+            data-lang="kr"
+            lang="ko"
+            aria-pressed="false"
+          >
+            한국어
+          </button>
+        </div>
       </div>
     </header>
     <div class="theme-switcher-shell">
@@ -73,489 +98,115 @@
     </div>
 
     <main id="top">
+      <!-- Hero: data/hero_*.json -->
       <section class="hero">
         <div class="container hero-grid">
           <div class="hero-copy">
-            <!-- <p class="eyebrow">Researcher / Educator / AI Engineer</p> -->
-            <h1>Researcher</h1>
-            <p class="hero-text">
-              Applied mathematician and AI/ML researcher specialising in mathematical modelling, computational geometry, computer vision, remote sensing, geospatial analysis, generative AI, AI agents, and agentic RAG for engineering and built-environment systems. I combine academic rigour with practical implementation to build reproducible, deployable, research-led solutions for complex engineering problems.
-            </p>
-            <div class="hero-actions">
-              <a class="button button-primary" href="#resume">View Resume</a>
-              <a class="button button-secondary" href="#projects"
-                >Explore Projects</a
-              >
-            </div>
-            <ul class="hero-highlights">
-              <li><strong>Research interests:</strong> Applied Mathematics, Mathematical Modelling, Graph Theory, Matrix Theory, Computer Vision, Deep Learning, Remote Sensing, Geospatial Analysis, Agentic AI Systems, and Geotechnical Data Analysis</li>
-              <li><strong>Academic direction:</strong> Research-led Teaching, Supervision, Translational Engineering</li>
-              <li><strong>Professional focus:</strong> Reproducible Pipelines, Deployable AI Systems, Real-world Engineering Applications</li>
-            </ul>
+            <h1 id="hero-title"></h1>
+            <p class="hero-text" id="hero-text"></p>
+            <div class="hero-actions" id="hero-actions"></div>
+            <ul class="hero-highlights" id="hero-highlights"></ul>
           </div>
           <aside class="hero-photo-card">
             <img
               src="img/github-profile.png"
               alt="Sudip Laudari"
               class="hero-photo"
+              id="hero-photo"
             />
-            <!-- <div class="photo-caption">
-              <strong>Current Focus</strong>
-              <span>CAD intelligence, floor-plan understanding, RAG systems, and engineering analytics.</span>
-            </div> -->
           </aside>
         </div>
       </section>
 
+      <!-- Academic foundation: data/education_*.json -->
       <section id="resume" class="section">
         <div class="container">
           <div class="section-heading">
-            <!-- <p class="eyebrow">Resume</p> -->
-            <h2 class="section-title-compact">Academic Foundation</h2>
-            <!-- <p>
-              This section summarizes my academic background, technical
-              strengths, and research direction for faculty roles,
-              collaborations, and advanced AI positions.
-            </p> -->
+            <h2 class="section-title-compact" data-ui="sections.academic"></h2>
           </div>
 
           <div class="summary-grid">
             <article class="panel">
-              <h2>Academic Degrees</h2>
-              <ul class="record-list">
-                <li><strong>PhD in Civil Engineering (2020-2024)</strong><br>The University of Sydney, Australia<br><strong>Project:</strong> AI-based material sorting and energy optimization in mining using computer vision and statistical modelling.<br><strong>Thesis:</strong> <a href="https://ses.library.usyd.edu.au/handle/2123/32885?show=full" target="_blank" rel="noopener" class="thesis-link">Detecting Particles Properties From Their Kinematics in Granular Flows</a></li>
-                <li><strong>MSc in Mathematics (2016-2019)</strong><br>Sungkyunkwan University, South Korea<br><strong>Project:</strong> AI-based material sorting and energy optimization in mining using computer vision and statistical modelling.<br><strong>Thesis:</strong> <a href="https://lib.skku.edu/hsc/search/all/13110235" target="_blank" rel="noopener" class="thesis-link">Application of machine learning knowledge and graph centrality pruning algorithm to echo state network</a></li>
-              </ul>
+              <h2 data-ui="sections.degrees"></h2>
+              <ul class="record-list" id="degrees-list"></ul>
             </article>
 
             <article class="panel">
-              <h2>Honours & Scholarships</h2>
-              <ul class="record-list">
-                <li>Faculty of Engineering Scholarship, The University of Sydney</li>
-                <li>International Student Scholarship, Sungkyunkwan University</li>
-                <li>International Class Scholarship, Sungkyunkwan University</li>
-                <li>Graduate Assistant Tuition Waiver, Sungkyunkwan University</li>
-                <li>Excellent Manpower Training Scholarship, Sungkyunkwan University</li>
-              </ul>
+              <h2 data-ui="sections.honours"></h2>
+              <ul class="record-list" id="honours-list"></ul>
             </article>
           </div>
         </div>
       </section>
 
+      <!-- Experience & skills: data/experience_*.json, data/skills_*.json -->
       <section class="section section-muted">
         <div class="container">
           <div class="section-heading">
-            <h2>Experience & Skills</h2>
+            <h2 data-ui="sections.experience_skills"></h2>
           </div>
           <div class="experience-skills-grid">
             <article class="panel experience-panel">
-              <h2>Experience <span class="heading-note">5+ years</span></h2>
-              <div class="timeline-item">
-                <span class="timeline-year">Feb 2024 - Present</span>
-                <h4>Researcher</h4>
-                <p>WIZCORE (CADian Inc.), Seoul, South Korea</p>
-                <p>
-                  Developed mathematical modelling and AI-based pipelines for 2D-to-3D CAD generation,
-                  CAD vectorisation, DWG layer standardisation, internal RAG systems, and
-                  production-ready tools for engineering automation.
-                </p>
-              </div>
-              <div class="timeline-item">
-                <span class="timeline-year">2021 - 2022</span>
-                <h4>Data Scientist</h4>
-                <p>Soul Energy, Seoul, South Korea</p>
-                <p>
-                  Built time-series forecasting, anomaly detection, and
-                  GIS-based renewable energy planning models using statistical
-                  and deep learning methods.
-                </p>
-              </div>
-              <div class="timeline-item">
-                <span class="timeline-year">2019 - 2021</span>
-                <h4>AI/ML Engineer</h4>
-                <p>InterMinds, Seoul, South Korea</p>
-                <p>
-                  Built smart retail AI prototypes, REST-integrated inference
-                  services, and reinforcement learning workflows for adaptive
-                  traffic control.
-                </p>
-              </div>
+              <h2>
+                <span data-ui="sections.experience"></span>
+                <span class="heading-note" id="experience-note"></span>
+              </h2>
+              <div id="experience-list"></div>
             </article>
 
             <article class="panel skills-panel">
-              <h2>Skills</h2>
-              <div class="skill-sections">
-              <section class="skill-section">
-                <h4>Mathematics & Modelling</h4>
-                <ul class="skill-chip-list">
-                  <li>Mathematical Modelling</li>
-                  <li>Numerical Methods</li>
-                  <li>Optimisation</li>
-                  <li>Graph Theory</li>
-                  <li>Matrix Theory</li>
-                  <li>Computational Geometry</li>
-                </ul>
-              </section>
-              <section class="skill-section">
-                <h4>AI & Machine Learning</h4>
-                <ul class="skill-chip-list">
-                  <li>Deep Learning</li>
-                  <li>PyTorch</li>
-                  <li>TensorFlow</li>
-                  <li>Time-Series Analysis</li>
-                  <li>Anomaly Detection</li>
-                  <li>Probabilistic Modelling</li>
-                  <li>Bayesian Methods</li>
-                  <li>Statistical Learning</li>
-                  <li>Model Evaluation</li>
-                  <li>Experiment Pipelines</li>
-                </ul>
-              </section>
-              <section class="skill-section">
-                <h4>Generative AI & Agents</h4>
-                <ul class="skill-chip-list">
-                  <li>LLMs</li>
-                  <li>RAG</li>
-                  <li>Retrieval Design</li>
-                  <li>Fine-Tuning</li>
-                  <li>Instruction Tuning</li>
-                  <li>AI Agents</li>
-                  <li>Tool Use</li>
-                  <li>Workflow Orchestration</li>
-                  <li>Task Automation</li>
-                  <li>Production AI Systems</li>
-                </ul>
-              </section>
-              <section class="skill-section">
-                <h4>Backend & Server-Side</h4>
-                <ul class="skill-chip-list">
-                  <li>Backend Development</li>
-                  <li>REST APIs</li>
-                  <li>API Integration</li>
-                  <li>FastAPI</li>
-                  <li>Flask</li>
-                  <li>Server Deployment</li>
-                  <li>Docker</li>
-                  <li>Linux</li>
-                  <li>PostgreSQL</li>
-                  <li>Nginx</li>
-                </ul>
-              </section>
-              <section class="skill-section">
-                <h4>Vision, Remote Sensing & Geospatial</h4>
-                <ul class="skill-chip-list">
-                  <li>Computer Vision</li>
-                  <li>Object Detection</li>
-                  <li>Segmentation</li>
-                  <li>OCR</li>
-                  <li>Remote Sensing</li>
-                  <li>Satellite Imagery</li>
-                  <li>Aerial Imagery</li>
-                  <li>GIS</li>
-                  <li>Geospatial Analysis</li>
-                  <li>Spatiotemporal Analysis</li>
-                  <li>Infrastructure Analytics</li>
-                </ul>
-              </section>
-              <section class="skill-section">
-                <h4>Engineering & Scientific Computing</h4>
-                <ul class="skill-chip-list">
-                  <li>Geotechnical Data Analysis</li>
-                  <li>Simulation-Informed Modelling</li>
-                  <li>Granular Materials</li>
-                  <li>Particle Kinematics</li>
-                  <li>DEM Simulation</li>
-                  <li>Digital Twins</li>
-                  <li>Digital Construction</li>
-                  <li>Python</li>
-                  <li>C++</li>
-                  <li>SQL</li>
-                  <li>NumPy</li>
-                  <li>Pandas</li>
-                  <li>Matplotlib</li>
-                </ul>
-              </section>
-              </div>
+              <h2 data-ui="sections.skills"></h2>
+              <div class="skill-sections" id="skills-list"></div>
             </article>
           </div>
         </div>
       </section>
 
+      <!-- Publications & patents: data/publications_*.json, data/patents_*.json -->
       <section class="section section-muted">
         <div class="container">
           <div class="section-heading">
-            <h2>Publications & Patents</h2>
+            <h2 data-ui="sections.publications_patents"></h2>
           </div>
 
           <div class="details-grid">
             <article class="panel records-panel">
-              <h1>Publications</h1>
-              <ul class="record-list">
-                <li>
-                  <a href="https://arxiv.org/abs/2608.04593" target="_blank" rel="noopener" class="publication-link">Rethinking Reservoir Pruning: A Dynamical Perspective for Echo State Networks</a>
-                  <ul class="record-sublist">
-                    <li><strong>arXiv, 2026</strong></li>
-                    <li>Code: <a href="https://github.com/Laudarisd/dmp_esn" target="_blank" rel="noopener" class="publication-link">View code</a></li>
-                  </ul>
-                </li>
-                <li>
-                  <a href="https://arxiv.org/abs/2603.20684" target="_blank" rel="noopener" class="publication-link">Centrality-Based Pruning for Efficient Echo State Networks</a>
-                  <ul class="record-sublist">
-                    <li><strong>arXiv, 2026</strong></li>
-                    <li>Code: <a href="https://github.com/Laudarisd" target="_blank" rel="noopener" class="publication-link">View code</a></li>
-                  </ul>
-                </li>
-                <li>
-                  <a href="https://arxiv.org/abs/2603.14764" target="_blank" rel="noopener" class="publication-link">Topology-Preserving Data Augmentation for Ring-Type Polygon Annotations</a>
-                  <ul class="record-sublist">
-                    <li><strong>arXiv, 2026</strong></li>
-                    <li>Code: <a href="https://github.com/Laudarisd/polyaug" target="_blank" rel="noopener" class="publication-link">View code</a></li>
-                  </ul>
-                </li>
-                <li>
-                  <a href="https://arxiv.org/html/2309.16259v2" target="_blank" rel="noopener" class="publication-link">Understanding student perceptions of flipped linear algebra classrooms via interpretable machine learning</a>
-                  <ul class="record-sublist">
-                    <li><strong>arXiv, 2026</strong></li>
-                  </ul>
-                </li>
-                <li>
-                  <a href="https://link.springer.com/article/10.1007/s10035-024-01493-5" target="_blank" rel="noopener" class="publication-link">Using tracer particle kinematics to sense particle size in rotating drums</a>
-                  <ul class="record-sublist">
-                    <li><strong>Granular Matter, 2024</strong></li>
-                  </ul>
-                </li>
-                <li>
-                  <a href="https://link.springer.com/article/10.1007/s10035-023-01357-4" target="_blank" rel="noopener" class="publication-link">Insights on the internal dynamics of bi-disperse granular flows from machine learning</a>
-                  <ul class="record-sublist">
-                    <li><strong>Granular Matter, 2023</strong></li>
-                  </ul>
-                </li>
-                <li>
-                  <a href="https://www.nature.com/articles/s41598-022-18250-4" target="_blank" rel="noopener" class="publication-link">Classifying grains using behaviour-informed machine learning</a>
-                  <ul class="record-sublist">
-                    <li><strong>Scientific Reports, 2022</strong></li>
-                  </ul>
-                </li>
-                <!-- For another paper just add here and follow the same format as above
-                <li>
-                  <a href="https://..." target="_blank" rel="noopener" class="publication-link">
-                    Paper title
-                  </a>
-                  <ul class="record-sublist">
-                    <li><strong>Journal, Year</strong></li>
-                  </ul>
-                </li> -->
-              </ul>
+              <h1 data-ui="sections.publications"></h1>
+              <ul class="record-list" id="publications-list"></ul>
             </article>
 
             <article class="panel records-panel">
-              <h1>Patents(Pending)</h1>
-              <ul class="record-list">
-                <li>
-                  CAD Drawing-Based AI System for Automatic Generation of
-                  Structured Models
-                  <ul class="record-sublist">
-                    <li>Republic of Korea</li>
-                    <li><strong>Application No. 10-2025-0147049</strong></li>
-                    <li>Filed in 2025</li>
-                  </ul>
-                </li>
-                <li>
-                  Projection Optimization System for Object Mapping Based on CAD
-                  Drawing Layers
-                  <ul class="record-sublist">
-                    <li>Republic of Korea</li>
-                    <li><strong>Application No. 10-2025-0147050</strong></li>
-                    <li>Filed in 2025</li>
-                  </ul>
-                </li>
-                <li>
-                  Standard Bounding Box Correction System Based on AI Object
-                  Detection
-                  <ul class="record-sublist">
-                    <li>Republic of Korea</li>
-                    <li><strong>Application No. 10-2026-0071858</strong></li>
-                    <li>Filed in 2026</li>
-                  </ul>
-                </li>
-                <li>
-                  Drawing Style Learning-Based Automatic Dimensioning System
-                  <ul class="record-sublist">
-                    <li>Republic of Korea</li>
-                    <li><strong>Application No. 10-2026-0071859</strong></li>
-                    <li>Filed in 2026</li>
-                  </ul>
-                </li>
-              </ul>
+              <h1 data-ui="sections.patents"></h1>
+              <ul class="record-list" id="patents-list"></ul>
             </article>
           </div>
         </div>
       </section>
 
+      <!-- Projects: data/projects_*.json -->
       <section id="projects" class="section">
         <div class="container">
           <div class="section-heading">
-            <h2>Selected Projects</h2>
+            <h2 data-ui="sections.projects"></h2>
           </div>
 
-          <div class="project-grid">
-            <article class="project-card">
-              <img
-                src="img/projects/computer-vision-ml.webp"
-                alt="Computer vision and machine learning"
-                class="project-image"
-              />
-              <h3>Computer Vision &amp; ML</h3>
-              <p>
-                Detection, segmentation, classification, and visual reasoning
-                systems for real-world image and video tasks.
-              </p>
-              <a href="https://github.com/Laudarisd/Machine-Learning-Projects" target="_blank" rel="noreferrer"
-                >View on GitHub</a
-              >
-            </article>
+          <div class="project-grid" id="project-grid"></div>
 
-            <article class="project-card">
-              <img
-                src="img/projects/generative-ai.webp"
-                alt="Generative AI systems"
-                class="project-image"
-              />
-              <h3>Generative AI</h3>
-              <p>
-                LLM applications, content generation, multimodal workflows, and
-                prompt-driven research prototypes.
-              </p>
-              <a href="https://github.com/Laudarisd/generative-ai" target="_blank" rel="noreferrer"
-                >View on GitHub</a
-              >
-            </article>
-
-            <article class="project-card">
-              <img
-                src="img/projects/ai-agents.webp"
-                alt="AI agent workflows"
-                class="project-image"
-              />
-              <h3>Agent Collection</h3>
-              <p>
-                Tool-using assistants, workflow automation, retrieval pipelines,
-                and task-focused agent systems for research and production.
-              </p>
-              <a href="https://github.com/Laudarisd/agent-collection" target="_blank" rel="noreferrer"
-                >View on GitHub</a
-              >
-            </article>
-
-            <article class="project-card">
-              <img
-                src="img/projects/vectra-logo.png"
-                alt="Vectra logo"
-                class="project-image project-image-logo"
-              />
-              <h3>Vectra</h3>
-              <p>
-                A privacy-focused local AI coding assistant with agent tools,
-                model discovery, workspace context, and a companion web app.
-              </p>
-              <a href="https://github.com/Laudarisd/vectra" target="_blank" rel="noreferrer"
-                >View on GitHub</a
-              >
-            </article>
-
-            <article class="project-card">
-              <img
-                src="img/projects/research.webp"
-                alt="Scientific machine learning research"
-                class="project-image"
-              />
-              <h3>Research</h3>
-              <p>
-                Centrality-aware pruning, augmentation methods, graph analysis,
-                and reproducible experiments for efficient learning systems.
-              </p>
-              <a href="https://github.com/Laudarisd/research" target="_blank" rel="noreferrer"
-                >View on GitHub</a
-              >
-            </article>
-
-            <article class="project-card">
-              <img
-                src="img/projects/dmp-esn.webp"
-                alt="DMP and echo state network pruning method from the research paper"
-                class="project-image project-image-paper"
-              />
-              <h3>DMP &amp; ESN</h3>
-              <p>
-                Dynamical movement primitives and reservoir computing for
-                adaptive motion learning, control, and network pruning research.
-              </p>
-              <a href="https://github.com/Laudarisd/dmp_esn" target="_blank" rel="noreferrer"
-                >View on GitHub</a
-              >
-            </article>
-
-            <article class="project-card">
-              <img
-                src="img/projects/data-science.webp"
-                alt="Data science and analytics"
-                class="project-image"
-              />
-              <h3>Data Science</h3>
-              <p>
-                Statistics, forecasting, anomaly detection, geospatial analysis,
-                and end-to-end experiments on practical datasets.
-              </p>
-              <a href="https://github.com/Laudarisd/data-science" target="_blank" rel="noreferrer"
-                >View on GitHub</a
-              >
-            </article>
-
-            <article class="project-card">
-              <img
-                src="img/projects/digital-twin.webp"
-                alt="Digital twin and floorplan reconstruction"
-                class="project-image"
-              />
-              <h3>Digital Twin</h3>
-              <p>
-                Floorplan reconstruction and spatial intelligence connecting
-                physical assets with interactive digital representations.
-              </p>
-              <a href="https://github.com/Laudarisd/digital-twin-and-spatial-ai" target="_blank" rel="noreferrer"
-                >View on GitHub</a
-              >
-            </article>
-
-          </div>
-
-          <p class="projects-note">
-            For other projects visit here:
-            <a href="https://github.com/Laudarisd" target="_blank" rel="noreferrer">GitHub profile</a>
-          </p>
+          <p class="projects-note" id="projects-note"></p>
         </div>
       </section>
     </main>
 
+    <!-- Contact: data/contact_*.json -->
     <footer id="contact" class="site-footer">
       <div class="container footer-shell">
         <div>
-          <h2>Open to research, teaching, and collaboration</h2>
+          <h2 id="contact-heading"></h2>
         </div>
-        <div class="footer-links">
-          <a href="https://github.com/Laudarisd" target="_blank" rel="noreferrer"
-            >GitHub</a
-          >
-          <a
-            href="https://www.linkedin.com/in/your-linkedin"
-            target="_blank"
-            rel="noreferrer"
-            >LinkedIn</a
-          >
-          <a href="mailto:your.email@example.com">your.email@example.com</a>
-        </div>
+        <div class="footer-links" id="contact-links"></div>
       </div>
     </footer>
+
     <script>
       (function () {
         var root = document.documentElement;
@@ -585,5 +236,6 @@
         });
       })();
     </script>
+    <script src="js/site.js"></script>
   </body>
 </html>

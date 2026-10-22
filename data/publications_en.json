@@ -1,0 +1,42 @@
+{
+  "items": [
+    {
+      "title": "Rethinking Reservoir Pruning: A Dynamical Perspective for Echo State Networks",
+      "url": "https://arxiv.org/abs/2608.04593",
+      "venue": "arXiv, 2026",
+      "code_url": "https://github.com/Laudarisd/dmp_esn"
+    },
+    {
+      "title": "Centrality-Based Pruning for Efficient Echo State Networks",
+      "url": "https://arxiv.org/abs/2603.20684",
+      "venue": "arXiv, 2026",
+      "code_url": "https://github.com/Laudarisd"
+    },
+    {
+      "title": "Topology-Preserving Data Augmentation for Ring-Type Polygon Annotations",
+      "url": "https://arxiv.org/abs/2603.14764",
+      "venue": "arXiv, 2026",
+      "code_url": "https://github.com/Laudarisd/polyaug"
+    },
+    {
+      "title": "Understanding student perceptions of flipped linear algebra classrooms via interpretable machine learning",
+      "url": "https://arxiv.org/html/2309.16259v2",
+      "venue": "arXiv, 2026"
+    },
+    {
+      "title": "Using tracer particle kinematics to sense particle size in rotating drums",
+      "url": "https://link.springer.com/article/10.1007/s10035-024-01493-5",
+      "venue": "Granular Matter, 2024"
+    },
+    {
+      "title": "Insights on the internal dynamics of bi-disperse granular flows from machine learning",
+      "url": "https://link.springer.com/article/10.1007/s10035-023-01357-4",
+      "venue": "Granular Matter, 2023"
+    },
+    {
+      "title": "Classifying grains using behaviour-informed machine learning",
+      "url": "https://www.nature.com/articles/s41598-022-18250-4",
+      "venue": "Scientific Reports, 2022"
+    }
+  ]
+}

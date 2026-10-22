@@ -1,0 +1,41 @@
+{
+  "lang": "ko",
+  "page_title": "Sudip Laudari: 연구자",
+  "meta_description": "연구, 강의, 논문, 프로젝트를 소개하는 포트폴리오입니다.",
+  "brand": "Sudip Laudari",
+  "nav": {
+    "about": "소개",
+    "projects": "프로젝트",
+    "contact": "연락처"
+  },
+  "themes": {
+    "dark": "Midnight Archive",
+    "light-vintage": "Paper Study",
+    "pure-vintage": "Sepia Ledger",
+    "simple": "Clean Draft",
+    "switch_to": "{name} 테마로 전환"
+  },
+  "sections": {
+    "academic": "학력",
+    "degrees": "학위",
+    "honours": "수상 및 장학금",
+    "experience_skills": "경력 및 기술",
+    "experience": "경력",
+    "skills": "기술 스택",
+    "publications_patents": "논문 및 특허",
+    "publications": "논문",
+    "patents": "특허 (출원 중)",
+    "projects": "주요 프로젝트"
+  },
+  "labels": {
+    "project": "프로젝트:",
+    "thesis": "학위논문:",
+    "code": "코드:",
+    "view_code": "코드 보기",
+    "application_no": "출원번호",
+    "view_on_github": "GitHub에서 보기",
+    "projects_note": "다른 프로젝트는 여기서 확인할 수 있어요:",
+    "projects_note_link": "GitHub 프로필",
+    "load_error": "콘텐츠를 불러오지 못했어요. HTTP 서버(예: python3 -m http.server)로 사이트를 실행한 뒤 새로 고침해 주세요."
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "title": "CAD 도면 기반 구조화 모델 자동 생성 AI 시스템",
+      "country": "대한민국",
+      "application_no": "10-2025-0147049",
+      "filed": "2025년 출원"
+    },
+    {
+      "title": "CAD 도면 Layer 기반 객체 매핑을 위한 Projection 최적화 시스템",
+      "country": "대한민국",
+      "application_no": "10-2025-0147050",
+      "filed": "2025년 출원"
+    },
+    {
+      "title": "AI Object Detection 기반 표준 Bounding Box 보정 시스템",
+      "country": "대한민국",
+      "application_no": "10-2026-0071858",
+      "filed": "2026년 출원"
+    },
+    {
+      "title": "도면 스타일 학습 기반 자동 치수 기입 시스템",
+      "country": "대한민국",
+      "application_no": "10-2026-0071859",
+      "filed": "2026년 출원"
+    }
+  ]
+}

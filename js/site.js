@@ -1,0 +1,438 @@
+/*
+  Content loader for the portfolio.
+
+  Every section of the page is rendered from a JSON file in /data:
+    data/<section>_<lang>.json      e.g. data/projects_en.json, data/projects_kr.json
+
+  To add a paper, patent, project, skill, etc. edit the JSON file for both
+  languages. The HTML structure and CSS never need to change.
+*/
+(function () {
+  "use strict";
+
+  var SECTIONS = [
+    "ui",
+    "hero",
+    "education",
+    "experience",
+    "skills",
+    "publications",
+    "patents",
+    "projects",
+    "contact"
+  ];
+
+  // File suffix -> value for <html lang="...">
+  var LANGS = { en: "en", kr: "ko" };
+  var DEFAULT_LANG = "en";
+  var STORAGE_KEY = "portfolio-lang";
+  var DATA_DIR = "data/";
+
+  var root = document.documentElement;
+  var langToggles = document.querySelectorAll(".lang-toggle");
+  var themeToggles = document.querySelectorAll(".theme-toggle");
+  var currentLang = null;
+
+  /* ---------- small DOM helpers ---------- */
+
+  function el(tag, attrs, children) {
+    var node = document.createElement(tag);
+    if (attrs) {
+      Object.keys(attrs).forEach(function (key) {
+        var value = attrs[key];
+        if (value === null || value === undefined || value === "") return;
+        if (key === "text") {
+          node.textContent = value;
+        } else if (key === "class") {
+          node.className = value;
+        } else {
+          node.setAttribute(key, value);
+        }
+      });
+    }
+    if (children) {
+      children.forEach(function (child) {
+        if (child === null || child === undefined) return;
+        node.appendChild(
+          typeof child === "string" ? document.createTextNode(child) : child
+        );
+      });
+    }
+    return node;
+  }
+
+  function externalLink(href, label, className) {
+    var attrs = { href: href, target: "_blank", rel: "noopener noreferrer" };
+    if (className) attrs.class = className;
+    attrs.text = label;
+    return el("a", attrs);
+  }
+
+  function clear(node) {
+    while (node && node.firstChild) node.removeChild(node.firstChild);
+  }
+
+  function byId(id) {
+    return document.getElementById(id);
+  }
+
+  function setText(id, value) {
+    var node = byId(id);
+    if (node && value !== undefined) node.textContent = value;
+  }
+
+  function getPath(obj, path) {
+    return path.split(".").reduce(function (acc, key) {
+      return acc && acc[key] !== undefined ? acc[key] : undefined;
+    }, obj);
+  }
+
+  /* ---------- data loading ---------- */
+
+  function fetchJSON(url) {
+    return fetch(url, { cache: "no-cache" }).then(function (response) {
+      if (!response.ok) throw new Error(url + " -> " + response.status);
+      return response.json();
+    });
+  }
+
+  // Load one section; if the translation is missing fall back to the default language.
+  function loadSection(section, lang) {
+    var primary = DATA_DIR + section + "_" + lang + ".json";
+    return fetchJSON(primary).catch(function (error) {
+      if (lang === DEFAULT_LANG) throw error;
+      console.warn("[portfolio] " + primary + " missing, falling back to " + DEFAULT_LANG);
+      return fetchJSON(DATA_DIR + section + "_" + DEFAULT_LANG + ".json");
+    });
+  }
+
+  function loadAll(lang) {
+    return Promise.all(
+      SECTIONS.map(function (section) {
+        return loadSection(section, lang);
+      })
+    ).then(function (results) {
+      var data = {};
+      SECTIONS.forEach(function (section, index) {
+        data[section] = results[index];
+      });
+      return data;
+    });
+  }
+
+  /* ---------- renderers (markup mirrors the original static HTML) ---------- */
+
+  function renderUI(ui) {
+    if (!ui) return;
+
+    if (ui.page_title) document.title = ui.page_title;
+    var meta = document.querySelector('meta[name="description"]');
+    if (meta && ui.meta_description) meta.setAttribute("content", ui.meta_description);
+
+    setText("brand", ui.brand);
+
+    // Any element with data-ui="dotted.path" gets its text from ui json.
+    document.querySelectorAll("[data-ui]").forEach(function (node) {
+      var value = getPath(ui, node.getAttribute("data-ui"));
+      if (value !== undefined) node.textContent = value;
+    });
+
+    // Theme switcher tooltips / accessible labels.
+    if (ui.themes) {
+      themeToggles.forEach(function (toggle) {
+        var key = toggle.getAttribute("data-theme-target");
+        var name = ui.themes[key];
+        if (!name) return;
+        var aria = (ui.themes.switch_to || "Switch to {name} theme").replace("{name}", name);
+        toggle.setAttribute("data-theme-label", name);
+        toggle.setAttribute("aria-label", aria);
+        toggle.setAttribute("title", name);
+      });
+    }
+  }
+
+  function renderHero(hero) {
+    if (!hero) return;
+    setText("hero-title", hero.title);
+    setText("hero-text", hero.text);
+
+    var photo = byId("hero-photo");
+    if (photo) {
+      if (hero.photo) photo.setAttribute("src", hero.photo);
+      if (hero.photo_alt) photo.setAttribute("alt", hero.photo_alt);
+    }
+
+    var actions = byId("hero-actions");
+    if (actions) {
+      clear(actions);
+      (hero.actions || []).forEach(function (action) {
+        var style = action.style === "secondary" ? "button-secondary" : "button-primary";
+        actions.appendChild(
+          el("a", { class: "button " + style, href: action.href, text: action.label })
+        );
+      });
+    }
+
+    var highlights = byId("hero-highlights");
+    if (highlights) {
+      clear(highlights);
+      (hero.highlights || []).forEach(function (item) {
+        highlights.appendChild(
+          el("li", null, [el("strong", { text: item.label }), " " + (item.text || "")])
+        );
+      });
+    }
+  }
+
+  function renderEducation(education, labels) {
+    if (!education) return;
+    var degrees = byId("degrees-list");
+    if (degrees) {
+      clear(degrees);
+      (education.degrees || []).forEach(function (degree) {
+        var li = el("li", null, [
+          el("strong", { text: degree.title }),
+          el("br"),
+          degree.institution || ""
+        ]);
+        if (degree.project) {
+          li.appendChild(el("br"));
+          li.appendChild(el("strong", { text: labels.project }));
+          li.appendChild(document.createTextNode(" " + degree.project));
+        }
+        if (degree.thesis_title) {
+          li.appendChild(el("br"));
+          li.appendChild(el("strong", { text: labels.thesis }));
+          li.appendChild(document.createTextNode(" "));
+          li.appendChild(
+            degree.thesis_url
+              ? externalLink(degree.thesis_url, degree.thesis_title, "thesis-link")
+              : document.createTextNode(degree.thesis_title)
+          );
+        }
+        degrees.appendChild(li);
+      });
+    }
+
+    var honours = byId("honours-list");
+    if (honours) {
+      clear(honours);
+      (education.honours || []).forEach(function (item) {
+        honours.appendChild(el("li", { text: item }));
+      });
+    }
+  }
+
+  function renderExperience(experience) {
+    if (!experience) return;
+    setText("experience-note", experience.heading_note || "");
+    var list = byId("experience-list");
+    if (!list) return;
+    clear(list);
+    (experience.items || []).forEach(function (item) {
+      list.appendChild(
+        el("div", { class: "timeline-item" }, [
+          el("span", { class: "timeline-year", text: item.period }),
+          el("h4", { text: item.role }),
+          el("p", { text: item.organization }),
+          el("p", { text: item.description })
+        ])
+      );
+    });
+  }
+
+  function renderSkills(skills) {
+    if (!skills) return;
+    var container = byId("skills-list");
+    if (!container) return;
+    clear(container);
+    (skills.categories || []).forEach(function (category) {
+      var chips = el("ul", { class: "skill-chip-list" });
+      (category.items || []).forEach(function (skill) {
+        chips.appendChild(el("li", { text: skill }));
+      });
+      container.appendChild(
+        el("section", { class: "skill-section" }, [el("h4", { text: category.name }), chips])
+      );
+    });
+  }
+
+  function renderPublications(publications, labels) {
+    if (!publications) return;
+    var list = byId("publications-list");
+    if (!list) return;
+    clear(list);
+    (publications.items || []).forEach(function (paper) {
+      var sub = el("ul", { class: "record-sublist" }, [
+        el("li", null, [el("strong", { text: paper.venue })])
+      ]);
+      if (paper.code_url) {
+        sub.appendChild(
+          el("li", null, [
+            labels.code + " ",
+            externalLink(paper.code_url, labels.view_code, "publication-link")
+          ])
+        );
+      }
+      list.appendChild(
+        el("li", null, [
+          paper.url
+            ? externalLink(paper.url, paper.title, "publication-link")
+            : document.createTextNode(paper.title),
+          sub
+        ])
+      );
+    });
+  }
+
+  function renderPatents(patents, labels) {
+    if (!patents) return;
+    var list = byId("patents-list");
+    if (!list) return;
+    clear(list);
+    (patents.items || []).forEach(function (patent) {
+      var sub = el("ul", { class: "record-sublist" });
+      if (patent.country) sub.appendChild(el("li", { text: patent.country }));
+      if (patent.application_no) {
+        sub.appendChild(
+          el("li", null, [
+            el("strong", { text: labels.application_no + " " + patent.application_no })
+          ])
+        );
+      }
+      if (patent.filed) sub.appendChild(el("li", { text: patent.filed }));
+      list.appendChild(el("li", null, [patent.title, sub]));
+    });
+  }
+
+  function renderProjects(projects, labels) {
+    if (!projects) return;
+    var grid = byId("project-grid");
+    if (grid) {
+      clear(grid);
+      (projects.items || []).forEach(function (project) {
+        var imageClass = "project-image" + (project.image_class ? " " + project.image_class : "");
+        grid.appendChild(
+          el("article", { class: "project-card" }, [
+            el("img", { src: project.image, alt: project.image_alt || project.title, class: imageClass }),
+            el("h3", { text: project.title }),
+            el("p", { text: project.description }),
+            externalLink(project.url, labels.view_on_github)
+          ])
+        );
+      });
+    }
+
+    var note = byId("projects-note");
+    if (note) {
+      clear(note);
+      note.appendChild(document.createTextNode((labels.projects_note || "") + " "));
+      note.appendChild(externalLink(projects.more_url, labels.projects_note_link));
+    }
+  }
+
+  function renderContact(contact) {
+    if (!contact) return;
+    setText("contact-heading", contact.heading);
+    var links = byId("contact-links");
+    if (!links) return;
+    clear(links);
+    (contact.links || []).forEach(function (link) {
+      var isMail = /^mailto:/i.test(link.url || "");
+      links.appendChild(
+        isMail
+          ? el("a", { href: link.url, text: link.label })
+          : externalLink(link.url, link.label)
+      );
+    });
+  }
+
+  function renderAll(data) {
+    var ui = data.ui || {};
+    var labels = ui.labels || {};
+    renderUI(ui);
+    renderHero(data.hero);
+    renderEducation(data.education, labels);
+    renderExperience(data.experience);
+    renderSkills(data.skills);
+    renderPublications(data.publications, labels);
+    renderPatents(data.patents, labels);
+    renderProjects(data.projects, labels);
+    renderContact(data.contact);
+  }
+
+  /* ---------- language handling ---------- */
+
+  function normaliseLang(value) {
+    if (!value) return null;
+    value = String(value).toLowerCase();
+    if (value === "ko" || value === "kr" || value.indexOf("ko-") === 0) return "kr";
+    if (value === "en" || value.indexOf("en-") === 0) return "en";
+    return LANGS[value] ? value : null;
+  }
+
+  function initialLang() {
+    var fromUrl = normaliseLang(new URLSearchParams(window.location.search).get("lang"));
+    if (fromUrl) return fromUrl;
+    try {
+      var stored = normaliseLang(localStorage.getItem(STORAGE_KEY));
+      if (stored) return stored;
+    } catch (e) { /* storage unavailable */ }
+    var browser = normaliseLang(navigator.language || "");
+    return browser || DEFAULT_LANG;
+  }
+
+  function markActiveLang(lang) {
+    langToggles.forEach(function (toggle) {
+      var isActive = toggle.getAttribute("data-lang") === lang;
+      toggle.classList.toggle("is-active", isActive);
+      toggle.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
+  }
+
+  function showLoadError(lang, error) {
+    console.error("[portfolio] failed to load content", error);
+    var target = byId("hero-text");
+    if (!target) return;
+    var message =
+      lang === "kr"
+        ? "콘텐츠를 불러오지 못했어요. HTTP 서버(예: python3 -m http.server)로 사이트를 실행한 뒤 새로 고침해 주세요."
+        : "Content could not be loaded. Please serve this site over HTTP (for example: python3 -m http.server) and reload.";
+    target.textContent = message;
+  }
+
+  function applyLang(lang, updateUrl) {
+    lang = LANGS[lang] ? lang : DEFAULT_LANG;
+    currentLang = lang;
+    root.setAttribute("lang", LANGS[lang]);
+    root.setAttribute("data-lang", lang);
+    markActiveLang(lang);
+
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* ignore */ }
+
+    if (updateUrl && window.history && window.history.replaceState) {
+      var url = new URL(window.location.href);
+      url.searchParams.set("lang", lang);
+      window.history.replaceState(null, "", url.toString());
+    }
+
+    return loadAll(lang)
+      .then(function (data) {
+        if (currentLang !== lang) return; // a newer switch won
+        renderAll(data);
+        root.classList.add("content-ready");
+      })
+      .catch(function (error) {
+        showLoadError(lang, error);
+      });
+  }
+
+  langToggles.forEach(function (toggle) {
+    toggle.addEventListener("click", function () {
+      var lang = toggle.getAttribute("data-lang");
+      if (lang !== currentLang) applyLang(lang, true);
+    });
+  });
+
+  applyLang(initialLang(), false);
+})();

@@ -1,0 +1,24 @@
+{
+  "title": "Researcher",
+  "text": "Applied mathematician and AI/ML researcher specialising in mathematical modelling, computational geometry, computer vision, remote sensing, geospatial analysis, generative AI, AI agents, and agentic RAG for engineering and built-environment systems. I combine academic rigour with practical implementation to build reproducible, deployable, research-led solutions for complex engineering problems.",
+  "photo": "img/github-profile.png",
+  "photo_alt": "Sudip Laudari",
+  "actions": [
+    { "label": "View Resume", "href": "#resume", "style": "primary" },
+    { "label": "Explore Projects", "href": "#projects", "style": "secondary" }
+  ],
+  "highlights": [
+    {
+      "label": "Research interests:",
+      "text": "Applied Mathematics, Mathematical Modelling, Graph Theory, Matrix Theory, Computer Vision, Deep Learning, Remote Sensing, Geospatial Analysis, Agentic AI Systems, and Geotechnical Data Analysis"
+    },
+    {
+      "label": "Academic direction:",
+      "text": "Research-led Teaching, Supervision, Translational Engineering"
+    },
+    {
+      "label": "Professional focus:",
+      "text": "Reproducible Pipelines, Deployable AI Systems, Real-world Engineering Applications"
+    }
+  ]
+}

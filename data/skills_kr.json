@@ -1,0 +1,28 @@
+{
+  "categories": [
+    {
+      "name": "수학 및 모델링",
+      "items": ["Mathematical Modelling", "Numerical Methods", "Optimisation", "Graph Theory", "Matrix Theory", "Computational Geometry"]
+    },
+    {
+      "name": "AI 및 Machine Learning",
+      "items": ["Deep Learning", "PyTorch", "TensorFlow", "Time-Series Analysis", "Anomaly Detection", "Probabilistic Modelling", "Bayesian Methods", "Statistical Learning", "Model Evaluation", "Experiment Pipelines"]
+    },
+    {
+      "name": "Generative AI 및 Agent",
+      "items": ["LLMs", "RAG", "Retrieval Design", "Fine-Tuning", "Instruction Tuning", "AI Agents", "Tool Use", "Workflow Orchestration", "Task Automation", "Production AI Systems"]
+    },
+    {
+      "name": "Backend 및 서버",
+      "items": ["Backend Development", "REST APIs", "API Integration", "FastAPI", "Flask", "Server Deployment", "Docker", "Linux", "PostgreSQL", "Nginx"]
+    },
+    {
+      "name": "Vision, Remote Sensing 및 Geospatial",
+      "items": ["Computer Vision", "Object Detection", "Segmentation", "OCR", "Remote Sensing", "Satellite Imagery", "Aerial Imagery", "GIS", "Geospatial Analysis", "Spatiotemporal Analysis", "Infrastructure Analytics"]
+    },
+    {
+      "name": "엔지니어링 및 과학 컴퓨팅",
+      "items": ["Geotechnical Data Analysis", "Simulation-Informed Modelling", "Granular Materials", "Particle Kinematics", "DEM Simulation", "Digital Twins", "Digital Construction", "Python", "C++", "SQL", "NumPy", "Pandas", "Matplotlib"]
+    }
+  ]
+}

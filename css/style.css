@@ -120,7 +120,7 @@ html {
 
 body {
   margin: 0;
-  font-family: "Manrope", sans-serif;
+  font-family: "Manrope", "Noto Sans KR", sans-serif;
   color: var(--text);
   background: var(--page-bg);
   background-attachment: fixed;
@@ -183,7 +183,7 @@ ul {
 }
 
 .brand {
-  font-family: "Spectral", serif;
+  font-family: "Spectral", "Noto Sans KR", serif;
   font-size: 1.3rem;
   font-weight: 700;
   letter-spacing: 0.02em;
@@ -365,7 +365,7 @@ ul {
 .hero h1,
 .section-heading h2,
 .site-footer h2 {
-  font-family: "Spectral", serif;
+  font-family: "Spectral", "Noto Sans KR", serif;
   letter-spacing: -0.02em;
 }
 
@@ -602,7 +602,7 @@ ul {
 .skill-section h4 {
   margin-bottom: 0.75rem;
   color: var(--accent);
-  font-family: "Spectral", serif;
+  font-family: "Spectral", "Noto Sans KR", serif;
   font-size: 1.02rem;
   letter-spacing: 0.01em;
 }
@@ -880,4 +880,55 @@ ul {
 .publication-link {
   color: var(--link-accent);
   text-decoration: underline;
+}
+
+/* Language switcher: compact EN / 한국어 control in the header, built from the same toggle tokens as the theme switcher. */
+.lang-switcher {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.2rem;
+  border: 1px solid var(--toggle-border);
+  border-radius: 999px;
+  background: var(--toggle-bg);
+}
+
+.lang-toggle {
+  min-height: 1.9rem;
+  padding: 0.25rem 0.7rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.lang-toggle:hover,
+.lang-toggle:focus-visible {
+  color: var(--accent);
+  outline: none;
+}
+
+.lang-toggle.is-active {
+  background: var(--toggle-active-bg);
+  color: var(--toggle-active-text);
+}
+
+/* Korean copy: Hangul has no italic/narrow forms, so relax the nowrap headings and letter-spacing slightly. */
+html[lang="ko"] .hero h1,
+html[lang="ko"] #resume .section-title-compact {
+  white-space: normal;
+}
+
+html[lang="ko"] .timeline-year {
+  letter-spacing: 0.04em;
 }
