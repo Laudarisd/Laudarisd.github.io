@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Demo chart: validation mAP by epoch for YOLO and the DETR experiment, placeholder values">
+  <rect width="800" height="400" rx="10" fill="#fffdf9"/>
+  <!-- title and demo banner -->
+  <text x="40" y="38" font-size="16" font-weight="700" fill="#1f2933">Validation mAP@0.5 by epoch</text>
+  <text x="40" y="58" font-size="12" fill="#5b6670">Placeholder values for layout only · replace with measured results</text>
+  <rect x="632" y="22" width="128" height="26" rx="13" fill="#f4ead7" stroke="#c8a96b"/>
+  <text x="696" y="40" font-size="12" font-weight="800" fill="#7e5627" text-anchor="middle">DEMO DATA</text>
+  <!-- plot area: x 80..740, y 90..330 ; x = epoch 0..50 ; y = mAP 0..1 -->
+  <g stroke="#e6e0d6" stroke-width="1">
+    <path d="M80 330 H740"/><path d="M80 270 H740"/><path d="M80 210 H740"/><path d="M80 150 H740"/><path d="M80 90 H740"/>
+  </g>
+  <g font-size="11" fill="#5b6670" text-anchor="end">
+    <text x="70" y="334">0.0</text><text x="70" y="274">0.25</text><text x="70" y="214">0.50</text><text x="70" y="154">0.75</text><text x="70" y="94">1.0</text>
+  </g>
+  <g font-size="11" fill="#5b6670" text-anchor="middle">
+    <text x="80" y="352">0</text><text x="212" y="352">10</text><text x="344" y="352">20</text><text x="476" y="352">30</text><text x="608" y="352">40</text><text x="740" y="352">50</text>
+    <text x="410" y="376" font-size="12">epoch</text>
+  </g>
+  <text transform="translate(26 210) rotate(-90)" font-size="12" fill="#5b6670" text-anchor="middle">mAP@0.5</text>
+  <!-- series 1: YOLO (deployed) -->
+  <path d="M80 318 L146 258 L212 222 L278 198 L344 182 L410 170 L476 160 L542 154 L608 150 L674 147 L740 145"
+        fill="none" stroke="#0f8fb0" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="740" cy="145" r="4" fill="#0f8fb0" stroke="#fffdf9" stroke-width="2"/>
+  <text x="748" y="140" font-size="12" font-weight="700" fill="#1f2933">YOLO</text>
+  <!-- series 2: DETR experiment -->
+  <path d="M80 326 L146 300 L212 270 L278 246 L344 226 L410 210 L476 198 L542 188 L608 182 L674 178 L740 175"
+        fill="none" stroke="#b8761f" stroke-width="2" stroke-dasharray="6 4" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="740" cy="175" r="4" fill="#b8761f" stroke="#fffdf9" stroke-width="2"/>
+  <text x="748" y="190" font-size="12" font-weight="700" fill="#1f2933">DETR</text>
+  <!-- legend -->
+  <g font-size="12" fill="#1f2933">
+    <path d="M80 76 H104" stroke="#0f8fb0" stroke-width="2"/><text x="110" y="80">YOLO (deployed)</text>
+    <path d="M230 76 H254" stroke="#b8761f" stroke-width="2" stroke-dasharray="6 4"/><text x="260" y="80">DETR (experiment)</text>
+  </g>
+  <!-- axes -->
+  <path d="M80 90 V330 H740" fill="none" stroke="#d8cec0" stroke-width="1.5"/>
+</svg>

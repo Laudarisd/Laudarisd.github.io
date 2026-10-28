@@ -41,30 +41,34 @@ The site is responsive, bilingual (English / Korean), and includes four selectab
 .
 ├── index.html          # Page layout only (no content)
 ├── js/site.js          # Loads data/*.json and renders every section
-├── data/               # All page content, one JSON file per section and language
+├── js/project.js       # Renders the project detail pages
+├── js/projects/        # One detail page per project (ai-ce.html, vectra.html, ...)
+├── data/               # All page content: one folder per section, en.json + kr.json inside
+│   └── projects/       # index.json (groups + order) and one folder per project
+│       └── <slug>/     # en.json, kr.json, thumbnail image
 ├── css/style.css       # Layout, responsive styles, and themes
-├── img/                # Portrait and project artwork
+├── img/                # Portrait artwork
 ├── fonts/              # Local icon and font assets
 └── static/             # Supporting generated assets
 ```
 
 ## Editing content (no HTML changes needed)
 
-Every section is rendered from JSON in `data/`. Each section has an English and a Korean file:
+Every section is rendered from JSON in `data/`. Each section is a folder with an English and a Korean file (`en.json`, `kr.json`):
 
-| Section | Files |
+| Section | Folder |
 | --- | --- |
-| Header, section titles, labels | `ui_en.json`, `ui_kr.json` |
-| Hero (intro, buttons, highlights) | `hero_en.json`, `hero_kr.json` |
-| Degrees, honours & scholarships | `education_en.json`, `education_kr.json` |
-| Experience timeline | `experience_en.json`, `experience_kr.json` |
-| Skill categories and chips | `skills_en.json`, `skills_kr.json` |
-| Publications | `publications_en.json`, `publications_kr.json` |
-| Patents | `patents_en.json`, `patents_kr.json` |
-| Project cards | `projects_en.json`, `projects_kr.json` |
-| Footer heading and links | `contact_en.json`, `contact_kr.json` |
+| Header, section titles, labels | `data/ui/` |
+| Hero (intro, buttons, highlights) | `data/hero/` |
+| Degrees, honours & scholarships | `data/education/` |
+| Experience timeline | `data/experience/` |
+| Skill categories and chips | `data/skills/` |
+| Publications | `data/publications/` |
+| Patents | `data/patents/` |
+| Projects (groups, cards, and detail pages) | `data/projects/` |
+| Footer heading and links | `data/contact/` |
 
-To add an item, copy an existing entry in the `items` array and edit its values, in both language files. For example, a new paper in `publications_en.json`:
+To add an item, copy an existing entry in the `items` array and edit its values, in both language files. For example, a new paper in `data/publications/en.json`:
 
 ```json
 {
@@ -75,7 +79,13 @@ To add an item, copy an existing entry in the `items` array and edit its values,
 }
 ```
 
-`code_url` is optional. For projects, `image_class` can be `""`, `"project-image-logo"` (padded logo), or `"project-image-paper"` (paper figure).
+`code_url` is optional.
+
+### Projects
+
+Each project is a folder `data/projects/<slug>/` containing `en.json`, `kr.json`, and its thumbnail image. The JSON holds the card (`title`, `description`, `image`, `image_alt`, `image_class`, `url` for the Code button) and the detail page (`subtitle`, `status`, `period`, `role`, `context`, `tags`, `overview`, `problem`, `contributions`, `architecture` (`steps`, or several named `flows`), `process` (numbered steps), `pipeline`, `stack`, `components` (table rows), `figures` (image files in the same folder with captions), `results`, `challenges`, `links`). Sections left empty are hidden on the detail page. `status` is one of `completed`, `in_development`, `research`, `poc`; `image_class` can be `""`, `"project-image-logo"` (padded logo), or `"project-image-paper"` (paper figure).
+
+`data/projects/index.json` defines the groups and the display order of the slugs. To add a project: create the folder with both JSON files and a thumbnail, add the slug to a group in `index.json`, and copy `js/projects/ai-ce.html` to `js/projects/<slug>.html` (change its `<title>` and `data-project`).
 
 If a Korean file is missing for a section, the English file is used for that section.
 
@@ -85,7 +95,7 @@ The header has an `EN / 한국어` toggle. The chosen language is remembered in 
 
 ## Local preview
 
-Content is fetched from `data/*.json`, so the site must be served over HTTP (opening `index.html` directly from disk will not load the content):
+Content is fetched from `data/`, so the site must be served over HTTP (opening `index.html` directly from disk will not load the content):
 
 ```bash
 python3 -m http.server 8000

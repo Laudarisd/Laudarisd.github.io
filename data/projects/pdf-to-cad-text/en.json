@@ -1,0 +1,20 @@
+{
+  "title": "PDF-to-CAD Text Processing",
+  "description": "Text extraction from PDF drawings for conversion into editable CAD.",
+  "image": "thumbnail.svg",
+  "image_alt": "PDF to CAD text processing",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd",
+  "status": "completed",
+  "period": "Dec 2025 / Jul 2026",
+  "role": "Researcher, WIZCORE (CADian Inc.)",
+  "context": "Industry project",
+  "overview": "Extraction and processing of text from PDF drawings so that it can be carried into editable CAD drawings during PDF-to-CAD conversion.",
+  "subtitle": "Text extraction from PDF drawings for conversion into editable CAD.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd"
+    }
+  ]
+}

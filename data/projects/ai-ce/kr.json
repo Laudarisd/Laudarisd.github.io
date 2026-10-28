@@ -1,0 +1,107 @@
+{
+  "title": "AI-CE: AI Cost Estimation",
+  "description": "CAD 도면 파싱, 탐지, 구조화 모델로 이어지는 AI 견적 시스템이에요.",
+  "image": "thumbnail.svg",
+  "image_alt": "CAD 도면 기반 AI 견적",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd",
+  "subtitle": "CAD 프로그램과 연동되는 End-to-End AI 기반 견적 산출 시스템이에요. 데이터, 모델, 백엔드, DB, CAD 애드온, UI까지 전체 파이프라인을 개발했어요.",
+  "status": "completed",
+  "period": "2024년 1월 – 2026년 4월",
+  "role": "연구원, 위즈코어 (CADian Inc.)",
+  "context": "산업용 End-to-End AI 시스템",
+  "tags": ["CAD Integration", "Computer Vision", "Information Extraction", "FastAPI", "Model Serving", "MySQL", "Monitoring"],
+  "overview": "AI-CE는 CAD 프로그램과 연동되는 AI 기반 견적 산출 시스템이에요. 초기 단계부터 데이터 분석, AI 모델 개발, 정보 추출, 백엔드 서버, 데이터베이스, CAD 애드온 및 UI 연동까지 전체 파이프라인을 개발한 End-to-End 프로젝트예요. 사용자가 CAD 프로그램에서 입력 데이터나 처리 요청을 보내면 서버가 전처리와 AI 추론을 실행하고, 추출·정리한 결과를 CAD 애드온으로 돌려줘요. 사용자는 CAD 환경에서 결과를 확인하고 견적 업무에 활용하며, 프로젝트 데이터와 처리 결과는 MySQL에 저장돼요.",
+  "problem": [
+    "CAD와 프로젝트 정보를 사람이 직접 확인하고 견적에 필요한 정보를 정리하는 과정은 반복 작업과 수작업 입력이 필요해요.",
+    "목표: 단순한 AI 모델 실험이 아니라, CAD 입력부터 서버 추론, 정보 추출, 데이터 관리, CAD 화면 내 결과 제공까지 이어지는 실사용 가능한 시스템을 만드는 것이에요.",
+    "CAD는 사용자 입력과 결과 확인을 담당하고, 모델 추론과 핵심 처리는 서버에서 실행해요."
+  ],
+  "contributions": [
+    "초기 설계부터 End-to-End 시스템 연동까지 전체 시스템을 직접 설계·개발",
+    "데이터 분석, AI 모델 실험(YOLO, DETR), 정보 추출 기능 개발",
+    "Python 백엔드(FastAPI) 개발 및 CAD 기능 연동",
+    "CAD 애드온/UI 연동, MySQL·Redis 데이터 워크플로, Prometheus/Grafana 모니터링 구축"
+  ],
+  "architecture": {
+    "flows": [
+      {
+        "title": "오프라인: AI 개발 파이프라인",
+        "steps": [
+          { "label": "원천 프로젝트 데이터", "detail": "도면 및 프로젝트 기록" },
+          { "label": "데이터 탐색 / EDA", "detail": "형식, 분포, 품질, 예외 사례" },
+          { "label": "정제 및 라벨링", "detail": "학습 데이터 구성" },
+          { "label": "모델 학습·평가", "detail": "PyTorch, YOLO; DETR 실험" },
+          { "label": "모델 배포 준비", "detail": "백엔드에서 서빙" }
+        ]
+      },
+      {
+        "title": "온라인: 서비스 실행 파이프라인",
+        "steps": [
+          { "label": "CAD 프로그램 + AI-CE 애드온", "detail": "입력 데이터 / 요청 전송" },
+          { "label": "백엔드 API (FastAPI)", "detail": "요청 검증 및 전처리" },
+          { "label": "AI 모델 추론", "detail": "배포된 탐지 모델" },
+          { "label": "정보 추출", "detail": "결과 구조화" },
+          { "label": "MySQL / Redis", "detail": "결과 저장; 백엔드 보조" },
+          { "label": "CAD 애드온 / UI", "detail": "결과 확인 및 CAD 업무 활용" }
+        ]
+      }
+    ],
+    "note": "모니터링: Prometheus(지표 수집) → Grafana(대시보드). 위 도식은 전체 구조를 설명하기 위한 것으로 모든 작업의 정확한 실행 순서를 의미하지는 않아요. Redis의 용도, DB 구조, 정보 추출 규칙은 내부 세부 사항이에요."
+  },
+  "process": [
+    { "title": "요구사항 및 전체 워크플로 설계", "items": ["CAD에서 전달할 입력과 견적 업무에 필요한 출력 정보를 정의했어요.", "CAD 애드온, 서버, AI 모델, 데이터베이스 간 역할을 설계했어요.", "CAD → 서버 → CAD의 요청·응답 구조를 정리했어요."] },
+    { "title": "데이터 수집, 탐색 및 분석", "items": ["개발에 필요한 프로젝트 및 도면 관련 데이터를 수집·검토했어요.", "EDA로 데이터 형식, 분포, 품질, 예외 사례를 확인했어요.", "전처리 및 라벨링 방향을 정했어요."] },
+    { "title": "데이터 전처리 및 학습 데이터 구성", "items": ["입력 데이터를 학습·추론에 적합한 형태로 변환했어요.", "학습/검증용 데이터셋을 준비하고 품질을 확인했어요.", "이미지 처리에 OpenCV를 활용했어요."] },
+    { "title": "AI 모델 개발 및 실험", "items": ["Python, PyTorch, YOLO로 Object Detection 기능을 개발했어요.", "대안 모델로 DETR을 테스트했어요 (실험 모델, 배포 모델 아님).", "다양한 입력에 대해 학습·검증과 모델 개선을 진행했어요."] },
+    { "title": "정보 추출 및 결과 구조화", "items": ["모델 예측 결과를 후속 처리용 구조화 데이터로 변환했어요.", "견적 업무에 필요한 정보로 연결하는 후처리 로직을 적용했어요.", "CAD 애드온이 쓸 수 있는 서버 응답 형식을 정리했어요."] },
+    { "title": "백엔드 API 및 서버 추론", "items": ["Python과 FastAPI 기반 백엔드 서비스를 구현했어요.", "CAD 요청 → 서버 전처리·추론 → 결과 반환 흐름을 연동했어요.", "Redis를 백엔드 기술 스택에 사용했어요."] },
+    { "title": "데이터베이스 및 데이터 관리", "items": ["MySQL에 프로젝트 데이터와 처리 기록을 저장했어요.", "서버의 읽기/쓰기 흐름과 요청 간 데이터 연속성을 구성했어요."] },
+    { "title": "CAD 애드온 및 UI 개발", "items": ["CAD 애드온과 사용자 UI 개발·연동 작업을 진행했어요.", "CAD → 서버 데이터 전달과 결과 표시·활용 기능을 구현했어요."] },
+    { "title": "모니터링, 통합 테스트 및 개선", "items": ["Prometheus와 Grafana로 모니터링을 구성했어요.", "CAD 입력 → API → 추론 → DB 저장 → CAD 결과 반환까지 전체 흐름을 테스트했어요.", "연동 과정의 문제를 확인하고 개선했어요."] }
+  ],
+  "pipeline": [
+    "원천 프로젝트 데이터 → 탐색 및 EDA",
+    "정제, 라벨링, 데이터셋 구성 (필요 시 OpenCV)",
+    "모델 학습·평가 (PyTorch, YOLO; DETR 실험)",
+    "FastAPI 백엔드 뒤에서 모델 패키징·배포",
+    "추론 결과 → 정보 추출 → 구조화된 API 응답 → CAD 애드온"
+  ],
+  "components": [
+    { "name": "CAD 애드온 / UI", "role": "사용자 입력 및 결과 표시", "tech": "CAD 애드온, UI" },
+    { "name": "백엔드 API", "role": "CAD·AI·DB 간 통신", "tech": "Python, FastAPI" },
+    { "name": "AI 모델", "role": "객체 탐지 및 정보 추출", "tech": "PyTorch, YOLO" },
+    { "name": "모델 비교 실험", "role": "대안 모델 검토", "tech": "DETR (테스트)" },
+    { "name": "이미지 처리", "role": "입력 데이터 전처리", "tech": "OpenCV" },
+    { "name": "영구 데이터 저장", "role": "프로젝트 및 처리 데이터 관리", "tech": "MySQL" },
+    { "name": "백엔드 보조 기능", "role": "캐시 / 큐 / 상태 관리", "tech": "Redis" },
+    { "name": "모니터링", "role": "지표 수집 및 시각화", "tech": "Prometheus, Grafana" }
+  ],
+  "stack": [
+    { "name": "언어 & 프레임워크", "items": ["Python", "FastAPI", "PyTorch"] },
+    { "name": "AI / Vision", "items": ["YOLO", "DETR (테스트)", "OpenCV", "Object Detection", "Information Extraction"] },
+    { "name": "데이터 & 운영", "items": ["MySQL", "Redis", "Prometheus", "Grafana"] },
+    { "name": "클라이언트", "items": ["CAD 애드온", "UI"] }
+  ],
+  "figures": [
+    { "file": "fig1-system-architecture.svg", "caption": "Figure 1. 전체 시스템 아키텍처: CAD ↔ FastAPI ↔ AI 모델 ↔ MySQL, Redis, Prometheus/Grafana." },
+    { "file": "fig2-training-workflow.svg", "caption": "Figure 2. 데이터 준비 및 모델 학습 흐름." },
+    { "file": "fig3-detection-example.svg", "caption": "Figure 3. AI 예측 및 정보 추출 결과 예시 (설명용 샘플)." },
+    { "file": "fig4-cad-addon-ui.svg", "caption": "Figure 4. CAD 애드온 UI와 결과 표시 화면 (설명용 목업)." },
+    { "file": "fig5-demo-metrics.svg", "caption": "Figure 5. 데모 그래프 (임시 값). 실제 측정값으로 교체 예정이에요." }
+  ],
+  "results": [
+    "AI 모델 실험에 그치지 않고 CAD 입력, 서버 추론, 정보 추출, MySQL 저장, CAD 결과 반환을 연결하는 통합 워크플로를 개발했어요.",
+    "객체 탐지 성능, 지연 시간, 처리량, 작업 시간 개선 효과는 공개 승인 후 실제 측정값으로 추가할 예정이에요."
+  ],
+  "challenges": [
+    "실제 시스템 연동: AI 예측 결과를 단순 시각화가 아닌 CAD에서 활용 가능한 정보로 변환해야 했어요.",
+    "클라이언트–서버 분리: CAD는 입력·결과 확인, 서버는 추론과 핵심 처리를 담당해요.",
+    "데이터 일관성: API 응답과 DB 저장을 연결해 처리 결과를 활용할 수 있게 했어요.",
+    "모델 검토: YOLO 기반 개발과 DETR 실험으로 탐지 방식의 대안을 비교했어요.",
+    "운영 가시성: Prometheus와 Grafana로 서버 상태와 지표를 관찰했어요."
+  ],
+  "links": [
+    { "label": "소스 코드: 비공개 / 사내 자산" }
+  ]
+}

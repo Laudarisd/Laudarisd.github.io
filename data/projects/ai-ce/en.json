@@ -1,0 +1,107 @@
+{
+  "title": "AI-CE: AI Cost Estimation",
+  "description": "AI cost estimation from CAD drawings: parsing, detection, and structured models.",
+  "image": "thumbnail.svg",
+  "image_alt": "AI cost estimation from CAD drawings",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd",
+  "subtitle": "End-to-end AI-assisted cost estimation system integrated with a CAD application: data, models, backend, database, CAD add-on, and UI.",
+  "status": "completed",
+  "period": "Jan 2024 – Apr 2026",
+  "role": "Researcher, WIZCORE (CADian Inc.)",
+  "context": "End-to-end industry AI system",
+  "tags": ["CAD Integration", "Computer Vision", "Information Extraction", "FastAPI", "Model Serving", "MySQL", "Monitoring"],
+  "overview": "AI-CE is an end-to-end AI-assisted cost estimation system integrated with a CAD application. It was built from the ground up, covering data exploration, AI model development, information extraction, backend services, database integration, CAD add-on development, and the user interface. A user submits CAD-related input from the CAD application; the backend runs preprocessing and AI inference and returns structured results to the CAD add-on, where the extracted information is reviewed and used in the estimation workflow. Project data and processing results are stored in MySQL.",
+  "problem": [
+    "Manual interpretation of CAD and project information for cost estimation needs repeated review and data entry.",
+    "Objective: a usable end-to-end workflow rather than a standalone ML experiment, connecting drawing-based input to automated information extraction and estimation-related outputs.",
+    "Keep the CAD application as the user-facing client and run processing and inference on the server."
+  ],
+  "contributions": [
+    "Designed and developed the system from the initial concept through end-to-end integration.",
+    "Built the data analysis, model experimentation (YOLO, DETR), and information-extraction components.",
+    "Developed the Python backend (FastAPI) and connected it to the CAD-side functionality.",
+    "Developed the CAD add-on / UI integration, the MySQL and Redis data workflows, and the Prometheus/Grafana monitoring."
+  ],
+  "architecture": {
+    "flows": [
+      {
+        "title": "Offline: development pipeline",
+        "steps": [
+          { "label": "Raw project data", "detail": "Drawing and project records" },
+          { "label": "Inspection / EDA", "detail": "Format, variation, quality, edge cases" },
+          { "label": "Cleaning + labelling", "detail": "Model-ready dataset" },
+          { "label": "Training + evaluation", "detail": "PyTorch, YOLO; DETR experiments" },
+          { "label": "Packaging + deployment", "detail": "Model served by the backend" }
+        ]
+      },
+      {
+        "title": "Online: application pipeline",
+        "steps": [
+          { "label": "CAD app + AI-CE add-on", "detail": "User input, drawing data, request" },
+          { "label": "Backend API (FastAPI)", "detail": "Validation and preprocessing" },
+          { "label": "AI inference", "detail": "Deployed detection model" },
+          { "label": "Information extraction", "detail": "Structured result formatting" },
+          { "label": "MySQL / Redis", "detail": "Persisted results; backend support" },
+          { "label": "CAD add-on / UI", "detail": "Review and use results in CAD" }
+        ]
+      }
+    ],
+    "note": "Observability: Prometheus (metrics) → Grafana (dashboards). The arrows describe the high-level design, not a verified execution order for every operation; the exact use of Redis, the database schema, and the extraction rules are internal details."
+  },
+  "process": [
+    { "title": "Requirements and workflow design", "items": ["Defined the input expected from the CAD application and the output needed by the estimation workflow.", "Planned responsibilities across CAD add-on, backend, AI models, and database.", "Mapped the full request–response path from CAD to server and back."] },
+    { "title": "Data collection, exploration, and analysis", "items": ["Collected and examined project and drawing-related data.", "EDA to understand format, variation, quality, and edge cases.", "Identified preprocessing and annotation requirements."] },
+    { "title": "Preprocessing and model-ready dataset", "items": ["Transformed input data into a format suitable for training and inference.", "Prepared training/validation data and checked quality.", "OpenCV for image-processing operations."] },
+    { "title": "AI model development and experiments", "items": ["Object-detection components with Python, PyTorch, and YOLO.", "DETR tested as an alternative architecture (experiment, not the deployed model).", "Iterated on training, validation, and behaviour across representative inputs."] },
+    { "title": "Information extraction and result structuring", "items": ["Transformed AI outputs into structured information for the backend and CAD add-on.", "Downstream processing to turn predictions into estimation-related data.", "Consistent response format for CAD integration."] },
+    { "title": "Backend API and server-side inference", "items": ["Backend services with Python and FastAPI.", "CAD submits input; the server runs processing and inference and returns results.", "Redis integrated as part of the backend stack."] },
+    { "title": "Database and data management", "items": ["MySQL for project data and application/inference records.", "Backend read/write workflows and data continuity between requests."] },
+    { "title": "CAD add-on and user interface", "items": ["CAD add-on and its user-facing UI.", "Input submission from CAD to the backend API; server results displayed and applied in the CAD workflow."] },
+    { "title": "Monitoring, testing, and iteration", "items": ["Prometheus and Grafana in the server/monitoring stack.", "Tested the integrated flow across CAD input, API, inference, storage, and CAD output.", "Refined the workflow based on integration issues and model behaviour."] }
+  ],
+  "pipeline": [
+    "Raw project data → inspection and EDA.",
+    "Cleaning, labelling, and dataset preparation (OpenCV where needed).",
+    "Model training and evaluation (PyTorch, YOLO; DETR experiments).",
+    "Model packaging and deployment behind the FastAPI backend.",
+    "Inference results → information extraction → structured API response → CAD add-on."
+  ],
+  "components": [
+    { "name": "CAD add-on and UI", "role": "Accept input and present server results", "tech": "CAD add-on / UI" },
+    { "name": "Backend API", "role": "Connect CAD requests with AI and data services", "tech": "Python, FastAPI" },
+    { "name": "AI model", "role": "Detect and extract relevant information", "tech": "PyTorch, YOLO" },
+    { "name": "Model comparison", "role": "Alternate detection approach", "tech": "DETR (tested)" },
+    { "name": "Image processing", "role": "Prepare and process visual inputs", "tech": "OpenCV" },
+    { "name": "Persistent storage", "role": "Project and application records", "tech": "MySQL" },
+    { "name": "Backend support", "role": "Cache / queue / state", "tech": "Redis" },
+    { "name": "Monitoring", "role": "Service metrics and dashboards", "tech": "Prometheus, Grafana" }
+  ],
+  "stack": [
+    { "name": "Languages & frameworks", "items": ["Python", "FastAPI", "PyTorch"] },
+    { "name": "AI / vision", "items": ["YOLO", "DETR (tested)", "OpenCV", "Object Detection", "Information Extraction"] },
+    { "name": "Data & operations", "items": ["MySQL", "Redis", "Prometheus", "Grafana"] },
+    { "name": "Client", "items": ["CAD add-on", "UI"] }
+  ],
+  "figures": [
+    { "file": "fig1-system-architecture.svg", "caption": "Figure 1. System architecture: CAD client ↔ FastAPI server ↔ AI inference ↔ MySQL, with Redis and Prometheus/Grafana." },
+    { "file": "fig2-training-workflow.svg", "caption": "Figure 2. Data preparation and training workflow." },
+    { "file": "fig3-detection-example.svg", "caption": "Figure 3. Example model prediction and extracted information (illustrative sample)." },
+    { "file": "fig4-cad-addon-ui.svg", "caption": "Figure 4. CAD add-on interface and result display (illustrative mock-up)." },
+    { "file": "fig5-demo-metrics.svg", "caption": "Figure 5. Demo plot with placeholder values; measured performance will replace it." }
+  ],
+  "results": [
+    "Progressed beyond model experimentation into an integrated CAD → server → CAD workflow with backend services, MySQL storage, and a CAD-side interface.",
+    "Measured detection metrics, latency, throughput, and workflow improvements will be added once approved for publication."
+  ],
+  "challenges": [
+    "Integration: AI predictions had to become output usable inside a CAD application, not just a notebook result.",
+    "Service boundaries: processing and inference stay on the server so CAD acts as the user-facing client.",
+    "Data consistency: structured API responses and persistent records connect CAD input with downstream estimation.",
+    "Model selection: YOLO-based development and DETR experiments compared detection approaches.",
+    "Operational visibility: Prometheus and Grafana for monitoring the running stack."
+  ],
+  "links": [
+    { "label": "Source code: private / proprietary" }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "title": "Research",
+  "description": "Centrality 기반 Pruning, Augmentation 기법, 재현 가능한 실험이에요.",
+  "image": "thumbnail.webp",
+  "image_alt": "Scientific Machine Learning 연구",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd/research",
+  "overview": "Centrality 기반 Pruning, Augmentation 기법, Graph 분석, 효율적인 학습 시스템을 위한 재현 가능한 실험들이에요.",
+  "subtitle": "Centrality 기반 Pruning, Augmentation 기법, 재현 가능한 실험이에요.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd/research"
+    }
+  ]
+}

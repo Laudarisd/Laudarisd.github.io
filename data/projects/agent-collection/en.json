@@ -1,0 +1,16 @@
+{
+  "title": "Agent Collection",
+  "description": "Tool-using assistants, workflow automation, and retrieval pipelines.",
+  "image": "thumbnail.webp",
+  "image_alt": "AI agent workflows",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd/agent-collection",
+  "overview": "Tool-using assistants, workflow automation, retrieval pipelines, and task-focused agent systems for research and production.",
+  "subtitle": "Tool-using assistants, workflow automation, and retrieval pipelines.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd/agent-collection"
+    }
+  ]
+}

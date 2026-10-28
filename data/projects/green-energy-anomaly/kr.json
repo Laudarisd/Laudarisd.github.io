@@ -1,0 +1,15 @@
+{
+  "title": "Green Energy Anomaly Detection",
+  "description": "재생에너지 데이터의 EDA, ML/DL Anomaly Detection과 예측 모델을 AWS에 배포했어요.",
+  "image": "thumbnail.svg",
+  "image_alt": "그린 에너지 Anomaly Detection",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd",
+  "subtitle": "재생에너지 데이터의 EDA, ML/DL Anomaly Detection과 예측 모델을 AWS에 배포했어요.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd"
+    }
+  ]
+}

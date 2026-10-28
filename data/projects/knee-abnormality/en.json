@@ -1,0 +1,17 @@
+{
+  "title": "Knee Abnormality Detection",
+  "description": "Deep learning models for detecting knee abnormalities from medical images.",
+  "image": "thumbnail.svg",
+  "image_alt": "Knee abnormality detection",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd",
+  "status": "completed",
+  "overview": "Deep learning models for detecting knee abnormalities from medical images.",
+  "subtitle": "Deep learning models for detecting knee abnormalities from medical images.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd"
+    }
+  ]
+}

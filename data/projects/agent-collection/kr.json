@@ -1,0 +1,16 @@
+{
+  "title": "Agent Collection",
+  "description": "Tool을 쓰는 어시스턴트, 워크플로 자동화, Retrieval Pipeline 모음이에요.",
+  "image": "thumbnail.webp",
+  "image_alt": "AI Agent 워크플로",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd/agent-collection",
+  "overview": "Tool을 사용하는 어시스턴트, 워크플로 자동화, Retrieval Pipeline, 연구와 실무에 쓰는 Agent 시스템 모음이에요.",
+  "subtitle": "Tool을 쓰는 어시스턴트, 워크플로 자동화, Retrieval Pipeline 모음이에요.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd/agent-collection"
+    }
+  ]
+}

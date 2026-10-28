@@ -1,0 +1,16 @@
+{
+  "title": "Generative AI",
+  "description": "LLM 애플리케이션, 콘텐츠 생성, Multimodal 연구 프로토타입이에요.",
+  "image": "thumbnail.webp",
+  "image_alt": "Generative AI 시스템",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd/generative-ai",
+  "overview": "LLM 애플리케이션, 콘텐츠 생성, Multimodal 워크플로, 프롬프트 기반 연구 프로토타입이에요.",
+  "subtitle": "LLM 애플리케이션, 콘텐츠 생성, Multimodal 연구 프로토타입이에요.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd/generative-ai"
+    }
+  ]
+}

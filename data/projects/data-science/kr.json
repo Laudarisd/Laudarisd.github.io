@@ -1,0 +1,16 @@
+{
+  "title": "Data Science",
+  "description": "통계, 예측, Anomaly Detection, Geospatial 분석 실험이에요.",
+  "image": "thumbnail.webp",
+  "image_alt": "Data Science와 분석",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd/data-science",
+  "overview": "통계, 예측, Anomaly Detection, Geospatial 분석, 그리고 실제 데이터셋을 다루는 End-to-End 실험이에요.",
+  "subtitle": "통계, 예측, Anomaly Detection, Geospatial 분석 실험이에요.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd/data-science"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "title": "Vectra",
+  "description": "Privacy-focused AI coding agent for VS Code with local and cloud models.",
+  "image": "thumbnail.png",
+  "image_alt": "Vectra logo",
+  "image_class": "project-image-logo",
+  "url": "https://github.com/Laudarisd/vectra",
+  "subtitle": "Privacy-focused AI coding agent for VS Code with local and cloud models.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd/vectra"
+    }
+  ]
+}

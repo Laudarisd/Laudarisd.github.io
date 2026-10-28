@@ -1,0 +1,17 @@
+{
+  "title": "무릎 이상 탐지",
+  "description": "의료 영상에서 무릎 이상을 탐지하는 Deep Learning 모델이에요.",
+  "image": "thumbnail.svg",
+  "image_alt": "무릎 이상 탐지",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd",
+  "status": "completed",
+  "overview": "의료 영상에서 무릎 이상을 탐지하는 Deep Learning 모델이에요.",
+  "subtitle": "의료 영상에서 무릎 이상을 탐지하는 Deep Learning 모델이에요.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd"
+    }
+  ]
+}

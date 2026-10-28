@@ -1,0 +1,82 @@
+{
+  "more_url": "https://github.com/Laudarisd",
+  "categories": [
+    {
+      "name": {
+        "en": "Agent Development",
+        "kr": "Agent 개발"
+      },
+      "items": [
+        "cad-inspection-agent",
+        "vectra",
+        "rag-system",
+        "agent-collection"
+      ]
+    },
+    {
+      "name": {
+        "en": "Engineering Drawing Analysis",
+        "kr": "엔지니어링 도면 분석"
+      },
+      "items": [
+        "ai-ce",
+        "samsung-ea-gad-poc",
+        "pdf-to-cad-text",
+        "samsung-ac-poc"
+      ]
+    },
+    {
+      "name": {
+        "en": "Training and Fine Tuning",
+        "kr": "학습 및 Fine-Tuning"
+      },
+      "items": [
+        "llm-vlm-finetuning",
+        "computer-vision-ml",
+        "ocr"
+      ]
+    },
+    {
+      "name": {
+        "en": "DX/AX/DT",
+        "kr": "DX/AX/DT"
+      },
+      "items": [
+        "digital-twin"
+      ]
+    },
+    {
+      "name": {
+        "en": "Predictive Analytics",
+        "kr": "예측 분석"
+      },
+      "items": [
+        "green-energy-anomaly",
+        "geohazard-penetration",
+        "data-science"
+      ]
+    },
+    {
+      "name": {
+        "en": "Other Projects",
+        "kr": "기타 프로젝트"
+      },
+      "items": [
+        "generative-ai",
+        "gov-rnd-project",
+        "smart-retail-ai",
+        "knee-abnormality"
+      ]
+    },
+    {
+      "name": {
+        "en": "Research",
+        "kr": "연구"
+      },
+      "items": [
+        "research",
+        "dmp"
+      ]
+    }
+  ]
+}

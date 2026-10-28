@@ -1,0 +1,17 @@
+{
+  "title": "Geohazard Penetration Prediction",
+  "description": "Predictive models of penetration behaviour from geotechnical data.",
+  "image": "thumbnail.svg",
+  "image_alt": "Geohazard penetration prediction",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd",
+  "status": "completed",
+  "overview": "Predictive models of penetration behaviour from geotechnical data, used for geohazard assessment.",
+  "subtitle": "Predictive models of penetration behaviour from geotechnical data.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd"
+    }
+  ]
+}

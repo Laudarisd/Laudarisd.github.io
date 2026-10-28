@@ -2,7 +2,11 @@
   Content loader for the portfolio.
 
   Every section of the page is rendered from a JSON file in /data:
-    data/<section>_<lang>.json      e.g. data/projects_en.json, data/projects_kr.json
+    data/<section>/<lang>.json      e.g. data/hero/en.json, data/hero/kr.json
+
+  Projects are special: data/projects/index.json lists the groups and the
+  order of the project folders, and each folder data/projects/<slug>/ holds
+  en.json, kr.json, and the thumbnail image.
 
   To add a paper, patent, project, skill, etc. edit the JSON file for both
   languages. The HTML structure and CSS never need to change.
@@ -18,7 +22,6 @@
     "skills",
     "publications",
     "patents",
-    "projects",
     "contact"
   ];
 
@@ -96,26 +99,50 @@
     });
   }
 
-  // Load one section; if the translation is missing fall back to the default language.
+  // Load one section from data/<section>/<lang>.json; fall back to English if the translation is missing.
   function loadSection(section, lang) {
-    var primary = DATA_DIR + section + "_" + lang + ".json";
+    var primary = DATA_DIR + section + "/" + lang + ".json";
     return fetchJSON(primary).catch(function (error) {
       if (lang === DEFAULT_LANG) throw error;
       console.warn("[portfolio] " + primary + " missing, falling back to " + DEFAULT_LANG);
-      return fetchJSON(DATA_DIR + section + "_" + DEFAULT_LANG + ".json");
+      return fetchJSON(DATA_DIR + section + "/" + DEFAULT_LANG + ".json");
+    });
+  }
+
+  // Projects: read index.json for the groups, then every project folder listed in it.
+  function loadProjects(lang) {
+    return fetchJSON(DATA_DIR + "projects/index.json").then(function (index) {
+      var slugs = [];
+      (index.categories || []).forEach(function (category) {
+        (category.items || []).forEach(function (slug) {
+          slugs.push(slug);
+        });
+      });
+      return Promise.all(
+        slugs.map(function (slug) {
+          return loadSection("projects/" + slug, lang);
+        })
+      ).then(function (results) {
+        var items = {};
+        slugs.forEach(function (slug, i) {
+          items[slug] = results[i];
+        });
+        return { index: index, items: items };
+      });
     });
   }
 
   function loadAll(lang) {
-    return Promise.all(
-      SECTIONS.map(function (section) {
-        return loadSection(section, lang);
-      })
-    ).then(function (results) {
+    var loaders = SECTIONS.map(function (section) {
+      return loadSection(section, lang);
+    });
+    loaders.push(loadProjects(lang));
+    return Promise.all(loaders).then(function (results) {
       var data = {};
       SECTIONS.forEach(function (section, index) {
         data[section] = results[index];
       });
+      data.projects = results[SECTIONS.length];
       return data;
     });
   }
@@ -305,19 +332,43 @@
     });
   }
 
-  function renderProjects(projects, labels) {
+  // One project card: thumbnail, title, description, and two buttons.
+  // "More" opens js/projects/<slug>.html; "Code" opens the project's "url".
+  function projectCard(slug, project, labels) {
+    var folder = DATA_DIR + "projects/" + slug + "/";
+    var imageClass = "project-image" + (project.image_class ? " " + project.image_class : "");
+    var links = el("div", { class: "project-links" }, [
+      el("a", { class: "project-btn project-btn-more", href: "js/projects/" + slug + ".html", text: labels.more })
+    ]);
+    if (project.url) {
+      links.appendChild(externalLink(project.url, labels.code_link, "project-btn project-btn-code"));
+    }
+    return el("article", { class: "project-card" }, [
+      el("img", { src: folder + project.image, alt: project.image_alt || project.title, class: imageClass }),
+      el("h3", { text: project.title }),
+      el("p", { text: project.description }),
+      links
+    ]);
+  }
+
+  function renderProjects(projects, labels, lang) {
     if (!projects) return;
-    var grid = byId("project-grid");
-    if (grid) {
-      clear(grid);
-      (projects.items || []).forEach(function (project) {
-        var imageClass = "project-image" + (project.image_class ? " " + project.image_class : "");
-        grid.appendChild(
-          el("article", { class: "project-card" }, [
-            el("img", { src: project.image, alt: project.image_alt || project.title, class: imageClass }),
-            el("h3", { text: project.title }),
-            el("p", { text: project.description }),
-            externalLink(project.url, labels.view_on_github)
+    var index = projects.index || {};
+    var items = projects.items || {};
+    var groups = byId("project-groups");
+    if (groups) {
+      clear(groups);
+      // Each group in index.json gets a heading and a grid of the project folders it lists.
+      (index.categories || []).forEach(function (category) {
+        var grid = el("div", { class: "project-grid" });
+        (category.items || []).forEach(function (slug) {
+          if (items[slug]) grid.appendChild(projectCard(slug, items[slug], labels));
+        });
+        var name = category.name[lang] || category.name[DEFAULT_LANG] || "";
+        groups.appendChild(
+          el("section", { class: "project-category" }, [
+            el("div", { class: "project-category-heading" }, [el("h3", { text: name })]),
+            grid
           ])
         );
       });
@@ -327,7 +378,7 @@
     if (note) {
       clear(note);
       note.appendChild(document.createTextNode((labels.projects_note || "") + " "));
-      note.appendChild(externalLink(projects.more_url, labels.projects_note_link));
+      note.appendChild(externalLink(index.more_url, labels.projects_note_link));
     }
   }
 
@@ -357,7 +408,7 @@
     renderSkills(data.skills);
     renderPublications(data.publications, labels);
     renderPatents(data.patents, labels);
-    renderProjects(data.projects, labels);
+    renderProjects(data.projects, labels, currentLang);
     renderContact(data.contact);
   }
 

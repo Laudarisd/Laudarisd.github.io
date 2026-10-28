@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="CAD drawing inspected by an AI agent">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6efe0"/>
+      <stop offset="1" stop-color="#e8d8ba"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="200" fill="url(#bg)"/>
+  <!-- drawing sheet -->
+  <rect x="42" y="30" width="200" height="140" rx="6" fill="#fffdf9" stroke="#284b52" stroke-width="2"/>
+  <rect x="52" y="40" width="180" height="120" fill="none" stroke="#284b52" stroke-width="1" opacity="0.5"/>
+  <!-- floor plan lines -->
+  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round">
+    <path d="M70 60 H160 V110 H120 V140 H70 Z"/>
+    <path d="M160 60 H214 V140 H120"/>
+    <path d="M70 90 H110"/>
+    <path d="M160 110 H214"/>
+  </g>
+  <!-- door arcs -->
+  <path d="M110 90 A20 20 0 0 1 130 110" fill="none" stroke="#c8a96b" stroke-width="2"/>
+  <!-- title block -->
+  <rect x="176" y="146" width="56" height="12" fill="none" stroke="#284b52" stroke-width="1"/>
+  <!-- magnifier with check -->
+  <circle cx="282" cy="96" r="44" fill="#fffdf9" stroke="#284b52" stroke-width="5"/>
+  <path d="M314 128 L352 166" stroke="#284b52" stroke-width="10" stroke-linecap="round"/>
+  <path d="M262 98 L276 112 L304 80" fill="none" stroke="#c8a96b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- AI chip -->
+  <rect x="326" y="34" width="40" height="24" rx="6" fill="#284b52"/>
+  <text x="346" y="51" font-family="Manrope, Arial, sans-serif" font-size="13" font-weight="700" fill="#f7f6f2" text-anchor="middle">AI</text>
+</svg>

@@ -1,0 +1,15 @@
+{
+  "title": "LLM/VLM Fine-Tuning",
+  "description": "Fine-tuning language and vision-language models on engineering and CAD domain data.",
+  "image": "thumbnail.svg",
+  "image_alt": "LLM and VLM fine-tuning",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd",
+  "subtitle": "Fine-tuning language and vision-language models on engineering and CAD domain data.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd"
+    }
+  ]
+}

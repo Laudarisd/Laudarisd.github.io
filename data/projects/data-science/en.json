@@ -1,0 +1,16 @@
+{
+  "title": "Data Science",
+  "description": "Statistics, forecasting, anomaly detection, and geospatial analysis experiments.",
+  "image": "thumbnail.webp",
+  "image_alt": "Data science and analytics",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd/data-science",
+  "overview": "Statistics, forecasting, anomaly detection, geospatial analysis, and end-to-end experiments on practical datasets.",
+  "subtitle": "Statistics, forecasting, anomaly detection, and geospatial analysis experiments.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd/data-science"
+    }
+  ]
+}

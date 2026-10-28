@@ -1,0 +1,16 @@
+{
+  "title": "OCR",
+  "description": "OCR model training and deployment for text extraction from images and documents.",
+  "image": "thumbnail.svg",
+  "image_alt": "OCR training and deployment",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd/Machine-Learning-Projects",
+  "overview": "OCR model training and deployment for extracting text from images and documents. Part of the Machine-Learning-Projects collection.",
+  "subtitle": "OCR model training and deployment for text extraction from images and documents.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd/Machine-Learning-Projects"
+    }
+  ]
+}

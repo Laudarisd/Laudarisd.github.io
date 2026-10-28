@@ -1,0 +1,16 @@
+{
+  "title": "DMP",
+  "description": "Dynamical movement primitives and reservoir computing for motion learning and pruning research.",
+  "image": "thumbnail.webp",
+  "image_alt": "DMP and echo state network pruning method from the research paper",
+  "image_class": "project-image-paper",
+  "url": "https://github.com/Laudarisd/dmp_esn",
+  "overview": "Dynamical movement primitives and reservoir computing for adaptive motion learning, control, and network pruning research.",
+  "subtitle": "Dynamical movement primitives and reservoir computing for motion learning and pruning research.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd/dmp_esn"
+    }
+  ]
+}

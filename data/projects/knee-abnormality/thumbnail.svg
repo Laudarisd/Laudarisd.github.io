@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Knee joint inside a medical scan frame">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6efe0"/>
+      <stop offset="1" stop-color="#e8d8ba"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="200" fill="url(#bg)"/>
+  <!-- scan frame -->
+  <rect x="110" y="20" width="180" height="160" rx="8" fill="#284b52"/>
+  <g fill="none" stroke="#c8a96b" stroke-width="3" stroke-linecap="round">
+    <path d="M122 44 V32 H134"/><path d="M266 32 H278 V44"/><path d="M122 156 V168 H134"/><path d="M266 168 H278 V156"/>
+  </g>
+  <!-- femur -->
+  <path d="M186 28 V84 Q176 94 172 104 Q182 112 200 110 Q218 112 228 104 Q224 94 214 84 V28" fill="#fffdf9" stroke="#f7f6f2" stroke-width="2" stroke-linejoin="round"/>
+  <!-- patella -->
+  <ellipse cx="200" cy="100" rx="11" ry="14" fill="#e3d3b4" stroke="#fffdf9" stroke-width="2"/>
+  <!-- tibia -->
+  <path d="M186 172 V126 Q176 118 174 112 Q186 118 200 118 Q214 118 226 112 Q224 118 214 126 V172" fill="#fffdf9" stroke="#f7f6f2" stroke-width="2" stroke-linejoin="round"/>
+  <!-- fibula -->
+  <path d="M228 128 V172" stroke="#fffdf9" stroke-width="7" stroke-linecap="round"/>
+  <!-- detection highlight -->
+  <circle cx="176" cy="110" r="14" fill="none" stroke="#c8a96b" stroke-width="3" stroke-dasharray="5 3"/>
+  <!-- scan line -->
+  <path d="M116 134 H284" stroke="#c8a96b" stroke-width="2" opacity="0.7"/>
+  <!-- side chart -->
+  <rect x="310" y="60" width="60" height="80" rx="6" fill="#fffdf9" stroke="#284b52" stroke-width="2"/>
+  <g fill="#284b52">
+    <rect x="320" y="110" width="10" height="20" rx="2"/>
+    <rect x="335" y="90" width="10" height="40" rx="2"/>
+  </g>
+  <rect x="350" y="76" width="10" height="54" rx="2" fill="#c8a96b"/>
+  <!-- left label -->
+  <rect x="30" y="60" width="60" height="80" rx="6" fill="#fffdf9" stroke="#284b52" stroke-width="2"/>
+  <text x="60" y="96" font-family="Manrope, Arial, sans-serif" font-size="14" font-weight="800" fill="#284b52" text-anchor="middle">MRI</text>
+  <g stroke="#284b52" stroke-width="2.5" stroke-linecap="round" opacity="0.5">
+    <path d="M42 112 H78"/><path d="M42 124 H66"/>
+  </g>
+</svg>

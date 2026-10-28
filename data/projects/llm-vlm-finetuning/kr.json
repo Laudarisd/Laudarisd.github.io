@@ -1,0 +1,15 @@
+{
+  "title": "LLM/VLM Fine-Tuning",
+  "description": "엔지니어링·CAD 도메인 데이터로 LLM과 VLM을 Fine-Tuning 해요.",
+  "image": "thumbnail.svg",
+  "image_alt": "LLM과 VLM Fine-Tuning",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd",
+  "subtitle": "엔지니어링·CAD 도메인 데이터로 LLM과 VLM을 Fine-Tuning 해요.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd"
+    }
+  ]
+}

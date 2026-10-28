@@ -1,0 +1,16 @@
+{
+  "title": "OCR",
+  "description": "이미지와 문서에서 텍스트를 추출하는 OCR 모델 학습과 배포예요.",
+  "image": "thumbnail.svg",
+  "image_alt": "OCR 학습과 배포",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd/Machine-Learning-Projects",
+  "overview": "이미지와 문서에서 텍스트를 추출하는 OCR 모델 학습과 배포예요. Machine-Learning-Projects 컬렉션에 포함되어 있어요.",
+  "subtitle": "이미지와 문서에서 텍스트를 추출하는 OCR 모델 학습과 배포예요.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd/Machine-Learning-Projects"
+    }
+  ]
+}

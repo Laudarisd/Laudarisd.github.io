@@ -1,0 +1,20 @@
+{
+  "title": "Korean Government R&D Project",
+  "description": "National R&D project (Ministry of SMEs and Startups) on AI for CAD and engineering automation.",
+  "image": "thumbnail.svg",
+  "image_alt": "Korean government R&D project",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd",
+  "status": "completed",
+  "period": "Oct 2024 – Sep 2026",
+  "role": "Researcher, WIZCORE (CADian Inc.)",
+  "context": "National R&D project",
+  "overview": "National R&D project funded by the Ministry of SMEs and Startups, developing AI technology for CAD and engineering automation at CADian.",
+  "subtitle": "National R&D project (Ministry of SMEs and Startups) on AI for CAD and engineering automation.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd"
+    }
+  ]
+}

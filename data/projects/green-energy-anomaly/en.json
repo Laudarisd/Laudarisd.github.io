@@ -1,0 +1,15 @@
+{
+  "title": "Green Energy Anomaly Detection",
+  "description": "EDA, ML/DL anomaly detection and forecasting on renewable energy data, deployed on AWS.",
+  "image": "thumbnail.svg",
+  "image_alt": "Green energy anomaly detection",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd",
+  "subtitle": "EDA, ML/DL anomaly detection and forecasting on renewable energy data, deployed on AWS.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd"
+    }
+  ]
+}

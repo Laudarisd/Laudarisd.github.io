@@ -1,0 +1,16 @@
+{
+  "title": "Research",
+  "description": "Centrality-aware pruning, augmentation methods, and reproducible experiments.",
+  "image": "thumbnail.webp",
+  "image_alt": "Scientific machine learning research",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd/research",
+  "overview": "Centrality-aware pruning, augmentation methods, graph analysis, and reproducible experiments for efficient learning systems.",
+  "subtitle": "Centrality-aware pruning, augmentation methods, and reproducible experiments.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd/research"
+    }
+  ]
+}

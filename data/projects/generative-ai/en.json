@@ -1,0 +1,16 @@
+{
+  "title": "Generative AI",
+  "description": "LLM applications, content generation, and multimodal research prototypes.",
+  "image": "thumbnail.webp",
+  "image_alt": "Generative AI systems",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd/generative-ai",
+  "overview": "LLM applications, content generation, multimodal workflows, and prompt-driven research prototypes.",
+  "subtitle": "LLM applications, content generation, and multimodal research prototypes.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd/generative-ai"
+    }
+  ]
+}

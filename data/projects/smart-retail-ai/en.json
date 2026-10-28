@@ -1,0 +1,15 @@
+{
+  "title": "Smart Retail AI",
+  "description": "Computer vision prototypes and REST inference services for real-time retail analytics.",
+  "image": "thumbnail.svg",
+  "image_alt": "Smart retail AI",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd",
+  "subtitle": "Computer vision prototypes and REST inference services for real-time retail analytics.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd"
+    }
+  ]
+}

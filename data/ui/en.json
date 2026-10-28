@@ -34,8 +34,39 @@
     "view_code": "View code",
     "application_no": "Application No.",
     "view_on_github": "View on GitHub",
+    "view_details": "View details",
+    "more": "More",
+    "code_link": "Code",
     "projects_note": "For other projects visit here:",
     "projects_note_link": "GitHub profile",
-    "load_error": "Content could not be loaded. Please serve this site over HTTP (for example: python3 -m http.server) and reload."
+    "load_error": "Content could not be loaded. Please serve this site over HTTP (for example: python3 -m http.server) and reload.",
+    "status": {
+      "completed": "Completed",
+      "in_development": "In Development",
+      "research": "Research in Progress",
+      "poc": "Proof of Concept"
+    }
+  },
+  "project_page": {
+    "back": "← Back to projects",
+    "role": "Role",
+    "context": "Context",
+    "overview": "Overview",
+    "problem": "Problem & Objective",
+    "contributions": "My Contributions",
+    "architecture": "System Architecture",
+    "process": "Development Process",
+    "pipeline": "Data & AI Pipeline",
+    "stack": "Technology Stack",
+    "components": "Components & Technologies",
+    "component": "Component",
+    "component_role": "Main role",
+    "component_tech": "Technology",
+    "figures": "Figures & Plots",
+    "results": "Results & Challenges",
+    "results_label": "Results",
+    "challenges_label": "Challenges",
+    "links": "Links & Publications",
+    "not_found": "Project not found."
   }
 }

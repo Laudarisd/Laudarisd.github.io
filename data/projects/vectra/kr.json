@@ -1,0 +1,15 @@
+{
+  "title": "Vectra",
+  "description": "로컬·클라우드 모델을 지원하는 프라이버시 중심 VS Code AI 코딩 Agent예요.",
+  "image": "thumbnail.png",
+  "image_alt": "Vectra 로고",
+  "image_class": "project-image-logo",
+  "url": "https://github.com/Laudarisd/vectra",
+  "subtitle": "로컬·클라우드 모델을 지원하는 프라이버시 중심 VS Code AI 코딩 Agent예요.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd/vectra"
+    }
+  ]
+}

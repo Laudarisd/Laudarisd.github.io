@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Research and development project document with gear and flask">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6efe0"/>
+      <stop offset="1" stop-color="#e8d8ba"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="200" fill="url(#bg)"/>
+  <!-- certificate document -->
+  <rect x="48" y="30" width="170" height="140" rx="6" fill="#fffdf9" stroke="#284b52" stroke-width="2"/>
+  <rect x="58" y="40" width="150" height="120" fill="none" stroke="#c8a96b" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="133" y="72" font-family="Spectral, Georgia, serif" font-size="22" font-weight="700" fill="#284b52" text-anchor="middle">R&amp;D</text>
+  <g stroke="#284b52" stroke-width="3" stroke-linecap="round" opacity="0.5">
+    <path d="M74 92 H192"/><path d="M74 108 H176"/><path d="M74 124 H192"/>
+  </g>
+  <!-- seal with ribbon -->
+  <circle cx="178" cy="142" r="14" fill="#c8a96b" stroke="#284b52" stroke-width="2"/>
+  <path d="M170 154 L166 174 L178 166 L190 174 L186 154" fill="#c8a96b" stroke="#284b52" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="178" cy="142" r="5" fill="none" stroke="#284b52" stroke-width="2"/>
+  <!-- gear -->
+  <g transform="translate(286 76)">
+    <g fill="#284b52">
+      <rect x="-6" y="-44" width="12" height="16" rx="2"/><rect x="-6" y="28" width="12" height="16" rx="2"/>
+      <rect x="-44" y="-6" width="16" height="12" rx="2"/><rect x="28" y="-6" width="16" height="12" rx="2"/>
+      <rect x="-6" y="-44" width="12" height="16" rx="2" transform="rotate(45)"/><rect x="-6" y="28" width="12" height="16" rx="2" transform="rotate(45)"/>
+      <rect x="-44" y="-6" width="16" height="12" rx="2" transform="rotate(45)"/><rect x="28" y="-6" width="16" height="12" rx="2" transform="rotate(45)"/>
+    </g>
+    <circle r="32" fill="#284b52"/>
+    <circle r="14" fill="#fffdf9"/>
+  </g>
+  <!-- flask -->
+  <path d="M318 112 V134 L298 170 Q296 176 302 176 H358 Q364 176 362 170 L342 134 V112 Z" fill="#fffdf9" stroke="#284b52" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M312 112 H348" stroke="#284b52" stroke-width="3" stroke-linecap="round"/>
+  <path d="M306 156 L354 156 L362 170 Q364 176 358 176 H302 Q296 176 298 170 Z" fill="#c8a96b"/>
+  <circle cx="326" cy="146" r="3" fill="#c8a96b"/><circle cx="336" cy="138" r="2" fill="#c8a96b"/>
+</svg>

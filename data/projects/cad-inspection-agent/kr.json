@@ -1,0 +1,15 @@
+{
+  "title": "CAD Inspection AI Agent",
+  "description": "DWG/DXF → Vector → LLM/VLM Agent로 도면을 검사하고 결과를 보고해요.",
+  "image": "thumbnail.svg",
+  "image_alt": "CAD 검사 AI Agent",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd",
+  "subtitle": "DWG/DXF → Vector → LLM/VLM Agent로 도면을 검사하고 결과를 보고해요.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd"
+    }
+  ]
+}

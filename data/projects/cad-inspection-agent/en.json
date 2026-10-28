@@ -1,0 +1,15 @@
+{
+  "title": "CAD Inspection AI Agent",
+  "description": "DWG/DXF → vector → LLM/VLM agent that inspects drawings and reports findings.",
+  "image": "thumbnail.svg",
+  "image_alt": "CAD inspection AI agent",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd",
+  "subtitle": "DWG/DXF → vector → LLM/VLM agent that inspects drawings and reports findings.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd"
+    }
+  ]
+}
