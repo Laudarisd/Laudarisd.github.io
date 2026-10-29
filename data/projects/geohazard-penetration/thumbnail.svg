@@ -1,36 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Cone penetration test profile with soil layers">
-  <rect width="400" height="200" fill="url(#ground)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Hillside cross-section with a slip surface, boreholes, groundwater and a risk gauge">
 <defs>
-    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#fdf0cf"/></linearGradient>
-    <filter id="sh" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#284b52" flood-opacity="0.16"/></filter>
-    <filter id="bs" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#284b52" flood-opacity="0.22"/></filter>
-  </defs>
-
-  <g><rect x="40" y="34" width="50" height="46" fill="#f6e7c3" stroke="#284b52" stroke-width="1"/><rect x="40" y="80" width="50" height="50" fill="#dcc29a" stroke="#284b52" stroke-width="1"/><rect x="40" y="130" width="50" height="40" fill="#c9a26d" stroke="#284b52" stroke-width="1"/></g>
-  <text x="65" y="60" font-size="7" font-weight="700" fill="#284b52" text-anchor="middle" >fill</text><text x="65" y="108" font-size="7" font-weight="700" fill="#284b52" text-anchor="middle" >clay</text><text x="65" y="153" font-size="7" font-weight="700" fill="#284b52" text-anchor="middle" >sand</text>
-  <text x="65" y="24" font-size="8" font-weight="700" fill="#8a9aa0" text-anchor="middle" >soil</text>
-  <text x="110" y="24" font-size="8" font-weight="700" fill="#8a9aa0" text-anchor="start" >cone resistance q</text><text x="190" y="24" font-size="6" font-weight="500" fill="#8a9aa0" text-anchor="start" >c</text><text x="260" y="24" font-size="8" font-weight="500" fill="#8a9aa0" text-anchor="start" >(MPa)</text>
-  <path d="M110 136.0 H260" stroke="#dfe6e8" stroke-width="1"/>
-<path d="M110 102.0 H260" stroke="#dfe6e8" stroke-width="1"/>
-<path d="M110 68.0 H260" stroke="#dfe6e8" stroke-width="1"/>
-<path d="M110 34.0 H260" stroke="#dfe6e8" stroke-width="1"/>
-<path d="M160.0 170 V34" stroke="#dfe6e8" stroke-width="1"/>
-<path d="M210.0 170 V34" stroke="#dfe6e8" stroke-width="1"/>
-<path d="M260.0 170 V34" stroke="#dfe6e8" stroke-width="1"/>
-<path d="M110 34 V170 H260" fill="none" stroke="#8a9aa0" stroke-width="1.2"/>
-  <text x="110.0" y="182" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >0</text><text x="160.0" y="182" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >10</text><text x="210.0" y="182" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >20</text><text x="260.0" y="182" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >30</text>
-  <text x="104" y="38.0" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="end" >0</text><text x="104" y="72.0" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="end" >5</text><text x="104" y="106.0" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="end" >10</text><text x="104" y="140.0" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="end" >15</text><text x="104" y="174.0" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="end" >20</text><text x="92" y="190" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="start" >depth (m)</text>
-  <path d="M110 80 H260 M110 130 H260" stroke="#ef7a2b" stroke-width="1" stroke-dasharray="4 3"/>
-  <polyline points="147.8,34.0 156.8,36.3 146.6,38.6 135.1,40.9 151.0,43.2 155.4,45.5 138.3,47.8 140.5,50.1 155.0,52.4 149.4,54.7 135.3,57.0 144.0,59.3 158.7,61.6 144.0,63.9 140.2,66.2 153.3,68.5 155.9,70.8 140.2,73.1 139.3,75.4 156.2,77.7 193.8,80.0 182.8,82.3 190.7,84.6 201.3,86.9 190.8,89.2 176.4,91.5 190.1,93.8 199.9,96.1 183.7,98.4 183.6,100.7 195.6,103.0 194.4,105.3 184.3,107.6 185.8,109.9 198.7,112.2 192.9,114.5 176.0,116.8 191.5,119.1 204.8,121.4 189.5,123.7 181.8,126.0 195.0,128.3 240.0,130.6 221.8,132.9 228.1,135.2 242.7,137.5 238.2,139.8 220.4,142.1 229.7,144.4 245.9,146.7 233.9,149.0 224.3,151.3 239.4,153.6 244.2,155.9 227.0,158.2 223.0,160.5 241.7,162.8 236.8,165.1 218.7,167.4 226.6,169.7" fill="none" stroke="#2f6fdb" stroke-width="2" stroke-linejoin="round"/>
-  <rect x="280" y="34" width="100" height="136" rx="6" fill="#fdf0cf" stroke="#e8a317" stroke-width="1.2"/>
-  <text x="330" y="54" font-size="8" font-weight="700" fill="#284b52" text-anchor="middle" >Prediction</text>
-  <path d="M292 110.0 H370" stroke="#dfe6e8" stroke-width="1"/>
-<path d="M292 64.0 H370" stroke="#dfe6e8" stroke-width="1"/>
-<path d="M331.0 156 V64" stroke="#dfe6e8" stroke-width="1"/>
-<path d="M370.0 156 V64" stroke="#dfe6e8" stroke-width="1"/>
-<path d="M292 64 V156 H370" fill="none" stroke="#8a9aa0" stroke-width="1.2"/>
-  <polyline points="292.0,150.0 312.0,132.0 332.0,110.0 352.0,90.0 370.0,76.0" fill="none" stroke="#2f6fdb" stroke-width="2" stroke-linejoin="round"/><polyline points="292.0,152.0 312.0,138.0 332.0,118.0 352.0,98.0 370.0,84.0" fill="none" stroke="#ef7a2b" stroke-width="2" stroke-linejoin="round" stroke-dasharray="4 3"/>
-  <text x="330" y="166" font-size="6" font-weight="500" fill="#8a9aa0" text-anchor="middle" >measured / predicted</text>
-
-<g transform="translate(383 22)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#b85c38" stroke-width="1.5"/><g fill="none" stroke="#b85c38" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#b85c38"><path d="M0 -7 L7 6 H-7 Z"/><path d="M0 -2 V2"/><circle cx="0" cy="4.5" r="0.8" fill="currentColor"/></g></g><g transform="translate(24 186)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#3f6b78" stroke-width="1.5"/><g fill="none" stroke="#3f6b78" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#3f6b78"><path d="M0 -7 L7 -3 L0 1 L-7 -3 Z"/><path d="M-7 1 L0 5 L7 1 M-7 4 L0 8 L7 4"/></g></g><g transform="translate(383 184)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#c8a96b" stroke-width="1.5"/><g fill="none" stroke="#c8a96b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#c8a96b"><path d="M0 8 C-5 2 -6 0 -6 -2 A6 6 0 0 1 6 -2 C6 0 5 2 0 8 Z"/><circle cx="0" cy="-2" r="2"/></g></g>
+<filter id="sh" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#1f2933" flood-opacity="0.18"/></filter>
+<linearGradient id="soil1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8d7b3"/><stop offset="1" stop-color="#d4bd8e"/></linearGradient>
+<linearGradient id="soil2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9ab79"/><stop offset="1" stop-color="#a98451"/></linearGradient>
+<linearGradient id="rock" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9c8b76"/><stop offset="1" stop-color="#6f604f"/></linearGradient>
+<linearGradient id="sky4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3eef5"/><stop offset="1" stop-color="#ffffff"/></linearGradient>
+</defs>
+<rect width="400" height="200" fill="#ffffff"/>
+<rect width="400" height="200" fill="url(#sky4)"/>
+<path d="M0 120 C60 118 110 70 180 60 C240 52 300 54 400 48 V200 H0 Z" fill="url(#soil1)"/>
+<path d="M0 150 C80 146 130 110 200 100 C260 92 320 90 400 86 V200 H0 Z" fill="url(#soil2)"/>
+<path d="M0 176 C100 170 200 150 400 136 V200 H0 Z" fill="url(#rock)"/>
+<path d="M0 138 C90 136 150 110 230 104 C300 100 350 102 400 98" fill="none" stroke="#2a9fd8" stroke-width="1.8" stroke-dasharray="6 4"/><text x="14" y="134" font-size="6" font-weight="700" fill="#2a9fd8" text-anchor="start" >▽ groundwater</text>
+<path d="M110 92 C140 130 200 140 262 60" fill="none" stroke="#e4506e" stroke-width="2.5" stroke-dasharray="7 4"/>
+<path d="M110 92 C140 130 200 140 262 60 C240 54 170 58 110 92 Z" fill="#e4506e" opacity="0.14"/>
+<path d="M190 96 L214 104" stroke="#e4506e" stroke-width="3" stroke-linecap="round"/><path d="M208 96 L216 105 L204 108" fill="none" stroke="#e4506e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="150" y="72" width="8" height="100" fill="#ffffff" stroke="#1f2933" stroke-width="1"/><rect x="150" y="107" width="8" height="30" fill="#c9ab79"/><rect x="150" y="137" width="8" height="35" fill="#6f604f"/><text x="154" y="66" font-size="6" font-weight="700" fill="#1f2933" text-anchor="middle" >BH-1</text><rect x="300" y="52" width="8" height="110" fill="#ffffff" stroke="#1f2933" stroke-width="1"/><rect x="300" y="90" width="8" height="33" fill="#c9ab79"/><rect x="300" y="124" width="8" height="38" fill="#6f604f"/><text x="304" y="46" font-size="6" font-weight="700" fill="#1f2933" text-anchor="middle" >BH-2</text>
+<g transform="translate(56 30)"><path d="M-14 6 H16 A8 8 0 0 0 16 -10 A12 12 0 0 0 -8 -6 A6 6 0 0 0 -14 6 Z" fill="#9fb3b8"/><g stroke="#2a9fd8" stroke-width="2" stroke-linecap="round"><path d="M-6 14 L-9 22 M2 14 L-1 22 M10 14 L7 22"/></g></g>
+<g transform="translate(330 150)"><rect x="-50" y="-30" width="100" height="56" rx="8" fill="#ffffff" filter="url(#sh)"/><path d="M-36 10 A36 36 0 0 1 36 10" fill="none" stroke="#e5e9ec" stroke-width="9"/><path d="M-36 10 A36 36 0 0 1 -6 -25" fill="none" stroke="#2ea35a" stroke-width="9"/><path d="M-6 -25 A36 36 0 0 1 20 -20" fill="none" stroke="#e8a317" stroke-width="9"/><path d="M20 -20 A36 36 0 0 1 36 10" fill="none" stroke="#e4506e" stroke-width="9"/><path d="M0 10 L24 -14" stroke="#1f2933" stroke-width="2.5" stroke-linecap="round"/><circle cy="10" r="4" fill="#1f2933"/><text x="0" y="22" font-size="7" font-weight="800" fill="#e4506e" text-anchor="middle" >slope risk: HIGH</text></g>
 </svg>

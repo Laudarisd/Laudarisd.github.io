@@ -1,23 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Scanned PDF drawing converted into editable CAD text">
-  <rect width="400" height="200" fill="url(#ground)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Scanned paper drawing converted into a clean vector drawing">
 <defs>
-    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#fde6d3"/></linearGradient>
-    <filter id="sh" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#284b52" flood-opacity="0.16"/></filter>
-    <filter id="bs" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#284b52" flood-opacity="0.22"/></filter>
-  </defs>
-
-  <rect x="20" y="16" width="170" height="168" fill="#f1f1ee" stroke="#cfcfc8" filter="url(#sh)"/>
-  <g fill="none" stroke="#6f6f6a" stroke-width="2.5" opacity="0.8"><path d="M44 48 H166 V140 H44 Z M44 94 H100 M100 48 V94"/></g>
-  <rect x="52" y="150" width="60" height="4" rx="1.5" fill="#9a9a94"/>
-<rect x="52" y="160" width="44" height="4" rx="1.5" fill="#9a9a94"/>
-  <rect x="40" y="18" width="34" height="14" rx="3" fill="#8b2e2e"/><text x="57" y="28" font-size="7" font-weight="800" fill="#ffffff" text-anchor="middle" >PDF</text>
-  <path d="M196 100 H224 M214 90 L226 100 L214 110" fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <rect x="230" y="16" width="150" height="168" fill="#dbe8fb" stroke="#2f6fdb" stroke-width="1.5"/>
-  <g stroke="#dfe6e8" stroke-width="1"><path d="M245 16 V184"/><path d="M260 16 V184"/><path d="M275 16 V184"/><path d="M290 16 V184"/><path d="M305 16 V184"/><path d="M320 16 V184"/><path d="M335 16 V184"/><path d="M350 16 V184"/><path d="M365 16 V184"/><path d="M230 31 H380"/><path d="M230 46 H380"/><path d="M230 61 H380"/><path d="M230 76 H380"/><path d="M230 91 H380"/><path d="M230 106 H380"/><path d="M230 121 H380"/><path d="M230 136 H380"/><path d="M230 151 H380"/><path d="M230 166 H380"/><path d="M230 181 H380"/></g>
-  <g fill="none" stroke="#2f6fdb" stroke-width="2.5"><path d="M250 48 H362 V140 H250 Z M250 94 H300 M300 48 V94"/></g>
-  <path d="M250 150 H362 M250 146 V154 M362 146 V154" stroke="#ef7a2b" stroke-width="1.5"/>
-  <text x="306" y="162" font-size="9" font-weight="700" fill="#ef7a2b" text-anchor="middle" >11,200</text><text x="275" y="76" font-size="8" font-weight="700" fill="#ef7a2b" text-anchor="middle" >Ø50</text><text x="331" y="120" font-size="8" font-weight="700" fill="#ef7a2b" text-anchor="middle" >ROOM 2</text>
-  <rect x="236" y="18" width="40" height="14" rx="3" fill="#2f6fdb"/><text x="256" y="28" font-size="7" font-weight="800" fill="#ffffff" text-anchor="middle" >DWG</text>
-
-<g transform="translate(24 178)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#b85c38" stroke-width="1.5"/><g fill="none" stroke="#b85c38" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#b85c38"><path d="M-5 -7 H2 L5 -4 V7 H-5 Z"/><path d="M-2 -1 H2 M-2 2 H2 M-2 5 H1"/></g></g><g transform="translate(376 24)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#c8a96b" stroke-width="1.5"/><g fill="none" stroke="#c8a96b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#c8a96b"><path d="M0 -8 L2 -2 L8 0 L2 2 L0 8 L-2 2 L-8 0 L-2 -2 Z"/></g></g><g transform="translate(210 150)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#3f6b78" stroke-width="1.5"/><g fill="none" stroke="#3f6b78" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#3f6b78"><rect x="-6" y="-6" width="12" height="12" rx="2"/><rect x="-2.5" y="-2.5" width="5" height="5"/></g></g>
+<filter id="sh" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#1f2933" flood-opacity="0.18"/></filter>
+<linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3eadb"/><stop offset="1" stop-color="#e6d9c2"/></linearGradient>
+<linearGradient id="edge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ef7a2b00"/><stop offset="1" stop-color="#ef7a2b"/></linearGradient>
+<radialGradient id="stain"><stop offset="0" stop-color="#c9a46a66"/><stop offset="1" stop-color="#c9a46a00"/></radialGradient>
+</defs>
+<rect width="400" height="200" fill="#ffffff"/>
+<clipPath id="left"><polygon points="0,0 250,0 150,200 0,200"/></clipPath><clipPath id="right"><polygon points="250,0 400,0 400,200 150,200"/></clipPath>
+<g clip-path="url(#left)"><rect width="400" height="200" fill="url(#paper)"/>
+  <circle cx="60" cy="150" r="26" fill="none" stroke="#b89462" stroke-width="5" opacity="0.35"/><circle cx="120" cy="40" r="40" fill="url(#stain)"/>
+  <g transform="rotate(-2 120 100)" fill="none" stroke="#6b645a" stroke-width="2.4" opacity="0.8"><path d="M40 50 H210 V150 H40 Z M40 100 H110 M110 50 V100 M150 100 H210"/><path d="M110 100 A26 26 0 0 1 136 74" stroke-width="1.4"/></g>
+  <g fill="#6b645a" opacity="0.5"><rect x="44" y="160" width="60" height="3" rx="1"/><rect x="44" y="170" width="44" height="3" rx="1"/><rect x="150" y="160" width="50" height="3" rx="1"/></g>
+  <text x="90" y="88" font-size="12" fill="#6b645a" opacity="0.5" transform="rotate(-2 120 100)" font-family="Georgia, serif">11200</text>
+  <rect x="14" y="14" width="40" height="16" rx="3" fill="#8b2e2e"/><text x="34" y="25" font-size="7" font-weight="800" fill="#ffffff" text-anchor="middle" >SCAN</text>
+</g>
+<g clip-path="url(#right)"><rect width="400" height="200" fill="#ffffff"/>
+  <g stroke="#e3ecf2"><path d="M160 0 V200"/><path d="M176 0 V200"/><path d="M192 0 V200"/><path d="M208 0 V200"/><path d="M224 0 V200"/><path d="M240 0 V200"/><path d="M256 0 V200"/><path d="M272 0 V200"/><path d="M288 0 V200"/><path d="M304 0 V200"/><path d="M320 0 V200"/><path d="M336 0 V200"/><path d="M352 0 V200"/><path d="M368 0 V200"/><path d="M384 0 V200"/><path d="M150 0 H400"/><path d="M150 16 H400"/><path d="M150 32 H400"/><path d="M150 48 H400"/><path d="M150 64 H400"/><path d="M150 80 H400"/><path d="M150 96 H400"/><path d="M150 112 H400"/><path d="M150 128 H400"/><path d="M150 144 H400"/><path d="M150 160 H400"/><path d="M150 176 H400"/><path d="M150 192 H400"/></g>
+  <g fill="none" stroke="#2f6fdb" stroke-width="2.4"><path d="M190 50 H360 V150 H190 Z M190 100 H260 M260 50 V100 M300 100 H360"/><path d="M260 100 A26 26 0 0 1 286 74" stroke-width="1.4"/></g>
+  <path d="M190 166 H360 M190 161 V171 M360 161 V171" stroke="#ef7a2b" stroke-width="1.5"/>
+  <text x="275" y="180" font-size="10" font-weight="800" fill="#ef7a2b" text-anchor="middle" font-family="Consolas, monospace">11,200</text><text x="226" y="76" font-size="8" font-weight="800" fill="#ef7a2b" text-anchor="middle" >Ø50</text><text x="330" y="128" font-size="8" font-weight="800" fill="#ef7a2b" text-anchor="middle" >ROOM 2</text>
+  <rect x="346" y="14" width="40" height="16" rx="3" fill="#2f6fdb"/><text x="366" y="25" font-size="7" font-weight="800" fill="#ffffff" text-anchor="middle" >DWG</text>
+</g>
+<polygon points="236,0 262,0 162,200 136,200" fill="url(#edge)" opacity="0.45"/><path d="M250 0 L150 200" stroke="#ef7a2b" stroke-width="2.5"/>
+<circle cx="246.5" cy="6.0" r="2.5" fill="#ef7a2b" opacity="0.8"/><circle cx="243.0" cy="26.0" r="1.1" fill="#ef7a2b" opacity="0.8"/><circle cx="228.9" cy="46.0" r="1.4" fill="#ef7a2b" opacity="0.8"/><circle cx="214.6" cy="66.0" r="1.5" fill="#ef7a2b" opacity="0.8"/><circle cx="210.4" cy="86.0" r="2.6" fill="#ef7a2b" opacity="0.8"/><circle cx="195.1" cy="106.0" r="1.2" fill="#ef7a2b" opacity="0.8"/><circle cx="189.4" cy="126.0" r="1.5" fill="#ef7a2b" opacity="0.8"/><circle cx="182.8" cy="146.0" r="1.8" fill="#ef7a2b" opacity="0.8"/><circle cx="175.4" cy="166.0" r="1.9" fill="#ef7a2b" opacity="0.8"/><circle cx="165.1" cy="186.0" r="1.8" fill="#ef7a2b" opacity="0.8"/>
+<circle cx="200" cy="100" r="16" fill="#ffffff" stroke="#ef7a2b" stroke-width="2" filter="url(#sh)"/><path d="M192 100 H206 M201 94 L208 100 L201 106" fill="none" stroke="#ef7a2b" stroke-width="2.5" stroke-linecap="round"/>
 </svg>

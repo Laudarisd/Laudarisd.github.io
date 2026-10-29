@@ -1,22 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Engineering drawing of an air-conditioner outdoor unit with dimensions">
-  <rect width="400" height="200" fill="url(#ground)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Three-dimensional render of an air-conditioner outdoor unit with callouts">
 <defs>
-    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dcf0fb"/></linearGradient>
-    <filter id="sh" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#284b52" flood-opacity="0.16"/></filter>
-    <filter id="bs" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#284b52" flood-opacity="0.22"/></filter>
-  </defs>
-
-  <rect x="12" y="12" width="376" height="176" fill="#fbfdff" stroke="#284b52" stroke-width="1.5"/>
-  <rect x="40" y="46" width="150" height="104" rx="4" fill="#dcf0fb"/><g fill="none" stroke="#284b52" stroke-width="2"><rect x="40" y="46" width="150" height="104" rx="4"/><circle cx="94" cy="98" r="36"/><circle cx="94" cy="98" r="30" stroke-width="1"/></g>
-  <g fill="none" stroke="#284b52" stroke-width="1.2"><path d="M94 98 L112 72 M94 98 L118 110 M94 98 L74 124 M94 98 L66 84"/><path d="M142 58 H178"/><path d="M142 67 H178"/><path d="M142 76 H178"/><path d="M142 85 H178"/><path d="M142 94 H178"/><path d="M142 103 H178"/><path d="M142 112 H178"/><path d="M142 121 H178"/><path d="M142 130 H178"/><path d="M142 139 H178"/></g>
-  <rect x="230" y="46" width="70" height="104" rx="3" fill="#dbe8fb"/><g fill="none" stroke="#284b52" stroke-width="2"><rect x="230" y="46" width="70" height="104" rx="3"/><path d="M238 60 H292"/><path d="M238 70 H292"/><path d="M238 80 H292"/><path d="M238 90 H292"/><path d="M238 100 H292"/><path d="M238 110 H292"/><path d="M238 120 H292"/><path d="M238 130 H292"/><path d="M238 140 H292"/></g>
-  <g stroke="#284b52" stroke-width="1"><path d="M40 162 H190 M40 158 V166 M190 158 V166 M28 46 V150 M24 46 H32 M24 150 H32 M230 162 H300 M230 158 V166 M300 158 V166"/></g>
-  <text x="115" y="176" font-size="8" font-weight="700" fill="#284b52" text-anchor="middle" >920</text><text x="20" y="100" font-size="8" font-weight="700" fill="#284b52" text-anchor="middle" transform="rotate(-90 20 100)">630</text><text x="265" y="176" font-size="8" font-weight="700" fill="#284b52" text-anchor="middle" >340</text>
-  <text x="115" y="36" font-size="8" font-weight="700" fill="#8a9aa0" text-anchor="middle" >FRONT VIEW</text><text x="265" y="36" font-size="8" font-weight="700" fill="#8a9aa0" text-anchor="middle" >SIDE VIEW</text>
-  <rect x="312" y="118" width="70" height="64" fill="#ffffff" stroke="#284b52" filter="url(#sh)"/>
-  <path d="M312 134 H382 M312 150 H382 M312 166 H382" stroke="#284b52" stroke-width="0.8"/>
-  <text x="347" y="129" font-size="6" font-weight="700" fill="#284b52" text-anchor="middle" >OUTDOOR UNIT</text><text x="347" y="145" font-size="6" font-weight="500" fill="#8a9aa0" text-anchor="middle" >SCALE 1:10</text><text x="347" y="161" font-size="6" font-weight="500" fill="#8a9aa0" text-anchor="middle" >DWG NO. AC-01</text><text x="347" y="177" font-size="6" font-weight="500" fill="#8a9aa0" text-anchor="middle" >REV A</text>
-  <path d="M196 70 q8 -5 16 0 t16 0 M196 90 q8 -5 16 0 t16 0 M196 110 q8 -5 16 0 t16 0" fill="none" stroke="#2a9fd8" stroke-width="2"/>
-
-<g transform="translate(340 70)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#3f6b78" stroke-width="1.5"/><g fill="none" stroke="#3f6b78" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#3f6b78"><path d="M0 -8 V8 M-7 -4 L7 4 M-7 4 L7 -4"/><path d="M-2 -6 L0 -4 L2 -6 M-2 6 L0 4 L2 6"/></g></g><g transform="translate(26 24)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#284b52" stroke-width="1.5"/><g fill="none" stroke="#284b52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#284b52"><rect x="-8" y="-3" width="16" height="6" rx="1"/><path d="M-5 -3 V0 M-2 -3 V-1 M1 -3 V0 M4 -3 V-1"/></g></g><g transform="translate(340 100)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#c8a96b" stroke-width="1.5"/><g fill="none" stroke="#c8a96b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#c8a96b"><path d="M1 -8 L-5 1 H0 L-1 8 L5 -1 H0 Z"/></g></g>
+<filter id="sh" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#1f2933" flood-opacity="0.18"/></filter>
+<linearGradient id="acf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f9fa"/><stop offset="1" stop-color="#d9e1e6"/></linearGradient>
+<linearGradient id="acs" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b5c2ca"/><stop offset="1" stop-color="#8a9ba5"/></linearGradient>
+<linearGradient id="act" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e6ecef"/></linearGradient>
+<radialGradient id="fanc"><stop offset="0" stop-color="#5b6670"/><stop offset="1" stop-color="#2b343a"/></radialGradient>
+</defs>
+<rect width="400" height="200" fill="#ffffff"/>
+<ellipse cx="190" cy="178" rx="150" ry="14" fill="#e6ebee"/>
+<polygon points="70,60 290,60 320,44 100,44" fill="url(#act)" stroke="#9fb0ba" stroke-width="1"/>
+<polygon points="290,60 320,44 320,154 290,170" fill="url(#acs)" stroke="#9fb0ba" stroke-width="1"/>
+<rect x="70" y="60" width="220" height="110" fill="url(#acf)" stroke="#9fb0ba" stroke-width="1.2" filter="url(#sh)"/>
+<g stroke="#b5c2ca" stroke-width="2.5"><path d="M206 72 H280"/><path d="M206 80 H280"/><path d="M206 88 H280"/><path d="M206 96 H280"/><path d="M206 104 H280"/><path d="M206 112 H280"/><path d="M206 120 H280"/><path d="M206 128 H280"/><path d="M206 136 H280"/><path d="M206 144 H280"/><path d="M206 152 H280"/></g>
+<circle cx="134" cy="115" r="42" fill="#eef2f4" stroke="#9fb0ba" stroke-width="2"/>
+<circle cx="134" cy="115" r="34" fill="none" stroke="#b5c2ca" stroke-width="1.5"/><circle cx="134" cy="115" r="26" fill="none" stroke="#b5c2ca" stroke-width="1.5"/><circle cx="134" cy="115" r="18" fill="none" stroke="#b5c2ca" stroke-width="1.5"/>
+<circle cx="134" cy="115" r="8" fill="url(#fanc)"/>
+<g transform="translate(134 115) rotate(20)" fill="#7c8f9a" opacity="0.85"><path d="M0 0 C 10 -24 24 -28 30 -18 C 20 -8 8 -4 0 0 Z" transform="rotate(0)"/><path d="M0 0 C 10 -24 24 -28 30 -18 C 20 -8 8 -4 0 0 Z" transform="rotate(120)"/><path d="M0 0 C 10 -24 24 -28 30 -18 C 20 -8 8 -4 0 0 Z" transform="rotate(240)"/></g>
+<path d="M296 128 q6 -4 12 0 t12 0 t12 0 M296 112 q6 -4 12 0 t12 0 t12 0 M296 96 q6 -4 12 0 t12 0 t12 0" fill="none" stroke="#2a9fd8" stroke-width="2" stroke-linecap="round"/>
+<g transform="translate(60 20)"><circle cx="0" cy="0" r="17" fill="#ffffff" stroke="#9fb0ba" stroke-dasharray="3 2"/><g transform="rotate(-30)" fill="#5b6670"><path d="M0 0 C 5 -12 12 -14 15 -9 C 10 -4 4 -2 0 0 Z" transform="rotate(0)"/><path d="M0 0 C 5 -12 12 -14 15 -9 C 10 -4 4 -2 0 0 Z" transform="rotate(120)"/><path d="M0 0 C 5 -12 12 -14 15 -9 C 10 -4 4 -2 0 0 Z" transform="rotate(240)"/></g><circle r="3" fill="#2b343a"/></g>
+<path d="M76 32 L112 92" stroke="#9fb0ba" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="86" y="14" font-size="7" font-weight="700" fill="#5b6670" text-anchor="start" >fan assembly</text>
+<g transform="translate(236 20)"><rect width="110" height="24" rx="5" fill="#ffffff" stroke="#c9d3d8" filter="url(#sh)"/><text x="55" y="10" font-size="6" font-weight="800" fill="#1f2933" text-anchor="middle" >OUTDOOR UNIT · 920×630</text><text x="55" y="19" font-size="5.5" font-weight="600" fill="#8a9aa0" text-anchor="middle" >drawing-based part detection</text></g>
+<rect x="206" y="64" width="78" height="100" fill="none" stroke="#ef7a2b" stroke-width="1.5" stroke-dasharray="5 3"/><text x="245" y="60" font-size="6" font-weight="800" fill="#ef7a2b" text-anchor="middle" >grille 0.97</text>
+<circle cx="134" cy="115" r="46" fill="none" stroke="#149e93" stroke-width="1.5" stroke-dasharray="5 3"/><text x="134" y="170" font-size="6" font-weight="800" fill="#149e93" text-anchor="middle" >fan 0.95</text>
 </svg>
