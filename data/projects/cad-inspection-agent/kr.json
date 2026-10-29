@@ -5,11 +5,24 @@
   "image_alt": "CAD 검사 AI Agent",
   "image_class": "",
   "url": "https://github.com/Laudarisd",
-  "subtitle": "DWG/DXF → Vector → LLM/VLM Agent로 도면을 검사하고 결과를 보고해요.",
+  "article": "PORTFOLIO_kr.md",
+  "subtitle": "CAD Parser: DWG 평면도를 읽고 무엇이 그려져 있는지 파악해, 문과 창을 공간에 연결하고 검사 규칙으로 점검한 뒤, 도면 위 근거와 함께 질문에 답하는 CADian 2026 애드온이에요.",
+  "status": "in_development",
+  "role": "연구원, 위즈코어 (CADian Inc.)",
+  "context": "산업 R&D",
+  "tags": [
+    "DWG / DXF",
+    "C# / .NET",
+    "CAD add-on",
+    "Computational Geometry",
+    "Graph Database",
+    "LLM Agent",
+    "Tool Use",
+    "Bilingual Reports"
+  ],
   "links": [
     {
-      "label": "GitHub",
-      "url": "https://github.com/Laudarisd"
+      "label": "소스 코드: 비공개 / 사내 자산"
     }
   ]
 }

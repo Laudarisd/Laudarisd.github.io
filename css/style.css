@@ -1339,3 +1339,193 @@ html[lang="ko"] .project-status {
     grid-template-columns: 1fr;
   }
 }
+
+/* Long-form article (Markdown rendered inside a detail page) and its table of contents. */
+.article-toc-wrap {
+  margin-bottom: 1.5rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--card-tint);
+}
+
+.article-toc-wrap h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.article-toc {
+  margin: 0;
+  padding-left: 1.2rem;
+  columns: 2;
+  column-gap: 1.5rem;
+  list-style: none;
+  font-size: 0.9rem;
+}
+
+.article-toc li {
+  display: list-item;
+  margin-bottom: 0.25rem;
+  break-inside: avoid;
+}
+
+.article-toc a {
+  color: var(--link-accent);
+}
+
+.project-article {
+  max-width: 78ch;
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+.project-article h1 {
+  margin-bottom: 0.75rem;
+  font-family: "Spectral", "Noto Sans KR", serif;
+  font-size: 1.7rem;
+  line-height: 1.2;
+}
+
+.project-article h2 {
+  margin: 2.2rem 0 0.8rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--accent);
+  font-family: "Spectral", "Noto Sans KR", serif;
+  font-size: 1.35rem;
+}
+
+.project-article h3 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.project-article h4 {
+  margin: 1.2rem 0 0.4rem;
+  font-size: 0.95rem;
+}
+
+.project-article p,
+.project-article li {
+  color: var(--text);
+}
+
+.project-article ul,
+.project-article ol {
+  margin: 0 0 1rem;
+  padding-left: 1.4rem;
+}
+
+.project-article ul {
+  list-style: disc;
+}
+
+.project-article ol {
+  list-style: decimal;
+}
+
+.project-article li {
+  display: list-item;
+  margin-bottom: 0.35rem;
+}
+
+.project-article blockquote {
+  margin: 1rem 0;
+  padding: 0.6rem 1rem;
+  border-left: 4px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--card-tint);
+  color: var(--muted);
+}
+
+.project-article blockquote p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.project-article code {
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  font-family: Consolas, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.86em;
+}
+
+/* Fenced blocks are used for tree diagrams: keep them monospace and scrollable. */
+.project-article pre {
+  margin: 1rem 0 1.25rem;
+  padding: 0.9rem 1.1rem;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--card-tint);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.project-article pre code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+}
+
+/* Mermaid diagrams render as inline SVG inside this block. */
+.project-article pre.mermaid {
+  display: flex;
+  justify-content: center;
+  background: var(--surface);
+}
+
+.project-article pre.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.project-article .table-scroll {
+  margin: 1rem 0 1.25rem;
+}
+
+.project-article table {
+  font-size: 0.88rem;
+}
+
+.project-article img {
+  margin: 1rem 0 0.4rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+}
+
+/* A line in italics right after an image is treated as its caption. */
+.project-article img + em {
+  display: block;
+  margin-bottom: 1.25rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.project-article hr {
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+/* A rule immediately before a section heading would double the heading's own line. */
+.project-article hr + h2 {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.project-article a {
+  color: var(--link-accent);
+  text-decoration: underline;
+}
+
+@media (max-width: 720px) {
+  .article-toc {
+    columns: 1;
+  }
+}

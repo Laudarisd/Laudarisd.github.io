@@ -12,6 +12,14 @@
   var ROOT = "../../"; // pages live in js/projects/, so site assets are two levels up
   var DATA_DIR = ROOT + "data/";
 
+  // Long-form articles are Markdown files next to the project JSON ("article": "PORTFOLIO.md").
+  // They are rendered with marked; ```mermaid blocks are drawn with mermaid. Both load on demand.
+  var LIBS = {
+    marked: "https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js",
+    mermaid: "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"
+  };
+  var libLoaded = {};
+
   var LANGS = { en: "en", kr: "ko" };
   var DEFAULT_LANG = "en";
   var STORAGE_KEY = "portfolio-lang"; // same key as site.js so the choice carries over
@@ -119,6 +127,117 @@
       });
       return data;
     });
+  }
+
+  // Load a CDN script once and remember the promise.
+  function loadScript(name) {
+    if (!libLoaded[name]) {
+      libLoaded[name] = new Promise(function (resolve, reject) {
+        var script = document.createElement("script");
+        script.src = LIBS[name];
+        script.onload = resolve;
+        script.onerror = function () { reject(new Error("failed to load " + LIBS[name])); };
+        document.head.appendChild(script);
+      });
+    }
+    return libLoaded[name];
+  }
+
+  // "2. The problem" -> "2-the-problem" (used for heading anchors in the table of contents).
+  function slugify(text) {
+    return String(text).toLowerCase().replace(/[^a-z0-9\u3131-\uD79D]+/g, "-").replace(/^-+|-+$/g, "");
+  }
+
+  // Draw every <pre class="mermaid"> inside `wrap`, using the site's theme colours.
+  function renderMermaid(wrap) {
+    return loadScript("mermaid").then(function () {
+      var css = getComputedStyle(root);
+      var pick = function (name, fallback) { return css.getPropertyValue(name).trim() || fallback; };
+      window.mermaid.initialize({
+        startOnLoad: false,
+        theme: "base",
+        fontFamily: "Manrope, Noto Sans KR, sans-serif",
+        themeVariables: {
+          fontSize: "14px",
+          primaryColor: pick("--surface", "#fffdf9"),
+          primaryTextColor: pick("--text", "#1f2933"),
+          primaryBorderColor: pick("--accent", "#284b52"),
+          lineColor: pick("--accent", "#284b52"),
+          secondaryColor: pick("--surface", "#fffdf9"),
+          tertiaryColor: pick("--surface", "#fffdf9")
+        }
+      });
+      return window.mermaid.run({ nodes: wrap.querySelectorAll("pre.mermaid") });
+    });
+  }
+
+  // Render the Markdown article (if the project has one) into #panel-article.
+  function renderArticle(project, ui) {
+    var panel = byId("panel-article");
+    if (!panel) return;
+    var body = panel.querySelector(".panel-body");
+    clear(body);
+    if (!project || !project.article) {
+      panel.hidden = true;
+      return;
+    }
+    panel.hidden = false;
+    var labels = ui.project_page || {};
+    var folder = DATA_DIR + PROJECT_FILE + "/";
+    var lang = currentLang;
+
+    Promise.all([
+      fetch(folder + project.article, { cache: "no-cache" }).then(function (response) {
+        if (!response.ok) throw new Error(project.article + " -> " + response.status);
+        return response.text();
+      }),
+      loadScript("marked")
+    ])
+      .then(function (results) {
+        if (currentLang !== lang) return; // a newer language switch won
+        var wrap = el("div", { class: "project-article" });
+        wrap.innerHTML = window.marked.parse(results[0]);
+
+        // Relative image paths point into the project folder.
+        wrap.querySelectorAll("img").forEach(function (img) {
+          var src = img.getAttribute("src") || "";
+          if (!/^(https?:|\/|data:)/.test(src)) img.setAttribute("src", folder + src);
+          img.setAttribute("loading", "lazy");
+        });
+
+        // Tables reuse the component-table style and scroll on narrow screens.
+        wrap.querySelectorAll("table").forEach(function (table) {
+          table.className = "component-table";
+          var scroll = el("div", { class: "table-scroll" });
+          table.parentNode.insertBefore(scroll, table);
+          scroll.appendChild(table);
+        });
+
+        // Section headings get anchors; a table of contents links to them.
+        var toc = el("ol", { class: "article-toc" });
+        wrap.querySelectorAll("h2").forEach(function (heading) {
+          heading.id = slugify(heading.textContent);
+          toc.appendChild(el("li", null, [el("a", { href: "#" + heading.id, text: heading.textContent })]));
+        });
+
+        // ```mermaid fences become diagrams.
+        var hasMermaid = false;
+        wrap.querySelectorAll("pre > code.language-mermaid").forEach(function (code) {
+          var pre = el("pre", { class: "mermaid", text: code.textContent });
+          code.parentNode.parentNode.replaceChild(pre, code.parentNode);
+          hasMermaid = true;
+        });
+
+        if (toc.children.length) {
+          body.appendChild(el("nav", { class: "article-toc-wrap" }, [el("h4", { text: labels.contents || "Contents" }), toc]));
+        }
+        body.appendChild(wrap);
+        if (hasMermaid) renderMermaid(wrap).catch(function (error) { console.error("[portfolio] mermaid", error); });
+      })
+      .catch(function (error) {
+        console.error("[portfolio] article", error);
+        body.appendChild(el("p", { text: labels.article_error || "The article could not be loaded." }));
+      });
   }
 
   /* ---------- renderers ---------- */
@@ -281,6 +400,7 @@
       });
     }
 
+    renderArticle(project, ui);
     fillPanel("panel-overview", [project.overview ? el("p", { text: project.overview }) : null]);
     fillPanel("panel-problem", [project.problem && project.problem.length ? bulletList(project.problem) : null]);
     fillPanel("panel-contributions", [
