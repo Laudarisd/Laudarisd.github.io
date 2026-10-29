@@ -1,11 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Air conditioner unit with airflow">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Air conditioner unit on an engineering drawing">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="86" y="54" width="170" height="92" rx="8" fill="#e8eff0"/>
-    <circle cx="140" cy="100" r="30" fill="#ffffff"/>
-    <path d="M140 100 Q150 80 164 88 M140 100 Q160 112 150 126 M140 100 Q118 108 116 88"/>
-    <circle cx="140" cy="100" r="4" fill="#284b52"/>
-    <path d="M192 72 H236 M192 86 H236 M192 100 H236 M192 114 H236 M192 128 H236"/>
-    <path d="M276 78 q10 -6 20 0 t20 0 M276 100 q10 -6 20 0 t20 0 M276 122 q10 -6 20 0 t20 0" stroke="#c8a96b"/>
+  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="40" y="30" width="320" height="140" rx="6" fill="#f7f9f9"/>
+    <rect x="96" y="56" width="150" height="92" rx="6" fill="#e8eff0"/>
+    <circle cx="146" cy="102" r="30" fill="#ffffff"/>
+    <path d="M146 102 Q156 80 170 88 M146 102 Q166 114 156 128 M146 102 Q124 110 122 90"/>
+    <circle cx="146" cy="102" r="4" fill="#284b52" stroke="none"/>
+    <path d="M196 72 H232 M196 86 H232 M196 100 H232 M196 114 H232 M196 128 H232" opacity="0.7"/>
+    <path d="M262 80 q10 -6 20 0 t20 0 M262 102 q10 -6 20 0 t20 0 M262 124 q10 -6 20 0 t20 0" stroke="#c8a96b"/>
+    <path d="M96 160 H246 M96 155 V165 M246 155 V165 M76 56 V148 M71 56 H81 M71 148 H81" stroke-width="1.5"/>
+    <text x="330" y="160" font-size="9" font-weight="700" fill="#284b52" stroke="none" text-anchor="middle">A/C UNIT</text>
   </g>
 </svg>

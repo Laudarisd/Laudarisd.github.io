@@ -1,13 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Neural network with a tuning dial">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Text and image data tuning a neural network">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M96 60 L166 82 M96 60 L166 118 M96 100 L166 82 M96 100 L166 118 M96 140 L166 82 M96 140 L166 118 M166 82 L236 100 M166 118 L236 100" stroke-width="2"/>
-    <circle cx="96" cy="60" r="11" fill="#ffffff"/><circle cx="96" cy="100" r="11" fill="#ffffff"/><circle cx="96" cy="140" r="11" fill="#ffffff"/>
-    <circle cx="166" cy="82" r="11" fill="#ffffff"/><circle cx="166" cy="118" r="11" fill="#ffffff"/>
-    <circle cx="236" cy="100" r="13" fill="#c8a96b" stroke="none"/>
-    <circle cx="306" cy="100" r="30" fill="#e8eff0"/>
-    <path d="M306 100 L322 82" stroke="#c8a96b" stroke-width="5"/>
-    <circle cx="306" cy="100" r="4" fill="#284b52"/>
-    <path d="M288 84 L291 87 M306 76 V80 M324 84 L321 87" stroke-width="2"/>
+  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="40" y="46" width="60" height="42" rx="6" fill="#f7f9f9"/>
+    <text x="70" y="75" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#284b52" stroke="none" text-anchor="middle">Aa</text>
+    <rect x="40" y="112" width="60" height="42" rx="6" fill="#f7f9f9"/>
+    <path d="M46 150 L62 130 L74 142 L82 134 L94 150 Z" fill="#c8a96b" stroke="none"/>
+    <circle cx="82" cy="124" r="4" fill="#284b52" stroke="none"/>
+    <path d="M100 67 L150 60 M100 67 L150 100 M100 67 L150 140 M100 133 L150 60 M100 133 L150 100 M100 133 L150 140 M150 60 L220 80 M150 60 L220 120 M150 100 L220 80 M150 100 L220 120 M150 140 L220 80 M150 140 L220 120 M220 80 L290 100 M220 120 L290 100" stroke-width="1.5" opacity="0.6"/>
+    <circle cx="150" cy="60" r="10" fill="#ffffff"/><circle cx="150" cy="100" r="10" fill="#ffffff"/><circle cx="150" cy="140" r="10" fill="#ffffff"/>
+    <circle cx="220" cy="80" r="10" fill="#ffffff"/><circle cx="220" cy="120" r="10" fill="#ffffff"/>
+    <circle cx="290" cy="100" r="13" fill="#c8a96b" stroke="none"/>
+    <circle cx="342" cy="140" r="24" fill="#e8eff0"/>
+    <path d="M342 140 L355 123" stroke="#c8a96b" stroke-width="5"/>
+    <circle cx="342" cy="140" r="4" fill="#284b52" stroke="none"/>
+    <path d="M302 54 H370" stroke-width="4" opacity="0.3"/>
+    <path d="M302 54 H348" stroke="#c8a96b" stroke-width="4"/>
+    <circle cx="348" cy="54" r="7" fill="#284b52" stroke="none"/>
   </g>
 </svg>

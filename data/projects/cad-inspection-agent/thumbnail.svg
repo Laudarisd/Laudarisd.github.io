@@ -1,12 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="CAD drawing inspected by an AI agent">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="CAD drawing inspected by an AI agent">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="96" y="44" width="150" height="112" rx="6" fill="#e8eff0"/>
-    <path d="M118 66 H190 V110 H160 V134 H118 Z"/>
-    <path d="M190 66 H224 V134 H160"/>
-    <path d="M118 92 H146"/>
-    <circle cx="272" cy="112" r="34" fill="#ffffff" stroke-width="4"/>
-    <path d="M297 137 L324 164" stroke-width="7"/>
-    <path d="M258 113 L268 123 L288 100" stroke="#c8a96b" stroke-width="5"/>
+  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="44" y="34" width="196" height="132" rx="6" fill="#f7f9f9"/>
+    <rect x="54" y="44" width="176" height="112" stroke-width="1" opacity="0.6"/>
+    <path d="M72 64 H158 V110 H120 V140 H72 Z M158 64 H212 V140 H120 M72 92 H108 M158 110 H212"/>
+    <path d="M108 92 A18 18 0 0 1 126 110" stroke="#c8a96b"/>
+    <rect x="176" y="144" width="52" height="10" stroke-width="1"/>
+    <circle cx="288" cy="100" r="40" fill="#ffffff" stroke-width="4"/>
+    <path d="M318 130 L350 162" stroke-width="8"/>
+    <path d="M270 102 L282 114 L308 86" stroke="#c8a96b" stroke-width="6"/>
+    <rect x="318" y="36" width="36" height="18" rx="5" fill="#284b52" stroke="none"/><text x="336.0" y="49" font-size="10" font-weight="700" fill="#ffffff" stroke="none" text-anchor="middle">AI</text>
   </g>
 </svg>

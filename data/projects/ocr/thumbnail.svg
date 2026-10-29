@@ -1,10 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Document scanned into text">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Document scanned by OCR into text">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="96" y="44" width="110" height="112" rx="6" fill="#e8eff0"/>
-    <path d="M114 68 H188 M114 86 H176 M114 122 H188 M114 140 H170"/>
-    <path d="M88 104 H214" stroke="#c8a96b" stroke-width="5"/>
-    <path d="M232 100 H262 M252 90 L264 100 L252 110"/>
-    <text x="312" y="112" font-family="Georgia, serif" font-size="40" font-weight="700" fill="#284b52" stroke="none" text-anchor="middle">Aa</text>
+  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="60" y="32" width="130" height="136" rx="6" fill="#f7f9f9"/>
+    <path d="M78 56 H172 M78 72 H156 M78 88 H172 M78 104 H140 M78 132 H172 M78 148 H150" opacity="0.7"/>
+    <rect x="52" y="110" width="146" height="14" rx="4" fill="#c8a96b" opacity="0.35" stroke="none"/>
+    <path d="M52 117 H198" stroke="#c8a96b" stroke-width="3"/>
+    <path d="M44 44 V24 H64 M186 24 H206 V44 M44 156 V176 H64 M186 176 H206 V156"/>
+    <path d="M222 100 H258 M248 91 L259 100 L248 109"/>
+    <text x="318" y="92" font-family="Georgia, serif" font-size="44" font-weight="700" fill="#284b52" stroke="none" text-anchor="middle">Aa</text>
+    <path d="M280 118 H356 M280 134 H340" opacity="0.6"/>
+    <rect x="280" y="150" width="76" height="8" rx="2" fill="#c8a96b" stroke="none"/>
   </g>
 </svg>

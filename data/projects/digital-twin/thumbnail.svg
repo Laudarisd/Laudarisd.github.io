@@ -1,10 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Building and its digital twin">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Floor plan reconstructed into a 3D digital twin">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M86 150 V76 L132 52 L178 76 V150 Z" fill="#e8eff0"/>
-    <path d="M108 100 H124 M140 100 H156 M108 124 H124 M140 124 H156"/>
-    <path d="M222 150 V76 L268 52 L314 76 V150 Z" stroke-dasharray="7 6"/>
-    <path d="M244 100 H260 M276 100 H292 M244 124 H260 M276 124 H292" stroke-dasharray="7 6"/>
-    <path d="M190 92 H212 M204 84 L214 92 L204 100 M212 112 H190 M198 104 L188 112 L198 120" stroke="#c8a96b"/>
+  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="40" y="46" width="136" height="108" rx="6" fill="#f7f9f9"/>
+    <path d="M58 64 H158 V136 H58 Z M58 100 H106 V136 M106 64 V100 M132 100 H158"/>
+    <path d="M86 100 A14 14 0 0 1 100 114" stroke="#c8a96b"/>
+    <path d="M192 100 H226 M216 91 L227 100 L216 109"/>
+    <path d="M250 124 L250 70 L300 44 L350 70 L350 124 L300 150 Z" fill="#e8eff0"/>
+    <path d="M250 70 L300 96 L350 70 M300 96 V150"/>
+    <path d="M262 92 L286 104 M262 110 L286 122 M314 104 L338 92 M314 122 L338 110" stroke-width="1.5"/>
+    <path d="M232 164 H368" stroke-dasharray="4 5" stroke-width="1.5"/>
+    <circle cx="300" cy="44" r="5" fill="#c8a96b" stroke="none"/>
   </g>
 </svg>

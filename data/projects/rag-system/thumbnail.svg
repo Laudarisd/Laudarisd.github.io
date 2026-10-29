@@ -1,12 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Documents retrieved to answer a question">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Documents retrieved to answer a question">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="80" y="56" width="74" height="96" rx="6" fill="#e8eff0"/>
-    <rect x="94" y="44" width="74" height="96" rx="6" fill="#ffffff"/>
-    <path d="M110 68 H152 M110 84 H148 M110 100 H152"/>
-    <rect x="108" y="112" width="34" height="8" rx="3" fill="#c8a96b" stroke="none"/>
-    <path d="M186 98 H218 M208 88 L220 98 L208 108"/>
-    <path d="M250 56 H316 Q328 56 328 68 V112 Q328 124 316 124 H278 L258 142 V124 H250 Q238 124 238 112 V68 Q238 56 250 56 Z" fill="#e8eff0"/>
-    <path d="M256 78 H308 M256 94 H300 M256 110 H286"/>
+  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="68" y="60" width="78" height="100" rx="6" fill="#e8eff0"/>
+    <rect x="56" y="48" width="78" height="100" rx="6" fill="#f7f9f9"/>
+    <rect x="44" y="36" width="78" height="100" rx="6" fill="#ffffff"/>
+    <path d="M58 58 H108 M58 72 H104 M58 86 H108 M58 100 H92"/>
+    <rect x="56" y="110" width="52" height="10" rx="3" fill="#c8a96b" stroke="none"/>
+    <circle cx="174" cy="70" r="12" fill="#ffffff" stroke="#c8a96b" stroke-width="3"/>
+    <path d="M183 79 L194 90" stroke="#c8a96b" stroke-width="4"/>
+    <path d="M152 104 H212 M202 95 L213 104 L202 113"/>
+    <path d="M240 46 H348 Q360 46 360 58 V122 Q360 134 348 134 H276 L252 156 V134 H240 Q228 134 228 122 V58 Q228 46 240 46 Z" fill="#e8eff0"/>
+    <path d="M248 72 H340 M248 90 H326 M248 108 H300"/>
+    <circle cx="334" cy="108" r="6" fill="#c8a96b" stroke="none"/>
   </g>
 </svg>

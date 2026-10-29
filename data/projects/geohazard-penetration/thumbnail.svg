@@ -1,11 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Soil layers with a penetration probe">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Soil layers with a penetration probe and a prediction curve">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M70 90 Q130 78 200 90 T330 90 V160 H70 Z" fill="#e8eff0"/>
-    <path d="M70 122 H330" stroke-dasharray="6 6" stroke-width="2"/>
-    <rect x="194" y="40" width="12" height="80" fill="#ffffff"/>
-    <path d="M194 120 L200 140 L206 120 Z" fill="#c8a96b" stroke="#c8a96b"/>
-    <path d="M182 40 H218" stroke-width="5"/>
-    <circle cx="110" cy="142" r="3" fill="#284b52"/><circle cx="260" cy="146" r="3" fill="#284b52"/><circle cx="300" cy="136" r="3" fill="#284b52"/>
+  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M30 70 Q80 60 130 70 T230 70 V104 H30 Z" fill="#f7f9f9"/>
+    <path d="M30 104 H230 V136 H30 Z" fill="#e8eff0"/>
+    <path d="M30 136 H230 V172 H30 Z" fill="#d9e4e6"/>
+    <path d="M30 70 Q80 60 130 70 T230 70"/>
+    <path d="M30 104 H230 M30 136 H230" stroke-width="1" opacity="0.4"/>
+    <circle cx="60" cy="154" r="3" fill="#284b52" stroke="none"/><circle cx="110" cy="160" r="2.5" fill="#284b52" stroke="none"/><circle cx="180" cy="150" r="3" fill="#284b52" stroke="none"/><circle cx="210" cy="164" r="2" fill="#284b52" stroke="none"/>
+    <rect x="124" y="30" width="12" height="100" fill="#ffffff"/>
+    <path d="M124 130 L130 150 L136 130 Z" fill="#c8a96b" stroke="#c8a96b"/>
+    <rect x="112" y="26" width="36" height="12" rx="3" fill="#284b52" stroke="none"/>
+    <path d="M70 136 L84 112 L98 136 Z" fill="#c8a96b" stroke="#c8a96b"/>
+    <path d="M84 120 V128" stroke="#ffffff"/><circle cx="84" cy="132" r="1.5" fill="#ffffff" stroke="none"/>
+    <rect x="250" y="40" width="120" height="120" rx="6" fill="#f7f9f9"/>
+    <path d="M264 148 V54 M264 148 H356"/>
+    <path d="M264 140 C290 132 300 100 316 90 S344 70 356 62"/>
+    <path d="M264 142 C292 138 304 108 318 98 S346 80 356 74" stroke="#c8a96b" stroke-dasharray="5 4"/>
+    <circle cx="290" cy="128" r="4" fill="#c8a96b" stroke="none"/><circle cx="316" cy="92" r="4" fill="#c8a96b" stroke="none"/><circle cx="340" cy="72" r="4" fill="#c8a96b" stroke="none"/>
   </g>
 </svg>

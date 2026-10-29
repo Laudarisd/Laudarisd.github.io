@@ -1,10 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Prompt text turned into generated content">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Prompt turned into generated text and images">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="80" y="60" width="120" height="80" rx="8" fill="#e8eff0"/>
-    <path d="M98 84 H160 M98 100 H176 M98 116 H146"/>
-    <path d="M216 100 H244 M234 90 L246 100 L234 110"/>
-    <path d="M292 56 L300 84 L328 92 L300 100 L292 128 L284 100 L256 92 L284 84 Z" fill="#c8a96b" stroke="#c8a96b"/>
-    <path d="M268 132 L271 142 L281 145 L271 148 L268 158 L265 148 L255 145 L265 142 Z" fill="#284b52" stroke="none"/>
+  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="40" y="62" width="124" height="76" rx="8" fill="#f7f9f9"/>
+    <path d="M56 84 H120 M56 100 H140 M56 116 H104"/>
+    <rect x="56" y="124" width="8" height="2" fill="#284b52" stroke="none"/>
+    <path d="M180 100 H212 M202 91 L213 100 L202 109"/>
+    <path d="M238 100 L246 78 L268 70 L246 62 L238 40 L230 62 L208 70 L230 78 Z" fill="#c8a96b" stroke="#c8a96b"/>
+    <path d="M226 136 L229 128 L237 125 L229 122 L226 114 L223 122 L215 125 L223 128 Z" fill="#284b52" stroke="none"/>
+    <rect x="286" y="44" width="76" height="50" rx="6" fill="#e8eff0"/>
+    <path d="M292 90 L310 70 L322 82 L332 72 L356 90 Z" fill="#ffffff"/>
+    <circle cx="344" cy="58" r="5" fill="#c8a96b" stroke="none"/>
+    <rect x="286" y="108" width="76" height="50" rx="6" fill="#e8eff0"/>
+    <path d="M298 124 H350 M298 138 H340 M298 150 H326" stroke-width="2"/>
   </g>
 </svg>

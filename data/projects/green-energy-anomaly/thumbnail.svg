@@ -1,11 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Wind turbine and a chart with an anomaly">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Wind turbine and solar panel with an anomaly on a chart">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M100 160 L104 80 H112 L116 160 Z" fill="#e8eff0"/>
-    <path d="M108 78 L112 34 M108 78 L146 100 M108 78 L70 100"/>
-    <circle cx="108" cy="78" r="5" fill="#284b52"/>
-    <rect x="196" y="48" width="130" height="104" rx="6" fill="#e8eff0"/>
-    <path d="M210 124 L228 112 L246 118 L262 106 L276 54 L288 112 L306 100 L314 104"/>
-    <circle cx="276" cy="54" r="7" fill="#c8a96b" stroke="none"/>
+  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M30 160 H370" opacity="0.4"/>
+    <path d="M90 160 L96 74 H100 L106 160 Z" fill="#f7f9f9"/>
+    <circle cx="98" cy="72" r="6" fill="#284b52" stroke="none"/>
+    <path d="M98 72 L104 22 L92 24 Z M98 72 L142 94 L136 104 Z M98 72 L54 96 L60 106 Z" fill="#ffffff"/>
+    <path d="M138 160 L148 124 H206 L196 160 Z" fill="#e8eff0"/>
+    <path d="M143 142 H201 M162 124 L156 160 M182 124 L176 160" stroke-width="1.5"/>
+    <rect x="226" y="40" width="144" height="110" rx="6" fill="#f7f9f9"/>
+    <path d="M240 70 H356 M240 96 H356 M240 122 H356" stroke-width="1" opacity="0.3"/>
+    <path d="M240 120 L256 110 L270 116 L284 104 L298 108 L308 62 L318 112 L332 100 L346 104 L356 94"/>
+    <circle cx="308" cy="62" r="8" fill="#c8a96b" stroke="none"/>
+    <path d="M308 44 V48" stroke-width="3"/><circle cx="308" cy="53" r="1.8" fill="#284b52" stroke="none"/>
   </g>
 </svg>

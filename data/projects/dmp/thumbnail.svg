@@ -1,9 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Motion trajectory with reservoir nodes">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Motion trajectory learned by a reservoir network">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M70 140 C120 40 170 160 220 70 S300 60 330 110" stroke="#c8a96b" stroke-width="4"/>
-    <path d="M318 92 L332 110 L312 114" stroke="#c8a96b"/>
-    <circle cx="120" cy="84" r="9" fill="#e8eff0"/><circle cx="172" cy="130" r="9" fill="#e8eff0"/><circle cx="222" cy="68" r="9" fill="#e8eff0"/><circle cx="276" cy="78" r="9" fill="#e8eff0"/>
-    <path d="M70 160 H330" stroke-width="2" stroke-dasharray="4 6"/>
+  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M40 150 H230" stroke-dasharray="4 6" stroke-width="1.5"/>
+    <path d="M44 140 C80 40 130 160 170 70 S215 70 230 110" stroke="#c8a96b" stroke-width="3.5"/>
+    <path d="M220 94 L232 112 L212 116" stroke="#c8a96b"/>
+    <circle cx="68" cy="100" r="5" fill="#284b52" stroke="none"/><circle cx="122" cy="120" r="5" fill="#284b52" stroke="none"/><circle cx="170" cy="70" r="5" fill="#284b52" stroke="none"/>
+    <circle cx="296" cy="96" r="54" fill="#e8eff0"/>
+    <path d="M270 76 L302 66 M270 76 L284 104 M302 66 L324 90 M284 104 L324 90 M284 104 L300 126 M324 90 L300 126 M270 76 L258 100 M258 100 L284 104 M302 66 L324 90" stroke-width="1.5"/>
+    <circle cx="270" cy="76" r="5" fill="#ffffff"/><circle cx="302" cy="66" r="5" fill="#ffffff"/><circle cx="284" cy="104" r="5" fill="#ffffff"/><circle cx="324" cy="90" r="5" fill="#ffffff"/><circle cx="300" cy="126" r="5" fill="#ffffff"/><circle cx="258" cy="100" r="5" fill="#ffffff"/>
+    <circle cx="324" cy="90" r="5" fill="#c8a96b" stroke="none"/>
+    <path d="M236 110 H242" stroke-width="3"/>
+    <text x="296" y="170" font-size="11" font-weight="700" fill="#284b52" stroke="none" text-anchor="middle">ESN</text>
   </g>
 </svg>

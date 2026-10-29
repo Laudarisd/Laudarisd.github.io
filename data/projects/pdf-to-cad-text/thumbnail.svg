@@ -1,12 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="PDF page converted into CAD text">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="PDF page converted into a CAD drawing with text">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M78 48 H150 L172 70 V152 H78 Z" fill="#e8eff0"/>
-    <path d="M150 48 V70 H172"/>
-    <path d="M96 92 H154 M96 108 H146 M96 124 H154"/>
-    <path d="M196 100 H228 M218 90 L230 100 L218 110"/>
-    <rect x="246" y="48" width="84" height="104" rx="6" fill="#ffffff"/>
-    <path d="M260 64 H316 V104 H260 Z M288 64 V104"/>
-    <text x="288" y="140" font-family="Georgia, serif" font-size="26" font-weight="700" fill="#c8a96b" stroke="none" text-anchor="middle">Aa</text>
+  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M44 34 H134 L160 60 V166 H44 Z" fill="#f7f9f9"/>
+    <path d="M134 34 V60 H160" fill="#e8eff0"/>
+    <path d="M60 80 H142 M60 96 H130 M60 112 H142"/>
+    <rect x="44" y="134" width="50" height="18" rx="5" fill="#284b52" stroke="none"/><text x="69.0" y="147" font-size="10" font-weight="700" fill="#ffffff" stroke="none" text-anchor="middle">PDF</text>
+    <path d="M180 100 H222 M212 91 L223 100 L212 109"/>
+    <rect x="238" y="34" width="124" height="132" rx="6" fill="#ffffff"/>
+    <path d="M254 52 H346 V110 H254 Z M300 52 V110 M254 82 H300"/>
+    <text x="300" y="146" font-family="Georgia, serif" font-size="26" font-weight="700" fill="#c8a96b" stroke="none" text-anchor="middle">Aa</text>
+    <path d="M256 156 H344" stroke="#c8a96b" stroke-width="2" stroke-dasharray="4 4"/>
   </g>
 </svg>
