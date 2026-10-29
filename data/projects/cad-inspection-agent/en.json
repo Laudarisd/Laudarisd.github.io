@@ -5,18 +5,17 @@
   "image_alt": "CAD inspection AI agent",
   "image_class": "",
   "url": "https://github.com/Laudarisd",
-  "subtitle": "CAD Parser: an add-on for a CAD application that reads a DWG floor plan, works out what is in it, links doors and windows to the spaces they serve, checks the plan against inspection rules, and answers questions about it with evidence on the drawing.",
-  "status": "in_development",
-  "role": "Researcher, WIZCORE",
-  "context": "Industry R&D",
+  "subtitle": "An add-on for a CAD application that reads a DWG drawing, extracts information and generates inspection reports.",
   "tags": [
-    "DWG / DXF",
+    "DWG Inspection Agent",
     "C# / .NET",
     "CAD add-on",
     "Computational Geometry",
     "Graph Database",
-    "LLM Agent",
+    "LLM/vLM Agent",
     "Tool Use",
+    "AI Agent",
+    "Agent Orchestration",
     "Bilingual Reports"
   ],
   "links": [
