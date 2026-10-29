@@ -43,6 +43,7 @@ The site is responsive, bilingual (English / Korean), and includes four selectab
 ├── js/site.js          # Loads data/*.json and renders every section
 ├── js/project.js       # Renders the project detail pages
 ├── js/projects/        # One detail page per project (ai-ce.html, vectra.html, ...)
+├── tools/              # build_articles.py: embeds PORTFOLIO*.md case studies into the pages
 ├── data/               # All page content: one folder per section, en.json + kr.json inside
 │   └── projects/       # index.json (groups + order) and one folder per project
 │       └── <slug>/     # en.json, kr.json, thumbnail image
@@ -83,7 +84,9 @@ To add an item, copy an existing entry in the `items` array and edit its values,
 
 ### Projects
 
-Each project is a folder `data/projects/<slug>/` containing `en.json`, `kr.json`, and its thumbnail image. The JSON holds the card (`title`, `description`, `image`, `image_alt`, `image_class`, `url` for the Code button) and the detail page (`subtitle`, `status`, `period`, `role`, `context`, `tags`, `overview`, `problem`, `contributions`, `architecture` (`steps`, or several named `flows`), `process` (numbered steps), `pipeline`, `stack`, `components` (table rows), `figures` (image files in the same folder with captions), `results`, `challenges`, `links`, and optionally `article`: the name of a Markdown file in the same folder, rendered in full on the page as a case study. Markdown supports headings (a table of contents is built from `##` headings), tables, fenced code blocks, images with relative paths, and ```mermaid diagrams. Sections left empty are hidden on the detail page. `status` is one of `completed`, `in_development`, `research`, `poc`; `image_class` can be `""`, `"project-image-logo"` (padded logo), or `"project-image-paper"` (paper figure).
+Each project is a folder `data/projects/<slug>/` containing `en.json`, `kr.json`, and its thumbnail image. The JSON holds the card (`title`, `description`, `image`, `image_alt`, `image_class`, `url` for the Code button) and the detail page (`subtitle`, `status`, `period`, `role`, `context`, `tags`, `overview`, `problem`, `contributions`, `architecture` (`steps`, or several named `flows`), `process` (numbered steps), `pipeline`, `stack`, `components` (table rows), `figures` (image files in the same folder with captions), `results`, `challenges`, `links`, ). Sections left empty are hidden on the detail page.
+
+A project can also carry a full case study. Write it as `PORTFOLIO.md` (English) and `PORTFOLIO_kr.md` (Korean) in the project folder, then run `python tools/build_articles.py` (needs `pip install markdown` once). The script converts the Markdown to HTML and embeds both languages directly in `js/projects/<slug>.html`, so the published page contains the whole text; nothing is fetched at view time. Markdown supports headings (a table of contents is built from `##` headings), tables, fenced code blocks, images with paths relative to the project folder, and ```mermaid diagrams, which the page draws with mermaid. `status` is one of `completed`, `in_development`, `research`, `poc`; `image_class` can be `""`, `"project-image-logo"` (padded logo), or `"project-image-paper"` (paper figure).
 
 `data/projects/index.json` defines the groups and the display order of the slugs. To add a project: create the folder with both JSON files and a thumbnail, add the slug to a group in `index.json`, and copy `js/projects/ai-ce.html` to `js/projects/<slug>.html` (change its `<title>` and `data-project`).
 

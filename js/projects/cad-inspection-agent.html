@@ -100,7 +100,1233 @@
         <div class="container detail-grid">
           <article class="panel detail-panel detail-panel-wide" id="panel-article">
             <h2 data-ui="project_page.article"></h2>
-            <div class="panel-body"></div>
+            <div class="panel-body">
+<!-- article:start -->
+<div class="project-article" data-lang="en" hidden>
+<nav class="article-toc-wrap"><h4>Contents</h4><ol class="article-toc"><li><a href="#1-introduction">1. Introduction</a></li><li><a href="#2-the-problem-a-drawing-is-not-a-model">2. The problem: a drawing is not a model</a></li><li><a href="#3-parsing-and-storage">3. Parsing and storage</a></li><li><a href="#4-what-the-system-produces">4. What the system produces</a></li><li><a href="#5-why-an-ai-agent">5. Why an AI agent</a></li><li><a href="#6-the-agent-harness">6. The agent harness</a></li><li><a href="#7-interaction-and-safety">7. Interaction and safety</a></li><li><a href="#8-reliability-engineering">8. Reliability engineering</a></li><li><a href="#9-results">9. Results</a></li><li><a href="#10-inspection-and-reporting">10. Inspection and reporting</a></li><li><a href="#11-graph-database">11. Graph database</a></li><li><a href="#12-technology-and-skills">12. Technology and skills</a></li><li><a href="#13-how-the-work-was-run">13. How the work was run</a></li><li><a href="#14-roadmap">14. Roadmap</a></li><li><a href="#15-summary">15. Summary</a></li></ol></nav>
+<h1>CAD Parser — turning architectural drawings into answers</h1>
+<p>An add-on for CADian 2026 that reads a DWG floor plan, works out what is in it, and
+answers questions about it. It identifies the spaces and the objects in them, links
+doors and windows to the spaces they serve, checks the plan against inspection
+rules, and produces a bilingual report.</p>
+<blockquote>
+<p><strong>A note on what this document contains.</strong> This is a description of the problem,
+the capabilities and the results. The methods behind them are deliberately left
+out. They are the product.</p>
+</blockquote>
+<hr />
+<h2 id="1-introduction">1. Introduction</h2>
+<p>An architectural drawing contains everything a building needs, but a computer does
+not see rooms, doors or bathrooms in it. It sees tens of thousands of lines, arcs,
+texts and symbols with no meaning attached to any of them. A person reads the plan
+in seconds. Software has to rebuild that understanding from nothing.</p>
+<p>This project does that rebuilding, and then puts an AI assistant on top of it, so
+that a user can simply ask.</p>
+<pre class="mermaid">flowchart LR
+    A[DWG drawing] --> B[Parse]
+    B --> C[(Structured<br/>knowledge)]
+    C --> D[Graph<br/>database]
+    C --> E[AI agent]
+    E --> F[Answers,<br/>highlights,<br/>reports]
+</pre>
+<p>Three questions shaped every decision in it:</p>
+<ol>
+<li><strong>Does it work on a drawing it has never seen?</strong> A system tuned to one file is a
+   demo, not a product.</li>
+<li><strong>Can every answer be traced?</strong> An inspection result that cannot be shown on the
+   drawing is an opinion.</li>
+<li><strong>Can it be wrong safely?</strong> It works on a customer's drawing, so uncertainty must
+   be a visible state, and nothing may change without a human decision.</li>
+</ol>
+<hr />
+<h2 id="2-the-problem-a-drawing-is-not-a-model">2. The problem: a drawing is not a model</h2>
+<p>A DWG file is a picture made of geometry. Nothing in it says "this is a bedroom".
+Everything that follows exists because of that one fact.</p>
+<h3>2.1 What the file actually contains</h3>
+<pre><code>A floor plan file
+├── Primitives      lines, polylines, arcs, circles, hatches
+├── Text            names, sizes, notes, titles, legends, revisions
+├── Symbols         reusable blocks: a door, a toilet, an entire flat
+│   ├── nested      a symbol inside a symbol inside a symbol
+│   └── external    geometry that lives in a different file altogether
+├── Layers          groupings chosen by whoever drew it
+└── Marks           codes that refer to a door or a window
+</code></pre>
+<h3>2.2 Why that is hard</h3>
+<p><strong>Geometry carries no meaning.</strong> The file stores shapes and positions. It does not
+store what anything <em>is</em>, what belongs to what, or where one thing ends and the next
+begins.</p>
+<p><strong>Everything overlaps.</strong> Furniture, tiling, hatching, dimension lines and
+annotations sit on top of the structure. Treating all geometry equally produces
+nonsense.</p>
+<p><strong>Symbols hide their position.</strong> A symbol's true coordinates exist only after it is
+resolved through insertion, rotation, scale and mirroring, sometimes several levels
+deep. The usual shortcut, exploding everything, destroys the information about what
+each symbol is, which is exactly the information needed.</p>
+<p><strong>Nothing is standardised.</strong> Every office draws differently and names things
+differently, in more than one language, and the same project mixes conventions.</p>
+<p><strong>One file, many flats.</strong> A residential plan repeats the same unit several times,
+some mirrored, some rotated at an angle. Every name repeats with it, so every answer
+must stay unambiguous without the user pointing at coordinates.</p>
+<p><strong>Drawings are not drawn correctly.</strong> Lines that should meet miss by a millimetre.
+Content sits on the wrong grouping. Labels sit outside the thing they name. Real
+files are the test, not clean ones.</p>
+<h3>2.3 Why the obvious approaches fail</h3>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Approach</th>
+<th>Why it is not enough</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Explode everything and analyse the shapes</td>
+<td>Loses the meaning carried by symbols, and multiplies the data</td>
+</tr>
+<tr>
+<td>Send the drawing to a language model</td>
+<td>Far too large, and models cannot do exact geometry or counting</td>
+</tr>
+<tr>
+<td>Image recognition on a rendered plan</td>
+<td>Loses exact coordinates, units and identity; cannot be traced back</td>
+</tr>
+<tr>
+<td>Manual templates per project</td>
+<td>Does not scale, and every customer draws differently</td>
+</tr>
+</tbody>
+</table></div>
+<p>The system uses none of these alone. It builds a structured understanding first, and
+treats the language model as a reader of that structure rather than of the file.</p>
+<hr />
+<h2 id="3-parsing-and-storage">3. Parsing and storage</h2>
+<p>The first stage reads the drawing and writes it down in a form a machine can work
+with.</p>
+<pre class="mermaid">flowchart LR
+    A[DWG] --> B[Read every entity:<br/>lines, polylines, arcs,<br/>circles, hatches, text]
+    B --> C[Resolve symbols and<br/>external references]
+    C --> D[Real world coordinates,<br/>in metres]
+    D --> E[(Stored per drawing)]
+</pre>
+<pre><code>Parsing
+├── Entities          lines, polylines, arcs, circles, hatches, text
+├── Symbols           resolved to the leaf, including nested ones
+├── External refs     pulled in and marked with their origin
+├── Units             normalised, so every later number is in metres
+└── Identity          a stable identifier per drawing and per entity
+</code></pre>
+<p>Two decisions mattered.</p>
+<p><strong>Nothing is exploded.</strong> Each piece of geometry keeps a path back to the symbol it
+belongs to, so a symbol is still recognisable as itself while its geometry sits in
+world coordinates.</p>
+<p><strong>Every fact keeps its origin.</strong> The drawing's own identifier for an entity is
+carried through the whole pipeline. That is what later lets any number be pointed at
+on screen, and lets a reviewer disagree with one line rather than the whole report.</p>
+<p>Parsed drawings are stored, not re-read. A drawing is processed once and the result
+is reused for every later question, by the assistant, by the inspection, and by the
+graph database.</p>
+<hr />
+<h2 id="4-what-the-system-produces">4. What the system produces</h2>
+<h3>4.1 Structured knowledge</h3>
+<pre><code>For one drawing
+├── Spaces           name, kind, area, confidence, evidence
+├── Objects          kind, position, the space it belongs to, evidence
+├── Openings         doors and windows, with sizes and the source of each size
+├── Marks            official codes and the openings they describe
+├── Relations        opening to spaces, space to space, space to its structure
+├── Inventory        what the drawing is made of, and how much of each
+└── Provenance       for every item, the exact drawing entities behind it
+</code></pre>
+<p><strong>Provenance is the feature.</strong> Every space, area, size and finding keeps a link back
+to the drawing. That is what allows the assistant to highlight its own evidence.</p>
+<p><strong>Confidence is explicit.</strong> A result that was recovered cleanly and one that was
+approximated are not presented as the same thing, and anything judged on top of an
+approximate result inherits that lower confidence.</p>
+<h3>4.2 From a user's point of view</h3>
+<pre class="mermaid">flowchart TD
+    A[Open a drawing in CAD] --> B[Extract]
+    B --> C[Browse what was found]
+    C --> D[Ask questions in chat]
+    D --> E[See the answer highlighted<br/>on the drawing]
+    E --> F[Add findings to the report]
+    F --> G[Export the report]
+    C --> H[Explore the graph database]
+    D --> I[Propose a change]
+    I --> J[Approve or reject]
+</pre>
+<h3>4.3 Capability inventory</h3>
+<pre><code>Capabilities
+├── Reading
+│   ├── full extraction with stable identity
+│   ├── symbol resolution to real world coordinates
+│   ├── external references included
+│   └── unit handling, so every result is in metres
+├── Understanding
+│   ├── spaces of every kind, including service and utility spaces
+│   ├── objects: doors, windows, sanitary fixtures, kitchen fittings, furniture
+│   ├── marks matched to the openings they describe
+│   └── relations between spaces, openings and structure
+├── Asking
+│   ├── find, count and measure anything the system knows about
+│   ├── walk the relations
+│   ├── answer in the language of the question
+│   └── show every answer on the drawing
+├── Inspecting
+│   ├── a rule set over spaces and their contents
+│   ├── a result state per rule per space, including &quot;cannot be judged&quot;
+│   └── findings collected into an editable report
+├── Reporting
+│   ├── one document per drawing, Korean and English together
+│   ├── content added straight from the conversation
+│   └── export to office formats
+└── Changing (always proposed, never automatic)
+    ├── create, edit, delete and reorganise drawing content
+    ├── move or copy content between groupings
+    └── a full journal of everything applied
+</code></pre>
+<hr />
+<h2 id="5-why-an-ai-agent">5. Why an AI agent</h2>
+<p>A fixed set of reports only answers the questions someone thought of in advance.
+Real users ask sideways questions:</p>
+<ul>
+<li><em>Which bathrooms have no ventilation?</em></li>
+<li><em>Make a table of the structure around this kitchen, with lengths.</em></li>
+<li><em>How many doors of this code are in the drawing, and where?</em></li>
+<li><em>Is anything missing in the balconies?</em></li>
+<li><em>Put that in the report, in both languages.</em></li>
+</ul>
+<p>An agent turns an open question into a short chain of exact lookups and explains the
+result. It is not asked to understand the drawing. It is asked to understand the
+<em>question</em>, and then to use tools that already understand the drawing.</p>
+<pre class="mermaid">flowchart LR
+    U[Question] --> M[Agent]
+    M --> T[Tools over the<br/>structured knowledge]
+    T --> O[Evidence]
+    O --> M
+    M --> A[Answer + highlight]
+</pre>
+<h3>5.1 Why not simply give the model the file</h3>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th></th>
+<th>Model reads the drawing</th>
+<th>Model reads the structured knowledge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Size</td>
+<td>far beyond a usable context</td>
+<td>a small, relevant slice</td>
+</tr>
+<tr>
+<td>Exactness</td>
+<td>approximate, unstable</td>
+<td>exact, repeatable</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>pays again for every question</td>
+<td>processed once, reused</td>
+</tr>
+<tr>
+<td>Traceability</td>
+<td>none</td>
+<td>every value carries its origin</td>
+</tr>
+<tr>
+<td>Reliability</td>
+<td>varies per model and per run</td>
+<td>the numbers do not depend on the model</td>
+</tr>
+</tbody>
+</table></div>
+<p>The deterministic work is done deterministically. The model is used for language,
+intent and composition, which is what it is actually good at.</p>
+<h3>5.2 What the agent can reach</h3>
+<p>The assistant works through a small, named set of tools. The names are what a user
+sees in the activity log:</p>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Tool</th>
+<th>What the user gets</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>find</code></td>
+<td>the items that match a description</td>
+</tr>
+<tr>
+<td><code>count</code></td>
+<td>how many, with the same filters</td>
+</tr>
+<tr>
+<td><code>measure</code></td>
+<td>sizes, clear widths, distances, with the source of each number</td>
+</tr>
+<tr>
+<td><code>relate</code></td>
+<td>how spaces, openings and structure connect</td>
+</tr>
+<tr>
+<td><code>highlight</code></td>
+<td>the answer shown on the drawing</td>
+</tr>
+<tr>
+<td><code>inspection</code></td>
+<td>findings written into the report</td>
+</tr>
+<tr>
+<td><code>modify</code></td>
+<td>a proposed change, never an applied one</td>
+</tr>
+<tr>
+<td><code>create_block</code></td>
+<td>a new symbol built from a selection</td>
+</tr>
+<tr>
+<td><code>data_scanner</code></td>
+<td>a raw sweep for anything the structured view missed</td>
+</tr>
+</tbody>
+</table></div>
+<p>What each tool accepts, and the shape of what it returns, are part of the product
+and are not described here.</p>
+<hr />
+<h2 id="6-the-agent-harness">6. The agent harness</h2>
+<p>The model is a small part of an agent. The harness is the rest, and it decides
+whether the thing survives real use.</p>
+<pre><code>Harness
+├── Conversation control
+│   ├── a working budget per question, and a clear stop
+│   ├── partial answers that say what is still missing
+│   └── no silent retry of a question already answered
+├── Grounding
+│   ├── every claim carries the drawing evidence behind it
+│   ├── the highlight shows exactly what the answer talked about
+│   └── anything that cannot be grounded is reported as unknown
+├── Scope discipline
+│   ├── &quot;only these&quot; means only these
+│   └── a narrowing word in the question narrows the result
+├── Context strategy
+│   ├── the drawing is introduced once, not repeated
+│   ├── tool results are reasoned over as they came back
+│   └── history is managed so long sessions stay coherent
+├── Determinism
+│   ├── the same question twice returns the same numbers
+│   └── numbers never depend on which model is configured
+├── Idempotence
+│   └── repeating an action does not duplicate its result
+├── Bilingual operation
+│   ├── answers in the language of the question
+│   └── report content stored in both languages at once
+├── Cost and observability
+│   ├── tokens and estimated cost shown per answer
+│   ├── every tool call traced with timing and outcome
+│   └── failures surfaced as information, not as crashes
+├── Model flexibility
+│   ├── hosted frontier models
+│   └── a self-hosted model for drawings that may not leave the building
+└── Safety
+    ├── proposal and approval are separate steps
+    ├── nothing is written without an explicit human click
+    └── everything applied is journalled
+</code></pre>
+<p>When an answer is wrong, the trace shows whether the agent asked the wrong question
+or a tool returned the wrong thing. That single distinction is most of debugging an
+agent system.</p>
+<hr />
+<h2 id="7-interaction-and-safety">7. Interaction and safety</h2>
+<h3>7.1 Showing the work</h3>
+<p>An answer that cannot be seen is hard to trust. Results are drawn directly on the
+CAD canvas without altering the drawing: evidence appears as temporary graphics that
+disappear when cleared. Spaces can be shown as outlines or filled with a see-through
+mask, so a space reads as an area while the plan stays readable underneath.</p>
+<h3>7.2 Changing a drawing</h3>
+<p>This is the only irreversible thing the system can do, so it is deliberately slow.</p>
+<pre class="mermaid">flowchart LR
+    A[Request] --> B[Exactly which items<br/>are affected]
+    B --> C[A proposal:<br/>what, what was skipped,<br/>what is risky]
+    C --> D[Shown on the drawing]
+    D --> E{Human decision}
+    E -- Approve --> F[Applied in one step]
+    E -- Reject --> G[Nothing happens]
+    F --> H[Journal and refresh]
+</pre>
+<p>The approval is a button, not a typed word. The assistant cannot propose and apply
+in the same breath, and the outcome of the click is fed back, so it knows what
+actually happened rather than what it suggested.</p>
+<hr />
+<h2 id="8-reliability-engineering">8. Reliability engineering</h2>
+<p>Correctness on one drawing is luck. The project is built around proving it on
+drawings it was not developed against.</p>
+<pre><code>Quality approach
+├── Benchmarks that cannot be gamed
+│   ├── no name, identifier or number appears in a test prompt
+│   ├── expected results are relations the drawing itself defines
+│   ├── every test is run on unrelated drawings, in both languages
+│   └── &quot;nothing found&quot; is a correct answer when it is true
+├── Staged scope
+│   ├── stage one: reading, classifying, counting, relating, grouping
+│   └── later stages do not start until stage one passes everywhere
+├── Fast measurement
+│   ├── the heavy stages can be run outside CAD on exported drawings
+│   └── a change can be measured in seconds instead of a manual session
+└── Regression discipline
+    ├── every result compared before and after a change
+    ├── spatial checks that results do not collide with each other
+    └── the same drawing re-tested in different units and rotated
+</code></pre>
+<p>A concrete example of what this catches: a change meant to improve one result
+quietly altered twenty others. The before-and-after comparison showed it in one run.
+Without that discipline, the improvement would have shipped with the damage attached.</p>
+<hr />
+<h2 id="9-results">9. Results</h2>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Measure</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Entities in a test plan</td>
+<td>roughly 25,000</td>
+</tr>
+<tr>
+<td>Spaces recovered in it</td>
+<td>66, across six repeated unit types</td>
+</tr>
+<tr>
+<td>Quality</td>
+<td>the large majority recovered cleanly; the rest reported as approximate rather than presented as exact</td>
+</tr>
+<tr>
+<td>Language coverage</td>
+<td>Korean and English, across both test sets</td>
+</tr>
+<tr>
+<td>Independence</td>
+<td>identical results in millimetres, in inches, and with the plan rotated</td>
+</tr>
+<tr>
+<td>Integrity</td>
+<td>results checked against each other on every change</td>
+</tr>
+<tr>
+<td>Repeatability</td>
+<td>the same question returns the same numbers across runs and models</td>
+</tr>
+</tbody>
+</table></div>
+<h3>9.1 Visual results</h3>
+<p>The figures below are illustrative placeholders drawn to the same layout as the
+real screens; they will be replaced with CAD screenshots.</p>
+<p><img alt="The drawing as it comes from CAD" src="../../data/projects/cad-inspection-agent/images/plan-original.svg" loading="lazy" />
+<em>Figure 1. The drawing as it comes from CAD: geometry, text and symbols with no meaning attached.</em></p>
+<p><img alt="What the system recovered, drawn over the plan" src="../../data/projects/cad-inspection-agent/images/spaces-detected.svg" loading="lazy" />
+<em>Figure 2. What the system recovered, drawn over the plan: spaces, openings and fixtures, each with a confidence.</em></p>
+<p><img alt="A space shown with the see-through mask" src="../../data/projects/cad-inspection-agent/images/space-mask.svg" loading="lazy" />
+<em>Figure 3. A space shown with the see-through mask, so it reads as an area while the plan stays readable underneath.</em></p>
+<p><img alt="The graph database view" src="../../data/projects/cad-inspection-agent/images/graph-db.svg" loading="lazy" />
+<em>Figure 4. The graph database view: a selected node with its direct connections, linked back to the canvas.</em></p>
+<p><img alt="A page of the inspection report" src="../../data/projects/cad-inspection-agent/images/report-sample.svg" loading="lazy" />
+<em>Figure 5. A page of the inspection report, Korean and English together, with the evidence behind each finding.</em></p>
+<h3>9.2 Demonstrations</h3>
+<p><em>(Add demo videos here.)</em></p>
+<ul>
+<li>A question asked and answered end to end, with the evidence highlighted.</li>
+<li>A full inspection run, from extraction to exported report.</li>
+<li>A proposed change, reviewed and approved.</li>
+</ul>
+<hr />
+<h2 id="10-inspection-and-reporting">10. Inspection and reporting</h2>
+<p>The inspection layer asks whether each space contains what it must contain.</p>
+<pre><code>Inspection
+├── Rule set        requirements on a kind of space and its contents
+├── Result states   pass, fail, warning, review required,
+│                   insufficient data, not applicable, not evaluated
+├── Evidence        the drawing entities behind every judgement
+├── Confidence      inherited from how well the result itself was recovered
+└── Report
+    ├── one document per drawing
+    ├── Korean and English stored together
+    ├── content added directly from the conversation
+    ├── editable: update, replace, remove, retitle
+    └── exported to office formats
+</code></pre>
+<p>The states that are neither pass nor fail matter most. A rule that cannot be judged
+on this drawing says so. That is the difference between a tool a reviewer trusts and
+one they stop reading.</p>
+<hr />
+<h2 id="11-graph-database">11. Graph database</h2>
+<p>A drawing is not a list. It is a web of things that refer to each other: a mark
+describes a door, a door joins two spaces, a space touches another space, a fixture
+belongs to a space. Storing that as a graph lets a question be answered by walking
+from one thing to the next, instead of scanning everything each time.</p>
+<pre class="mermaid">graph LR
+    M[Mark<br/>code] -- describes --> D[Door]
+    D -- connects --> R1[Space A]
+    D -- connects --> R2[Space B]
+    R1 -- touches --> R2
+    F[Fixture] -- belongs to --> R1
+    W[Window] -- opens from --> R1
+</pre>
+<h3>11.1 What is in it</h3>
+<pre><code>Graph database
+├── Nodes       one per meaningful thing: space, opening, mark, fixture,
+│               and the structural pieces around a space
+│   ├── class   what kind of thing it is
+│   ├── origin  the drawing entity it was built from
+│   └── values  its own properties, such as a code or a size
+├── Edges       directed, named relations between two nodes
+│   └── evidence   why the relation exists, kept on the edge itself
+└── One graph per drawing, saved and reloaded by drawing identity
+</code></pre>
+<p><strong>Edges carry their evidence.</strong> A relation is not an assertion, it is a claim with a
+reason attached. That makes the graph auditable: any connection can be questioned
+and traced back to the drawing.</p>
+<h3>11.2 What it is used for</h3>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Use</th>
+<th>What it gives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Exploration</td>
+<td>a window listing every node with its class, origin and how many connections it has</td>
+</tr>
+<tr>
+<td>Visualisation</td>
+<td>a selected node drawn with its direct connections, so the local picture is immediate</td>
+</tr>
+<tr>
+<td>Linking to the drawing</td>
+<td>selecting a node highlights it and its connections on the CAD canvas</td>
+</tr>
+<tr>
+<td>Answering</td>
+<td>the assistant walks the graph to answer questions about how things connect</td>
+</tr>
+<tr>
+<td>Inspection</td>
+<td>rules are evaluated over relations, not only over positions</td>
+</tr>
+<tr>
+<td>Persistence</td>
+<td>the graph is stored per drawing, so a reopened file brings its relations back</td>
+</tr>
+</tbody>
+</table></div>
+<h3>11.3 Why a graph rather than tables</h3>
+<p>Questions in this domain are relational by nature: <em>which spaces does this door
+join</em>, <em>what opens off this corridor</em>, <em>which spaces have no opening at all</em>, <em>what
+surrounds this space</em>. In a table these are joins that grow with every new question.
+As a graph they are short walks, and new relation types can be added without
+reshaping what is already stored.</p>
+<hr />
+<h2 id="12-technology-and-skills">12. Technology and skills</h2>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Area</th>
+<th>What this project demanded</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Language and platform</td>
+<td>C#, .NET, Windows desktop application development</td>
+</tr>
+<tr>
+<td>CAD integration</td>
+<td>commercial CAD add-on development, drawing database access, non-destructive on-canvas rendering, document and transaction handling</td>
+</tr>
+<tr>
+<td>Computational geometry</td>
+<td>spatial computation on unstructured drawing data, independence from unit and orientation</td>
+</tr>
+<tr>
+<td>Data engineering</td>
+<td>structured storage per drawing, content-based identity, vector search for free text, change journalling</td>
+</tr>
+<tr>
+<td>Graph modelling</td>
+<td>node and edge design, evidence-carrying relations, persistence, visualisation, traversal for question answering</td>
+</tr>
+<tr>
+<td>AI engineering</td>
+<td>tool-calling agents, multi-round control, grounding and evidence, prompt and configuration design, token and cost accounting, model routing</td>
+</tr>
+<tr>
+<td>Model operations</td>
+<td>hosted frontier models and a self-hosted model server for private data</td>
+</tr>
+<tr>
+<td>Natural language</td>
+<td>Korean and English throughout</td>
+</tr>
+<tr>
+<td>Documents</td>
+<td>bilingual document generation and export</td>
+</tr>
+<tr>
+<td>Product thinking</td>
+<td>confidence as a first-class output, approval gates, traceability, staged delivery</td>
+</tr>
+<tr>
+<td>Quality engineering</td>
+<td>drawing-independent benchmarks, offline measurement harness, regression comparison on every change</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="13-how-the-work-was-run">13. How the work was run</h2>
+<pre><code>Working method
+├── One problem at a time, measured before and after
+├── Every change verified on more than one drawing
+├── Nothing accepted because it looked right in one screenshot
+├── Configuration kept in one place, so behaviour is tunable
+├── Documentation written alongside, in plain language
+└── Scope held: a fix that improves one case and damages another is not a fix
+</code></pre>
+<hr />
+<h2 id="14-roadmap">14. Roadmap</h2>
+<ul>
+<li><strong>Recognition without names.</strong> Classify drawing content by what it is, so a file
+  with meaningless naming still works.</li>
+<li><strong>Drawing back into the file.</strong> The system proposes changes today; the next stage
+  is generating new geometry to resolve what the inspection found.</li>
+<li><strong>Learning across projects.</strong> Each drawing read makes the next one easier.</li>
+<li><strong>Wider rule sets.</strong> Customer-specific and regulation-specific checks on top of
+  the same structured knowledge.</li>
+<li><strong>Richer graph.</strong> More relation types, and queries that span several drawings.</li>
+</ul>
+<hr />
+<h2 id="15-summary">15. Summary</h2>
+<p>I built a system that reads an architectural drawing the way a person does: it
+parses the raw geometry, resolves the symbols, works out what the drawing is made
+of, records how everything connects as a graph, and lets an AI assistant answer
+questions about the result with evidence attached to every number. It states its
+confidence, it shows its work on the drawing, and it never changes a customer's file
+without a human decision.</p>
+<p>The hard part was not the AI. It was making the drawing understandable enough that
+the AI never has to guess.</p>
+</div>
+<div class="project-article" data-lang="kr" hidden>
+<nav class="article-toc-wrap"><h4>목차</h4><ol class="article-toc"><li><a href="#1-소개">1. 소개</a></li><li><a href="#2-문제-도면은-모델이-아니다">2. 문제: 도면은 모델이 아니다</a></li><li><a href="#3-파싱과-저장">3. 파싱과 저장</a></li><li><a href="#4-시스템이-만들어-내는-것">4. 시스템이 만들어 내는 것</a></li><li><a href="#5-왜-ai-에이전트인가">5. 왜 AI 에이전트인가</a></li><li><a href="#6-에이전트-하네스">6. 에이전트 하네스</a></li><li><a href="#7-상호작용과-안전">7. 상호작용과 안전</a></li><li><a href="#8-신뢰성-엔지니어링">8. 신뢰성 엔지니어링</a></li><li><a href="#9-결과">9. 결과</a></li><li><a href="#10-검사와-보고">10. 검사와 보고</a></li><li><a href="#11-그래프-데이터베이스">11. 그래프 데이터베이스</a></li><li><a href="#12-기술과-역량">12. 기술과 역량</a></li><li><a href="#13-일하는-방식">13. 일하는 방식</a></li><li><a href="#14-로드맵">14. 로드맵</a></li><li><a href="#15-요약">15. 요약</a></li></ol></nav>
+<h1>CAD Parser — 건축 도면을 답으로 바꾸는 시스템</h1>
+<p>CADian 2026용 애드온이에요. DWG 평면도를 읽고, 그 안에 무엇이 있는지 파악하고,
+도면에 대한 질문에 답해요. 공간과 그 안의 객체를 식별하고, 문과 창을 그것이 연결하는
+공간에 묶고, 검사 규칙에 따라 도면을 점검한 뒤, 한·영 이중 언어 보고서를 만들어요.</p>
+<blockquote>
+<p><strong>이 문서에 담긴 내용에 대하여.</strong> 이 문서는 문제, 기능, 결과를 설명해요. 그 뒤에 있는
+방법은 의도적으로 적지 않았어요. 방법 자체가 제품이기 때문이에요.</p>
+</blockquote>
+<hr />
+<h2 id="1-소개">1. 소개</h2>
+<p>건축 도면에는 건물에 필요한 모든 것이 담겨 있지만, 컴퓨터는 그 안에서 방, 문, 욕실을
+보지 못해요. 컴퓨터가 보는 것은 아무 의미도 붙어 있지 않은 수만 개의 선, 호, 텍스트,
+기호뿐이에요. 사람은 도면을 몇 초 만에 읽지만, 소프트웨어는 그 이해를 처음부터 다시
+쌓아 올려야 해요.</p>
+<p>이 프로젝트는 그 재구성을 해내고, 그 위에 AI 어시스턴트를 올려서 사용자가 그냥 물어볼
+수 있게 해요.</p>
+<pre class="mermaid">flowchart LR
+    A[DWG 도면] --> B[파싱]
+    B --> C[(구조화된<br/>지식)]
+    C --> D[그래프<br/>데이터베이스]
+    C --> E[AI 에이전트]
+    E --> F[답변,<br/>하이라이트,<br/>보고서]
+</pre>
+<p>모든 결정은 세 가지 질문을 기준으로 내렸어요.</p>
+<ol>
+<li><strong>처음 보는 도면에서도 동작하는가?</strong> 하나의 파일에 맞춰 튜닝된 시스템은 데모일 뿐,
+   제품이 아니에요.</li>
+<li><strong>모든 답을 추적할 수 있는가?</strong> 도면 위에 보여줄 수 없는 검사 결과는 의견에 불과해요.</li>
+<li><strong>틀려도 안전한가?</strong> 고객의 도면 위에서 동작하므로, 불확실함은 눈에 보이는 상태여야
+   하고, 사람의 결정 없이는 아무것도 바뀌면 안 돼요.</li>
+</ol>
+<hr />
+<h2 id="2-문제-도면은-모델이-아니다">2. 문제: 도면은 모델이 아니다</h2>
+<p>DWG 파일은 기하 요소로 이루어진 그림이에요. 그 안의 어떤 것도 "이것은 침실이다"라고
+말해 주지 않아요. 뒤에 나오는 모든 내용은 이 한 가지 사실에서 출발해요.</p>
+<h3>2.1 파일에 실제로 담긴 것</h3>
+<pre><code>평면도 파일
+├── 기본 요소      선, 폴리라인, 호, 원, 해치
+├── 텍스트         이름, 치수, 메모, 제목, 범례, 개정 이력
+├── 기호           재사용되는 블록: 문 하나, 변기 하나, 세대 하나 전체
+│   ├── 중첩       기호 안의 기호 안의 기호
+│   └── 외부 참조  아예 다른 파일에 들어 있는 기하 요소
+├── 레이어         그린 사람이 정한 묶음
+└── 마크           특정 문이나 창을 가리키는 코드
+</code></pre>
+<h3>2.2 왜 어려운가</h3>
+<p><strong>기하 요소에는 의미가 없어요.</strong> 파일은 형태와 위치를 저장할 뿐, 무엇이 무엇<em>인지</em>,
+무엇이 무엇에 속하는지, 어디서 하나가 끝나고 다음이 시작되는지는 저장하지 않아요.</p>
+<p><strong>모든 것이 겹쳐 있어요.</strong> 가구, 타일, 해치, 치수선, 주석이 구조 위에 그대로 올라가
+있어요. 모든 기하 요소를 똑같이 다루면 말이 안 되는 결과가 나와요.</p>
+<p><strong>기호는 자기 위치를 숨겨요.</strong> 기호의 실제 좌표는 삽입, 회전, 축척, 반전을 거쳐야
+비로소 나오고, 그것도 여러 단계가 겹칠 때가 많아요. 흔히 쓰는 지름길인 '모두 분해하기'는
+각 기호가 무엇인지에 대한 정보를 파괴하는데, 그 정보가 바로 필요한 정보예요.</p>
+<p><strong>표준화된 것이 없어요.</strong> 사무소마다 그리는 방식과 이름 붙이는 방식이 다르고, 언어도
+하나가 아니며, 같은 프로젝트 안에서도 관행이 섞여요.</p>
+<p><strong>파일 하나, 세대 여럿.</strong> 주거 평면도는 같은 세대를 여러 번 반복하고, 일부는 반전되고
+일부는 비스듬히 회전돼요. 이름도 함께 반복되므로, 사용자가 좌표를 가리키지 않아도 모든
+답이 모호하지 않아야 해요.</p>
+<p><strong>도면은 정확하게 그려져 있지 않아요.</strong> 만나야 할 선이 1mm 어긋나요. 내용이 엉뚱한
+묶음에 들어가 있어요. 라벨이 자기가 가리키는 것 바깥에 놓여 있어요. 깨끗한 파일이
+아니라 실제 파일이 시험대예요.</p>
+<h3>2.3 뻔한 접근이 실패하는 이유</h3>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>접근</th>
+<th>충분하지 않은 이유</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>모두 분해한 뒤 형태를 분석</td>
+<td>기호가 지닌 의미를 잃고, 데이터만 몇 배로 불어남</td>
+</tr>
+<tr>
+<td>도면을 언어 모델에 통째로 전달</td>
+<td>너무 크고, 모델은 정확한 기하 계산과 개수 세기를 못 함</td>
+</tr>
+<tr>
+<td>렌더링한 평면 이미지 인식</td>
+<td>정확한 좌표, 단위, 식별자를 잃고, 역추적이 불가능</td>
+</tr>
+<tr>
+<td>프로젝트별 수동 템플릿</td>
+<td>확장이 안 되고, 고객마다 그리는 방식이 다름</td>
+</tr>
+</tbody>
+</table></div>
+<p>이 시스템은 이 중 어느 것도 단독으로 쓰지 않아요. 먼저 구조화된 이해를 만들고, 언어
+모델은 파일이 아니라 그 구조를 읽는 독자로 다뤄요.</p>
+<hr />
+<h2 id="3-파싱과-저장">3. 파싱과 저장</h2>
+<p>첫 단계는 도면을 읽어 기계가 다룰 수 있는 형태로 적어 두는 일이에요.</p>
+<pre class="mermaid">flowchart LR
+    A[DWG] --> B[모든 엔티티 읽기:<br/>선, 폴리라인, 호,<br/>원, 해치, 텍스트]
+    B --> C[기호와<br/>외부 참조 해석]
+    C --> D[미터 단위의<br/>실세계 좌표]
+    D --> E[(도면별 저장)]
+</pre>
+<pre><code>파싱
+├── 엔티티        선, 폴리라인, 호, 원, 해치, 텍스트
+├── 기호          중첩된 것까지 말단까지 해석
+├── 외부 참조     가져온 뒤 출처를 표시
+├── 단위          정규화해서 이후의 모든 숫자는 미터 단위
+└── 식별자        도면마다, 엔티티마다 안정적인 식별자
+</code></pre>
+<p>두 가지 결정이 중요했어요.</p>
+<p><strong>아무것도 분해하지 않아요.</strong> 각 기하 요소는 자신이 속한 기호로 돌아가는 경로를
+유지해요. 그래서 기호의 기하 요소가 실세계 좌표에 놓여 있어도 기호는 여전히 기호로
+인식돼요.</p>
+<p><strong>모든 사실은 출처를 유지해요.</strong> 도면이 엔티티에 부여한 고유 식별자가 파이프라인 전체를
+통과해요. 덕분에 나중에 어떤 숫자든 화면에서 가리킬 수 있고, 검토자가 보고서 전체가
+아니라 한 줄에 대해서만 이의를 제기할 수 있어요.</p>
+<p>파싱된 도면은 저장되며 다시 읽지 않아요. 도면은 한 번 처리되고, 그 결과를 이후의 모든
+질문에서 재사용해요. 어시스턴트도, 검사도, 그래프 데이터베이스도 같은 결과를 써요.</p>
+<hr />
+<h2 id="4-시스템이-만들어-내는-것">4. 시스템이 만들어 내는 것</h2>
+<h3>4.1 구조화된 지식</h3>
+<pre><code>도면 하나에 대해
+├── 공간          이름, 종류, 면적, 신뢰도, 근거
+├── 객체          종류, 위치, 속한 공간, 근거
+├── 개구부        문과 창, 크기와 각 크기의 출처
+├── 마크          공식 코드와 그것이 설명하는 개구부
+├── 관계          개구부–공간, 공간–공간, 공간–구조
+├── 인벤토리      도면이 무엇으로 이루어져 있고 각각 얼마나 있는지
+└── 출처          모든 항목에 대해, 그 뒤에 있는 정확한 도면 엔티티
+</code></pre>
+<p><strong>출처가 핵심 기능이에요.</strong> 모든 공간, 면적, 크기, 판정은 도면으로 돌아가는 링크를
+유지해요. 그래서 어시스턴트가 자기 근거를 직접 하이라이트할 수 있어요.</p>
+<p><strong>신뢰도는 명시적이에요.</strong> 깨끗하게 복원된 결과와 근사된 결과는 같은 것으로 제시되지
+않고, 근사 결과 위에서 내려진 판정은 그 낮은 신뢰도를 그대로 물려받아요.</p>
+<h3>4.2 사용자 관점에서</h3>
+<pre class="mermaid">flowchart TD
+    A[CAD에서 도면 열기] --> B[추출]
+    B --> C[찾아낸 내용 살펴보기]
+    C --> D[채팅으로 질문하기]
+    D --> E[도면 위에 하이라이트된<br/>답 확인]
+    E --> F[보고서에 결과 추가]
+    F --> G[보고서 내보내기]
+    C --> H[그래프 데이터베이스 탐색]
+    D --> I[변경 제안]
+    I --> J[승인 또는 거부]
+</pre>
+<h3>4.3 기능 목록</h3>
+<pre><code>기능
+├── 읽기
+│   ├── 안정적인 식별자를 가진 전체 추출
+│   ├── 실세계 좌표로의 기호 해석
+│   ├── 외부 참조 포함
+│   └── 단위 처리, 모든 결과는 미터 단위
+├── 이해
+│   ├── 설비·유틸리티 공간을 포함한 모든 종류의 공간
+│   ├── 객체: 문, 창, 위생 기구, 주방 설비, 가구
+│   ├── 개구부와 짝지어진 마크
+│   └── 공간, 개구부, 구조 사이의 관계
+├── 질문
+│   ├── 시스템이 아는 모든 것을 찾고, 세고, 재기
+│   ├── 관계를 따라가기
+│   ├── 질문한 언어로 답하기
+│   └── 모든 답을 도면 위에 보여주기
+├── 검사
+│   ├── 공간과 그 내용물에 대한 규칙 집합
+│   ├── 규칙별·공간별 결과 상태, &quot;판정 불가&quot; 포함
+│   └── 편집 가능한 보고서로 모은 판정
+├── 보고
+│   ├── 도면당 문서 하나, 한국어와 영어 함께
+│   ├── 대화에서 바로 추가되는 내용
+│   └── 오피스 형식으로 내보내기
+└── 변경 (항상 제안만, 자동 적용 없음)
+    ├── 도면 내용의 생성, 편집, 삭제, 재구성
+    ├── 묶음 간 이동 또는 복사
+    └── 적용된 모든 것의 전체 기록
+</code></pre>
+<hr />
+<h2 id="5-왜-ai-에이전트인가">5. 왜 AI 에이전트인가</h2>
+<p>고정된 보고서 집합은 누군가 미리 생각해 둔 질문에만 답해요. 실제 사용자는 옆길로 빠지는
+질문을 해요.</p>
+<ul>
+<li><em>환기가 없는 욕실은 어디예요?</em></li>
+<li><em>이 주방 주변 구조를 길이와 함께 표로 만들어 줘요.</em></li>
+<li><em>이 코드의 문이 도면에 몇 개 있고, 어디에 있어요?</em></li>
+<li><em>발코니에 빠진 게 있어요?</em></li>
+<li><em>그걸 보고서에 두 언어로 넣어 줘요.</em></li>
+</ul>
+<p>에이전트는 열린 질문을 정확한 조회의 짧은 연쇄로 바꾸고 결과를 설명해요. 에이전트에게
+도면을 이해하라고 요구하지 않아요. <em>질문</em>을 이해하고, 이미 도면을 이해하고 있는 도구를
+쓰라고 요구해요.</p>
+<pre class="mermaid">flowchart LR
+    U[질문] --> M[에이전트]
+    M --> T[구조화된 지식 위의<br/>도구]
+    T --> O[근거]
+    O --> M
+    M --> A[답변 + 하이라이트]
+</pre>
+<h3>5.1 왜 모델에 파일을 그냥 주지 않는가</h3>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th></th>
+<th>모델이 도면을 읽음</th>
+<th>모델이 구조화된 지식을 읽음</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>크기</td>
+<td>쓸 수 있는 컨텍스트를 한참 넘어섬</td>
+<td>작고 관련 있는 조각</td>
+</tr>
+<tr>
+<td>정확성</td>
+<td>근사적이고 불안정</td>
+<td>정확하고 반복 가능</td>
+</tr>
+<tr>
+<td>비용</td>
+<td>질문마다 다시 지불</td>
+<td>한 번 처리하고 재사용</td>
+</tr>
+<tr>
+<td>추적성</td>
+<td>없음</td>
+<td>모든 값이 출처를 지님</td>
+</tr>
+<tr>
+<td>신뢰성</td>
+<td>모델과 실행마다 달라짐</td>
+<td>숫자가 모델에 의존하지 않음</td>
+</tr>
+</tbody>
+</table></div>
+<p>결정론적인 일은 결정론적으로 처리해요. 모델은 언어, 의도, 구성에 쓰는데, 그것이 모델이
+실제로 잘하는 일이에요.</p>
+<h3>5.2 에이전트가 쓸 수 있는 것</h3>
+<p>어시스턴트는 이름이 정해진 작은 도구 집합을 통해 일해요. 이 이름들이 사용자가 활동
+로그에서 보는 것이에요.</p>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>도구</th>
+<th>사용자가 얻는 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>find</code></td>
+<td>설명에 맞는 항목들</td>
+</tr>
+<tr>
+<td><code>count</code></td>
+<td>같은 필터로 센 개수</td>
+</tr>
+<tr>
+<td><code>measure</code></td>
+<td>크기, 유효 폭, 거리, 그리고 각 숫자의 출처</td>
+</tr>
+<tr>
+<td><code>relate</code></td>
+<td>공간, 개구부, 구조가 어떻게 연결되는지</td>
+</tr>
+<tr>
+<td><code>highlight</code></td>
+<td>도면 위에 표시된 답</td>
+</tr>
+<tr>
+<td><code>inspection</code></td>
+<td>보고서에 기록된 판정</td>
+</tr>
+<tr>
+<td><code>modify</code></td>
+<td>제안된 변경, 적용된 변경이 아님</td>
+</tr>
+<tr>
+<td><code>create_block</code></td>
+<td>선택 영역으로 만든 새 기호</td>
+</tr>
+<tr>
+<td><code>data_scanner</code></td>
+<td>구조화된 뷰가 놓친 것을 찾는 원시 스캔</td>
+</tr>
+</tbody>
+</table></div>
+<p>각 도구가 무엇을 받고 무엇을 돌려주는지는 제품의 일부이므로 여기에 적지 않아요.</p>
+<hr />
+<h2 id="6-에이전트-하네스">6. 에이전트 하네스</h2>
+<p>모델은 에이전트의 작은 부분이에요. 나머지가 하네스이고, 실제 사용에서 살아남을지는
+하네스가 결정해요.</p>
+<pre><code>하네스
+├── 대화 제어
+│   ├── 질문당 작업 예산과 명확한 중단
+│   ├── 무엇이 아직 빠졌는지 말하는 부분 답변
+│   └── 이미 답한 질문의 조용한 재시도 없음
+├── 근거 확보
+│   ├── 모든 주장은 뒤에 도면 근거를 지님
+│   ├── 하이라이트는 답이 말한 것을 정확히 보여줌
+│   └── 근거를 댈 수 없는 것은 모름으로 보고
+├── 범위 규율
+│   ├── &quot;이것들만&quot;은 이것들만
+│   └── 질문의 한정어는 결과를 좁힘
+├── 컨텍스트 전략
+│   ├── 도면은 한 번만 소개하고 반복하지 않음
+│   ├── 도구 결과는 돌아온 그대로 추론
+│   └── 긴 세션도 일관되도록 이력 관리
+├── 결정론
+│   ├── 같은 질문을 두 번 하면 같은 숫자
+│   └── 숫자는 어떤 모델이 설정됐는지에 의존하지 않음
+├── 멱등성
+│   └── 동작을 반복해도 결과가 중복되지 않음
+├── 이중 언어 동작
+│   ├── 질문한 언어로 답변
+│   └── 보고서 내용은 두 언어로 동시에 저장
+├── 비용과 관측성
+│   ├── 답변마다 토큰과 추정 비용 표시
+│   ├── 모든 도구 호출을 시간과 결과와 함께 추적
+│   └── 실패는 충돌이 아니라 정보로 드러냄
+├── 모델 유연성
+│   ├── 호스팅된 최신 모델
+│   └── 건물 밖으로 나가면 안 되는 도면을 위한 자체 호스팅 모델
+└── 안전
+    ├── 제안과 승인은 별개의 단계
+    ├── 사람의 명시적 클릭 없이는 아무것도 쓰지 않음
+    └── 적용된 모든 것은 기록됨
+</code></pre>
+<p>답이 틀렸을 때, 추적 기록은 에이전트가 잘못된 질문을 했는지, 아니면 도구가 잘못된 것을
+돌려줬는지 보여줘요. 이 하나의 구분이 에이전트 시스템 디버깅의 대부분이에요.</p>
+<hr />
+<h2 id="7-상호작용과-안전">7. 상호작용과 안전</h2>
+<h3>7.1 작업 보여주기</h3>
+<p>볼 수 없는 답은 믿기 어려워요. 결과는 도면을 바꾸지 않고 CAD 캔버스 위에 직접
+그려져요. 근거는 임시 그래픽으로 나타나고 지우면 사라져요. 공간은 외곽선으로 보여주거나
+반투명 마스크로 채울 수 있어서, 공간은 면적으로 읽히면서도 아래의 평면은 계속 읽을 수
+있어요.</p>
+<h3>7.2 도면 변경하기</h3>
+<p>시스템이 할 수 있는 유일하게 되돌릴 수 없는 일이므로, 일부러 느리게 만들었어요.</p>
+<pre class="mermaid">flowchart LR
+    A[요청] --> B[정확히 어떤 항목이<br/>영향을 받는지]
+    B --> C[제안:<br/>무엇을, 무엇을 건너뛰었고,<br/>무엇이 위험한지]
+    C --> D[도면 위에 표시]
+    D --> E{사람의 결정}
+    E -- 승인 --> F[한 번에 적용]
+    E -- 거부 --> G[아무 일도 없음]
+    F --> H[기록 및 갱신]
+</pre>
+<p>승인은 타이핑한 단어가 아니라 버튼이에요. 어시스턴트는 제안과 적용을 한 호흡에 할 수
+없고, 클릭의 결과는 다시 어시스턴트에게 전달돼서, 제안한 것이 아니라 실제로 일어난 일을
+알게 돼요.</p>
+<hr />
+<h2 id="8-신뢰성-엔지니어링">8. 신뢰성 엔지니어링</h2>
+<p>도면 하나에서의 정확성은 운이에요. 이 프로젝트는 개발에 쓰지 않은 도면에서 그것을
+증명하는 것을 중심으로 만들어졌어요.</p>
+<pre><code>품질 접근
+├── 속일 수 없는 벤치마크
+│   ├── 테스트 프롬프트에 이름, 식별자, 숫자가 등장하지 않음
+│   ├── 기대 결과는 도면 자체가 정의하는 관계
+│   ├── 모든 테스트는 무관한 도면에서 두 언어로 실행
+│   └── 사실이라면 &quot;찾지 못함&quot;도 정답
+├── 단계적 범위
+│   ├── 1단계: 읽기, 분류, 세기, 관계 짓기, 묶기
+│   └── 1단계가 모든 곳에서 통과하기 전에는 다음 단계를 시작하지 않음
+├── 빠른 측정
+│   ├── 무거운 단계는 내보낸 도면으로 CAD 밖에서 실행 가능
+│   └── 수동 세션 대신 몇 초 만에 변경을 측정
+└── 회귀 규율
+    ├── 모든 결과를 변경 전후로 비교
+    ├── 결과끼리 충돌하지 않는지 공간 검사
+    └── 같은 도면을 다른 단위와 회전 상태로 재검사
+</code></pre>
+<p>이것이 잡아내는 것의 구체적인 예: 한 결과를 개선하려던 변경이 다른 스무 개를 조용히
+바꿔 버렸어요. 전후 비교가 한 번의 실행으로 그것을 드러냈어요. 이런 규율이 없었다면
+개선은 손상을 달고 출시됐을 거예요.</p>
+<hr />
+<h2 id="9-결과">9. 결과</h2>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>항목</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>테스트 평면도의 엔티티 수</td>
+<td>약 25,000개</td>
+</tr>
+<tr>
+<td>그 안에서 복원된 공간</td>
+<td>66개, 6가지 반복 세대 유형에 걸쳐</td>
+</tr>
+<tr>
+<td>품질</td>
+<td>대다수는 깨끗하게 복원, 나머지는 정확한 것처럼 제시하지 않고 근사로 보고</td>
+</tr>
+<tr>
+<td>언어 범위</td>
+<td>두 테스트 세트 모두 한국어와 영어</td>
+</tr>
+<tr>
+<td>독립성</td>
+<td>밀리미터, 인치, 회전된 평면에서 동일한 결과</td>
+</tr>
+<tr>
+<td>무결성</td>
+<td>변경할 때마다 결과를 서로 대조 검사</td>
+</tr>
+<tr>
+<td>반복성</td>
+<td>실행과 모델이 달라도 같은 질문에 같은 숫자</td>
+</tr>
+</tbody>
+</table></div>
+<h3>9.1 시각적 결과</h3>
+<p>아래 그림은 실제 화면과 같은 구성으로 그린 설명용 임시 이미지예요. CAD 스크린샷으로
+교체할 예정이에요.</p>
+<p><img alt="CAD에서 열린 원본 도면" src="../../data/projects/cad-inspection-agent/images/plan-original.svg" loading="lazy" />
+<em>그림 1. CAD에서 열린 원본 도면: 의미가 붙어 있지 않은 기하 요소, 텍스트, 기호.</em></p>
+<p><img alt="시스템이 복원한 내용을 평면 위에 그린 모습" src="../../data/projects/cad-inspection-agent/images/spaces-detected.svg" loading="lazy" />
+<em>그림 2. 시스템이 복원한 내용을 평면 위에 그린 모습: 공간, 개구부, 기구, 각각의 신뢰도.</em></p>
+<p><img alt="반투명 마스크로 표시된 공간" src="../../data/projects/cad-inspection-agent/images/space-mask.svg" loading="lazy" />
+<em>그림 3. 반투명 마스크로 표시된 공간: 면적으로 읽히면서도 아래 평면은 계속 읽을 수 있어요.</em></p>
+<p><img alt="그래프 데이터베이스 뷰" src="../../data/projects/cad-inspection-agent/images/graph-db.svg" loading="lazy" />
+<em>그림 4. 그래프 데이터베이스 뷰: 선택한 노드와 직접 연결, 캔버스와 연동.</em></p>
+<p><img alt="검사 보고서의 한 페이지" src="../../data/projects/cad-inspection-agent/images/report-sample.svg" loading="lazy" />
+<em>그림 5. 검사 보고서의 한 페이지: 한국어와 영어 함께, 판정마다 근거 표시.</em></p>
+<h3>9.2 시연</h3>
+<p><em>(데모 영상은 추후 추가 예정이에요.)</em></p>
+<ul>
+<li>질문부터 답변까지 처음부터 끝까지, 근거 하이라이트와 함께.</li>
+<li>추출부터 내보낸 보고서까지 전체 검사 실행.</li>
+<li>제안된 변경의 검토와 승인.</li>
+</ul>
+<hr />
+<h2 id="10-검사와-보고">10. 검사와 보고</h2>
+<p>검사 레이어는 각 공간이 반드시 담아야 할 것을 담고 있는지 물어요.</p>
+<pre><code>검사
+├── 규칙 집합     공간 종류와 그 내용물에 대한 요구 사항
+├── 결과 상태     통과, 실패, 경고, 검토 필요,
+│                 데이터 부족, 해당 없음, 미평가
+├── 근거          모든 판정 뒤의 도면 엔티티
+├── 신뢰도        결과 자체가 얼마나 잘 복원됐는지에서 물려받음
+└── 보고서
+    ├── 도면당 문서 하나
+    ├── 한국어와 영어를 함께 저장
+    ├── 대화에서 바로 추가되는 내용
+    ├── 편집 가능: 수정, 교체, 삭제, 제목 변경
+    └── 오피스 형식으로 내보내기
+</code></pre>
+<p>통과도 실패도 아닌 상태가 가장 중요해요. 이 도면에서 판정할 수 없는 규칙은 그렇다고
+말해요. 그것이 검토자가 믿는 도구와 읽기를 그만두는 도구의 차이예요.</p>
+<hr />
+<h2 id="11-그래프-데이터베이스">11. 그래프 데이터베이스</h2>
+<p>도면은 목록이 아니에요. 서로를 참조하는 것들의 그물이에요. 마크는 문을 설명하고, 문은 두
+공간을 잇고, 공간은 다른 공간과 맞닿고, 기구는 공간에 속해요. 이것을 그래프로 저장하면,
+매번 전체를 훑는 대신 한 것에서 다음 것으로 걸어가며 질문에 답할 수 있어요.</p>
+<pre class="mermaid">graph LR
+    M[마크<br/>코드] -- 설명 --> D[문]
+    D -- 연결 --> R1[공간 A]
+    D -- 연결 --> R2[공간 B]
+    R1 -- 인접 --> R2
+    F[기구] -- 소속 --> R1
+    W[창] -- 개방 --> R1
+</pre>
+<h3>11.1 안에 있는 것</h3>
+<pre><code>그래프 데이터베이스
+├── 노드        의미 있는 것 하나당 하나: 공간, 개구부, 마크, 기구,
+│               그리고 공간 주변의 구조 부재
+│   ├── 클래스  어떤 종류의 것인지
+│   ├── 출처    만들어진 근원이 된 도면 엔티티
+│   └── 값      코드나 크기 같은 고유 속성
+├── 엣지        두 노드 사이의 방향 있는, 이름 붙은 관계
+│   └── 근거    관계가 존재하는 이유, 엣지 자체에 보관
+└── 도면당 그래프 하나, 도면 식별자로 저장하고 다시 불러옴
+</code></pre>
+<p><strong>엣지는 근거를 지녀요.</strong> 관계는 단정이 아니라 이유가 붙은 주장이에요. 그래서 그래프는
+감사가 가능해요. 어떤 연결이든 의문을 제기하고 도면까지 거슬러 올라갈 수 있어요.</p>
+<h3>11.2 쓰임새</h3>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>용도</th>
+<th>제공하는 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>탐색</td>
+<td>모든 노드를 클래스, 출처, 연결 수와 함께 나열하는 창</td>
+</tr>
+<tr>
+<td>시각화</td>
+<td>선택한 노드를 직접 연결과 함께 그려서 국소 구조를 바로 보여줌</td>
+</tr>
+<tr>
+<td>도면 연동</td>
+<td>노드를 선택하면 그 노드와 연결이 CAD 캔버스에 하이라이트</td>
+</tr>
+<tr>
+<td>답변</td>
+<td>어시스턴트가 그래프를 걸어가며 연결에 관한 질문에 답함</td>
+</tr>
+<tr>
+<td>검사</td>
+<td>규칙을 위치뿐 아니라 관계 위에서 평가</td>
+</tr>
+<tr>
+<td>영속성</td>
+<td>그래프를 도면별로 저장해서 파일을 다시 열면 관계가 돌아옴</td>
+</tr>
+</tbody>
+</table></div>
+<h3>11.3 왜 테이블이 아니라 그래프인가</h3>
+<p>이 분야의 질문은 본질적으로 관계적이에요. <em>이 문이 어떤 공간들을 잇는가</em>, <em>이 복도에서
+무엇이 열리는가</em>, <em>개구부가 전혀 없는 공간은 어디인가</em>, <em>이 공간을 무엇이 둘러싸는가</em>.
+테이블에서는 새 질문마다 조인이 늘어나요. 그래프에서는 짧은 걸음이고, 이미 저장된 것을
+재구성하지 않고도 새 관계 유형을 추가할 수 있어요.</p>
+<hr />
+<h2 id="12-기술과-역량">12. 기술과 역량</h2>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>영역</th>
+<th>이 프로젝트가 요구한 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>언어와 플랫폼</td>
+<td>C#, .NET, Windows 데스크톱 애플리케이션 개발</td>
+</tr>
+<tr>
+<td>CAD 통합</td>
+<td>상용 CAD 애드온 개발, 도면 데이터베이스 접근, 비파괴 캔버스 렌더링, 문서와 트랜잭션 처리</td>
+</tr>
+<tr>
+<td>계산 기하</td>
+<td>비구조화된 도면 데이터 위의 공간 계산, 단위와 방향으로부터의 독립</td>
+</tr>
+<tr>
+<td>데이터 엔지니어링</td>
+<td>도면별 구조화 저장, 내용 기반 식별자, 자유 텍스트용 벡터 검색, 변경 기록</td>
+</tr>
+<tr>
+<td>그래프 모델링</td>
+<td>노드·엣지 설계, 근거를 지닌 관계, 영속성, 시각화, 질의응답을 위한 순회</td>
+</tr>
+<tr>
+<td>AI 엔지니어링</td>
+<td>도구 호출 에이전트, 다단계 제어, 근거와 증거, 프롬프트·설정 설계, 토큰·비용 계산, 모델 라우팅</td>
+</tr>
+<tr>
+<td>모델 운영</td>
+<td>호스팅된 최신 모델과 비공개 데이터용 자체 호스팅 모델 서버</td>
+</tr>
+<tr>
+<td>자연어</td>
+<td>전 과정 한국어와 영어</td>
+</tr>
+<tr>
+<td>문서</td>
+<td>이중 언어 문서 생성과 내보내기</td>
+</tr>
+<tr>
+<td>제품 사고</td>
+<td>신뢰도를 일급 출력으로, 승인 게이트, 추적성, 단계적 전달</td>
+</tr>
+<tr>
+<td>품질 엔지니어링</td>
+<td>도면에 독립적인 벤치마크, 오프라인 측정 하네스, 모든 변경에 대한 회귀 비교</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="13-일하는-방식">13. 일하는 방식</h2>
+<pre><code>작업 방식
+├── 한 번에 한 문제, 전후를 측정
+├── 모든 변경을 둘 이상의 도면에서 검증
+├── 스크린샷 하나에서 괜찮아 보인다는 이유로는 아무것도 수용하지 않음
+├── 설정은 한곳에 모아 동작을 조정 가능하게
+├── 문서는 작업과 나란히, 쉬운 말로
+└── 범위 유지: 한 경우를 개선하고 다른 경우를 망치는 수정은 수정이 아님
+</code></pre>
+<hr />
+<h2 id="14-로드맵">14. 로드맵</h2>
+<ul>
+<li><strong>이름 없이 인식하기.</strong> 도면 내용을 그것이 무엇인지로 분류해서, 의미 없는 이름이 붙은
+  파일에서도 동작하게 해요.</li>
+<li><strong>파일에 다시 그리기.</strong> 지금은 변경을 제안하는 단계이고, 다음 단계는 검사가 찾아낸
+  것을 해결하는 새 기하 요소를 생성하는 거예요.</li>
+<li><strong>프로젝트 간 학습.</strong> 읽은 도면이 하나 늘 때마다 다음 도면이 더 쉬워져요.</li>
+<li><strong>더 넓은 규칙 집합.</strong> 같은 구조화된 지식 위에 고객별·규정별 검사를 얹어요.</li>
+<li><strong>더 풍부한 그래프.</strong> 더 많은 관계 유형과 여러 도면에 걸친 질의.</li>
+</ul>
+<hr />
+<h2 id="15-요약">15. 요약</h2>
+<p>사람이 읽는 방식으로 건축 도면을 읽는 시스템을 만들었어요. 원시 기하 요소를 파싱하고,
+기호를 해석하고, 도면이 무엇으로 이루어졌는지 알아내고, 모든 것이 어떻게 연결되는지를
+그래프로 기록하고, AI 어시스턴트가 모든 숫자에 근거를 붙여 결과에 대한 질문에 답하게
+해요. 시스템은 자신의 신뢰도를 밝히고, 도면 위에 작업을 보여주고, 사람의 결정 없이는
+고객의 파일을 절대 바꾸지 않아요.</p>
+<p>어려운 부분은 AI가 아니었어요. AI가 결코 추측할 필요가 없을 만큼 도면을 이해 가능하게
+만드는 일이었어요.</p>
+</div>
+<!-- article:end -->
+            </div>
           </article>
           <article class="panel detail-panel detail-panel-wide" id="panel-overview">
             <h2 data-ui="project_page.overview"></h2>

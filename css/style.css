@@ -1373,6 +1373,21 @@ html[lang="ko"] .project-status {
 
 .article-toc a {
   color: var(--link-accent);
+  text-decoration: none;
+}
+
+/* The contents list sits inside the article, so undo the article's own list styling. */
+.project-article .article-toc {
+  padding-left: 0;
+  list-style: none;
+}
+
+.project-article .article-toc li {
+  margin-bottom: 0.25rem;
+}
+
+.project-article[hidden] {
+  display: none;
 }
 
 .project-article {

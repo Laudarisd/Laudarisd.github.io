@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" viewBox="0 0 900 500" role="img" aria-label="OCR — Illustrative CRNN Architecture">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748b"/></marker></defs>
+<rect width="900" height="500" rx="16" fill="#f8fafc"/>
+<text x="35" y="43" font-family="sans-serif" font-size="24" font-weight="700" fill="#0f172a">OCR — Illustrative CRNN Architecture</text>
+<path d="M 265 150.0 L 325 150.0" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 555 150.0 L 615 150.0" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 730.0 190 L 730.0 330" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 845 370.0 L 325 370.0" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 555 370.0 L 35 370.0" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<rect x="35" y="110" width="230" height="80" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="150.0" y="136" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Input crop</text>
+<text x="150.0" y="157" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">1 × 32 × 128</text>
+<rect x="325" y="110" width="230" height="80" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="440.0" y="136" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Convolution + ReLU</text>
+<text x="440.0" y="157" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">32 → 64 → 128 channels</text>
+<rect x="615" y="110" width="230" height="80" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="730.0" y="136" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Height aggregation</text>
+<text x="730.0" y="157" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">32 time steps</text>
+<rect x="615" y="330" width="230" height="80" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="730.0" y="356" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Bidirectional sequence</text>
+<text x="730.0" y="377" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">256 output features</text>
+<rect x="325" y="330" width="230" height="80" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="440.0" y="356" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Character projection</text>
+<text x="440.0" y="377" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">K class scores</text>
+<rect x="35" y="330" width="230" height="80" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="150.0" y="356" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Decoded text</text>
+<text x="150.0" y="377" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Dimensions / labels</text>
+</svg>

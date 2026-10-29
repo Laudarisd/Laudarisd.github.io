@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="650" viewBox="0 0 1100 650" role="img" aria-label="AI CE Image Mode — Component Structure">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748b"/></marker></defs>
+<rect width="1100" height="650" rx="16" fill="#f8fafc"/>
+<text x="35" y="43" font-family="sans-serif" font-size="24" font-weight="700" fill="#0f172a">AI CE Image Mode — Component Structure</text>
+<path d="M 550.0 145 L 195.0 215" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 550.0 145 L 550.0 215" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 550.0 145 L 905.0 215" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 195.0 275 L 195.0 340" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 550.0 275 L 550.0 340" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 905.0 275 L 905.0 340" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 195.0 440 L 550.0 535" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 550.0 440 L 550.0 535" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 905.0 440 L 550.0 535" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<rect x="375" y="85" width="350" height="60" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="550.0" y="111" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">AI CE Image Mode</text>
+<rect x="45" y="215" width="300" height="60" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="195.0" y="241" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Application layer</text>
+<rect x="400" y="215" width="300" height="60" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="550.0" y="241" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Model layer</text>
+<rect x="755" y="215" width="300" height="60" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="905.0" y="241" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Operations layer</text>
+<rect x="45" y="340" width="300" height="100" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="195.0" y="366" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">API and batch entry points</text>
+<text x="195.0" y="387" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Pipeline coordination</text>
+<text x="195.0" y="408" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">JSON and persistence</text>
+<rect x="400" y="340" width="300" height="100" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="550.0" y="366" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Detection and classification</text>
+<text x="550.0" y="387" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Segmentation and walls</text>
+<text x="550.0" y="408" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">CRNN / Paddle OCR</text>
+<rect x="755" y="340" width="300" height="100" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="905.0" y="366" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">systemd and reverse proxy</text>
+<text x="905.0" y="387" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Redis and metrics</text>
+<text x="905.0" y="408" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Transfer and dashboards</text>
+<rect x="375" y="535" width="350" height="60" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="550.0" y="561" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Versioned inputs, artifacts, evaluation</text>
+</svg>

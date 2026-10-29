@@ -100,7 +100,933 @@
         <div class="container detail-grid">
           <article class="panel detail-panel detail-panel-wide" id="panel-article">
             <h2 data-ui="project_page.article"></h2>
-            <div class="panel-body"></div>
+            <div class="panel-body">
+<!-- article:start -->
+<div class="project-article" data-lang="en" hidden>
+<nav class="article-toc-wrap"><h4>Contents</h4><ol class="article-toc"><li><a href="#1-project-overview">1. Project overview</a></li><li><a href="#2-skills-and-tools">2. Skills and tools</a></li><li><a href="#3-project-structure">3. Project structure</a></li><li><a href="#4-system-architecture">4. System architecture</a></li><li><a href="#5-model-development-with-pytorch">5. Model development with PyTorch</a></li><li><a href="#6-ocr-training-and-integration">6. OCR training and integration</a></li><li><a href="#7-redis-shared-state-and-operational-control">7. Redis: shared state and operational control</a></li><li><a href="#8-deployment">8. Deployment</a></li><li><a href="#9-monitoring-prometheus-grafana-and-custom-dashboards">9. Monitoring: Prometheus, Grafana, and custom dashboards</a></li><li><a href="#10-sending-data-to-another-server-for-mlops">10. Sending data to another server for MLOps</a></li><li><a href="#11-engineering-decisions-and-lessons">11. Engineering decisions and lessons</a></li><li><a href="#12-results-and-evidence-to-add">12. Results and evidence to add</a></li><li><a href="#13-images-videos-and-demonstrations">13. Images, videos, and demonstrations</a></li><li><a href="#14-public-disclosure-boundary">14. Public disclosure boundary</a></li></ol></nav>
+<h1>AI CE Image Mode — Computer Vision &amp; MLOps Portfolio</h1>
+<blockquote>
+<p>Turning architectural floor-plan images into structured, reviewable information through image analysis, OCR, and observable service operations.</p>
+<p>Public project overview. Infrastructure values are placeholders. Model workflows describe engineering responsibilities without exposing proprietary processing logic. Illustrative OCR dimensions do not disclose deployed model configurations.</p>
+</blockquote>
+<h2 id="1-project-overview">1. Project overview</h2>
+<p>AI CE Image Mode processes floor-plan images for object detection, classification, segmentation, wall analysis, and text recognition. It supports local batch processing and an API workflow, producing structured JSON and optional visualizations, database records, and transferable result archives.</p>
+<p>The engineering challenge spans more than prediction: large drawings need consistent image preparation; different information types need coordinated processing; outputs need traceability; and a long-running service needs deployment controls, failure visibility, and reliable artifact handling.</p>
+<h3>Goals</h3>
+<ul>
+<li>Convert drawings into structured information that downstream engineering applications can consume.</li>
+<li>Support image rescaling and noise reduction while retaining small text and fine drawing details.</li>
+<li>Recognize symbols, dimensions, and space labels with OCR.</li>
+<li>Keep model execution modular so individual components can evolve independently.</li>
+<li>Support repeatable evaluation, batch experiments, and API-based inference.</li>
+<li>Make service health, request outcomes, database activity, and archive transfers observable.</li>
+<li>Prepare a controlled feedback path from operational results to model evaluation and improvement.</li>
+</ul>
+<h3>Portfolio project areas</h3>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Area</th>
+<th>Engineering focus</th>
+<th>Deliverable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Floor-plan understanding</td>
+<td>Image preparation, detection, classification, segmentation</td>
+<td>Structured drawing annotations</td>
+</tr>
+<tr>
+<td>OCR subsystem</td>
+<td>CRNN recognition and Paddle OCR integration</td>
+<td>Recognized dimensions, symbols, and space labels</td>
+</tr>
+<tr>
+<td>Inference service</td>
+<td>Request validation, orchestration, result packaging</td>
+<td>API and batch workflows</td>
+</tr>
+<tr>
+<td>Operational observability</td>
+<td>Redis-backed state, metrics, event history</td>
+<td>Service snapshots and monitoring integration</td>
+</tr>
+<tr>
+<td>Deployment engineering</td>
+<td>Process supervision, reverse proxy, repeatable releases</td>
+<td>Deployment templates and operating procedures</td>
+</tr>
+<tr>
+<td>MLOps foundation</td>
+<td>Artifact transfer, evaluation, version tracking</td>
+<td>A basis for review and retraining workflows</td>
+</tr>
+</tbody>
+</table></div>
+<p>These are workstreams within one system, rather than unrelated products.</p>
+<h2 id="2-skills-and-tools">2. Skills and tools</h2>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Skill</th>
+<th>Tools / concepts</th>
+<th>Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deep learning</td>
+<td>Python, PyTorch, torchvision, CUDA</td>
+<td>Model development, tensor processing, inference</td>
+</tr>
+<tr>
+<td>Image engineering</td>
+<td>OpenCV, NumPy</td>
+<td>Rescaling, noise reduction, image and crop preparation</td>
+</tr>
+<tr>
+<td>OCR</td>
+<td>CRNN, Paddle OCR</td>
+<td>Text recognition integration and evaluation</td>
+</tr>
+<tr>
+<td>API engineering</td>
+<td>FastAPI, Pydantic, Uvicorn</td>
+<td>Upload handling and operational endpoints</td>
+</tr>
+<tr>
+<td>Data and geometry</td>
+<td>JSON, pandas, geometry utilities</td>
+<td>Structured results and evaluation support</td>
+</tr>
+<tr>
+<td>Persistence</td>
+<td>Relational database integration</td>
+<td>Optional result persistence</td>
+</tr>
+<tr>
+<td>Shared operational state</td>
+<td>Redis</td>
+<td>Counters, recent events, operational snapshots</td>
+</tr>
+<tr>
+<td>Linux operations</td>
+<td>systemd, systemctl, journalctl, nginx</td>
+<td>Service lifecycle and reverse proxy</td>
+</tr>
+<tr>
+<td>Observability</td>
+<td>Prometheus, Grafana, JSON snapshots</td>
+<td>Metrics collection and dashboard integration</td>
+</tr>
+<tr>
+<td>Delivery</td>
+<td>Git, environment locking, CI checks</td>
+<td>Reproducible source and dependency management</td>
+</tr>
+<tr>
+<td>Artifact transport</td>
+<td>Secure remote transfer</td>
+<td>Moving approved result archives between environments</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-project-structure">3. Project structure</h2>
+<p><img alt="Project component structure" src="../../data/projects/ai-ce/project-structure.svg" loading="lazy" /></p>
+<p>Sanitized repository map; private configuration, weight filenames, customer inputs, and result identifiers are omitted.</p>
+<pre><code class="language-text">AI-CE-Image-Mode/
+├── main_all.py                    # Batch entry point
+├── server_run.py                  # API entry point
+├── app/
+│   ├── api/                       # Request and operational routes
+│   ├── utils/                     # Pipeline coordination and output helpers
+│   ├── infer/                     # Task-specific inference adapters
+│   ├── text_recognition/          # OCR model interfaces and modules
+│   ├── postprocess/               # Private domain processing
+│   ├── wall_class/                # Wall classification integration
+│   ├── get_metric/                # Evaluation utilities
+│   ├── db/                        # Persistence integration
+│   ├── file_transfer/             # Remote archive synchronization
+│   └── ops/                       # Metrics and operational state
+├── models/                        # Private model artifacts
+├── static/                        # Private runtime configuration
+├── original_img/                  # Private inputs
+├── results/                       # Generated structured outputs
+├── temporary_data/                # Intermediate and visualization outputs
+├── ops/
+│   ├── systemd/                   # Service template
+│   ├── nginx/                     # Reverse-proxy template
+│   ├── prometheus/                # Scrape configuration
+│   ├── alerts/                    # Alert rules
+│   └── grafana/                   # Starter dashboard definition
+├── tests/
+├── .github/workflows/             # CI configuration
+├── pyproject.toml
+├── uv.lock
+└── portfolio.md
+</code></pre>
+<h2 id="4-system-architecture">4. System architecture</h2>
+<p><img alt="End-to-end processing flowchart" src="../../data/projects/ai-ce/pipeline-flow.svg" loading="lazy" /></p>
+<pre><code class="language-text">                      DRAWING INPUT
+                            │
+                 VALIDATION &amp; PREPARATION
+                  Rescale · Noise reduction
+                            │
+           ┌────────────────┼─────────────────┐
+           ▼                ▼                 ▼
+     DETECTION MODEL  SEGMENTATION MODEL    OCR MODELS
+     Classification   Regions and walls    Text recognition
+           │                │                 │
+           └────────────────┼─────────────────┘
+                            ▼
+                  STRUCTURED RESULTS
+                            │
+            ┌───────────────┼────────────────┐
+            ▼               ▼                ▼
+           JSON        VISUALIZATION     PERSISTENCE
+</code></pre>
+<p>The following view communicates responsibilities without exposing processing rules, thresholds, model internals for detection, or result-merging logic.</p>
+<pre class="mermaid">flowchart TD
+    A[Drawing upload or batch input] --> B[Validate input]
+    B --> C[Image preparation: rescale and noise reduction]
+    C --> D[Analysis orchestration]
+    D --> E[Detection and classification]
+    D --> F[Segmentation and wall analysis]
+    D --> G[OCR: symbols, dimensions, spaces]
+    E --> H[Structured output assembly]
+    F --> H
+    G --> H
+    H --> I[JSON and visualizations]
+    H --> J[Optional database persistence]
+    I --> K[Approved archive transfer]
+    D -. operational events .-> L[Observability layer]
+    J -. write status .-> L
+    K -. transfer status .-> L
+    L --> M[Redis or local fallback]
+    L --> N[Metrics and JSON snapshot]
+</pre>
+<h3>Public input/output contract</h3>
+<pre><code class="language-json">{
+  &quot;request_id&quot;: &quot;example-request&quot;,
+  &quot;model_version&quot;: &quot;example-v1&quot;,
+  &quot;status&quot;: &quot;completed&quot;,
+  &quot;outputs&quot;: {
+    &quot;objects&quot;: &quot;artifact-reference&quot;,
+    &quot;segmentation&quot;: &quot;artifact-reference&quot;,
+    &quot;ocr&quot;: &quot;artifact-reference&quot;,
+    &quot;visualization&quot;: &quot;artifact-reference&quot;
+  }
+}
+</code></pre>
+<p>This is an illustrative response schema, not a promise about the current API's exact field names.</p>
+<h2 id="5-model-development-with-pytorch">5. Model development with PyTorch</h2>
+<h3>Detection and classification model</h3>
+<p>The detection component identifies relevant objects in architectural drawings and assigns semantic categories. PyTorch provides the model execution and tensor-processing foundation. The public architecture is described through its input and output contract; private model design, filtering rules, and decision thresholds remain internal.</p>
+<pre><code class="language-text">DRAWING TENSOR → VISUAL FEATURES → DETECTION / CLASSIFICATION → OBJECT RECORDS
+   Image data      Learned patterns      Locations and classes     Structured output
+</code></pre>
+<p>Model development involves organizing approved annotated drawings, validating class labels, splitting data by source drawing, training candidate models, and evaluating held-out examples. A release pairs approved weights with the preprocessing contract, class vocabulary, dependency environment, and evaluation report. This describes the development workflow; it does not assert that training scripts or measured results are included in this repository.</p>
+<h3>Segmentation and wall analysis</h3>
+<p>The segmentation component represents image regions as structured masks. Wall analysis adds domain-specific categories to drawing elements. Evaluation should include overlap quality, continuity of fine structures, and failure review on complex drawings. Production reconciliation and geometric processing are not disclosed.</p>
+<h3>OCR recognition model</h3>
+<p><img alt="CRNN architecture flowchart" src="../../data/projects/ai-ce/ocr-architecture.svg" loading="lazy" /></p>
+<p>CRNN recognition turns cropped text regions into character sequences. Convolutional layers learn visual features, recurrent layers model reading context, and a character projection produces recognition scores. CRNN and Paddle OCR are supported integration paths for appropriate text categories.</p>
+<p>The following is an illustrative CRNN design, not the deployed architecture:</p>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Stage</th>
+<th>Layer / operation</th>
+<th>Output shape</th>
+<th>Activation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input</td>
+<td>Normalized grayscale crop</td>
+<td>B × 1 × 32 × 128</td>
+<td>Normalized image values</td>
+</tr>
+<tr>
+<td>Visual block 1</td>
+<td>3×3 convolution, normalization</td>
+<td>B × 32 × 32 × 128</td>
+<td>ReLU</td>
+</tr>
+<tr>
+<td>Spatial reduction</td>
+<td>2×2 pooling</td>
+<td>B × 32 × 16 × 64</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Visual block 2</td>
+<td>3×3 convolution, normalization</td>
+<td>B × 64 × 16 × 64</td>
+<td>ReLU</td>
+</tr>
+<tr>
+<td>Spatial reduction</td>
+<td>2×2 pooling</td>
+<td>B × 64 × 8 × 32</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Visual block 3</td>
+<td>3×3 convolution</td>
+<td>B × 128 × 8 × 32</td>
+<td>ReLU</td>
+</tr>
+<tr>
+<td>Height aggregation</td>
+<td>Average pooling across height</td>
+<td>B × 128 × 1 × 32</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Sequence formatting</td>
+<td>Width becomes reading time</td>
+<td>B × 32 × 128</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Context modeling</td>
+<td>Two bidirectional recurrent layers, 128 hidden units per direction</td>
+<td>B × 32 × 256</td>
+<td>Internal sigmoid / tanh</td>
+</tr>
+<tr>
+<td>Character head</td>
+<td>Linear projection</td>
+<td>B × 32 × K</td>
+<td>Logits</td>
+</tr>
+<tr>
+<td>Training objective</td>
+<td>Sequence alignment</td>
+<td>Sequence-level loss</td>
+<td>Log-softmax</td>
+</tr>
+<tr>
+<td>Inference</td>
+<td>Decode scores</td>
+<td>Recognized text</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>B</code> is batch size and <code>K</code> includes the vocabulary and alignment blank. Exact Paddle OCR layers and activations depend on the selected configuration and are not inferred from the framework name.</p>
+<h3>Architecture plot</h3>
+<p><img alt="OCR spatial dimension line plot" src="../../data/projects/ai-ce/ocr-spatial-plot.png" loading="lazy" /></p>
+<p>The line plot shows how image height and width change through the illustrative OCR layers.</p>
+<p><img alt="OCR layer feature-width plot" src="../../data/projects/ai-ce/ocr-feature-plot.svg" loading="lazy" /></p>
+<p>This plot compares feature dimensions in the illustrative architecture. It is not an accuracy or performance claim.</p>
+<h3>PyTorch training lifecycle</h3>
+<pre><code class="language-text">APPROVED DATASET
+      │
+      ▼
+SOURCE-GROUPED TRAIN / VALIDATION SPLIT
+      │
+      ▼
+TENSOR PREPARATION &amp; TRAINING AUGMENTATION
+      │
+      ▼
+FORWARD PASS → TRAINING LOSS → BACKPROPAGATION → PARAMETER UPDATE
+      │                                              │
+      └──────────── REPEAT OVER TRAINING BATCHES ─────┘
+      │
+      ▼
+HELD-OUT EVALUATION → CHECKPOINT SELECTION → VERSIONED MODEL ARTIFACT
+</code></pre>
+<p>Training concerns include vocabulary consistency, valid sequence lengths, gradient stability, reproducibility, and validation on unseen drawings. Mixed precision can be evaluated for compatible hardware. Fine-tuning may freeze visual features while adapting recognition layers, with normalization state controlled consistently.</p>
+<h3>PyTorch inference lifecycle</h3>
+<pre><code class="language-text">APPROVED CHECKPOINT + VERSIONED CONFIGURATION
+                    │
+                    ▼
+          LOAD MODEL → EVALUATION MODE
+                    │
+                    ▼
+          PREPARE INPUT TENSORS
+                    │
+                    ▼
+          INFERENCE WITHOUT GRADIENTS
+                    │
+                    ▼
+          DECODE AND PACKAGE RESULTS
+                    │
+                    ▼
+          RECORD LATENCY &amp; OUTCOME
+</code></pre>
+<p>Inference engineering covers device placement, GPU memory use, model reuse, controlled concurrency, and input/output validation. Measure model-forward time separately from end-to-end request latency so upload, preparation, persistence, and transfer costs remain visible.</p>
+<h2 id="6-ocr-training-and-integration">6. OCR training and integration</h2>
+<h3>CRNN training workflow</h3>
+<pre class="mermaid">flowchart TD
+    A[Approved text crops and transcriptions] --> B[Validate vocabulary and labels]
+    B --> C[Split by source drawing]
+    C --> D[Training-only augmentation]
+    D --> E[Normalize and batch crops]
+    E --> F[Convolutional feature extraction]
+    F --> G[Recurrent sequence modeling]
+    G --> H[Character logits and alignment loss]
+    H --> I[Backpropagation and optimizer update]
+    I --> J[Held-out validation]
+    J --> K{Meets release criteria?}
+    K -- No --> D
+    K -- Yes --> L[Versioned weights and vocabulary]
+    L --> M[Staged inference evaluation]
+</pre>
+<p>Candidate augmentations include mild brightness variation, controlled noise, and small geometric changes. Validate each against drawing-specific text; aggressive transformations can change dimension meaning or erase punctuation.</p>
+<h3>Paddle OCR integration</h3>
+<p>The repository supports Paddle OCR as an alternative for dimension and space text recognition, alongside CRNN paths. Paddle OCR is a framework with multiple model configurations; exact layer sizes, activations, and training objectives depend on the selected configuration and checkpoint. They cannot be inferred from the framework name alone.</p>
+<p>A training plan for a selected Paddle OCR configuration follows this public architecture contract:</p>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Component</th>
+<th>Input → output</th>
+<th>Training concern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Crop preparation</td>
+<td>Image region → normalized tensor <code>B × C × H × W</code></td>
+<td>Match the selected configuration's channel count and size</td>
+</tr>
+<tr>
+<td>Visual encoder</td>
+<td>Tensor → spatial or sequence features</td>
+<td>Layer widths and activations come from the approved model configuration</td>
+</tr>
+<tr>
+<td>Sequence adaptation</td>
+<td>Features → ordered text representation</td>
+<td>Preserve reading direction and valid sequence lengths</td>
+</tr>
+<tr>
+<td>Recognition head</td>
+<td>Representation → character/token scores</td>
+<td>Match vocabulary and prediction objective</td>
+</tr>
+<tr>
+<td>Decoder</td>
+<td>Scores → text</td>
+<td>Keep decoding consistent with training</td>
+</tr>
+<tr>
+<td>Evaluation</td>
+<td>Text and references → recognition metrics</td>
+<td>Report dimension, symbol, and space subsets separately</td>
+</tr>
+</tbody>
+</table></div>
+<p>Before training, record the framework version, selected configuration, pretrained artifact provenance, input normalization, vocabulary, train/validation manifests, and evaluation protocol. This portfolio does not claim that a Paddle OCR training run or a particular Paddle architecture was verified in this repository.</p>
+<h3>Evaluation plan</h3>
+<ul>
+<li>OCR: character error rate, word error rate, exact text match, and errors on punctuation or numeric dimensions.</li>
+<li>Detection and classification: class-level precision and recall, localization quality, and representative failure categories.</li>
+<li>Segmentation: overlap quality and visual checks on fine structures.</li>
+<li>Service: request success rate, end-to-end latency, queue growth, persistence failures, and transfer failures.</li>
+</ul>
+<p>Report dataset size, split policy, hardware context, and model version alongside any future results. No fabricated accuracy, speedup, or production-volume claims are included.</p>
+<h2 id="7-redis-shared-state-and-operational-control">7. Redis: shared state and operational control</h2>
+<p>In the inspected application, Redis supports <strong>observability state</strong>: counters, request state, recent events, and history shared across processes. It is not evidence of a Redis inference job queue. Database queue instrumentation and Redis observability should be described separately.</p>
+<pre class="mermaid">flowchart LR
+    A[API and processing events] --> B[Observability adapter]
+    C[Database and transfer events] --> B
+    B --> D{Redis available?}
+    D -- Yes --> E[Shared counters and bounded history]
+    D -- No --> F[Local fallback state]
+    E --> G[Metrics / snapshot endpoints]
+    F --> G
+    G --> H[Monitoring consumers]
+</pre>
+<h3>Control strategy</h3>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Concern</th>
+<th>Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Environment separation</td>
+<td>Prefix keys by application and environment</td>
+</tr>
+<tr>
+<td>Concurrent counters</td>
+<td>Use atomic increments rather than read-modify-write</td>
+</tr>
+<tr>
+<td>Recent activity</td>
+<td>Bound event lists and history windows</td>
+</tr>
+<tr>
+<td>Connection failures</td>
+<td>Use short timeouts and observable fallback behavior</td>
+</tr>
+<tr>
+<td>Retention</td>
+<td>Apply explicit retention policies; example temporary keys use TTL</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>Monitor memory use, evictions, and key growth</td>
+</tr>
+<tr>
+<td>Access</td>
+<td>Use private connectivity, service credentials, and least-privilege ACLs</td>
+</tr>
+<tr>
+<td>Correctness</td>
+<td>Treat fallback snapshots as process-local, potentially incomplete views</td>
+</tr>
+</tbody>
+</table></div>
+<p>Operational state uses atomic counter updates, bounded recent-event lists, and explicit retention policies. Key naming and connection settings remain private.</p>
+<p>Expiration alone does not impose a fixed list size; bounded history and expiration solve different problems. Global counters need an explicit reset/retention policy and should not expire unexpectedly during monitoring windows.</p>
+<p>Redis interruption should raise an operational event. A local fallback preserves partial visibility, but it does not provide durable global accounting or cross-worker consistency. Redis recovery and state reconciliation should be tested before relying on combined totals.</p>
+<h2 id="8-deployment">8. Deployment</h2>
+<p><img alt="Deployment, Redis, MLOps, and monitoring topology" src="../../data/projects/ai-ce/deployment-flow.svg" loading="lazy" /></p>
+<p>The repository contains systemd, reverse-proxy, Prometheus, alert, and Grafana assets. The examples below are sanitized deployment patterns; they are not a record of a verified live deployment.</p>
+<h3>Deployment topology</h3>
+<pre class="mermaid">flowchart TD
+    U[Authorized client] --> P[TLS reverse proxy]
+    P --> A[API service]
+    S[systemd supervisor] --> A
+    A --> G[PyTorch runtime and approved model artifacts]
+    A --> R[Redis operational state]
+    A --> D[Optional result database]
+    A --> F[Result artifact storage]
+    F --> T[Transfer agent]
+    T --> M[Separate MLOps environment]
+    A -. private metrics .-> C[Prometheus]
+    C --> V[Grafana]
+    A -. private JSON snapshot .-> W[Custom dashboard integration]
+</pre>
+<h3>Release flow</h3>
+<pre class="mermaid">flowchart LR
+    A[Reviewed source] --> B[CI checks]
+    B --> C[Versioned release bundle]
+    C --> D[Install locked environment]
+    D --> E[Verify approved model manifest]
+    E --> F[Activate candidate release]
+    F --> G[Restart supervised service]
+    G --> H{Health and smoke checks pass?}
+    H -- Yes --> I[Observe candidate]
+    H -- No --> J[Restore previous release and restart]
+</pre>
+<p>A release bundle should pair source revision, dependency lock, model manifest, and configuration schema. Keep environment secrets outside the bundle. A restart may interrupt requests; zero-downtime rollout requires additional routing and draining infrastructure.</p>
+<h3>Deployment control flow</h3>
+<pre><code class="language-text">REVIEWED RELEASE → CI CHECKS → STAGED INSTALL → MODEL VERIFICATION
+                                                     │
+                                                     ▼
+                                              SERVICE RESTART
+                                                     │
+                                               HEALTH CHECK
+                                                /         \
+                                             PASS         FAIL
+                                              │             │
+                                              ▼             ▼
+                                           MONITOR       ROLLBACK
+</code></pre>
+<p>The deployment diagram shows control flow rather than invented rollout percentages. Performance graphs can be added when measured latency and service metrics are available.</p>
+<h3>systemd service example</h3>
+<p>Every username and filesystem path below is fictional. The <code>current</code> directory represents an activated release. The environment file is supplied privately by the operator.</p>
+<pre><code class="language-ini"># /etc/systemd/system/example-ai-ce.service
+[Unit]
+Description=Example AI CE Image Mode API
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=120
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=xxx
+Group=xxx
+WorkingDirectory=/opt/xxx/ai-ce/current
+EnvironmentFile=/etc/xxx/ai-ce.env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/opt/xxx/ai-ce/current/.venv/bin/python server_run.py
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=60
+KillSignal=SIGTERM
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>Example environment-file <strong>names only</strong>:</p>
+<pre><code class="language-dotenv"># Illustrative names: map these to the application's actual configuration.
+EXAMPLE_APP_ENV=staging
+EXAMPLE_MODEL_ROOT=/opt/xxx/models
+EXAMPLE_RESULTS_ROOT=/var/lib/xxx/results
+EXAMPLE_REDIS_URL=redis://xxx:xxx@redis.example.invalid:6379/0
+</code></pre>
+<p>Do not copy sample values into a real deployment. Required directories, service identity, dependency environment, approved weights, and private runtime settings must exist before startup.</p>
+<pre><code class="language-bash"># Install the prepared unit; execute on the intended deployment host.
+sudo install -m 0644 example-ai-ce.service /etc/systemd/system/example-ai-ce.service
+sudo systemd-analyze verify /etc/systemd/system/example-ai-ce.service
+sudo systemctl daemon-reload
+sudo systemctl enable --now example-ai-ce.service
+sudo systemctl status example-ai-ce.service --no-pager
+sudo systemctl is-active example-ai-ce.service
+sudo systemctl is-enabled example-ai-ce.service
+
+# Apply a prepared application release.
+sudo systemctl restart example-ai-ce.service
+
+# Inspect recent logs or follow live events.
+sudo journalctl -u example-ai-ce.service -n 100 --no-pager
+sudo journalctl -u example-ai-ce.service -f
+
+# Recover from a restart-limit condition after fixing the root cause.
+sudo systemctl reset-failed example-ai-ce.service
+sudo systemctl start example-ai-ce.service
+</code></pre>
+<p><code>enable</code> configures startup at boot; <code>Restart=on-failure</code> supervises crashes. Neither command fetches source, trains models, or automatically deploys new releases. Automated deployment requires a separate release job that installs a reviewed bundle, switches the release directory, restarts the service, checks health, and restores the previous release if necessary.</p>
+<h3>Reverse-proxy example</h3>
+<pre><code class="language-nginx"># Conceptual example. Replace xxx with the configured internal application port.
+# TLS certificate configuration and authentication are supplied privately.
+location / {
+    proxy_pass http://127.0.0.1:xxx;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}
+
+# Monitoring is routed separately through trusted internal access.
+location = /metrics { deny all; }
+location = /ops/snapshot { deny all; }
+</code></pre>
+<pre><code class="language-bash">sudo nginx -t
+sudo systemctl reload nginx
+curl --fail https://api.example.invalid/health
+</code></pre>
+<p>The nginx fragment contains a deliberately nonnumeric port placeholder and must be completed before validation. Set upload limits, request timeouts, TLS, and monitoring access according to the deployment environment.</p>
+<h2 id="9-monitoring-prometheus-grafana-and-custom-dashboards">9. Monitoring: Prometheus, Grafana, and custom dashboards</h2>
+<h3>What is supported by repository evidence</h3>
+<ul>
+<li>A health route for basic availability checks.</li>
+<li>A Prometheus text endpoint at <code>/metrics</code>.</li>
+<li>A JSON operational endpoint at <code>/ops/snapshot</code>.</li>
+<li>Instrumentation for uploads, request outcomes, database activity, remote transfers, recent events, and system resource snapshots.</li>
+<li>A Grafana starter dashboard, Prometheus scrape configuration, and alert-rule assets.</li>
+<li>An interface suitable for a custom monitoring dashboard.</li>
+</ul>
+<p>These assets demonstrate the Grafana integration approach and custom-dashboard foundation. They do not establish that a Grafana connection succeeded in a particular environment or that a finished custom dashboard UI is deployed.</p>
+<h3>Grafana integration approach</h3>
+<ol>
+<li>Confirm the service produces valid metrics on a trusted internal route.</li>
+<li>Configure Prometheus to scrape that route and inspect target health.</li>
+<li>Add Prometheus as a Grafana data source using a private connection.</li>
+<li>Import the starter dashboard and map its data-source reference.</li>
+<li>Compare panel queries with actual metric names and labels.</li>
+<li>Trigger a controlled example request and verify counter changes.</li>
+<li>Check missing-data behavior, restart resets, and alert routing.</li>
+</ol>
+<p>Example sanitized Prometheus configuration:</p>
+<pre><code class="language-yaml">global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: example-ai-ce
+    scheme: https
+    metrics_path: /metrics
+    static_configs:
+      - targets: [&quot;metrics.example.invalid:443&quot;]
+        labels:
+          environment: example
+</code></pre>
+<p>The example metrics gateway must authorize the collector; it is separate from the public nginx route denied above. Supply TLS trust and authentication privately.</p>
+<h3>Dashboard design</h3>
+<pre><code class="language-text">┌──────────────────────────────────────────────────────────────┐
+│ AI CE — Operational Overview                                │
+├──────────────┬──────────────┬──────────────┬───────────────────┤
+│ Availability │ Request rate │ Failure rate │ Active requests  │
+├──────────────┴──────────────┼──────────────┴───────────────────┤
+│ Request duration over time │ Database backlog / outcomes     │
+├───────────────────────────┼──────────────────────────────────┤
+│ CPU / memory / GPU         │ Remote transfer outcomes         │
+├───────────────────────────┴──────────────────────────────────┤
+│ Recent operational events / data freshness / fallback state │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Panel</th>
+<th>Operational question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Availability</td>
+<td>Is the service reachable and ready to accept work?</td>
+</tr>
+<tr>
+<td>Request outcomes</td>
+<td>Are requests completing, failing, or remaining active?</td>
+</tr>
+<tr>
+<td>Duration</td>
+<td>Is processing becoming slower for comparable inputs?</td>
+</tr>
+<tr>
+<td>Database backlog</td>
+<td>Is result persistence keeping up with processing?</td>
+</tr>
+<tr>
+<td>Transfer outcomes</td>
+<td>Are archives reaching the separate environment?</td>
+</tr>
+<tr>
+<td>Resource usage</td>
+<td>Are memory pressure or GPU saturation limiting work?</td>
+</tr>
+<tr>
+<td>Redis state</td>
+<td>Is shared telemetry available or running in fallback?</td>
+</tr>
+<tr>
+<td>Freshness</td>
+<td>How old is the latest successful sample?</td>
+</tr>
+</tbody>
+</table></div>
+<p>Illustrative PromQL below uses <strong>invented metric names</strong>. Map them to the actual exposition before use. A percentile query requires an instrumented histogram; a duration counter alone cannot provide percentiles.</p>
+<pre><code class="language-promql"># Request completion rate.
+rate(example_requests_total{status=&quot;completed&quot;}[5m])
+
+# Failure ratio; the denominator covers completed + failed outcomes only.
+sum(rate(example_requests_total{status=&quot;failed&quot;}[5m]))
+/
+clamp_min(sum(rate(example_requests_total{status=~&quot;completed|failed&quot;}[5m])), 0.001)
+
+# P95 request latency, only when the example histogram exists.
+histogram_quantile(
+  0.95,
+  sum by (le) (rate(example_request_duration_seconds_bucket[5m]))
+)
+</code></pre>
+<h3>Custom monitoring dashboard approach</h3>
+<p>A custom frontend can use <code>/ops/snapshot</code> for current counters, recent events, and operational status, while using Prometheus-backed queries for historical trends. Poll through an authenticated monitoring gateway. Show stale data explicitly rather than presenting an old successful response as current health.</p>
+<p>Suggested UI behavior: cancel overlapping requests, back off after failures, display sample timestamps, distinguish unavailable values from zeros, and allow operators to filter events by category. The actual snapshot schema must be inspected when implementing the UI.</p>
+<h3>Alerts and response</h3>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Signal</th>
+<th>Candidate response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Service unreachable</td>
+<td>Inspect systemd state, restart history, and proxy health</td>
+</tr>
+<tr>
+<td>Sustained failure increase</td>
+<td>Review sanitized errors and recent release changes</td>
+</tr>
+<tr>
+<td>Growing database backlog</td>
+<td>Check database availability and writer throughput</td>
+</tr>
+<tr>
+<td>Repeated transfer failures</td>
+<td>Inspect transport reachability, destination permissions, and retries</td>
+</tr>
+<tr>
+<td>Resource pressure</td>
+<td>Review concurrency, input sizes, and available capacity</td>
+</tr>
+<tr>
+<td>Missing or stale metrics</td>
+<td>Check collector reachability and telemetry fallback state</td>
+</tr>
+</tbody>
+</table></div>
+<p>Alert thresholds should come from an observed baseline and agreed operating goals; this document does not invent service-level results.</p>
+<h2 id="10-sending-data-to-another-server-for-mlops">10. Sending data to another server for MLOps</h2>
+<p>The repository includes remote archive synchronization and transfer-event instrumentation. That establishes artifact-transfer capability. The full feedback, labeling, retraining, and release loop below is a proposed extension rather than a verified automated training platform.</p>
+<pre class="mermaid">sequenceDiagram
+    participant A as Inference service
+    participant L as Local artifact store
+    participant T as Transfer agent
+    participant R as Separate MLOps environment
+    participant V as Validation and review
+    participant M as Model release process
+    A->>L: Save results and approved artifacts
+    L->>T: Discover completed artifact set
+    T->>R: Transfer over authenticated encrypted channel
+    R->>R: Verify manifest and content integrity
+    R-->>T: Confirm durable acceptance
+    T->>T: Record transfer outcome
+    R->>V: Propose samples for annotation / evaluation
+    V->>M: Approved dataset and evaluation report
+    M-->>A: Reviewed versioned model release
+</pre>
+<h3>Transfer contract</h3>
+<p>A mature receiving environment should validate a manifest such as:</p>
+<pre><code class="language-json">{
+  &quot;schema_version&quot;: &quot;example-1&quot;,
+  &quot;artifact_id&quot;: &quot;example-artifact&quot;,
+  &quot;request_ref&quot;: &quot;example-pseudonymous-ref&quot;,
+  &quot;model_version&quot;: &quot;example-v1&quot;,
+  &quot;content_digest&quot;: &quot;xxx&quot;,
+  &quot;artifact_types&quot;: [&quot;approved-image&quot;, &quot;prediction-json&quot;],
+  &quot;review_status&quot;: &quot;pending&quot;,
+  &quot;transfer_state&quot;: &quot;awaiting-acknowledgement&quot;
+}
+</code></pre>
+<p>This is a proposed schema. It does not expose actual filenames, customer identifiers, storage locations, or credentials.</p>
+<h3>Reliability and control</h3>
+<ul>
+<li>Transfer only completed artifact sets; stage incomplete uploads away from consumers.</li>
+<li>Use stable artifact IDs and content digests to recognize duplicate transfers.</li>
+<li>Retry transient failures with bounded backoff and visible failure status.</li>
+<li>Verify remote integrity and durable acceptance before applying local retention rules.</li>
+<li>Keep failed transfers available for inspection rather than silently dropping data.</li>
+<li>Send approved samples and operational metadata according to the data-sharing agreement.</li>
+<li>Keep prediction outputs separate from human-approved ground truth.</li>
+<li>Version datasets and evaluate candidate weights before release; avoid training automatically on unreviewed predictions.</li>
+</ul>
+<p>These are target reliability controls to validate against the transfer implementation, not assertions that every control already exists.</p>
+<h3>MLOps lifecycle</h3>
+<pre><code class="language-text">Operational artifacts
+    └── Approved sample selection
+        └── Annotation and quality review
+            └── Versioned dataset
+                └── PyTorch training / OCR fine-tuning
+                    └── Held-out evaluation
+                        └── Reviewed model artifact
+                            └── Staged deployment
+                                └── Monitoring and feedback
+</code></pre>
+<h2 id="11-engineering-decisions-and-lessons">11. Engineering decisions and lessons</h2>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Challenge</th>
+<th>Engineering direction</th>
+<th>Practical lesson</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Large drawings and small text</td>
+<td>Controlled rescaling and OCR crop preparation</td>
+<td>Validate legibility, not only image dimensions</td>
+</tr>
+<tr>
+<td>Multiple prediction tasks</td>
+<td>Modular adapters and orchestration</td>
+<td>Stable interfaces reduce integration friction</td>
+</tr>
+<tr>
+<td>Recognition ambiguity</td>
+<td>Separate OCR categories and evaluation subsets</td>
+<td>Global averages can hide important numeric errors</td>
+</tr>
+<tr>
+<td>Shared operational state</td>
+<td>Redis-backed observability with fallback</td>
+<td>Availability and global consistency are separate concerns</td>
+</tr>
+<tr>
+<td>Repeatable execution</td>
+<td>Locked dependencies and versioned model contracts</td>
+<td>Weights alone do not reproduce behavior</td>
+</tr>
+<tr>
+<td>Process recovery</td>
+<td>systemd supervision and health checks</td>
+<td>Restarting is useful only when failures remain visible</td>
+</tr>
+<tr>
+<td>Monitoring integration</td>
+<td>Prometheus plus JSON snapshots</td>
+<td>Historical metrics and recent event detail serve different needs</td>
+</tr>
+<tr>
+<td>Continuous improvement</td>
+<td>Artifact transfer followed by reviewed feedback</td>
+<td>Predictions need validation before becoming training labels</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="12-results-and-evidence-to-add">12. Results and evidence to add</h2>
+<p>The repository demonstrates implemented components and operational templates. Quantitative outcomes should be added only after reproducible measurement.</p>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Evidence item</th>
+<th>Value / link to fill</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Approved evaluation dataset and split</td>
+<td><code>xxx</code></td>
+</tr>
+<tr>
+<td>Detection / classification evaluation</td>
+<td><code>xxx</code></td>
+</tr>
+<tr>
+<td>Segmentation evaluation</td>
+<td><code>xxx</code></td>
+</tr>
+<tr>
+<td>OCR character and exact-match results</td>
+<td><code>xxx</code></td>
+</tr>
+<tr>
+<td>End-to-end latency distribution</td>
+<td><code>xxx</code></td>
+</tr>
+<tr>
+<td>Hardware category, without host identity</td>
+<td><code>xxx</code></td>
+</tr>
+<tr>
+<td>Grafana connection screenshot</td>
+<td><code>xxx</code></td>
+</tr>
+<tr>
+<td>Custom dashboard screenshot / implementation link</td>
+<td><code>xxx</code></td>
+</tr>
+<tr>
+<td>Deployment and recovery demonstration</td>
+<td><code>xxx</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="13-images-videos-and-demonstrations">13. Images, videos, and demonstrations</h2>
+<p>Approved, sanitized media will be added here as it is cleared for publication:</p>
+<ul>
+<li>a project cover,</li>
+<li>an input drawing shown next to its structured result visualization,</li>
+<li>dimension and space text recognition examples,</li>
+<li>a deployment diagram or screenshot, Grafana integration evidence, and the custom monitoring dashboard,</li>
+<li>short videos of end-to-end processing, deployment and recovery, and monitoring.</li>
+</ul>
+<p>Before publishing media, remove visible credentials, terminals containing connection strings, browser address bars showing private infrastructure, customer drawing identifiers, and embedded sensitive metadata.</p>
+<h2 id="14-public-disclosure-boundary">14. Public disclosure boundary</h2>
+<p>This portfolio describes goals, engineering responsibilities, conceptual architecture, and independent educational code. Deployment identities, domains, addresses, ports, private configuration, training datasets, deployed weight details, and proprietary decision rules are intentionally absent. CRNN and Paddle OCR are discussed as permitted OCR technologies; other model capabilities are described generically.</p>
+</div>
+<!-- article:end -->
+            </div>
           </article>
           <article class="panel detail-panel detail-panel-wide" id="panel-overview">
             <h2 data-ui="project_page.overview"></h2>

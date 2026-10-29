@@ -5,7 +5,6 @@
   "image_alt": "CAD 검사 AI Agent",
   "image_class": "",
   "url": "https://github.com/Laudarisd",
-  "article": "PORTFOLIO_kr.md",
   "subtitle": "CAD Parser: DWG 평면도를 읽고 무엇이 그려져 있는지 파악해, 문과 창을 공간에 연결하고 검사 규칙으로 점검한 뒤, 도면 위 근거와 함께 질문에 답하는 CADian 2026 애드온이에요.",
   "status": "in_development",
   "role": "연구원, 위즈코어 (CADian Inc.)",

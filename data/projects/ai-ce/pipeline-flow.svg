@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="650" viewBox="0 0 1100 650" role="img" aria-label="AI CE Image Mode — Processing Flow">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748b"/></marker></defs>
+<rect width="1100" height="650" rx="16" fill="#f8fafc"/>
+<text x="35" y="43" font-family="sans-serif" font-size="24" font-weight="700" fill="#0f172a">AI CE Image Mode — Processing Flow</text>
+<path d="M 550.0 145 L 550.0 180" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 550.0 240 L 195.0 300" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 550.0 240 L 550.0 300" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 550.0 240 L 905.0 300" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 195.0 370 L 550.0 435" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 550.0 370 L 550.0 435" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 905.0 370 L 550.0 435" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 550.0 495 L 550.0 545" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<rect x="375" y="85" width="350" height="60" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="550.0" y="111" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Drawing upload / batch input</text>
+<rect x="375" y="180" width="350" height="60" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="550.0" y="206" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Validate, rescale, reduce noise</text>
+<rect x="45" y="300" width="300" height="70" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="195.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Detection model</text>
+<text x="195.0" y="347" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Objects and classifications</text>
+<rect x="400" y="300" width="300" height="70" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="550.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Segmentation model</text>
+<text x="550.0" y="347" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Regions and wall analysis</text>
+<rect x="755" y="300" width="300" height="70" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="905.0" y="326" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">OCR models</text>
+<text x="905.0" y="347" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Dimensions, symbols, spaces</text>
+<rect x="375" y="435" width="350" height="60" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="550.0" y="461" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Structured result assembly</text>
+<rect x="375" y="545" width="350" height="60" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="550.0" y="571" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">JSON / visualization / persistence</text>
+</svg>

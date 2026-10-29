@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="650" viewBox="0 0 900 650" role="img" aria-label="AI CE Image Mode — Deployment and Monitoring">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748b"/></marker></defs>
+<rect width="900" height="650" rx="16" fill="#f8fafc"/>
+<text x="35" y="43" font-family="sans-serif" font-size="24" font-weight="700" fill="#0f172a">AI CE Image Mode — Deployment and Monitoring</text>
+<path d="M 265 132.5 L 325 132.5" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 555 132.5 L 615 132.5" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 150.0 290 L 440.0 165" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 440.0 165 L 440.0 290" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 440.0 165 L 730.0 290" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 440.0 165 L 150.0 490" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 265 522.5 L 325 522.5" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<path d="M 730.0 355 L 730.0 490" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<rect x="35" y="100" width="230" height="65" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="150.0" y="126" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Reviewed release</text>
+<text x="150.0" y="147" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Locked dependencies</text>
+<rect x="325" y="100" width="230" height="65" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="440.0" y="126" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">systemd supervisor</text>
+<text x="440.0" y="147" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">API service</text>
+<rect x="615" y="100" width="230" height="65" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="730.0" y="126" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">PyTorch inference</text>
+<text x="730.0" y="147" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Approved model artifacts</text>
+<rect x="35" y="290" width="230" height="65" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="150.0" y="316" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Reverse proxy</text>
+<text x="150.0" y="337" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Authorized clients</text>
+<rect x="325" y="290" width="230" height="65" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="440.0" y="316" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Redis</text>
+<text x="440.0" y="337" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Operational state</text>
+<rect x="615" y="290" width="230" height="65" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="730.0" y="316" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Private metrics</text>
+<text x="730.0" y="337" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Prometheus</text>
+<rect x="35" y="490" width="230" height="65" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="150.0" y="516" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Result archives</text>
+<text x="150.0" y="537" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Remote transfer</text>
+<rect x="325" y="490" width="230" height="65" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="440.0" y="516" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Separate environment</text>
+<text x="440.0" y="537" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">MLOps review</text>
+<rect x="615" y="490" width="230" height="65" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+<text x="730.0" y="516" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Grafana / custom UI</text>
+<text x="730.0" y="537" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#0f172a">Monitoring integration</text>
+</svg>
