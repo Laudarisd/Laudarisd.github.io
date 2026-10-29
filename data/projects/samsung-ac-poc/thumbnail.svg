@@ -1,22 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Engineering drawing of an air-conditioner outdoor unit with dimensions">
   <rect width="400" height="200" fill="url(#ground)"/>
 <defs>
-    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f3f6f7"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dcf0fb"/></linearGradient>
     <filter id="sh" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#284b52" flood-opacity="0.16"/></filter>
     <filter id="bs" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#284b52" flood-opacity="0.22"/></filter>
   </defs>
 
-  <rect x="12" y="12" width="376" height="176" fill="#ffffff" stroke="#284b52" stroke-width="1.5" filter="url(#sh)"/>
-  <g fill="none" stroke="#284b52" stroke-width="2"><rect x="40" y="46" width="150" height="104" rx="4"/><circle cx="94" cy="98" r="36"/><circle cx="94" cy="98" r="30" stroke-width="1"/></g>
+  <rect x="12" y="12" width="376" height="176" fill="#fbfdff" stroke="#284b52" stroke-width="1.5"/>
+  <rect x="40" y="46" width="150" height="104" rx="4" fill="#dcf0fb"/><g fill="none" stroke="#284b52" stroke-width="2"><rect x="40" y="46" width="150" height="104" rx="4"/><circle cx="94" cy="98" r="36"/><circle cx="94" cy="98" r="30" stroke-width="1"/></g>
   <g fill="none" stroke="#284b52" stroke-width="1.2"><path d="M94 98 L112 72 M94 98 L118 110 M94 98 L74 124 M94 98 L66 84"/><path d="M142 58 H178"/><path d="M142 67 H178"/><path d="M142 76 H178"/><path d="M142 85 H178"/><path d="M142 94 H178"/><path d="M142 103 H178"/><path d="M142 112 H178"/><path d="M142 121 H178"/><path d="M142 130 H178"/><path d="M142 139 H178"/></g>
-  <g fill="none" stroke="#284b52" stroke-width="2"><rect x="230" y="46" width="70" height="104" rx="3"/><path d="M238 60 H292"/><path d="M238 70 H292"/><path d="M238 80 H292"/><path d="M238 90 H292"/><path d="M238 100 H292"/><path d="M238 110 H292"/><path d="M238 120 H292"/><path d="M238 130 H292"/><path d="M238 140 H292"/></g>
+  <rect x="230" y="46" width="70" height="104" rx="3" fill="#dbe8fb"/><g fill="none" stroke="#284b52" stroke-width="2"><rect x="230" y="46" width="70" height="104" rx="3"/><path d="M238 60 H292"/><path d="M238 70 H292"/><path d="M238 80 H292"/><path d="M238 90 H292"/><path d="M238 100 H292"/><path d="M238 110 H292"/><path d="M238 120 H292"/><path d="M238 130 H292"/><path d="M238 140 H292"/></g>
   <g stroke="#284b52" stroke-width="1"><path d="M40 162 H190 M40 158 V166 M190 158 V166 M28 46 V150 M24 46 H32 M24 150 H32 M230 162 H300 M230 158 V166 M300 158 V166"/></g>
   <text x="115" y="176" font-size="8" font-weight="700" fill="#284b52" text-anchor="middle" >920</text><text x="20" y="100" font-size="8" font-weight="700" fill="#284b52" text-anchor="middle" transform="rotate(-90 20 100)">630</text><text x="265" y="176" font-size="8" font-weight="700" fill="#284b52" text-anchor="middle" >340</text>
   <text x="115" y="36" font-size="8" font-weight="700" fill="#8a9aa0" text-anchor="middle" >FRONT VIEW</text><text x="265" y="36" font-size="8" font-weight="700" fill="#8a9aa0" text-anchor="middle" >SIDE VIEW</text>
   <rect x="312" y="118" width="70" height="64" fill="#ffffff" stroke="#284b52" filter="url(#sh)"/>
   <path d="M312 134 H382 M312 150 H382 M312 166 H382" stroke="#284b52" stroke-width="0.8"/>
   <text x="347" y="129" font-size="6" font-weight="700" fill="#284b52" text-anchor="middle" >OUTDOOR UNIT</text><text x="347" y="145" font-size="6" font-weight="500" fill="#8a9aa0" text-anchor="middle" >SCALE 1:10</text><text x="347" y="161" font-size="6" font-weight="500" fill="#8a9aa0" text-anchor="middle" >DWG NO. AC-01</text><text x="347" y="177" font-size="6" font-weight="500" fill="#8a9aa0" text-anchor="middle" >REV A</text>
-  <path d="M196 70 q8 -5 16 0 t16 0 M196 90 q8 -5 16 0 t16 0 M196 110 q8 -5 16 0 t16 0" fill="none" stroke="#c8a96b" stroke-width="2"/>
+  <path d="M196 70 q8 -5 16 0 t16 0 M196 90 q8 -5 16 0 t16 0 M196 110 q8 -5 16 0 t16 0" fill="none" stroke="#2a9fd8" stroke-width="2"/>
 
 <g transform="translate(340 70)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#3f6b78" stroke-width="1.5"/><g fill="none" stroke="#3f6b78" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#3f6b78"><path d="M0 -8 V8 M-7 -4 L7 4 M-7 4 L7 -4"/><path d="M-2 -6 L0 -4 L2 -6 M-2 6 L0 4 L2 6"/></g></g><g transform="translate(26 24)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#284b52" stroke-width="1.5"/><g fill="none" stroke="#284b52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#284b52"><rect x="-8" y="-3" width="16" height="6" rx="1"/><path d="M-5 -3 V0 M-2 -3 V-1 M1 -3 V0 M4 -3 V-1"/></g></g><g transform="translate(340 100)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#c8a96b" stroke-width="1.5"/><g fill="none" stroke="#c8a96b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#c8a96b"><path d="M1 -8 L-5 1 H0 L-1 8 L5 -1 H0 Z"/></g></g>
 </svg>

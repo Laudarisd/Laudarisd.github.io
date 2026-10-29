@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Scanned invoice with OCR-recognised fields">
   <rect width="400" height="200" fill="url(#ground)"/>
 <defs>
-    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f3f6f7"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#fdf0cf"/></linearGradient>
     <filter id="sh" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#284b52" flood-opacity="0.16"/></filter>
     <filter id="bs" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#284b52" flood-opacity="0.22"/></filter>
   </defs>
@@ -13,13 +13,13 @@
   <path d="M46 70 H214" stroke="#cfcac0"/>
   <text x="46" y="86" font-size="7" font-weight="500" fill="#5a5a55" text-anchor="start" >Steel plate 10T</text><text x="214" y="86" font-size="7" font-weight="500" fill="#5a5a55" text-anchor="end" >1,240,000</text><text x="46" y="100" font-size="7" font-weight="500" fill="#5a5a55" text-anchor="start" >Bolt M16 x 200</text><text x="214" y="100" font-size="7" font-weight="500" fill="#5a5a55" text-anchor="end" >86,500</text><text x="46" y="114" font-size="7" font-weight="500" fill="#5a5a55" text-anchor="start" >Welding labour</text><text x="214" y="114" font-size="7" font-weight="500" fill="#5a5a55" text-anchor="end" >420,000</text><text x="46" y="128" font-size="7" font-weight="500" fill="#5a5a55" text-anchor="start" >Delivery</text><text x="214" y="128" font-size="7" font-weight="500" fill="#5a5a55" text-anchor="end" >35,000</text>
   <path d="M46 142 H214" stroke="#cfcac0"/><text x="46" y="158" font-size="8" font-weight="800" fill="#4b4b46" text-anchor="start" >TOTAL</text><text x="214" y="158" font-size="8" font-weight="800" fill="#4b4b46" text-anchor="end" >1,781,500</text>
-  <rect x="40" y="76" width="180" height="14" fill="#c8a96b" opacity="0.22"/><rect x="150" y="150" width="70" height="13" fill="#c8a96b" opacity="0.22"/>
-  <path d="M28 118 H232" stroke="#c8a96b" stroke-width="2"/><rect x="28" y="110" width="204" height="16" fill="#c8a96b" opacity="0.15"/>
+  <rect x="40" y="76" width="180" height="14" fill="#e8a317" opacity="0.3"/><rect x="150" y="150" width="70" height="13" fill="#e8a317" opacity="0.3"/>
+  <path d="M28 118 H232" stroke="#ef7a2b" stroke-width="2"/><rect x="28" y="110" width="204" height="16" fill="#ef7a2b" opacity="0.15"/>
   <path d="M242 100 H268 M258 90 L270 100 L258 110" fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <rect x="280" y="40" width="108" height="120" rx="6" fill="#e8eff0" stroke="#284b52" stroke-width="1.2" filter="url(#sh)"/>
+  <rect x="280" y="40" width="108" height="120" rx="6" fill="#dcf3e1" stroke="#3aa655" stroke-width="1.2"/>
   <text x="334" y="58" font-size="8" font-weight="700" fill="#284b52" text-anchor="middle" >Extracted fields</text>
   <text x="290" y="78" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="start" >invoice_no</text><text x="380" y="78" font-size="7" font-weight="700" fill="#284b52" text-anchor="end" >2026-0147</text><text x="290" y="96" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="start" >vendor</text><text x="380" y="96" font-size="7" font-weight="700" fill="#284b52" text-anchor="end" >ACME</text><text x="290" y="114" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="start" >total</text><text x="380" y="114" font-size="7" font-weight="700" fill="#284b52" text-anchor="end" >1,781,500</text><text x="290" y="132" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="start" >currency</text><text x="380" y="132" font-size="7" font-weight="700" fill="#284b52" text-anchor="end" >KRW</text>
-  <text x="334" y="152" font-size="7" font-weight="700" fill="#7e5627" text-anchor="middle" >confidence 0.97</text>
+  <text x="334" y="152" font-size="7" font-weight="700" fill="#3aa655" text-anchor="middle" >confidence 0.97</text>
 
 <g transform="translate(256 160)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#c8a96b" stroke-width="1.5"/><g fill="none" stroke="#c8a96b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#c8a96b"><circle cx="-2" cy="-2" r="5"/><path d="M2 2 L7 7"/></g></g><g transform="translate(376 24)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#6c8e3a" stroke-width="1.5"/><g fill="none" stroke="#6c8e3a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#6c8e3a"><path d="M-6 0 L-2 4 L6 -5"/></g></g><g transform="translate(376 176)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#3f6b78" stroke-width="1.5"/><g fill="none" stroke="#3f6b78" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#3f6b78"><path d="M-5 -7 H2 L5 -4 V7 H-5 Z"/><path d="M-2 -1 H2 M-2 2 H2 M-2 5 H1"/></g></g>
 </svg>

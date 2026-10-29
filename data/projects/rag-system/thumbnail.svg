@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Document with a highlighted passage feeding an answer">
   <rect width="400" height="200" fill="url(#ground)"/>
 <defs>
-    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f3f6f7"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e9e3fa"/></linearGradient>
     <filter id="sh" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#284b52" flood-opacity="0.16"/></filter>
     <filter id="bs" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#284b52" flood-opacity="0.22"/></filter>
   </defs>
@@ -12,7 +12,7 @@
 <rect x="50" y="57" width="140" height="3" rx="1.5" fill="#b9c4c8"/>
 <rect x="50" y="66" width="150" height="3" rx="1.5" fill="#b9c4c8"/>
 <rect x="50" y="75" width="96" height="3" rx="1.5" fill="#b9c4c8"/>
-  <rect x="46" y="86" width="156" height="30" rx="3" fill="#c8a96b" opacity="0.28"/>
+  <rect x="46" y="86" width="156" height="30" rx="3" fill="#e8a317" opacity="0.28"/>
   <rect x="50" y="92" width="148" height="3" rx="1.5" fill="#7e5627"/>
 <rect x="50" y="101" width="146" height="3" rx="1.5" fill="#7e5627"/>
 <rect x="50" y="110" width="110" height="3" rx="1.5" fill="#7e5627"/>
@@ -21,9 +21,9 @@
 <rect x="50" y="146" width="150" height="3" rx="1.5" fill="#b9c4c8"/>
 <rect x="50" y="155" width="130" height="3" rx="1.5" fill="#b9c4c8"/>
 <rect x="50" y="164" width="86" height="3" rx="1.5" fill="#b9c4c8"/>
-  <path d="M202 101 C230 101 232 70 258 70" fill="none" stroke="#c8a96b" stroke-width="2" stroke-dasharray="4 3"/>
-  <rect x="236" y="40" width="140" height="120" rx="10" fill="#e8eff0" stroke="#284b52" stroke-width="1.5" filter="url(#sh)"/>
-  <rect x="236" y="40" width="140" height="22" rx="10" fill="#284b52"/><rect x="236" y="52" width="140" height="10" fill="#284b52"/>
+  <path d="M202 101 C230 101 232 70 258 70" fill="none" stroke="#e8a317" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="236" y="40" width="140" height="120" rx="10" fill="#e9e3fa" stroke="#7c5cd6" stroke-width="1.5"/>
+  <rect x="236" y="40" width="140" height="22" rx="10" fill="#7c5cd6"/><rect x="236" y="52" width="140" height="10" fill="#7c5cd6"/>
   <text x="306" y="55" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle" >Answer</text>
   <rect x="250" y="76" width="112" height="4" rx="1.5" fill="#6b7d84"/>
 <rect x="250" y="85" width="104" height="4" rx="1.5" fill="#6b7d84"/>
