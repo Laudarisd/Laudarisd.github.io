@@ -1,40 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Plant general arrangement drawing with tanks and piping">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#f6efe0"/>
-      <stop offset="1" stop-color="#e8d8ba"/>
-    </linearGradient>
-    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-      <path d="M20 0 H0 V20" fill="none" stroke="#284b52" stroke-width="0.6" opacity="0.25"/>
-    </pattern>
-  </defs>
-  <rect width="400" height="200" fill="url(#bg)"/>
-  <!-- sheet with grid -->
-  <rect x="40" y="26" width="320" height="148" rx="6" fill="#fffdf9" stroke="#284b52" stroke-width="2"/>
-  <rect x="48" y="34" width="304" height="132" fill="url(#grid)"/>
-  <!-- tanks (top view) -->
-  <g fill="#f0e7d6" stroke="#284b52" stroke-width="2.5">
-    <circle cx="96" cy="76" r="24"/>
-    <circle cx="96" cy="134" r="18"/>
-    <circle cx="300" cy="70" r="20"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Plant general arrangement drawing">
+  <rect width="400" height="200" fill="#ffffff"/>
+  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="70" y="40" width="260" height="120" rx="6" fill="#e8eff0"/>
+    <circle cx="118" cy="82" r="20" fill="#ffffff"/>
+    <circle cx="118" cy="82" r="5"/>
+    <circle cx="118" cy="132" r="13" fill="#ffffff"/>
+    <rect x="176" y="62" width="60" height="36" rx="3" fill="#ffffff"/>
+    <rect x="256" y="104" width="60" height="34" rx="3" fill="#ffffff"/>
+    <circle cx="290" cy="74" r="16" fill="#ffffff"/>
+    <path d="M138 82 H176 M236 80 H274 M131 132 H256 M290 90 V104" stroke="#c8a96b" stroke-width="4"/>
   </g>
-  <circle cx="96" cy="76" r="6" fill="none" stroke="#284b52" stroke-width="2"/>
-  <!-- equipment blocks -->
-  <g fill="#f0e7d6" stroke="#284b52" stroke-width="2.5">
-    <rect x="166" y="54" width="70" height="40" rx="3"/>
-    <rect x="166" y="118" width="56" height="30" rx="3"/>
-    <rect x="258" y="112" width="80" height="38" rx="3"/>
-  </g>
-  <!-- piping -->
-  <g fill="none" stroke="#c8a96b" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M120 76 H166"/>
-    <path d="M236 74 H280"/>
-    <path d="M114 134 H166"/>
-    <path d="M222 133 H258"/>
-    <path d="M300 90 V112"/>
-    <path d="M201 94 V118"/>
-  </g>
-  <!-- title block -->
-  <rect x="268" y="150" width="84" height="16" fill="none" stroke="#284b52" stroke-width="1"/>
-  <text x="310" y="162" font-family="Manrope, Arial, sans-serif" font-size="10" font-weight="700" fill="#284b52" text-anchor="middle">GAD</text>
 </svg>

@@ -1,43 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Camera detecting products on a retail shelf">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#f6efe0"/>
-      <stop offset="1" stop-color="#e8d8ba"/>
-    </linearGradient>
-  </defs>
-  <rect width="400" height="200" fill="url(#bg)"/>
-  <!-- shelf unit -->
-  <rect x="60" y="52" width="250" height="124" rx="6" fill="#fffdf9" stroke="#284b52" stroke-width="2"/>
-  <g stroke="#284b52" stroke-width="4" stroke-linecap="round">
-    <path d="M66 100 H304"/><path d="M66 140 H304"/><path d="M66 172 H304"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Camera watching products on a shelf">
+  <rect width="400" height="200" fill="#ffffff"/>
+  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="80" y="64" width="200" height="96" rx="6" fill="#e8eff0"/>
+    <path d="M80 112 H280"/>
+    <rect x="100" y="80" width="22" height="30" rx="3" fill="#ffffff"/><rect x="134" y="86" width="26" height="24" rx="3" fill="#ffffff"/><rect x="176" y="78" width="18" height="32" rx="9" fill="#ffffff"/><rect x="214" y="84" width="30" height="26" rx="3" fill="#ffffff"/>
+    <rect x="104" y="128" width="30" height="26" rx="3" fill="#ffffff"/><rect x="150" y="122" width="18" height="32" rx="9" fill="#ffffff"/><rect x="190" y="130" width="34" height="24" rx="3" fill="#ffffff"/>
+    <rect x="128" y="80" width="38" height="32" stroke="#c8a96b" stroke-dasharray="5 3"/>
+    <rect x="296" y="46" width="34" height="22" rx="6" fill="#e8eff0"/>
+    <circle cx="313" cy="57" r="6" fill="#ffffff"/>
+    <path d="M300 70 L250 150" stroke-dasharray="5 4" stroke-width="2"/>
   </g>
-  <!-- products, top shelf -->
-  <g stroke="#284b52" stroke-width="2">
-    <rect x="82" y="66" width="22" height="32" rx="3" fill="#c8a96b"/>
-    <rect x="112" y="72" width="26" height="26" rx="3" fill="#e3d3b4"/>
-    <rect x="150" y="62" width="18" height="36" rx="9" fill="#284b52"/>
-    <rect x="178" y="70" width="30" height="28" rx="3" fill="#c8a96b"/>
-    <rect x="222" y="64" width="22" height="34" rx="3" fill="#e3d3b4"/>
-    <rect x="256" y="72" width="34" height="26" rx="3" fill="#284b52"/>
-  </g>
-  <!-- products, middle shelf -->
-  <g stroke="#284b52" stroke-width="2">
-    <rect x="86" y="110" width="30" height="28" rx="3" fill="#e3d3b4"/>
-    <rect x="128" y="104" width="18" height="34" rx="9" fill="#c8a96b"/>
-    <rect x="160" y="112" width="34" height="26" rx="3" fill="#284b52"/>
-    <rect x="214" y="106" width="24" height="32" rx="3" fill="#c8a96b"/>
-    <rect x="250" y="112" width="40" height="26" rx="3" fill="#e3d3b4"/>
-  </g>
-  <!-- detection boxes -->
-  <g fill="none" stroke="#c8a96b" stroke-width="2.5" stroke-dasharray="5 3">
-    <rect x="144" y="56" width="30" height="46" rx="3"/>
-    <rect x="154" y="106" width="46" height="36" rx="3"/>
-  </g>
-  <!-- camera -->
-  <rect x="318" y="34" width="48" height="30" rx="8" fill="#284b52"/>
-  <circle cx="342" cy="49" r="9" fill="#fffdf9"/>
-  <circle cx="342" cy="49" r="4" fill="#284b52"/>
-  <path d="M366 42 L380 36 V62 L366 56 Z" fill="#284b52"/>
-  <!-- field of view -->
-  <path d="M322 66 L236 160 M360 66 L300 160" stroke="#c8a96b" stroke-width="2" stroke-dasharray="4 4" opacity="0.8"/>
 </svg>

@@ -1,7 +1,7 @@
 {
   "title": "DMP",
   "description": "모션 학습과 Pruning 연구를 위한 Dynamical Movement Primitives와 Reservoir Computing이에요.",
-  "image": "thumbnail.webp",
+  "image": "thumbnail.svg",
   "image_alt": "논문에 소개된 DMP와 Echo State Network Pruning 방법",
   "image_class": "project-image-paper",
   "url": "https://github.com/Laudarisd/dmp_esn",

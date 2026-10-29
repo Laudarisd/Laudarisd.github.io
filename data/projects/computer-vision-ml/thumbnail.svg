@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Camera lens with detection frame">
+  <rect width="400" height="200" fill="#ffffff"/>
+  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="200" cy="100" r="46" fill="#e8eff0"/>
+    <circle cx="200" cy="100" r="26" fill="#ffffff"/>
+    <circle cx="200" cy="100" r="10" fill="#c8a96b" stroke="none"/>
+    <path d="M124 60 V40 H144 M256 40 H276 V60 M124 140 V160 H144 M256 160 H276 V140"/>
+  </g>
+</svg>

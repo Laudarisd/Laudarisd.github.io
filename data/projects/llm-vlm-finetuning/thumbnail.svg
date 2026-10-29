@@ -1,39 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Text and image data tuning a neural network">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#f6efe0"/>
-      <stop offset="1" stop-color="#e8d8ba"/>
-    </linearGradient>
-  </defs>
-  <rect width="400" height="200" fill="url(#bg)"/>
-  <!-- inputs: text and image -->
-  <rect x="40" y="46" width="60" height="44" rx="6" fill="#fffdf9" stroke="#284b52" stroke-width="2"/>
-  <text x="70" y="76" font-family="Spectral, Georgia, serif" font-size="22" font-weight="700" fill="#284b52" text-anchor="middle">Aa</text>
-  <rect x="40" y="110" width="60" height="44" rx="6" fill="#fffdf9" stroke="#284b52" stroke-width="2"/>
-  <path d="M46 148 L62 128 L74 140 L82 132 L94 148 Z" fill="#c8a96b"/>
-  <circle cx="82" cy="122" r="5" fill="#284b52"/>
-  <!-- connections to network -->
-  <g stroke="#284b52" stroke-width="1.5" opacity="0.5">
-    <path d="M100 68 L150 60 M100 68 L150 100 M100 68 L150 140"/>
-    <path d="M100 132 L150 60 M100 132 L150 100 M100 132 L150 140"/>
-    <path d="M150 60 L220 80 M150 60 L220 120 M150 100 L220 80 M150 100 L220 120 M150 140 L220 80 M150 140 L220 120"/>
-    <path d="M220 80 L290 100 M220 120 L290 100"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Neural network with a tuning dial">
+  <rect width="400" height="200" fill="#ffffff"/>
+  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M96 60 L166 82 M96 60 L166 118 M96 100 L166 82 M96 100 L166 118 M96 140 L166 82 M96 140 L166 118 M166 82 L236 100 M166 118 L236 100" stroke-width="2"/>
+    <circle cx="96" cy="60" r="11" fill="#ffffff"/><circle cx="96" cy="100" r="11" fill="#ffffff"/><circle cx="96" cy="140" r="11" fill="#ffffff"/>
+    <circle cx="166" cy="82" r="11" fill="#ffffff"/><circle cx="166" cy="118" r="11" fill="#ffffff"/>
+    <circle cx="236" cy="100" r="13" fill="#c8a96b" stroke="none"/>
+    <circle cx="306" cy="100" r="30" fill="#e8eff0"/>
+    <path d="M306 100 L322 82" stroke="#c8a96b" stroke-width="5"/>
+    <circle cx="306" cy="100" r="4" fill="#284b52"/>
+    <path d="M288 84 L291 87 M306 76 V80 M324 84 L321 87" stroke-width="2"/>
   </g>
-  <!-- network nodes -->
-  <g fill="#fffdf9" stroke="#284b52" stroke-width="3">
-    <circle cx="150" cy="60" r="11"/><circle cx="150" cy="100" r="11"/><circle cx="150" cy="140" r="11"/>
-    <circle cx="220" cy="80" r="11"/><circle cx="220" cy="120" r="11"/>
-  </g>
-  <circle cx="290" cy="100" r="14" fill="#284b52"/>
-  <!-- tuning dial -->
-  <circle cx="340" cy="140" r="26" fill="#fffdf9" stroke="#284b52" stroke-width="3"/>
-  <path d="M340 140 L354 122" stroke="#c8a96b" stroke-width="5" stroke-linecap="round"/>
-  <circle cx="340" cy="140" r="4" fill="#284b52"/>
-  <g stroke="#284b52" stroke-width="2" stroke-linecap="round">
-    <path d="M322 126 L326 130"/><path d="M340 118 V124"/><path d="M358 126 L354 130"/>
-  </g>
-  <!-- slider -->
-  <path d="M300 54 H372" stroke="#284b52" stroke-width="4" stroke-linecap="round" opacity="0.4"/>
-  <path d="M300 54 H348" stroke="#c8a96b" stroke-width="4" stroke-linecap="round"/>
-  <circle cx="348" cy="54" r="8" fill="#284b52"/>
 </svg>

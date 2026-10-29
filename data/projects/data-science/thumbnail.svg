@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Bar chart with a trend line">
+  <rect width="400" height="200" fill="#ffffff"/>
+  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M90 150 H310 M90 150 V46"/>
+    <rect x="112" y="110" width="26" height="40" fill="#e8eff0"/>
+    <rect x="156" y="88" width="26" height="62" fill="#e8eff0"/>
+    <rect x="200" y="100" width="26" height="50" fill="#e8eff0"/>
+    <rect x="244" y="66" width="26" height="84" fill="#e8eff0"/>
+    <path d="M125 100 L169 78 L213 88 L257 54" stroke="#c8a96b"/>
+    <circle cx="257" cy="54" r="6" fill="#c8a96b" stroke="none"/>
+  </g>
+</svg>

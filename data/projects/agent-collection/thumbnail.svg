@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Several agents connected to a shared hub">
+  <rect width="400" height="200" fill="#ffffff"/>
+  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="200" cy="100" r="26" fill="#e8eff0"/>
+    <circle cx="200" cy="100" r="9" fill="#c8a96b" stroke="none"/>
+    <circle cx="104" cy="60" r="18" fill="#ffffff"/>
+    <circle cx="296" cy="60" r="18" fill="#ffffff"/>
+    <circle cx="104" cy="140" r="18" fill="#ffffff"/>
+    <circle cx="296" cy="140" r="18" fill="#ffffff"/>
+    <path d="M120 68 L178 90 M280 68 L222 90 M120 132 L178 110 M280 132 L222 110"/>
+    <path d="M98 60 H110 M104 54 V66 M290 60 H302 M98 140 H110 M290 140 H302 M296 134 V146"/>
+  </g>
+</svg>

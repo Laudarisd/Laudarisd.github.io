@@ -732,7 +732,7 @@ html[lang="ko"] .site-nav a {
 .project-image-logo {
   padding: 1.4rem;
   object-fit: contain;
-  background: linear-gradient(135deg, #f4ead7, #e8d8ba);
+  background: #ffffff;
 }
 
 .project-image-paper {

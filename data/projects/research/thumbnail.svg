@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Graph network with a pruned connection">
+  <rect width="400" height="200" fill="#ffffff"/>
+  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="110" cy="100" r="14" fill="#e8eff0"/><circle cx="180" cy="56" r="14" fill="#e8eff0"/><circle cx="180" cy="144" r="14" fill="#e8eff0"/>
+    <circle cx="250" cy="100" r="14" fill="#e8eff0"/><circle cx="310" cy="56" r="14" fill="#e8eff0"/><circle cx="310" cy="144" r="14" fill="#e8eff0"/>
+    <path d="M122 92 L168 64 M122 108 L168 136 M192 64 L238 92 M192 136 L238 108 M262 92 L298 64 M262 108 L298 136"/>
+    <path d="M310 70 V130" stroke="#c8a96b" stroke-dasharray="6 5"/>
+    <path d="M180 70 V130" stroke="#c8a96b"/>
+  </g>
+</svg>

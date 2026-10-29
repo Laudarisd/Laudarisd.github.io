@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" role="img" aria-label="Building and its digital twin">
+  <rect width="400" height="200" fill="#ffffff"/>
+  <g fill="none" stroke="#284b52" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M86 150 V76 L132 52 L178 76 V150 Z" fill="#e8eff0"/>
+    <path d="M108 100 H124 M140 100 H156 M108 124 H124 M140 124 H156"/>
+    <path d="M222 150 V76 L268 52 L314 76 V150 Z" stroke-dasharray="7 6"/>
+    <path d="M244 100 H260 M276 100 H292 M244 124 H260 M276 124 H292" stroke-dasharray="7 6"/>
+    <path d="M190 92 H212 M204 84 L214 92 L204 100 M212 112 H190 M198 104 L188 112 L198 120" stroke="#c8a96b"/>
+  </g>
+</svg>
