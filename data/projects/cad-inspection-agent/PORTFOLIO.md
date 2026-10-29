@@ -1,13 +1,9 @@
-# CAD Parser — turning architectural drawings into answers
+# CAD Parser - turning architectural drawings into answers
 
-An add-on for a CAD application that reads a DWG floor plan, works out what is in it, and
-answers questions about it. It identifies the spaces and the objects in them, links
-doors and windows to the spaces they serve, checks the plan against inspection
-rules, and produces a bilingual report.
+An add-on for a CAD application that reads a DWG drawing, extracts what is in it, organizes entitites, objects and
+answers questions about it. It inspects the whole drawing and prepares the reports based on users desired and goals.
 
-> **A note on what this document contains.** This is a description of the problem,
-> the capabilities and the results. The methods behind them are deliberately left
-> out. They are the product.
+**Code files are not available in this repository because of confidentiality**
 
 ---
 
