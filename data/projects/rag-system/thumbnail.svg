@@ -1,16 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Documents retrieved to answer a question">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Document with a highlighted passage feeding an answer">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="68" y="60" width="78" height="100" rx="6" fill="#e8eff0"/>
-    <rect x="56" y="48" width="78" height="100" rx="6" fill="#f7f9f9"/>
-    <rect x="44" y="36" width="78" height="100" rx="6" fill="#ffffff"/>
-    <path d="M58 58 H108 M58 72 H104 M58 86 H108 M58 100 H92"/>
-    <rect x="56" y="110" width="52" height="10" rx="3" fill="#c8a96b" stroke="none"/>
-    <circle cx="174" cy="70" r="12" fill="#ffffff" stroke="#c8a96b" stroke-width="3"/>
-    <path d="M183 79 L194 90" stroke="#c8a96b" stroke-width="4"/>
-    <path d="M152 104 H212 M202 95 L213 104 L202 113"/>
-    <path d="M240 46 H348 Q360 46 360 58 V122 Q360 134 348 134 H276 L252 156 V134 H240 Q228 134 228 122 V58 Q228 46 240 46 Z" fill="#e8eff0"/>
-    <path d="M248 72 H340 M248 90 H326 M248 108 H300"/>
-    <circle cx="334" cy="108" r="6" fill="#c8a96b" stroke="none"/>
-  </g>
+<rect x="34" y="14" width="180" height="186" fill="#ffffff" stroke="#dfe6e8"/>
+  <rect x="50" y="30" width="80" height="6" rx="2" fill="#284b52"/>
+  <rect x="50" y="48" width="148" height="3" rx="1.5" fill="#b9c4c8"/>
+<rect x="50" y="57" width="140" height="3" rx="1.5" fill="#b9c4c8"/>
+<rect x="50" y="66" width="150" height="3" rx="1.5" fill="#b9c4c8"/>
+<rect x="50" y="75" width="96" height="3" rx="1.5" fill="#b9c4c8"/>
+  <rect x="46" y="86" width="156" height="30" rx="3" fill="#c8a96b" opacity="0.28"/>
+  <rect x="50" y="92" width="148" height="3" rx="1.5" fill="#7e5627"/>
+<rect x="50" y="101" width="146" height="3" rx="1.5" fill="#7e5627"/>
+<rect x="50" y="110" width="110" height="3" rx="1.5" fill="#7e5627"/>
+  <rect x="50" y="128" width="150" height="3" rx="1.5" fill="#b9c4c8"/>
+<rect x="50" y="137" width="142" height="3" rx="1.5" fill="#b9c4c8"/>
+<rect x="50" y="146" width="150" height="3" rx="1.5" fill="#b9c4c8"/>
+<rect x="50" y="155" width="130" height="3" rx="1.5" fill="#b9c4c8"/>
+<rect x="50" y="164" width="86" height="3" rx="1.5" fill="#b9c4c8"/>
+  <path d="M202 101 C230 101 232 70 258 70" fill="none" stroke="#c8a96b" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="236" y="40" width="140" height="120" rx="10" fill="#e8eff0" stroke="#284b52" stroke-width="1.5"/>
+  <rect x="236" y="40" width="140" height="22" rx="10" fill="#284b52"/><rect x="236" y="52" width="140" height="10" fill="#284b52"/>
+  <text x="306" y="55" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle" >Answer</text>
+  <rect x="250" y="76" width="112" height="4" rx="1.5" fill="#6b7d84"/>
+<rect x="250" y="85" width="104" height="4" rx="1.5" fill="#6b7d84"/>
+<rect x="250" y="94" width="110" height="4" rx="1.5" fill="#6b7d84"/>
+<rect x="250" y="103" width="70" height="4" rx="1.5" fill="#6b7d84"/>
+  <rect x="250" y="120" width="60" height="16" rx="8" fill="#ffffff" stroke="#c8a96b"/><text x="280" y="131" font-size="7" font-weight="700" fill="#7e5627" text-anchor="middle" >source p.3</text>
+  <rect x="316" y="120" width="48" height="16" rx="8" fill="#ffffff" stroke="#c8a96b"/><text x="340" y="131" font-size="7" font-weight="700" fill="#7e5627" text-anchor="middle" >cite</text>
 </svg>

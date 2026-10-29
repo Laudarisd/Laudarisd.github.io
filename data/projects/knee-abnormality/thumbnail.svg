@@ -1,18 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Knee joint inside a medical scan frame">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="MRI-style knee scan with a highlighted abnormality">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="120" y="22" width="160" height="156" rx="8" fill="#e8eff0"/>
-    <path d="M132 46 V34 H144 M256 34 H268 V46 M132 154 V166 H144 M256 166 H268 V154" stroke="#c8a96b"/>
-    <path d="M186 30 V84 Q176 94 172 104 Q182 112 200 110 Q218 112 228 104 Q224 94 214 84 V30" fill="#ffffff"/>
-    <ellipse cx="200" cy="100" rx="11" ry="14" fill="#f7f9f9"/>
-    <path d="M186 170 V126 Q176 118 174 112 Q186 118 200 118 Q214 118 226 112 Q224 118 214 126 V170" fill="#ffffff"/>
-    <path d="M228 128 V170" stroke-width="6"/>
-    <circle cx="176" cy="110" r="14" stroke="#c8a96b" stroke-dasharray="5 3"/>
-    <path d="M126 134 H274" stroke="#c8a96b" stroke-width="1.5" opacity="0.7"/>
-    <rect x="300" y="60" width="60" height="80" rx="6" fill="#f7f9f9"/>
-    <rect x="310" y="110" width="10" height="20" rx="2" fill="#284b52" stroke="none"/><rect x="325" y="90" width="10" height="40" rx="2" fill="#284b52" stroke="none"/><rect x="340" y="76" width="10" height="54" rx="2" fill="#c8a96b" stroke="none"/>
-    <rect x="40" y="60" width="60" height="80" rx="6" fill="#f7f9f9"/>
-    <text x="70" y="96" font-size="14" font-weight="700" fill="#284b52" stroke="none" text-anchor="middle">MRI</text>
-    <path d="M52 112 H88 M52 124 H76" opacity="0.5"/>
-  </g>
+<rect width="400" height="200" fill="#0f1416"/>
+  <defs>
+    <radialGradient id="bone" cx="0.5" cy="0.5" r="0.6"><stop offset="0" stop-color="#e6e2da"/><stop offset="0.7" stop-color="#9a958c"/><stop offset="1" stop-color="#3b3a37"/></radialGradient>
+    <radialGradient id="soft" cx="0.5" cy="0.5" r="0.7"><stop offset="0" stop-color="#5c5a55"/><stop offset="1" stop-color="#1b1f21"/></radialGradient>
+    <radialGradient id="heat" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ffcf5a" stop-opacity="0.95"/><stop offset="0.6" stop-color="#e36b2d" stop-opacity="0.6"/><stop offset="1" stop-color="#e36b2d" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse cx="200" cy="100" rx="120" ry="92" fill="url(#soft)"/>
+  <path d="M178 6 V70 Q166 84 162 98 Q180 110 200 108 Q220 110 238 98 Q234 84 222 70 V6 Z" fill="url(#bone)"/>
+  <path d="M180 194 V134 Q166 124 164 114 Q182 122 200 122 Q218 122 236 114 Q234 124 220 134 V194 Z" fill="url(#bone)"/>
+  <path d="M244 136 V194" stroke="#b9b4aa" stroke-width="8" stroke-linecap="round"/>
+  <ellipse cx="150" cy="104" rx="14" ry="20" fill="#cfcac0"/>
+  <path d="M170 112 Q200 118 230 112" stroke="#6f6b64" stroke-width="3" fill="none"/>
+  <circle cx="226" cy="118" r="22" fill="url(#heat)"/>
+  <circle cx="226" cy="118" r="18" fill="none" stroke="#c8a96b" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <path d="M30 40 V20 H50 M350 20 H370 V40 M30 160 V180 H50 M350 180 H370 V160" fill="none" stroke="#9fb3b8" stroke-width="2"/>
+  <text x="36" y="32" font-size="8" font-weight="700" fill="#cfd8da" text-anchor="start" >SAG T2</text><text x="364" y="32" font-size="8" font-weight="700" fill="#cfd8da" text-anchor="end" >KNEE R</text>
+  <text x="36" y="174" font-size="8" font-weight="700" fill="#ffcf5a" text-anchor="start" >abnormal: 0.87</text><text x="364" y="174" font-size="7" font-weight="500" fill="#9fb3b8" text-anchor="end" >slice 12/24</text>
 </svg>

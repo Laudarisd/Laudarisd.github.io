@@ -1,21 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Soil layers with a penetration probe and a prediction curve">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Cone penetration test profile with soil layers">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M30 70 Q80 60 130 70 T230 70 V104 H30 Z" fill="#f7f9f9"/>
-    <path d="M30 104 H230 V136 H30 Z" fill="#e8eff0"/>
-    <path d="M30 136 H230 V172 H30 Z" fill="#d9e4e6"/>
-    <path d="M30 70 Q80 60 130 70 T230 70"/>
-    <path d="M30 104 H230 M30 136 H230" stroke-width="1" opacity="0.4"/>
-    <circle cx="60" cy="154" r="3" fill="#284b52" stroke="none"/><circle cx="110" cy="160" r="2.5" fill="#284b52" stroke="none"/><circle cx="180" cy="150" r="3" fill="#284b52" stroke="none"/><circle cx="210" cy="164" r="2" fill="#284b52" stroke="none"/>
-    <rect x="124" y="30" width="12" height="100" fill="#ffffff"/>
-    <path d="M124 130 L130 150 L136 130 Z" fill="#c8a96b" stroke="#c8a96b"/>
-    <rect x="112" y="26" width="36" height="12" rx="3" fill="#284b52" stroke="none"/>
-    <path d="M70 136 L84 112 L98 136 Z" fill="#c8a96b" stroke="#c8a96b"/>
-    <path d="M84 120 V128" stroke="#ffffff"/><circle cx="84" cy="132" r="1.5" fill="#ffffff" stroke="none"/>
-    <rect x="250" y="40" width="120" height="120" rx="6" fill="#f7f9f9"/>
-    <path d="M264 148 V54 M264 148 H356"/>
-    <path d="M264 140 C290 132 300 100 316 90 S344 70 356 62"/>
-    <path d="M264 142 C292 138 304 108 318 98 S346 80 356 74" stroke="#c8a96b" stroke-dasharray="5 4"/>
-    <circle cx="290" cy="128" r="4" fill="#c8a96b" stroke="none"/><circle cx="316" cy="92" r="4" fill="#c8a96b" stroke="none"/><circle cx="340" cy="72" r="4" fill="#c8a96b" stroke="none"/>
-  </g>
+<g><rect x="40" y="34" width="50" height="46" fill="#efe6d2" stroke="#284b52" stroke-width="1"/><rect x="40" y="80" width="50" height="50" fill="#dccfb2" stroke="#284b52" stroke-width="1"/><rect x="40" y="130" width="50" height="40" fill="#c4b08b" stroke="#284b52" stroke-width="1"/></g>
+  <text x="65" y="60" font-size="7" font-weight="700" fill="#284b52" text-anchor="middle" >fill</text><text x="65" y="108" font-size="7" font-weight="700" fill="#284b52" text-anchor="middle" >clay</text><text x="65" y="153" font-size="7" font-weight="700" fill="#284b52" text-anchor="middle" >sand</text>
+  <text x="65" y="24" font-size="8" font-weight="700" fill="#8a9aa0" text-anchor="middle" >soil</text>
+  <text x="110" y="24" font-size="8" font-weight="700" fill="#8a9aa0" text-anchor="start" >cone resistance q</text><text x="190" y="24" font-size="6" font-weight="500" fill="#8a9aa0" text-anchor="start" >c</text><text x="260" y="24" font-size="8" font-weight="500" fill="#8a9aa0" text-anchor="start" >(MPa)</text>
+  <path d="M110 136.0 H260" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M110 102.0 H260" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M110 68.0 H260" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M110 34.0 H260" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M160.0 170 V34" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M210.0 170 V34" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M260.0 170 V34" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M110 34 V170 H260" fill="none" stroke="#8a9aa0" stroke-width="1.2"/>
+  <text x="110.0" y="182" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >0</text><text x="160.0" y="182" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >10</text><text x="210.0" y="182" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >20</text><text x="260.0" y="182" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >30</text>
+  <text x="104" y="38.0" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="end" >0</text><text x="104" y="72.0" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="end" >5</text><text x="104" y="106.0" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="end" >10</text><text x="104" y="140.0" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="end" >15</text><text x="104" y="174.0" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="end" >20</text><text x="92" y="190" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="start" >depth (m)</text>
+  <path d="M110 80 H260 M110 130 H260" stroke="#c8a96b" stroke-width="1" stroke-dasharray="4 3"/>
+  <polyline points="147.8,34.0 156.8,36.3 146.6,38.6 135.1,40.9 151.0,43.2 155.4,45.5 138.3,47.8 140.5,50.1 155.0,52.4 149.4,54.7 135.3,57.0 144.0,59.3 158.7,61.6 144.0,63.9 140.2,66.2 153.3,68.5 155.9,70.8 140.2,73.1 139.3,75.4 156.2,77.7 193.8,80.0 182.8,82.3 190.7,84.6 201.3,86.9 190.8,89.2 176.4,91.5 190.1,93.8 199.9,96.1 183.7,98.4 183.6,100.7 195.6,103.0 194.4,105.3 184.3,107.6 185.8,109.9 198.7,112.2 192.9,114.5 176.0,116.8 191.5,119.1 204.8,121.4 189.5,123.7 181.8,126.0 195.0,128.3 240.0,130.6 221.8,132.9 228.1,135.2 242.7,137.5 238.2,139.8 220.4,142.1 229.7,144.4 245.9,146.7 233.9,149.0 224.3,151.3 239.4,153.6 244.2,155.9 227.0,158.2 223.0,160.5 241.7,162.8 236.8,165.1 218.7,167.4 226.6,169.7" fill="none" stroke="#284b52" stroke-width="2" stroke-linejoin="round"/>
+  <rect x="280" y="34" width="100" height="136" rx="6" fill="#e8eff0" stroke="#284b52" stroke-width="1.2"/>
+  <text x="330" y="54" font-size="8" font-weight="700" fill="#284b52" text-anchor="middle" >Prediction</text>
+  <path d="M292 110.0 H370" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M292 64.0 H370" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M331.0 156 V64" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M370.0 156 V64" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M292 64 V156 H370" fill="none" stroke="#8a9aa0" stroke-width="1.2"/>
+  <polyline points="292.0,150.0 312.0,132.0 332.0,110.0 352.0,90.0 370.0,76.0" fill="none" stroke="#284b52" stroke-width="2" stroke-linejoin="round"/><polyline points="292.0,152.0 312.0,138.0 332.0,118.0 352.0,98.0 370.0,84.0" fill="none" stroke="#c8a96b" stroke-width="2" stroke-linejoin="round" stroke-dasharray="4 3"/>
+  <text x="330" y="166" font-size="6" font-weight="500" fill="#8a9aa0" text-anchor="middle" >measured / predicted</text>
 </svg>

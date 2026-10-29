@@ -1,14 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Air conditioner unit on an engineering drawing">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Engineering drawing of an air-conditioner outdoor unit with dimensions">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="40" y="30" width="320" height="140" rx="6" fill="#f7f9f9"/>
-    <rect x="96" y="56" width="150" height="92" rx="6" fill="#e8eff0"/>
-    <circle cx="146" cy="102" r="30" fill="#ffffff"/>
-    <path d="M146 102 Q156 80 170 88 M146 102 Q166 114 156 128 M146 102 Q124 110 122 90"/>
-    <circle cx="146" cy="102" r="4" fill="#284b52" stroke="none"/>
-    <path d="M196 72 H232 M196 86 H232 M196 100 H232 M196 114 H232 M196 128 H232" opacity="0.7"/>
-    <path d="M262 80 q10 -6 20 0 t20 0 M262 102 q10 -6 20 0 t20 0 M262 124 q10 -6 20 0 t20 0" stroke="#c8a96b"/>
-    <path d="M96 160 H246 M96 155 V165 M246 155 V165 M76 56 V148 M71 56 H81 M71 148 H81" stroke-width="1.5"/>
-    <text x="330" y="160" font-size="9" font-weight="700" fill="#284b52" stroke="none" text-anchor="middle">A/C UNIT</text>
-  </g>
+<rect x="12" y="12" width="376" height="176" fill="#ffffff" stroke="#284b52" stroke-width="1.5"/>
+  <g fill="none" stroke="#284b52" stroke-width="2"><rect x="40" y="46" width="150" height="104" rx="4"/><circle cx="94" cy="98" r="36"/><circle cx="94" cy="98" r="30" stroke-width="1"/></g>
+  <g fill="none" stroke="#284b52" stroke-width="1.2"><path d="M94 98 L112 72 M94 98 L118 110 M94 98 L74 124 M94 98 L66 84"/><path d="M142 58 H178"/><path d="M142 67 H178"/><path d="M142 76 H178"/><path d="M142 85 H178"/><path d="M142 94 H178"/><path d="M142 103 H178"/><path d="M142 112 H178"/><path d="M142 121 H178"/><path d="M142 130 H178"/><path d="M142 139 H178"/></g>
+  <g fill="none" stroke="#284b52" stroke-width="2"><rect x="230" y="46" width="70" height="104" rx="3"/><path d="M238 60 H292"/><path d="M238 70 H292"/><path d="M238 80 H292"/><path d="M238 90 H292"/><path d="M238 100 H292"/><path d="M238 110 H292"/><path d="M238 120 H292"/><path d="M238 130 H292"/><path d="M238 140 H292"/></g>
+  <g stroke="#284b52" stroke-width="1"><path d="M40 162 H190 M40 158 V166 M190 158 V166 M28 46 V150 M24 46 H32 M24 150 H32 M230 162 H300 M230 158 V166 M300 158 V166"/></g>
+  <text x="115" y="176" font-size="8" font-weight="700" fill="#284b52" text-anchor="middle" >920</text><text x="20" y="100" font-size="8" font-weight="700" fill="#284b52" text-anchor="middle" transform="rotate(-90 20 100)">630</text><text x="265" y="176" font-size="8" font-weight="700" fill="#284b52" text-anchor="middle" >340</text>
+  <text x="115" y="36" font-size="8" font-weight="700" fill="#8a9aa0" text-anchor="middle" >FRONT VIEW</text><text x="265" y="36" font-size="8" font-weight="700" fill="#8a9aa0" text-anchor="middle" >SIDE VIEW</text>
+  <rect x="312" y="118" width="70" height="64" fill="#ffffff" stroke="#284b52"/>
+  <path d="M312 134 H382 M312 150 H382 M312 166 H382" stroke="#284b52" stroke-width="0.8"/>
+  <text x="347" y="129" font-size="6" font-weight="700" fill="#284b52" text-anchor="middle" >OUTDOOR UNIT</text><text x="347" y="145" font-size="6" font-weight="500" fill="#8a9aa0" text-anchor="middle" >SCALE 1:10</text><text x="347" y="161" font-size="6" font-weight="500" fill="#8a9aa0" text-anchor="middle" >DWG NO. AC-01</text><text x="347" y="177" font-size="6" font-weight="500" fill="#8a9aa0" text-anchor="middle" >REV A</text>
+  <path d="M196 70 q8 -5 16 0 t16 0 M196 90 q8 -5 16 0 t16 0 M196 110 q8 -5 16 0 t16 0" fill="none" stroke="#c8a96b" stroke-width="2"/>
 </svg>

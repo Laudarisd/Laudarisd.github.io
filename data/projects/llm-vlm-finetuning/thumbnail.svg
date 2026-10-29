@@ -1,20 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Text and image data tuning a neural network">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Training loss curves: base model versus fine-tuned model">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="40" y="46" width="60" height="42" rx="6" fill="#f7f9f9"/>
-    <text x="70" y="75" font-family="Georgia, serif" font-size="20" font-weight="700" fill="#284b52" stroke="none" text-anchor="middle">Aa</text>
-    <rect x="40" y="112" width="60" height="42" rx="6" fill="#f7f9f9"/>
-    <path d="M46 150 L62 130 L74 142 L82 134 L94 150 Z" fill="#c8a96b" stroke="none"/>
-    <circle cx="82" cy="124" r="4" fill="#284b52" stroke="none"/>
-    <path d="M100 67 L150 60 M100 67 L150 100 M100 67 L150 140 M100 133 L150 60 M100 133 L150 100 M100 133 L150 140 M150 60 L220 80 M150 60 L220 120 M150 100 L220 80 M150 100 L220 120 M150 140 L220 80 M150 140 L220 120 M220 80 L290 100 M220 120 L290 100" stroke-width="1.5" opacity="0.6"/>
-    <circle cx="150" cy="60" r="10" fill="#ffffff"/><circle cx="150" cy="100" r="10" fill="#ffffff"/><circle cx="150" cy="140" r="10" fill="#ffffff"/>
-    <circle cx="220" cy="80" r="10" fill="#ffffff"/><circle cx="220" cy="120" r="10" fill="#ffffff"/>
-    <circle cx="290" cy="100" r="13" fill="#c8a96b" stroke="none"/>
-    <circle cx="342" cy="140" r="24" fill="#e8eff0"/>
-    <path d="M342 140 L355 123" stroke="#c8a96b" stroke-width="5"/>
-    <circle cx="342" cy="140" r="4" fill="#284b52" stroke="none"/>
-    <path d="M302 54 H370" stroke-width="4" opacity="0.3"/>
-    <path d="M302 54 H348" stroke="#c8a96b" stroke-width="4"/>
-    <circle cx="348" cy="54" r="7" fill="#284b52" stroke="none"/>
-  </g>
+<text x="60" y="22" font-size="10" font-weight="700" fill="#284b52" text-anchor="start" >Validation loss</text><text x="370" y="22" font-size="8" font-weight="500" fill="#8a9aa0" text-anchor="end" >steps</text>
+  <path d="M60 130.0 H370" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M60 100.0 H370" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M60 70.0 H370" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M60 40.0 H370" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M122.0 160 V40" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M184.0 160 V40" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M246.0 160 V40" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M308.0 160 V40" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M370.0 160 V40" stroke="#dfe6e8" stroke-width="1"/>
+<path d="M60 40 V160 H370" fill="none" stroke="#8a9aa0" stroke-width="1.2"/>
+  <text x="60.0" y="174" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >0k</text><text x="122.0" y="174" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >2k</text><text x="184.0" y="174" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >4k</text><text x="246.0" y="174" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >6k</text><text x="308.0" y="174" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >8k</text><text x="370.0" y="174" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >10k</text>
+  <text x="52" y="163.0" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="end" >0.5</text><text x="52" y="133.0" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="end" >0.6</text><text x="52" y="103.0" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="end" >0.8</text><text x="52" y="73.0" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="end" >0.9</text><text x="52" y="43.0" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="end" >1.0</text>
+  <polyline points="60.0,40.0 67.8,43.5 75.5,46.9 83.2,50.2 91.0,53.6 98.8,57.1 106.5,60.8 114.2,64.7 122.0,68.6 129.8,72.4 137.5,76.1 145.2,79.4 153.0,82.3 160.8,84.7 168.5,86.4 176.2,87.7 184.0,88.4 191.8,88.7 199.5,88.8 207.2,88.8 215.0,88.9 222.8,89.2 230.5,89.8 238.2,90.7 246.0,92.0 253.8,93.6 261.5,95.5 269.2,97.4 277.0,99.2 284.8,100.9 292.5,102.2 300.2,103.1 308.0,103.5 315.8,103.5 323.5,103.1 331.2,102.3 339.0,101.4 346.8,100.5 354.5,99.8 362.2,99.3 370.0,99.1" fill="none" stroke="#8a9aa0" stroke-width="2" stroke-linejoin="round"/><polyline points="60.0,40.0 67.8,48.7 75.5,56.7 83.2,64.1 91.0,71.2 98.8,78.1 106.5,84.7 114.2,91.0 122.0,96.8 129.8,102.0 137.5,106.6 145.2,110.4 153.0,113.5 160.8,115.9 168.5,117.6 176.2,119.0 184.0,120.2 191.8,121.4 199.5,122.8 207.2,124.4 215.0,126.3 222.8,128.4 230.5,130.5 238.2,132.6 246.0,134.4 253.8,135.9 261.5,136.8 269.2,137.3 277.0,137.3 284.8,137.0 292.5,136.5 300.2,136.0 308.0,135.8 315.8,135.9 323.5,136.3 331.2,137.1 339.0,138.3 346.8,139.5 354.5,140.7 362.2,141.8 370.0,142.4" fill="none" stroke="#284b52" stroke-width="2.4" stroke-linejoin="round"/>
+  <circle cx="370" cy="142.4" r="4" fill="#c8a96b" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="372" y="95.14786700721945" font-size="8" font-weight="700" fill="#8a9aa0" text-anchor="end" >base</text><text x="372" y="154.43915881386005" font-size="8" font-weight="700" fill="#284b52" text-anchor="end" >fine-tuned</text>
+  <rect x="70" y="48" width="112" height="30" rx="4" fill="#ffffff" stroke="#dfe6e8"/>
+  <path d="M78 58 H96" stroke="#8a9aa0" stroke-width="2"/><text x="100" y="61" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="start" >base LLM/VLM</text>
+  <path d="M78 70 H96" stroke="#284b52" stroke-width="2.4"/><text x="100" y="73" font-size="7" font-weight="500" fill="#284b52" text-anchor="start" >domain fine-tuned</text>
 </svg>

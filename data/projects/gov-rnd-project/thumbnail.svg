@@ -1,18 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Research and development certificate with gear and flask">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Gantt chart of the national R&amp;D project timeline">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="44" y="30" width="170" height="140" rx="6" fill="#f7f9f9"/>
-    <rect x="54" y="40" width="150" height="120" stroke="#c8a96b" stroke-width="1.5" stroke-dasharray="3 3"/>
-    <text x="129" y="74" font-family="Georgia, serif" font-size="22" font-weight="700" fill="#284b52" stroke="none" text-anchor="middle">R&amp;D</text>
-    <path d="M70 94 H188 M70 110 H172 M70 126 H188" opacity="0.6"/>
-    <circle cx="176" cy="142" r="14" fill="#c8a96b" stroke="none"/>
-    <path d="M168 154 L164 174 L176 166 L188 174 L184 154" fill="#c8a96b" stroke="#c8a96b"/>
-    <circle cx="176" cy="142" r="5" stroke="#ffffff"/>
-    <circle cx="284" cy="74" r="30" fill="#e8eff0"/>
-    <circle cx="284" cy="74" r="11" fill="#ffffff"/>
-    <path d="M284 34 V44 M284 104 V114 M244 74 H254 M314 74 H324 M256 46 L263 53 M305 95 L312 102 M312 46 L305 53 M263 95 L256 102" stroke-width="6"/>
-    <path d="M322 116 V136 L302 170 Q300 176 306 176 H358 Q364 176 362 170 L342 136 V116 Z" fill="#ffffff"/>
-    <path d="M316 116 H348"/>
-    <path d="M310 156 L354 156 L362 170 Q364 176 358 176 H306 Q300 176 302 170 Z" fill="#c8a96b" stroke="none"/>
-  </g>
+<text x="28" y="28" font-size="9" font-weight="700" fill="#284b52" text-anchor="start" >National R&amp;D project — work plan</text>
+  <path d="M130 44 V178" stroke="#dfe6e8"/><text x="130.0" y="40" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >2024.10</text><path d="M190 44 V178" stroke="#dfe6e8"/><text x="190.0" y="40" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >2025.04</text><path d="M250 44 V178" stroke="#dfe6e8"/><text x="250.0" y="40" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >2025.10</text><path d="M310 44 V178" stroke="#dfe6e8"/><text x="310.0" y="40" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >2026.04</text><path d="M370 44 V178" stroke="#dfe6e8"/><text x="370.0" y="40" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="middle" >2026.09</text>
+  <text x="28" y="70" font-size="7" font-weight="700" fill="#284b52" text-anchor="start" >Requirements</text><rect x="130" y="60" width="29" height="12" rx="3" fill="#284b52" opacity="0.75"/><text x="28" y="92" font-size="7" font-weight="700" fill="#284b52" text-anchor="start" >Data &amp; annotation</text><rect x="149" y="82" width="77" height="12" rx="3" fill="#284b52" opacity="0.75"/><text x="28" y="114" font-size="7" font-weight="700" fill="#284b52" text-anchor="start" >Model R&amp;D</text><rect x="202" y="104" width="108" height="12" rx="3" fill="#c8a96b" opacity="1"/><text x="28" y="136" font-size="7" font-weight="700" fill="#284b52" text-anchor="start" >Integration</text><rect x="274" y="126" width="72" height="12" rx="3" fill="#284b52" opacity="0.75"/><text x="28" y="158" font-size="7" font-weight="700" fill="#284b52" text-anchor="start" >Evaluation &amp; report</text><rect x="327" y="148" width="43" height="12" rx="3" fill="#284b52" opacity="0.75"/>
+  <path d="M226 50 l-5 -8 h10 z" fill="#c8a96b"/><path d="M310 50 l-5 -8 h10 z" fill="#c8a96b"/><path d="M370 50 l-5 -8 h10 z" fill="#c8a96b"/>
+  <path d="M262 44 V178" stroke="#284b52" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="28" y="190" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="start" >milestone</text><path d="M72 191 l-4 -7 h8 z" fill="#c8a96b"/>
 </svg>

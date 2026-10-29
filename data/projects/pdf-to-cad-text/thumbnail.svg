@@ -1,14 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="PDF page converted into a CAD drawing with text">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Scanned PDF drawing converted into editable CAD text">
   <rect width="400" height="200" fill="#ffffff"/>
-  <g fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M44 34 H134 L160 60 V166 H44 Z" fill="#f7f9f9"/>
-    <path d="M134 34 V60 H160" fill="#e8eff0"/>
-    <path d="M60 80 H142 M60 96 H130 M60 112 H142"/>
-    <rect x="44" y="134" width="50" height="18" rx="5" fill="#284b52" stroke="none"/><text x="69.0" y="147" font-size="10" font-weight="700" fill="#ffffff" stroke="none" text-anchor="middle">PDF</text>
-    <path d="M180 100 H222 M212 91 L223 100 L212 109"/>
-    <rect x="238" y="34" width="124" height="132" rx="6" fill="#ffffff"/>
-    <path d="M254 52 H346 V110 H254 Z M300 52 V110 M254 82 H300"/>
-    <text x="300" y="146" font-family="Georgia, serif" font-size="26" font-weight="700" fill="#c8a96b" stroke="none" text-anchor="middle">Aa</text>
-    <path d="M256 156 H344" stroke="#c8a96b" stroke-width="2" stroke-dasharray="4 4"/>
-  </g>
+<rect x="20" y="16" width="170" height="168" fill="#f1f1ee" stroke="#cfcfc8"/>
+  <g fill="none" stroke="#6f6f6a" stroke-width="2.5" opacity="0.8"><path d="M44 48 H166 V140 H44 Z M44 94 H100 M100 48 V94"/></g>
+  <rect x="52" y="150" width="60" height="4" rx="1.5" fill="#9a9a94"/>
+<rect x="52" y="160" width="44" height="4" rx="1.5" fill="#9a9a94"/>
+  <rect x="40" y="18" width="34" height="14" rx="3" fill="#8b2e2e"/><text x="57" y="28" font-size="7" font-weight="800" fill="#ffffff" text-anchor="middle" >PDF</text>
+  <path d="M196 100 H224 M214 90 L226 100 L214 110" fill="none" stroke="#284b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="230" y="16" width="150" height="168" fill="#ffffff" stroke="#284b52" stroke-width="1.5"/>
+  <g stroke="#dfe6e8" stroke-width="1"><path d="M245 16 V184"/><path d="M260 16 V184"/><path d="M275 16 V184"/><path d="M290 16 V184"/><path d="M305 16 V184"/><path d="M320 16 V184"/><path d="M335 16 V184"/><path d="M350 16 V184"/><path d="M365 16 V184"/><path d="M230 31 H380"/><path d="M230 46 H380"/><path d="M230 61 H380"/><path d="M230 76 H380"/><path d="M230 91 H380"/><path d="M230 106 H380"/><path d="M230 121 H380"/><path d="M230 136 H380"/><path d="M230 151 H380"/><path d="M230 166 H380"/><path d="M230 181 H380"/></g>
+  <g fill="none" stroke="#284b52" stroke-width="2.5"><path d="M250 48 H362 V140 H250 Z M250 94 H300 M300 48 V94"/></g>
+  <path d="M250 150 H362 M250 146 V154 M362 146 V154" stroke="#c8a96b" stroke-width="1.5"/>
+  <text x="306" y="162" font-size="9" font-weight="700" fill="#7e5627" text-anchor="middle" >11,200</text><text x="275" y="76" font-size="8" font-weight="700" fill="#7e5627" text-anchor="middle" >Ø50</text><text x="331" y="120" font-size="8" font-weight="700" fill="#7e5627" text-anchor="middle" >ROOM 2</text>
+  <rect x="236" y="18" width="40" height="14" rx="3" fill="#284b52"/><text x="256" y="28" font-size="7" font-weight="800" fill="#ffffff" text-anchor="middle" >DWG</text>
 </svg>
