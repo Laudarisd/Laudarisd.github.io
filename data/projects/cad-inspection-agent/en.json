@@ -1,11 +1,11 @@
 {
-  "title": "CAD Inspection AI Agent",
-  "description": "DWG/DXF → vector → LLM/VLM agent that inspects drawings and reports findings.",
+  "title": "CAD Parser – Agent System",
+  "description": "Parses DWG architectural drawings into structured knowledge; an AI agent inspects, answers, and reports.",
   "image": "thumbnail.svg",
-  "image_alt": "CAD inspection AI agent",
+  "image_alt": "CAD Parser agent system",
   "image_class": "",
   "url": "https://github.com/Laudarisd",
-  "subtitle": "An add-on for a CAD application that reads a DWG drawing, extracts information and generates inspection reports.",
+  "subtitle": "An add-on for a CAD application that parses architectural drawings in DWG format into structured knowledge: spaces, objects, openings, marks, and their relations. An AI agent then answers questions with evidence on the drawing, runs inspection rules, produces bilingual reports, and proposes drawing changes for human approval.",
   "tags": [
     "DWG Inspection Agent",
     "C# / .NET",

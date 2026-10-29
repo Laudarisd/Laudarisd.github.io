@@ -1359,7 +1359,7 @@ html[lang="ko"] .project-status {
 .article-toc {
   margin: 0;
   padding-left: 1.2rem;
-  columns: 2;
+  columns: 3;
   column-gap: 1.5rem;
   list-style: none;
   font-size: 0.9rem;
@@ -1391,7 +1391,7 @@ html[lang="ko"] .project-status {
 }
 
 .project-article {
-  max-width: 78ch;
+  max-width: none;
   font-size: 0.98rem;
   line-height: 1.7;
 }
@@ -1537,6 +1537,12 @@ html[lang="ko"] .project-status {
 .project-article a {
   color: var(--link-accent);
   text-decoration: underline;
+}
+
+@media (max-width: 920px) {
+  .article-toc {
+    columns: 2;
+  }
 }
 
 @media (max-width: 720px) {
