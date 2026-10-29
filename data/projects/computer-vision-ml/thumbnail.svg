@@ -1,6 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Street scene with detected cars and people">
-  <rect width="400" height="200" fill="#ffffff"/>
-<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfeaf0"/><stop offset="1" stop-color="#f3f6f7"/></linearGradient></defs>
+  <rect width="400" height="200" fill="url(#ground)"/>
+<defs>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f3f6f7"/></linearGradient>
+    <filter id="sh" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#284b52" flood-opacity="0.16"/></filter>
+    <filter id="bs" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#284b52" flood-opacity="0.22"/></filter>
+  </defs>
+
+  <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfeaf0"/><stop offset="1" stop-color="#f3f6f7"/></linearGradient></defs>
   <rect width="400" height="130" fill="url(#sky)"/>
   <rect y="130" width="400" height="70" fill="#c9ced0"/><path d="M0 165 H400" stroke="#ffffff" stroke-width="3" stroke-dasharray="18 14"/>
   <g fill="#b7c3c7"><rect x="20" y="60" width="50" height="70"/><rect x="80" y="40" width="40" height="90"/><rect x="300" y="50" width="70" height="80"/><rect x="250" y="80" width="40" height="50"/></g>
@@ -11,4 +17,6 @@
   <g fill="none" stroke="#c8a96b" stroke-width="2"><rect x="120" y="128" width="90" height="48"/><rect x="260" y="138" width="74" height="40"/><rect x="222" y="116" width="20" height="48"/></g>
   <g fill="#c8a96b"><rect x="120" y="117" width="48" height="11"/><rect x="260" y="127" width="48" height="11"/><rect x="222" y="105" width="52" height="11"/></g>
   <text x="144" y="126" font-size="7" font-weight="700" fill="#ffffff" text-anchor="middle" >car 0.96</text><text x="284" y="136" font-size="7" font-weight="700" fill="#ffffff" text-anchor="middle" >car 0.91</text><text x="248" y="114" font-size="7" font-weight="700" fill="#ffffff" text-anchor="middle" >person 0.88</text>
+
+<g transform="translate(376 24)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#284b52" stroke-width="1.5"/><g fill="none" stroke="#284b52" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#284b52"><rect x="-7" y="-4" width="14" height="10" rx="2"/><circle cx="0" cy="1" r="3"/><path d="M-3 -4 L-2 -7 H2 L3 -4"/></g></g><g transform="translate(24 24)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#b85c38" stroke-width="1.5"/><g fill="none" stroke="#b85c38" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#b85c38"><rect x="-5" y="-5" width="10" height="10" rx="1.5"/><path d="M-2 -5 V-8 M2 -5 V-8 M-2 5 V8 M2 5 V8 M-5 -2 H-8 M-5 2 H-8 M5 -2 H8 M5 2 H8"/></g></g><g transform="translate(24 176)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#6c8e3a" stroke-width="1.5"/><g fill="none" stroke="#6c8e3a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#6c8e3a"><path d="M0 -8 L7 -5 V1 C7 5 3 7 0 8 C-3 7 -7 5 -7 1 V-5 Z"/><path d="M-3 0 L-1 2 L3 -2"/></g></g>
 </svg>

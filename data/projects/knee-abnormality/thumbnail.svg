@@ -1,6 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="MRI-style knee scan with a highlighted abnormality">
-  <rect width="400" height="200" fill="#ffffff"/>
-<rect width="400" height="200" fill="#0f1416"/>
+  <rect width="400" height="200" fill="#0f1416"/>
+<defs>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f3f6f7"/></linearGradient>
+    <filter id="sh" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#284b52" flood-opacity="0.16"/></filter>
+    <filter id="bs" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#284b52" flood-opacity="0.22"/></filter>
+  </defs>
+
+  <rect width="400" height="200" fill="#0f1416"/>
   <defs>
     <radialGradient id="bone" cx="0.5" cy="0.5" r="0.6"><stop offset="0" stop-color="#e6e2da"/><stop offset="0.7" stop-color="#9a958c"/><stop offset="1" stop-color="#3b3a37"/></radialGradient>
     <radialGradient id="soft" cx="0.5" cy="0.5" r="0.7"><stop offset="0" stop-color="#5c5a55"/><stop offset="1" stop-color="#1b1f21"/></radialGradient>
@@ -17,4 +23,6 @@
   <path d="M30 40 V20 H50 M350 20 H370 V40 M30 160 V180 H50 M350 180 H370 V160" fill="none" stroke="#9fb3b8" stroke-width="2"/>
   <text x="36" y="32" font-size="8" font-weight="700" fill="#cfd8da" text-anchor="start" >SAG T2</text><text x="364" y="32" font-size="8" font-weight="700" fill="#cfd8da" text-anchor="end" >KNEE R</text>
   <text x="36" y="174" font-size="8" font-weight="700" fill="#ffcf5a" text-anchor="start" >abnormal: 0.87</text><text x="364" y="174" font-size="7" font-weight="500" fill="#9fb3b8" text-anchor="end" >slice 12/24</text>
+
+<g transform="translate(200 176)" filter="url(#bs)"><circle r="13" fill="#1f2a2e" stroke="#ffcf5a" stroke-width="1.5"/><g fill="none" stroke="#ffcf5a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#ffcf5a"><circle cx="-2" cy="-2" r="5"/><path d="M2 2 L7 7"/></g></g><g transform="translate(380 100)" filter="url(#bs)"><circle r="13" fill="#1f2a2e" stroke="#9fb3b8" stroke-width="1.5"/><g fill="none" stroke="#9fb3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#9fb3b8"><rect x="-6" y="-6" width="12" height="12" rx="2"/><rect x="-2.5" y="-2.5" width="5" height="5"/></g></g>
 </svg>

@@ -1,6 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Solar generation time series with a flagged anomaly">
-  <rect width="400" height="200" fill="#ffffff"/>
-<text x="40" y="22" font-size="10" font-weight="700" fill="#284b52" text-anchor="start" >PV generation (kW)</text><text x="370" y="22" font-size="8" font-weight="500" fill="#8a9aa0" text-anchor="end" >4 days</text>
+  <rect width="400" height="200" fill="url(#ground)"/>
+<defs>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f3f6f7"/></linearGradient>
+    <filter id="sh" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#284b52" flood-opacity="0.16"/></filter>
+    <filter id="bs" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#284b52" flood-opacity="0.22"/></filter>
+  </defs>
+
+  <text x="40" y="22" font-size="10" font-weight="700" fill="#284b52" text-anchor="start" >PV generation (kW)</text><text x="370" y="22" font-size="8" font-weight="500" fill="#8a9aa0" text-anchor="end" >4 days</text>
   <path d="M40 123.5 H370" stroke="#dfe6e8" stroke-width="1"/>
 <path d="M40 97.0 H370" stroke="#dfe6e8" stroke-width="1"/>
 <path d="M40 70.5 H370" stroke="#dfe6e8" stroke-width="1"/>
@@ -17,4 +23,6 @@
   <rect x="226" y="50" width="62" height="16" rx="8" fill="#c8a96b"/><text x="257" y="61" font-size="8" font-weight="700" fill="#ffffff" text-anchor="middle" >anomaly</text>
   <path d="M246 66 V86" stroke="#c8a96b" stroke-width="2"/>
   <text x="40" y="184" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="start" >expected</text><path d="M80 181 H100" stroke="#284b52" stroke-width="2"/><text x="108" y="184" font-size="7" font-weight="500" fill="#8a9aa0" text-anchor="start" >measured output</text>
+
+<g transform="translate(26 36)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#c8a96b" stroke-width="1.5"/><g fill="none" stroke="#c8a96b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#c8a96b"><path d="M1 -8 L-5 1 H0 L-1 8 L5 -1 H0 Z"/></g></g><g transform="translate(384 60)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#b85c38" stroke-width="1.5"/><g fill="none" stroke="#b85c38" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#b85c38"><path d="M0 -7 L7 6 H-7 Z"/><path d="M0 -2 V2"/><circle cx="0" cy="4.5" r="0.8" fill="currentColor"/></g></g><g transform="translate(384 140)" filter="url(#bs)"><circle r="13" fill="#ffffff" stroke="#3f6b78" stroke-width="1.5"/><g fill="none" stroke="#3f6b78" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" color="#3f6b78"><path d="M-5 5 H4 A4 4 0 0 0 4 -3 A5 5 0 0 0 -5 -1 A3 3 0 0 0 -5 5 Z"/></g></g>
 </svg>
