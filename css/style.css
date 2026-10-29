@@ -1081,6 +1081,13 @@ html[lang="ko"] .timeline-year {
 }
 
 /* Project detail pages (js/projects/*.html): hero, section panels, and the architecture flow diagram. */
+
+/* Detail pages hold long case studies, so they use the wider header width (1320px) instead of 1120px.
+   Change --nav-container at the top of this file to make them wider or narrower. */
+main[data-project] .container {
+  width: min(calc(100% - 2rem), var(--nav-container));
+}
+
 .project-detail-hero {
   padding: 2.4rem 0 1.5rem;
 }
@@ -1102,6 +1109,7 @@ html[lang="ko"] .timeline-year {
 }
 
 .project-detail-hero .hero-text {
+  max-width: none; /* the summary line spans the full width instead of a 62-character column */
   margin-bottom: 1rem;
 }
 
