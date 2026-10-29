@@ -1,22 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Street photo with segmentation masks and a pose skeleton">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Night street scene with glowing detections, masks and a pose skeleton">
 <defs>
 <filter id="sh" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#1f2933" flood-opacity="0.18"/></filter>
-<linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9ec9ea"/><stop offset="1" stop-color="#e7f3fb"/></linearGradient>
-<linearGradient id="road" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5f6b73"/><stop offset="1" stop-color="#3e474d"/></linearGradient>
+<linearGradient id="nsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c1a26"/><stop offset="1" stop-color="#13262f"/></linearGradient>
+<linearGradient id="nroad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a2429"/><stop offset="1" stop-color="#0f1416"/></linearGradient>
+<radialGradient id="lamp"><stop offset="0" stop-color="#ffe6a8"/><stop offset="1" stop-color="#ffe6a800"/></radialGradient>
+<radialGradient id="hl"><stop offset="0" stop-color="#bfe9ff"/><stop offset="1" stop-color="#bfe9ff00"/></radialGradient>
+<radialGradient id="tl"><stop offset="0" stop-color="#ff5f5f"/><stop offset="1" stop-color="#ff5f5f00"/></radialGradient>
 </defs>
-<rect width="400" height="200" fill="#ffffff"/>
-<rect width="400" height="118" fill="url(#sky2)"/><rect y="118" width="400" height="82" fill="url(#road)"/><rect y="112" width="400" height="10" fill="#b8c2c8"/>
-<circle cx="340" cy="34" r="16" fill="#fff3c4"/>
-<g fill="#7d8f9b"><rect x="0" y="50" width="60" height="68"/><rect x="70" y="30" width="46" height="88"/><rect x="280" y="40" width="60" height="78"/><rect x="346" y="64" width="54" height="54"/></g>
-<g fill="#dfe7ec" opacity="0.8"><rect x="8" y="58" width="6" height="8"/><rect x="8" y="72" width="6" height="8"/><rect x="8" y="86" width="6" height="8"/><rect x="8" y="100" width="6" height="8"/><rect x="20" y="58" width="6" height="8"/><rect x="20" y="72" width="6" height="8"/><rect x="20" y="86" width="6" height="8"/><rect x="20" y="100" width="6" height="8"/><rect x="32" y="58" width="6" height="8"/><rect x="32" y="72" width="6" height="8"/><rect x="32" y="86" width="6" height="8"/><rect x="32" y="100" width="6" height="8"/><rect x="44" y="58" width="6" height="8"/><rect x="44" y="72" width="6" height="8"/><rect x="44" y="86" width="6" height="8"/><rect x="44" y="100" width="6" height="8"/><rect x="288" y="48" width="6" height="8"/><rect x="288" y="62" width="6" height="8"/><rect x="288" y="76" width="6" height="8"/><rect x="288" y="90" width="6" height="8"/><rect x="288" y="104" width="6" height="8"/><rect x="300" y="48" width="6" height="8"/><rect x="300" y="62" width="6" height="8"/><rect x="300" y="76" width="6" height="8"/><rect x="300" y="90" width="6" height="8"/><rect x="300" y="104" width="6" height="8"/><rect x="312" y="48" width="6" height="8"/><rect x="312" y="62" width="6" height="8"/><rect x="312" y="76" width="6" height="8"/><rect x="312" y="90" width="6" height="8"/><rect x="312" y="104" width="6" height="8"/><rect x="324" y="48" width="6" height="8"/><rect x="324" y="62" width="6" height="8"/><rect x="324" y="76" width="6" height="8"/><rect x="324" y="90" width="6" height="8"/><rect x="324" y="104" width="6" height="8"/></g>
-<path d="M0 160 L400 150" stroke="#f2f4f5" stroke-width="2" stroke-dasharray="14 12"/>
-<path d="M118 150 L130 128 H186 L198 150 Z" fill="#149e93" opacity="0.55"/><rect x="112" y="148" width="92" height="22" rx="4" fill="#149e93" opacity="0.55"/>
-<path d="M118 150 L130 128 H186 L198 150 Z M112 148 H204 V170 H112 Z" fill="none" stroke="#149e93" stroke-width="2"/>
-<circle cx="130" cy="172" r="7" fill="#1f2933"/><circle cx="188" cy="172" r="7" fill="#1f2933"/>
-<path d="M232 116 l4 -8 h22 l6 8 v22 h-32 z" fill="#2f6fdb" opacity="0.5"/><rect x="226" y="136" width="44" height="20" rx="4" fill="#2f6fdb" opacity="0.5"/><circle cx="236" cy="158" r="5" fill="#1f2933"/><circle cx="262" cy="158" r="5" fill="#1f2933"/>
-<g fill="#e4506e" opacity="0.45"><circle cx="316" cy="118" r="7"/><path d="M308 126 h16 v26 h-16 z"/><path d="M308 152 l-4 22 h7 l3 -18 M324 152 l4 22 h-7 l-3 -18"/></g>
-<g stroke="#ffffff" stroke-width="2" stroke-linecap="round"><path d="M316 125 V150 M316 132 L304 146 M316 132 L328 146 M312 150 L306 172 M320 150 L326 172"/></g>
-<g fill="#ffd166"><circle cx="316" cy="125" r="2.6"/><circle cx="316" cy="132" r="2.6"/><circle cx="304" cy="146" r="2.6"/><circle cx="328" cy="146" r="2.6"/><circle cx="312" cy="150" r="2.6"/><circle cx="320" cy="150" r="2.6"/><circle cx="306" cy="172" r="2.6"/><circle cx="326" cy="172" r="2.6"/></g>
-<g transform="translate(10 10)"><rect width="104" height="30" rx="5" fill="#1f2933" opacity="0.85"/><text x="8" y="12" font-size="6.5" font-weight="800" fill="#ffffff" text-anchor="start" >segmentation + pose</text><text x="8" y="23" font-size="6" font-weight="600" fill="#9fb3b8" text-anchor="start" >car · bus · person</text></g>
-<rect x="16" y="60" width="12" height="4" fill="#149e93"/><rect x="16" y="66" width="12" height="4" fill="#2f6fdb"/><rect x="16" y="72" width="12" height="4" fill="#e4506e"/>
+<rect width="400" height="200" fill="#0f1416"/>
+<rect width="400" height="200" fill="#0f1416"/>
+<rect width="400" height="120" fill="url(#nsky)"/><rect y="120" width="400" height="80" fill="url(#nroad)"/>
+<g fill="#16252d"><rect x="0" y="48" width="58" height="72"/><rect x="66" y="30" width="44" height="90"/><rect x="118" y="62" width="30" height="58"/><rect x="284" y="42" width="56" height="78"/><rect x="348" y="60" width="52" height="60"/></g>
+<g fill="#ffd27a" opacity="0.75"><rect x="8" y="56" width="5" height="7"/><rect x="8" y="72" width="5" height="7"/><rect x="8" y="88" width="5" height="7"/><rect x="8" y="104" width="5" height="7"/><rect x="20" y="56" width="5" height="7"/><rect x="20" y="72" width="5" height="7"/><rect x="20" y="104" width="5" height="7"/><rect x="32" y="56" width="5" height="7"/><rect x="32" y="72" width="5" height="7"/><rect x="32" y="88" width="5" height="7"/><rect x="44" y="56" width="5" height="7"/><rect x="44" y="88" width="5" height="7"/><rect x="44" y="104" width="5" height="7"/><rect x="292" y="98" width="5" height="7"/><rect x="304" y="50" width="5" height="7"/><rect x="304" y="82" width="5" height="7"/><rect x="316" y="50" width="5" height="7"/><rect x="316" y="98" width="5" height="7"/><rect x="328" y="82" width="5" height="7"/><rect x="328" y="98" width="5" height="7"/></g>
+<circle cx="200" cy="40" r="60" fill="url(#lamp)" opacity="0.25"/><path d="M200 40 V120" stroke="#2c3a42" stroke-width="2"/><circle cx="200" cy="40" r="5" fill="#ffe6a8"/>
+<path d="M0 160 L400 150" stroke="#3a4a52" stroke-width="2" stroke-dasharray="14 12"/>
+<circle cx="116" cy="150" r="30" fill="url(#hl)" opacity="0.6"/><circle cx="118" cy="150" r="4" fill="#ffffff"/>
+<path d="M120 150 L132 128 H186 L198 150 Z" fill="#00e5ff" opacity="0.22"/><rect x="114" y="148" width="92" height="22" rx="4" fill="#00e5ff" opacity="0.22"/>
+<g fill="none" stroke="#00e5ff" stroke-width="1.8"><rect x="110" y="124" width="100" height="50" rx="2"/></g><rect x="110" y="114" width="52" height="10" fill="#00e5ff"/><text x="136" y="122" font-size="6.5" font-weight="800" fill="#0f1416" text-anchor="middle" >car 0.96</text>
+<circle cx="130" cy="172" r="7" fill="#0b1115" stroke="#3a4a52"/><circle cx="190" cy="172" r="7" fill="#0b1115" stroke="#3a4a52"/>
+<g fill="#ff2d95" opacity="0.3"><circle cx="300" cy="118" r="7"/><path d="M292 126 h16 v26 h-16 z"/><path d="M292 152 l-4 22 h7 l3 -18 M308 152 l4 22 h-7 l-3 -18"/></g>
+<g stroke="#ff2d95" stroke-width="1.8" stroke-linecap="round"><path d="M300 125 V150 M300 132 L288 146 M300 132 L312 146 M296 150 L290 172 M304 150 L310 172"/></g>
+<g fill="#ffffff"><circle cx="300" cy="125" r="2.2"/><circle cx="300" cy="132" r="2.2"/><circle cx="288" cy="146" r="2.2"/><circle cx="312" cy="146" r="2.2"/><circle cx="296" cy="150" r="2.2"/><circle cx="304" cy="150" r="2.2"/><circle cx="290" cy="172" r="2.2"/><circle cx="310" cy="172" r="2.2"/></g>
+<g fill="none" stroke="#ff2d95" stroke-width="1.5"><rect x="282" y="108" width="36" height="68" rx="2"/></g><rect x="282" y="98" width="52" height="10" fill="#ff2d95"/><text x="308" y="106" font-size="6" font-weight="800" fill="#ffffff" text-anchor="middle" >person 0.91</text>
+<circle cx="246" cy="86" r="14" fill="url(#tl)" opacity="0.7"/><rect x="242" y="70" width="8" height="24" rx="2" fill="#1b262c"/><circle cx="246" cy="76" r="2.5" fill="#ff5f5f"/><circle cx="246" cy="83" r="2.5" fill="#3a4a52"/><circle cx="246" cy="90" r="2.5" fill="#3a4a52"/>
+<rect x="0" y="0" width="400" height="200" fill="none"/><path d="M0 97 H400" stroke="#7CF2C0" stroke-width="1" opacity="0.4"/>
+<g stroke="#9fb3b8" stroke-width="1.5" fill="none"><path d="M30 40 V20 H50 M350 20 H370 V40 M30 160 V180 H50 M350 180 H370 V160"/></g>
+<text x="36" y="32" font-size="8" font-weight="700" fill="#cfd8da" text-anchor="start" >CAM-02 · 23:41:07</text><text x="364" y="32" font-size="8" font-weight="700" fill="#cfd8da" text-anchor="end" >YOLO + pose</text>
+<g transform="translate(36 142)"><rect width="86" height="36" rx="6" fill="#1f2a2e" stroke="#3b4a50"/><text x="43.0" y="14" font-size="7" font-weight="800" fill="#00e5ff" text-anchor="middle" >2 objects</text><text x="43.0" y="28" font-size="8" font-weight="700" fill="#ffffff" text-anchor="middle" >fps 42</text></g>
+<text x="364" y="190" font-size="6.5" font-weight="600" fill="#9fb3b8" text-anchor="end" >frame 1188</text>
 </svg>
