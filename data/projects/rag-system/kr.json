@@ -6,9 +6,9 @@
   "image_class": "",
   "url": "https://github.com/Laudarisd",
   "status": "completed",
-  "role": "연구원, 위즈코어 (CADian Inc.)",
+  "role": "연구원, 위즈코어",
   "context": "산업 프로젝트",
-  "overview": "CADian에서 개발한 사내 RAG(Retrieval-Augmented Generation) 시스템이에요. 사내 기술 문서에서 관련 내용을 검색하고, 그 자료를 근거로 답변을 생성해요.",
+  "overview": "사내용으로 개발한 RAG(Retrieval-Augmented Generation) 시스템이에요. 사내 기술 문서에서 관련 내용을 검색하고, 그 자료를 근거로 답변을 생성해요.",
   "subtitle": "기술 문서를 근거로 답변하는 사내 RAG 시스템이에요.",
   "links": [
     {

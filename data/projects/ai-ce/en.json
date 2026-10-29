@@ -8,7 +8,7 @@
   "subtitle": "End-to-end AI-assisted cost estimation system integrated with a CAD application: data, models, backend, database, CAD add-on, and UI.",
   "status": "completed",
   "period": "Jan 2024 – Apr 2026",
-  "role": "Researcher, WIZCORE (CADian Inc.)",
+  "role": "Researcher, WIZCORE",
   "context": "End-to-end industry AI system",
   "tags": [
     "CAD Integration",
@@ -27,7 +27,7 @@
   ],
   "contributions": [
     "Designed and developed the system from the initial concept through end-to-end integration.",
-    "Built the data analysis, model experimentation (YOLO, DETR), and information-extraction components.",
+    "Built the data analysis, model experimentation in PyTorch, and information-extraction components.",
     "Developed the Python backend (FastAPI) and connected it to the CAD-side functionality.",
     "Developed the CAD add-on / UI integration, the MySQL and Redis data workflows, and the Prometheus/Grafana monitoring."
   ],
@@ -50,7 +50,7 @@
           },
           {
             "label": "Training + evaluation",
-            "detail": "PyTorch, YOLO; DETR experiments"
+            "detail": "PyTorch"
           },
           {
             "label": "Packaging + deployment",
@@ -118,9 +118,8 @@
     {
       "title": "AI model development and experiments",
       "items": [
-        "Object-detection components with Python, PyTorch, and YOLO.",
-        "DETR tested as an alternative architecture (experiment, not the deployed model).",
-        "Iterated on training, validation, and behaviour across representative inputs."
+        "Object-detection components built with Python and PyTorch.",
+        "Iterated on training, validation, and model behaviour across representative inputs."
       ]
     },
     {
@@ -165,7 +164,7 @@
   "pipeline": [
     "Raw project data → inspection and EDA.",
     "Cleaning, labelling, and dataset preparation (OpenCV where needed).",
-    "Model training and evaluation (PyTorch, YOLO; DETR experiments).",
+    "Model training and evaluation (PyTorch).",
     "Model packaging and deployment behind the FastAPI backend.",
     "Inference results → information extraction → structured API response → CAD add-on."
   ],
@@ -183,12 +182,7 @@
     {
       "name": "AI model",
       "role": "Detect and extract relevant information",
-      "tech": "PyTorch, YOLO"
-    },
-    {
-      "name": "Model comparison",
-      "role": "Alternate detection approach",
-      "tech": "DETR (tested)"
+      "tech": "PyTorch"
     },
     {
       "name": "Image processing",
@@ -223,8 +217,6 @@
     {
       "name": "AI / vision",
       "items": [
-        "YOLO",
-        "DETR (tested)",
         "OpenCV",
         "Object Detection",
         "Information Extraction"
@@ -255,7 +247,7 @@
     "Integration: AI predictions had to become output usable inside a CAD application, not just a notebook result.",
     "Service boundaries: processing and inference stay on the server so CAD acts as the user-facing client.",
     "Data consistency: structured API responses and persistent records connect CAD input with downstream estimation.",
-    "Model selection: YOLO-based development and DETR experiments compared detection approaches.",
+    "Model selection: candidate detection models were trained and compared in PyTorch before choosing the deployed one.",
     "Operational visibility: Prometheus and Grafana for monitoring the running stack."
   ],
   "links": [

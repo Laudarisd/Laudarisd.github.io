@@ -6,9 +6,9 @@
   "image_class": "",
   "url": "https://github.com/Laudarisd",
   "status": "completed",
-  "role": "Researcher, WIZCORE (CADian Inc.)",
+  "role": "Researcher, WIZCORE",
   "context": "Industry project",
-  "overview": "An internal retrieval-augmented generation (RAG) system developed at CADian. It retrieves relevant passages from in-house technical documents and generates answers grounded in that material.",
+  "overview": "An internal retrieval-augmented generation (RAG) system developed for internal use. It retrieves relevant passages from in-house technical documents and generates answers grounded in that material.",
   "subtitle": "Internal RAG system for grounded answers over technical documents.",
   "links": [
     {

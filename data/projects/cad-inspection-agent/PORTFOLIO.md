@@ -1,6 +1,6 @@
 # CAD Parser — turning architectural drawings into answers
 
-An add-on for CADian 2026 that reads a DWG floor plan, works out what is in it, and
+An add-on for a CAD application that reads a DWG floor plan, works out what is in it, and
 answers questions about it. It identifies the spaces and the objects in them, links
 doors and windows to the spaces they serve, checks the plan against inspection
 rules, and produces a bilingual report.

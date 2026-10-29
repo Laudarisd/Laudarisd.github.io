@@ -8,7 +8,7 @@
   "subtitle": "CAD 프로그램과 연동되는 End-to-End AI 기반 견적 산출 시스템이에요. 데이터, 모델, 백엔드, DB, CAD 애드온, UI까지 전체 파이프라인을 개발했어요.",
   "status": "completed",
   "period": "2024년 1월 – 2026년 4월",
-  "role": "연구원, 위즈코어 (CADian Inc.)",
+  "role": "연구원, 위즈코어",
   "context": "산업용 End-to-End AI 시스템",
   "tags": [
     "CAD Integration",
@@ -27,7 +27,7 @@
   ],
   "contributions": [
     "초기 설계부터 End-to-End 시스템 연동까지 전체 시스템을 직접 설계·개발",
-    "데이터 분석, AI 모델 실험(YOLO, DETR), 정보 추출 기능 개발",
+    "데이터 분석, PyTorch 기반 AI 모델 실험, 정보 추출 기능 개발",
     "Python 백엔드(FastAPI) 개발 및 CAD 기능 연동",
     "CAD 애드온/UI 연동, MySQL·Redis 데이터 워크플로, Prometheus/Grafana 모니터링 구축"
   ],
@@ -50,7 +50,7 @@
           },
           {
             "label": "모델 학습·평가",
-            "detail": "PyTorch, YOLO; DETR 실험"
+            "detail": "PyTorch"
           },
           {
             "label": "모델 배포 준비",
@@ -118,8 +118,7 @@
     {
       "title": "AI 모델 개발 및 실험",
       "items": [
-        "Python, PyTorch, YOLO로 Object Detection 기능을 개발했어요.",
-        "대안 모델로 DETR을 테스트했어요 (실험 모델, 배포 모델 아님).",
+        "Python과 PyTorch로 Object Detection 기능을 개발했어요.",
         "다양한 입력에 대해 학습·검증과 모델 개선을 진행했어요."
       ]
     },
@@ -165,7 +164,7 @@
   "pipeline": [
     "원천 프로젝트 데이터 → 탐색 및 EDA",
     "정제, 라벨링, 데이터셋 구성 (필요 시 OpenCV)",
-    "모델 학습·평가 (PyTorch, YOLO; DETR 실험)",
+    "모델 학습·평가 (PyTorch)",
     "FastAPI 백엔드 뒤에서 모델 패키징·배포",
     "추론 결과 → 정보 추출 → 구조화된 API 응답 → CAD 애드온"
   ],
@@ -183,12 +182,7 @@
     {
       "name": "AI 모델",
       "role": "객체 탐지 및 정보 추출",
-      "tech": "PyTorch, YOLO"
-    },
-    {
-      "name": "모델 비교 실험",
-      "role": "대안 모델 검토",
-      "tech": "DETR (테스트)"
+      "tech": "PyTorch"
     },
     {
       "name": "이미지 처리",
@@ -223,8 +217,6 @@
     {
       "name": "AI / Vision",
       "items": [
-        "YOLO",
-        "DETR (테스트)",
         "OpenCV",
         "Object Detection",
         "Information Extraction"
@@ -255,7 +247,7 @@
     "실제 시스템 연동: AI 예측 결과를 단순 시각화가 아닌 CAD에서 활용 가능한 정보로 변환해야 했어요.",
     "클라이언트–서버 분리: CAD는 입력·결과 확인, 서버는 추론과 핵심 처리를 담당해요.",
     "데이터 일관성: API 응답과 DB 저장을 연결해 처리 결과를 활용할 수 있게 했어요.",
-    "모델 검토: YOLO 기반 개발과 DETR 실험으로 탐지 방식의 대안을 비교했어요.",
+    "모델 검토: PyTorch로 여러 탐지 모델 후보를 학습·비교한 뒤 배포 모델을 정했어요.",
     "운영 가시성: Prometheus와 Grafana로 서버 상태와 지표를 관찰했어요."
   ],
   "links": [

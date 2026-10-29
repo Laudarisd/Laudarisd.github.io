@@ -5,9 +5,9 @@
   "image_alt": "CAD inspection AI agent",
   "image_class": "",
   "url": "https://github.com/Laudarisd",
-  "subtitle": "CAD Parser: an add-on for CADian 2026 that reads a DWG floor plan, works out what is in it, links doors and windows to the spaces they serve, checks the plan against inspection rules, and answers questions about it with evidence on the drawing.",
+  "subtitle": "CAD Parser: an add-on for a CAD application that reads a DWG floor plan, works out what is in it, links doors and windows to the spaces they serve, checks the plan against inspection rules, and answers questions about it with evidence on the drawing.",
   "status": "in_development",
-  "role": "Researcher, WIZCORE (CADian Inc.)",
+  "role": "Researcher, WIZCORE",
   "context": "Industry R&D",
   "tags": [
     "DWG / DXF",
