@@ -1,8 +1,12 @@
 {
   "categories": [
     {
-      "name": "AI & Machine Learning",
-      "items": ["Deep Learning", "Time-Series Analysis", "Anomaly Detection", "Bayesian Methods", "Statistical Learning"]
+      "name": "Programming Languages",
+      "items": ["Python", "C#", "SQL"]
+    },
+    {
+      "name": "AI, Machine Learning & Computer Vision",
+      "items": ["Deep Learning", "Time-Series Analysis", "Anomaly Detection", "Computer Vision", "Object Detection", "Classification", "Segmentation", "OCR", "Remote Sensing", "GIS"]
     },
     {
       "name": "Generative AI & Agents",
@@ -10,19 +14,11 @@
     },
     {
       "name": "Backend & Server-Side",
-      "items": ["Backend Development", "API Integration", "Server Deployment", "Docker", "AWS"]
+      "items": ["Backend Development", "API Integration", "ONNX Deployment", "Server Deployment", "Linux Systems", "Docker", "AWS"]
     },
     {
-      "name": "Vision, Remote Sensing & Geospatial",
-      "items": ["Computer Vision (Detection, Classification, Segmentation)", "OCR", "Remote Sensing", "GIS"]
-    },
-    {
-      "name": "Engineering & Scientific Computing",
-      "items": ["Geotechnical Data Analysis", "Granular Materials Analysis", "DEM Simulation", "Digital Twins"]
-    },
-    {
-      "name": "Mathematics & Modelling",
-      "items": ["Mathematical Modelling", "Optimisation", "Graph Theory", "Matrix Theory"]
+      "name": "Engineering, Mathematics & Modelling",
+      "items": ["Geotechnical Data Analysis", "Granular Materials Analysis", "DEM Simulation", "Digital Twins", "Mathematical Modelling", "Optimisation", "Graph Theory", "Matrix Theory"]
     }
   ]
 }
