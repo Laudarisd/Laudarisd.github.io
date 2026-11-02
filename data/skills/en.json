@@ -6,7 +6,7 @@
     },
     {
       "name": "AI, Machine Learning & Computer Vision",
-      "items": ["Deep Learning", "Time-Series Analysis", "Anomaly Detection", "Computer Vision", "Object Detection", "Classification", "Segmentation", "OCR", "Remote Sensing", "GIS"]
+      "items": ["Deep Learning", "PyTorch", "NumPy", "scikit-learn", "Time-Series Analysis", "Anomaly Detection", "Computer Vision", "OpenCV", "Object Detection", "Classification", "Segmentation", "OCR", "Remote Sensing", "GIS"]
     },
     {
       "name": "Generative AI & Agents",
