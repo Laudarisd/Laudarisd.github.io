@@ -1,28 +1,28 @@
 {
   "categories": [
     {
+      "name": "AI 및 머신러닝",
+      "items": ["딥러닝", "시계열 분석", "이상 탐지", "베이지안 방법론", "통계적 학습"]
+    },
+    {
+      "name": "생성형 AI 및 에이전트",
+      "items": ["LLMs", "RAG", "프롬프트 엔지니어링", "파인튜닝", "AI 에이전트", "도구 사용", "워크플로 오케스트레이션", "작업 자동화"]
+    },
+    {
+      "name": "백엔드 및 서버 사이드",
+      "items": ["백엔드 개발", "API 통합", "서버 배포", "Docker", "AWS"]
+    },
+    {
+      "name": "비전, 원격탐사 및 공간정보",
+      "items": ["컴퓨터 비전 (객체 탐지, 분류, 분할)", "OCR", "원격탐사", "GIS"]
+    },
+    {
+      "name": "공학 및 과학 컴퓨팅",
+      "items": ["지반공학 데이터 분석", "입상 재료 분석", "DEM 시뮬레이션", "디지털 트윈"]
+    },
+    {
       "name": "수학 및 모델링",
-      "items": ["Mathematical Modelling", "Numerical Methods", "Optimisation", "Graph Theory", "Matrix Theory", "Computational Geometry"]
-    },
-    {
-      "name": "AI 및 Machine Learning",
-      "items": ["Deep Learning", "PyTorch", "TensorFlow", "Time-Series Analysis", "Anomaly Detection", "Probabilistic Modelling", "Bayesian Methods", "Statistical Learning", "Model Evaluation", "Experiment Pipelines"]
-    },
-    {
-      "name": "Generative AI 및 Agent",
-      "items": ["LLMs", "RAG", "Retrieval Design", "Fine-Tuning", "Instruction Tuning", "AI Agents", "Tool Use", "Workflow Orchestration", "Task Automation", "Production AI Systems"]
-    },
-    {
-      "name": "Backend 및 서버",
-      "items": ["Backend Development", "REST APIs", "API Integration", "FastAPI", "Flask", "Server Deployment", "Docker", "Linux", "PostgreSQL", "Nginx"]
-    },
-    {
-      "name": "Vision, Remote Sensing 및 Geospatial",
-      "items": ["Computer Vision", "Object Detection", "Segmentation", "OCR", "Remote Sensing", "Satellite Imagery", "Aerial Imagery", "GIS", "Geospatial Analysis", "Spatiotemporal Analysis", "Infrastructure Analytics"]
-    },
-    {
-      "name": "엔지니어링 및 과학 컴퓨팅",
-      "items": ["Geotechnical Data Analysis", "Simulation-Informed Modelling", "Granular Materials", "Particle Kinematics", "DEM Simulation", "Digital Twins", "Digital Construction", "Python", "C++", "SQL", "NumPy", "Pandas", "Matplotlib"]
+      "items": ["수학적 모델링", "최적화", "그래프 이론", "행렬 이론"]
     }
   ]
 }
