@@ -522,9 +522,8 @@ html[lang="ko"] .site-nav a {
 }
 
 .records-panel {
-  max-height: 32rem;
-  overflow-y: auto;
-  scrollbar-gutter: stable;
+  max-height: none;
+  overflow: visible;
 }
 
 .project-grid {
@@ -566,12 +565,8 @@ html[lang="ko"] .site-nav a {
 .skills-panel,
 .experience-panel {
   width: 100%;
-  height: 24rem;
-  padding-right: 1.75rem;
-  overflow-y: scroll;
-  scrollbar-gutter: stable;
-  scrollbar-color: var(--accent) transparent;
-  scrollbar-width: thin;
+  height: auto;
+  overflow: visible;
 }
 
 .skills-panel::-webkit-scrollbar,
@@ -652,10 +647,10 @@ html[lang="ko"] .site-nav a {
 .timeline-year {
   display: inline-block;
   margin-bottom: 0.55rem;
-  color: var(--accent);
-  font-size: 0.84rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
@@ -689,6 +684,44 @@ html[lang="ko"] .site-nav a {
   display: list-item;
   margin-top: 0.2rem;
   font-size: 0.95rem;
+}
+
+/* Resume records: quiet, flat cards that keep the content—not the box—prominent. */
+.summary-grid .panel,
+.experience-skills-grid .panel,
+.details-grid .panel {
+  padding: 1.4rem;
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  box-shadow: none;
+}
+
+.summary-grid .panel > h2,
+.experience-skills-grid .panel > h2,
+.details-grid .panel > h1 {
+  margin: 0 0 1.1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--line);
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+.summary-grid .record-list,
+.details-grid .record-list {
+  padding-left: 1rem;
+}
+
+.summary-grid .record-list li + li,
+.details-grid .record-list > li + li {
+  margin-top: 1rem;
+}
+
+.experience-skills-grid {
+  margin-top: 0;
 }
 
 /* Project cards: compact tiles with small text and the buttons pinned to the bottom. */
