@@ -500,6 +500,7 @@ html[lang="ko"] .site-nav a {
 /* Card and grid layout: reusable panel shells for resume, publications, and project sections. */
 .summary-grid,
 .details-grid,
+.academic-records-grid,
 .project-grid {
   display: grid;
   gap: 1.25rem;
@@ -519,6 +520,11 @@ html[lang="ko"] .site-nav a {
 
 .details-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.academic-records-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
 }
 
 .records-panel {
@@ -691,7 +697,8 @@ html[lang="ko"] .site-nav a {
 /* Resume records: open two-column layouts with simple dividers instead of cards. */
 .summary-grid .panel,
 .experience-skills-grid .panel,
-.details-grid .panel {
+.details-grid .panel,
+.academic-records-grid .panel {
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -707,14 +714,17 @@ html[lang="ko"] .site-nav a {
 
 .summary-grid .panel + .panel,
 .experience-skills-grid .panel + .panel,
-.details-grid .panel + .panel {
+.details-grid .panel + .panel,
+.academic-records-grid .panel + .panel {
   padding-left: 3rem;
   border-left: 1px solid var(--line);
 }
 
 .summary-grid .panel > h2,
 .experience-skills-grid .panel > h2,
-.details-grid .panel > h1 {
+.details-grid .panel > h1,
+.academic-records-grid .panel > h1,
+.academic-records-grid .panel > h2 {
   margin: 0 0 1.1rem;
   padding-bottom: 0.7rem;
   border-bottom: 1px solid var(--line);
@@ -737,6 +747,51 @@ html[lang="ko"] .site-nav a {
 
 .experience-skills-grid {
   margin-top: 0;
+}
+
+/* Academic work: compact three-column records followed by an unboxed honours list. */
+.academic-records-grid .record-list {
+  padding-left: 1rem;
+}
+
+.academic-records-grid .record-list > li {
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.academic-records-grid .record-list > li + li {
+  margin-top: 0.85rem;
+}
+
+.academic-records-grid .record-sublist,
+.academic-records-grid .record-sublist li {
+  font-size: 0.78rem;
+}
+
+.honours-strip {
+  margin-top: 2.5rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line);
+}
+
+.honours-strip h2 {
+  margin-bottom: 0.9rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.honours-strip .record-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem 2rem;
+  padding-left: 1rem;
+}
+
+.honours-strip .record-list li {
+  margin-top: 0;
+  font-size: 0.82rem;
+  line-height: 1.4;
 }
 
 /* Project cards: compact tiles with small text and the buttons pinned to the bottom. */
@@ -863,17 +918,23 @@ html[lang="ko"] .site-nav a {
   .summary-grid,
   .experience-skills-grid,
   .details-grid,
+  .academic-records-grid,
   .footer-shell {
     grid-template-columns: 1fr;
   }
 
   .summary-grid .panel + .panel,
   .experience-skills-grid .panel + .panel,
-  .details-grid .panel + .panel {
+  .details-grid .panel + .panel,
+  .academic-records-grid .panel + .panel {
     padding-top: 1.5rem;
     padding-left: 0;
     border-top: 1px solid var(--line);
     border-left: 0;
+  }
+
+  .honours-strip .record-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .project-grid {
@@ -895,6 +956,10 @@ html[lang="ko"] .site-nav a {
 }
 
 @media (max-width: 720px) {
+  .honours-strip .record-list {
+    grid-template-columns: 1fr;
+  }
+
   .skill-sections {
     grid-template-columns: 1fr;
     gap: 1rem;
