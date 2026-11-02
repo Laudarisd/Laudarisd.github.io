@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light-vintage">
+<html lang="en" data-theme="simple">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -65,7 +65,7 @@
           <span class="theme-swatch" aria-hidden="true"></span>
         </button>
         <button
-          class="theme-toggle theme-toggle-light-vintage is-active"
+          class="theme-toggle theme-toggle-light-vintage"
           type="button"
           data-theme-target="light-vintage"
           data-theme-label="Paper Study"
@@ -85,7 +85,7 @@
           <span class="theme-swatch" aria-hidden="true"></span>
         </button>
         <button
-          class="theme-toggle theme-toggle-simple"
+          class="theme-toggle theme-toggle-simple is-active"
           type="button"
           data-theme-target="simple"
           data-theme-label="Clean Draft"
@@ -200,8 +200,8 @@
       (function () {
         var root = document.documentElement;
         var toggles = document.querySelectorAll(".theme-toggle");
-        var storageKey = "portfolio-theme";
-        var defaultTheme = "light-vintage";
+        var storageKey = "portfolio-theme-v2";
+        var defaultTheme = "simple";
         var savedTheme = localStorage.getItem(storageKey) || defaultTheme;
 
         function applyTheme(theme) {
