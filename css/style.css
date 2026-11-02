@@ -27,7 +27,7 @@
   --radius-lg: 28px;
   --radius-md: 18px;
   --radius-sm: 12px;
-  --container: 1120px;
+  --container: 1320px;
   --nav-container: 1320px;
 }
 
@@ -155,11 +155,6 @@ ul {
 .container {
   width: min(calc(100% - 2rem), var(--container));
   margin: 0 auto;
-}
-
-#resume .container,
-.publication-records-section .container {
-  width: min(calc(100% - 2rem), var(--nav-container));
 }
 
 /* Header and navigation: keeps the top bar readable and anchored while scrolling. */
@@ -613,7 +608,7 @@ html[lang="ko"] .site-nav a {
 
 .skill-sections {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.85rem 1.25rem;
 }
 
