@@ -501,6 +501,8 @@ html[lang="ko"] .site-nav a {
 .summary-grid,
 .details-grid,
 .academic-records-grid,
+.resume-overview-grid,
+.publication-records-grid,
 .project-grid {
   display: grid;
   gap: 1.25rem;
@@ -523,6 +525,12 @@ html[lang="ko"] .site-nav a {
 }
 
 .academic-records-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+}
+
+.resume-overview-grid,
+.publication-records-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0;
 }
@@ -567,7 +575,7 @@ html[lang="ko"] .site-nav a {
   margin-top: 1.25rem;
 }
 
-/* Skills panel: presents the skills as simple category rows with compact outlined chips. */
+/* Skills panel: category bullets with a plain indented keyword line. */
 .skills-panel,
 .experience-panel {
   width: 100%;
@@ -599,14 +607,16 @@ html[lang="ko"] .site-nav a {
 }
 
 .skill-sections {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.3rem 1.5rem;
+  display: block;
 }
 
 .skill-section {
   padding: 0;
   border: 0;
+}
+
+.skill-section + .skill-section {
+  margin-top: 1rem;
 }
 
 .skill-section:first-child {
@@ -615,34 +625,48 @@ html[lang="ko"] .site-nav a {
 }
 
 .skill-section h4 {
-  margin-bottom: 0.5rem;
-  color: var(--accent);
+  position: relative;
+  margin-bottom: 0.28rem;
+  padding-left: 1rem;
+  color: var(--text);
   font-family: inherit;
-  font-size: 0.82rem;
+  font-size: 0.86rem;
   line-height: 1.35;
   letter-spacing: 0;
 }
 
+.skill-section h4::before {
+  content: "";
+  position: absolute;
+  top: 0.48em;
+  left: 0;
+  width: 0.34rem;
+  height: 0.34rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
 .skill-chip-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  margin-top: 0;
+  display: block;
+  margin: 0 0 0 1rem;
+  padding: 0;
 }
 
 .skill-chip-list li {
-  display: inline-flex;
-  align-items: center;
+  display: inline;
   min-height: 0;
-  padding: 0.28rem 0.45rem;
-  border: 1px solid var(--chip-border);
-  border-radius: 4px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
   background: transparent;
-  margin-bottom: 0;
-  color: var(--text);
-  font-size: 0.76rem;
-  line-height: 1.25;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
   box-shadow: none;
+}
+
+.skill-chip-list li + li::before {
+  content: ", ";
 }
 
 /* Timeline items: adds visual separation between experience entries. */
@@ -698,7 +722,9 @@ html[lang="ko"] .site-nav a {
 .summary-grid .panel,
 .experience-skills-grid .panel,
 .details-grid .panel,
-.academic-records-grid .panel {
+.academic-records-grid .panel,
+.resume-overview-grid .panel,
+.publication-records-grid .panel {
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -715,7 +741,9 @@ html[lang="ko"] .site-nav a {
 .summary-grid .panel + .panel,
 .experience-skills-grid .panel + .panel,
 .details-grid .panel + .panel,
-.academic-records-grid .panel + .panel {
+.academic-records-grid .panel + .panel,
+.resume-overview-grid .panel + .panel,
+.publication-records-grid .panel + .panel {
   padding-left: 3rem;
   border-left: 1px solid var(--line);
 }
@@ -724,7 +752,10 @@ html[lang="ko"] .site-nav a {
 .experience-skills-grid .panel > h2,
 .details-grid .panel > h1,
 .academic-records-grid .panel > h1,
-.academic-records-grid .panel > h2 {
+.academic-records-grid .panel > h2,
+.resume-overview-grid .panel > h2,
+.publication-records-grid .panel > h1,
+.publication-records-grid .panel > h2 {
   margin: 0 0 1.1rem;
   padding-bottom: 0.7rem;
   border-bottom: 1px solid var(--line);
@@ -747,6 +778,23 @@ html[lang="ko"] .site-nav a {
 
 .experience-skills-grid {
   margin-top: 0;
+}
+
+.resume-overview-grid .record-list,
+.publication-records-grid .record-list {
+  padding-left: 1rem;
+}
+
+.resume-overview-grid p,
+.resume-overview-grid .record-list > li,
+.publication-records-grid .record-list > li {
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.publication-records-grid .record-sublist,
+.publication-records-grid .record-sublist li {
+  font-size: 0.76rem;
 }
 
 /* Academic work: compact three-column records followed by an unboxed honours list. */
@@ -919,6 +967,8 @@ html[lang="ko"] .site-nav a {
   .experience-skills-grid,
   .details-grid,
   .academic-records-grid,
+  .resume-overview-grid,
+  .publication-records-grid,
   .footer-shell {
     grid-template-columns: 1fr;
   }
@@ -926,7 +976,9 @@ html[lang="ko"] .site-nav a {
   .summary-grid .panel + .panel,
   .experience-skills-grid .panel + .panel,
   .details-grid .panel + .panel,
-  .academic-records-grid .panel + .panel {
+  .academic-records-grid .panel + .panel,
+  .resume-overview-grid .panel + .panel,
+  .publication-records-grid .panel + .panel {
     padding-top: 1.5rem;
     padding-left: 0;
     border-top: 1px solid var(--line);

@@ -20,9 +20,11 @@
     "degrees": "Academic Degrees",
     "honours": "Honours & Scholarships",
     "experience_skills": "Experience & Skills",
+    "experience_skills_education": "Experience, Skills & Education",
     "experience": "Experience",
     "skills": "Skills",
     "publications_patents": "Publications & Patents",
+    "publications_patents_scholarships": "Publications, Patents & Scholarships",
     "publications": "Publications",
     "patents": "Patents (Pending)",
     "projects": "Selected Projects"

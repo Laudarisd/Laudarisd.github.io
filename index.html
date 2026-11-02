@@ -118,13 +118,13 @@
         </div>
       </section>
 
-      <!-- Experience & skills: data/experience_*.json, data/skills_*.json -->
+      <!-- Experience, skills, and education -->
       <section id="resume" class="section section-muted">
         <div class="container">
           <div class="section-heading">
-            <h2 data-ui="sections.experience_skills"></h2>
+            <h2 data-ui="sections.experience_skills_education"></h2>
           </div>
-          <div class="experience-skills-grid">
+          <div class="resume-overview-grid">
             <article class="panel experience-panel">
               <h2>
                 <span data-ui="sections.experience"></span>
@@ -137,23 +137,23 @@
               <h2 data-ui="sections.skills"></h2>
               <div class="skill-sections" id="skills-list"></div>
             </article>
+
+            <article class="panel records-panel education-panel">
+              <h2 data-ui="sections.degrees"></h2>
+              <ul class="record-list" id="degrees-list"></ul>
+            </article>
           </div>
         </div>
       </section>
 
-      <!-- Academic work: data/education_*.json, data/publications_*.json, data/patents_*.json -->
-      <section class="section academic-work-section">
+      <!-- Publications, patent applications, and scholarships -->
+      <section class="section publication-records-section">
         <div class="container">
           <div class="section-heading">
-            <h2 class="section-title-compact" data-ui="sections.academic"></h2>
+            <h2 data-ui="sections.publications_patents_scholarships"></h2>
           </div>
 
-          <div class="academic-records-grid">
-            <article class="panel records-panel">
-              <h2 data-ui="sections.degrees"></h2>
-              <ul class="record-list" id="degrees-list"></ul>
-            </article>
-
+          <div class="publication-records-grid">
             <article class="panel records-panel">
               <h1 data-ui="sections.publications"></h1>
               <ul class="record-list" id="publications-list"></ul>
@@ -163,12 +163,12 @@
               <h1 data-ui="sections.patents"></h1>
               <ul class="record-list" id="patents-list"></ul>
             </article>
-          </div>
 
-          <aside class="honours-strip">
-            <h2 data-ui="sections.honours"></h2>
-            <ul class="record-list" id="honours-list"></ul>
-          </aside>
+            <article class="panel records-panel scholarship-panel">
+              <h2 data-ui="sections.honours"></h2>
+              <ul class="record-list" id="honours-list"></ul>
+            </article>
+          </div>
         </div>
       </section>
 
