@@ -487,6 +487,10 @@ html[data-theme="simple"] .site-footer {
   background: #f4f5f6;
 }
 
+.publication-records-section {
+  border-top: 1px solid var(--line);
+}
+
 .section-heading {
   max-width: 62ch;
   margin-bottom: 2rem;
