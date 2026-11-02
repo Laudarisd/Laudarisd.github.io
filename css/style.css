@@ -594,12 +594,13 @@ html[lang="ko"] .site-nav a {
 
 .skill-sections {
   display: grid;
-  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.3rem 1.5rem;
 }
 
 .skill-section {
-  padding-top: 0.9rem;
-  border-top: 1px solid rgba(216, 206, 192, 0.9);
+  padding: 0;
+  border: 0;
 }
 
 .skill-section:first-child {
@@ -608,32 +609,33 @@ html[lang="ko"] .site-nav a {
 }
 
 .skill-section h4 {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   color: var(--accent);
-  font-family: "Spectral", "Noto Sans KR", serif;
-  font-size: 1.02rem;
-  letter-spacing: 0.01em;
+  font-family: inherit;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  letter-spacing: 0;
 }
 
 .skill-chip-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 0.75rem;
+  gap: 0.35rem;
+  margin-top: 0;
 }
 
 .skill-chip-list li {
   display: inline-flex;
   align-items: center;
-  min-height: 2.4rem;
-  padding: 0.5rem 0.8rem;
+  min-height: 0;
+  padding: 0.28rem 0.45rem;
   border: 1px solid var(--chip-border);
-  border-radius: 10px;
+  border-radius: 4px;
   background: transparent;
   margin-bottom: 0;
   color: var(--text);
-  font-size: 0.92rem;
-  line-height: 1.35;
+  font-size: 0.76rem;
+  line-height: 1.25;
   box-shadow: none;
 }
 
@@ -686,15 +688,28 @@ html[lang="ko"] .site-nav a {
   font-size: 0.95rem;
 }
 
-/* Resume records: quiet, flat cards that keep the content—not the box—prominent. */
+/* Resume records: open two-column layouts with simple dividers instead of cards. */
 .summary-grid .panel,
 .experience-skills-grid .panel,
 .details-grid .panel {
-  padding: 1.4rem;
-  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   box-shadow: none;
+}
+
+.summary-grid,
+.experience-skills-grid,
+.details-grid {
+  column-gap: 3rem;
+}
+
+.summary-grid .panel + .panel,
+.experience-skills-grid .panel + .panel,
+.details-grid .panel + .panel {
+  padding-left: 3rem;
+  border-left: 1px solid var(--line);
 }
 
 .summary-grid .panel > h2,
@@ -852,6 +867,15 @@ html[lang="ko"] .site-nav a {
     grid-template-columns: 1fr;
   }
 
+  .summary-grid .panel + .panel,
+  .experience-skills-grid .panel + .panel,
+  .details-grid .panel + .panel {
+    padding-top: 1.5rem;
+    padding-left: 0;
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
   .project-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -871,6 +895,11 @@ html[lang="ko"] .site-nav a {
 }
 
 @media (max-width: 720px) {
+  .skill-sections {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
   .project-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
