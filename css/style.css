@@ -474,6 +474,19 @@ html[lang="ko"] .site-nav a {
   border-bottom: 1px solid rgba(216, 206, 192, 0.75);
 }
 
+/* Clean Draft: alternate one quiet gray band with one white band. */
+html[data-theme="simple"] main > section:nth-of-type(odd) {
+  background: #f4f5f6;
+}
+
+html[data-theme="simple"] main > section:nth-of-type(even) {
+  background: #ffffff;
+}
+
+html[data-theme="simple"] .site-footer {
+  background: #f4f5f6;
+}
+
 .section-heading {
   max-width: 62ch;
   margin-bottom: 2rem;
