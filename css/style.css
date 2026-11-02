@@ -1174,7 +1174,8 @@ html[lang="ko"] .timeline-year {
 
 .project-category-heading {
   margin-bottom: 0.8rem;
-  padding-bottom: 0.4rem;
+  padding: 0.2rem 0 0.45rem 0.85rem;
+  border-left: 3px solid var(--accent);
   border-bottom: 1px solid var(--line);
 }
 
@@ -1184,6 +1185,10 @@ html[lang="ko"] .timeline-year {
   font-family: "Spectral", "Noto Sans KR", serif;
   font-size: 1.1rem;
   letter-spacing: 0.01em;
+}
+
+.project-category:nth-child(-n + 2) .project-category-heading h3 {
+  font-size: 1.25rem;
 }
 
 .project-category-heading p {

@@ -3,69 +3,28 @@
   "categories": [
     {
       "name": {
-        "en": "Agent Development",
-        "kr": "Agent 개발"
+        "en": "Main Projects",
+        "kr": "주요 프로젝트"
       },
       "items": [
         "cad-inspection-agent",
         "vectra",
-        "rag-system",
-        "agent-collection"
-      ]
-    },
-    {
-      "name": {
-        "en": "Engineering Drawing Analysis",
-        "kr": "엔지니어링 도면 분석"
-      },
-      "items": [
         "ai-ce",
-        "samsung-ea-gad-poc",
-        "pdf-to-cad-text",
-        "samsung-ac-poc"
-      ]
-    },
-    {
-      "name": {
-        "en": "Training and Fine Tuning",
-        "kr": "학습 및 Fine-Tuning"
-      },
-      "items": [
         "llm-vlm-finetuning",
+        "green-energy-anomaly"
+      ]
+    },
+    {
+      "name": {
+        "en": "Secondary Projects",
+        "kr": "보조 프로젝트"
+      },
+      "items": [
+        "agent-collection",
         "computer-vision-ml",
-        "ocr"
-      ]
-    },
-    {
-      "name": {
-        "en": "DX/AX/DT",
-        "kr": "DX/AX/DT"
-      },
-      "items": [
-        "digital-twin"
-      ]
-    },
-    {
-      "name": {
-        "en": "Predictive Analytics",
-        "kr": "예측 분석"
-      },
-      "items": [
-        "green-energy-anomaly",
-        "geohazard-penetration",
-        "data-science"
-      ]
-    },
-    {
-      "name": {
-        "en": "Other Projects",
-        "kr": "기타 프로젝트"
-      },
-      "items": [
-        "generative-ai",
-        "gov-rnd-project",
-        "smart-retail-ai",
-        "knee-abnormality"
+        "ocr",
+        "digital-twin",
+        "smart-retail-ai"
       ]
     },
     {
@@ -74,8 +33,11 @@
         "kr": "연구"
       },
       "items": [
+        "dmp",
         "research",
-        "dmp"
+        "knee-abnormality",
+        "geohazard-penetration",
+        "pdf-to-cad-text"
       ]
     }
   ]
