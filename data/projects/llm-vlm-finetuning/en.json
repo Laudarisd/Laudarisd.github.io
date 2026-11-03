@@ -4,12 +4,12 @@
   "image": "thumbnail.svg",
   "image_alt": "LLM and VLM fine-tuning",
   "image_class": "",
-  "url": "https://github.com/Laudarisd",
+  "url": "https://github.com/Laudarisd/finetune-llm-vllm",
   "subtitle": "Fine-tuning Qwen3.5-9B with QLoRA (Unsloth, TRL, PEFT) so it can read an architectural floor-plan image and answer questions about rooms, counts, junctions, and polygon annotations as structured JSON.",
   "links": [
     {
       "label": "GitHub",
-      "url": "https://github.com/Laudarisd"
+      "url": "https://github.com/Laudarisd/finetune-llm-vllm"
     }
   ],
   "status": "in_development",
