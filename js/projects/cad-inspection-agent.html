@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Spectral:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../../css/style.css?v=20261029" />
+    <link rel="stylesheet" href="../../css/style.css?v=20261103" />
   </head>
   <body>
     <!--
@@ -106,10 +106,22 @@
 <nav class="article-toc-wrap"><h4>Contents</h4><ol class="article-toc"><li><a href="#1-introduction">1. Introduction</a></li><li><a href="#2-the-problem-a-drawing-is-not-a-model">2. The problem: a drawing is not a model</a></li><li><a href="#3-parsing-and-storage">3. Parsing and storage</a></li><li><a href="#4-what-the-system-produces">4. What the system produces</a></li><li><a href="#5-why-an-ai-agent">5. Why an AI agent</a></li><li><a href="#6-the-agent-harness">6. The agent harness</a></li><li><a href="#7-interaction-and-safety">7. Interaction and safety</a></li><li><a href="#8-reliability-engineering">8. Reliability engineering</a></li><li><a href="#9-results">9. Results</a></li><li><a href="#10-inspection-and-reporting">10. Inspection and reporting</a></li><li><a href="#11-graph-database">11. Graph database</a></li><li><a href="#12-technology-and-skills">12. Technology and skills</a></li><li><a href="#13-how-the-work-was-run">13. How the work was run</a></li><li><a href="#14-roadmap">14. Roadmap</a></li><li><a href="#15-summary">15. Summary</a></li></ol></nav>
 <h1>CAD Parser - turning architectural drawings into answers</h1>
 <p>An add-on for a CAD application that reads a DWG drawing, extracts what is in it, organizes entitites, objects and
-answers questions about it. It inspects the whole drawing and prepares the reports based on users desired and goals. </p>
-<blockquote>
-<p><strong>Code files are not available in this repository because of confidentiality</strong></br></p>
-</blockquote>
+answers questions about it. It inspects the whole drawing and prepares the reports based on users desired and goals.</p>
+<p><strong>Code files are not available in this repository because of confidentiality</strong></p>
+<div class="fact-grid">
+<div class="fact"><span class="fact-label">Input</span><span class="fact-value">Architectural drawings (DWG)</span></div>
+<div class="fact"><span class="fact-label">Output</span><span class="fact-value">Structured knowledge · graph · reports</span></div>
+<div class="fact"><span class="fact-label">Interface</span><span class="fact-value">Chat agent inside the CAD canvas</span></div>
+<div class="fact"><span class="fact-label">Languages</span><span class="fact-value">Korean and English</span></div>
+<div class="fact"><span class="fact-label">Safety</span><span class="fact-value">Every change needs human approval</span></div>
+<div class="fact"><span class="fact-label">Platform</span><span class="fact-value">C# / .NET CAD add-on</span></div>
+</div>
+
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>Project cover: the add-on open inside the CAD application, with a drawing, the chat panel, and a highlighted answer.</figcaption>
+</figure>
+
 <hr />
 <h2 id="1-introduction">1. Introduction</h2>
 <p>An architectural drawing contains everything a building needs, but a computer does
@@ -125,15 +137,15 @@ that a user can simply ask.</p>
     C --> E[AI agent]
     E --> F[Answers,<br/>highlights,<br/>reports]
 </pre>
-<p>Three questions shaped every decision in it:</p>
+<div class="callout callout-problem">
+<h4>Three questions shaped every decision</h4>
 <ol>
-<li><strong>Does it work on a drawing it has never seen?</strong> A system tuned to one file is a
-   demo, not a product.</li>
-<li><strong>Can every answer be traced?</strong> An inspection result that cannot be shown on the
-   drawing is an opinion.</li>
-<li><strong>Can it be wrong safely?</strong> It works on a customer's drawing, so uncertainty must
-   be a visible state, and nothing may change without a human decision.</li>
+<li><strong>Does it work on a drawing it has never seen?</strong> A system tuned to one file is a demo, not a product.</li>
+<li><strong>Can every answer be traced?</strong> An inspection result that cannot be shown on the drawing is an opinion.</li>
+<li><strong>Can it be wrong safely?</strong> It works on a customer's drawing, so uncertainty must be a visible state, and nothing may change without a human decision.</li>
 </ol>
+</div>
+
 <hr />
 <h2 id="2-the-problem-a-drawing-is-not-a-model">2. The problem: a drawing is not a model</h2>
 <p>A DWG file is a picture made of geometry. Nothing in it says "this is a bedroom".
@@ -149,24 +161,18 @@ Everything that follows exists because of that one fact.</p>
 └── Marks           codes that refer to a door or a window
 </code></pre>
 <h3>2.2 Why that is hard</h3>
-<p><strong>Geometry carries no meaning.</strong> The file stores shapes and positions. It does not
-store what anything <em>is</em>, what belongs to what, or where one thing ends and the next
-begins.</p>
-<p><strong>Everything overlaps.</strong> Furniture, tiling, hatching, dimension lines and
-annotations sit on top of the structure. Treating all geometry equally produces
-nonsense.</p>
-<p><strong>Symbols hide their position.</strong> A symbol's true coordinates exist only after it is
-resolved through insertion, rotation, scale and mirroring, sometimes several levels
-deep. The usual shortcut, exploding everything, destroys the information about what
-each symbol is, which is exactly the information needed.</p>
-<p><strong>Nothing is standardised.</strong> Every office draws differently and names things
-differently, in more than one language, and the same project mixes conventions.</p>
-<p><strong>One file, many flats.</strong> A residential plan repeats the same unit several times,
-some mirrored, some rotated at an angle. Every name repeats with it, so every answer
-must stay unambiguous without the user pointing at coordinates.</p>
-<p><strong>Drawings are not drawn correctly.</strong> Lines that should meet miss by a millimetre.
-Content sits on the wrong grouping. Labels sit outside the thing they name. Real
-files are the test, not clean ones.</p>
+<div class="callout callout-problem">
+<h4>Problems in the raw drawing</h4>
+<ul>
+<li><strong>Geometry carries no meaning.</strong> The file stores shapes and positions. It does not store what anything <em>is</em>, what belongs to what, or where one thing ends and the next begins.</li>
+<li><strong>Everything overlaps.</strong> Furniture, tiling, hatching, dimension lines and annotations sit on top of the structure. Treating all geometry equally produces nonsense.</li>
+<li><strong>Symbols hide their position.</strong> A symbol's true coordinates exist only after it is resolved through insertion, rotation, scale and mirroring, sometimes several levels deep. The usual shortcut, exploding everything, destroys the information about what each symbol is, which is exactly the information needed.</li>
+<li><strong>Nothing is standardised.</strong> Every office draws differently and names things differently, in more than one language, and the same project mixes conventions.</li>
+<li><strong>One file, many flats.</strong> A residential plan repeats the same unit several times, some mirrored, some rotated at an angle. Every name repeats with it, so every answer must stay unambiguous without the user pointing at coordinates.</li>
+<li><strong>Drawings are not drawn correctly.</strong> Lines that should meet miss by a millimetre. Content sits on the wrong grouping. Labels sit outside the thing they name. Real files are the test, not clean ones.</li>
+</ul>
+</div>
+
 <h3>2.3 Why the obvious approaches fail</h3>
 <div class="table-scroll"><table class="component-table">
 <thead>
@@ -196,8 +202,23 @@ files are the test, not clean ones.</p>
 </table></div>
 <p>The system uses none of these alone. It builds a structured understanding first, and
 treats the language model as a reader of that structure rather than of the file.</p>
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>A raw DWG drawing as the computer sees it: primitives, text, and nested symbols with no meaning attached.</figcaption>
+</figure>
+
 <hr />
 <h2 id="3-parsing-and-storage">3. Parsing and storage</h2>
+<div class="callout callout-problem">
+<h4>Problems this stage solves</h4>
+<ul>
+<li>Geometry inside nested and external symbols has no real-world coordinates until every insertion, rotation, scale and mirror is resolved.</li>
+<li>Exploding symbols to get coordinates destroys their identity.</li>
+<li>Drawings come in different units; later numbers must all mean the same thing.</li>
+<li>Every later answer must be traceable to the exact entity in the drawing.</li>
+</ul>
+</div>
+
 <p>The first stage reads the drawing and writes it down in a form a machine can work
 with.</p>
 <pre class="mermaid">flowchart LR
@@ -225,6 +246,15 @@ is reused for every later question, by the assistant, by the inspection, and by 
 graph database.</p>
 <hr />
 <h2 id="4-what-the-system-produces">4. What the system produces</h2>
+<div class="callout callout-problem">
+<h4>Problems this stage solves</h4>
+<ul>
+<li>Spaces, objects, openings and marks must be recognised and linked to each other, not just listed.</li>
+<li>A cleanly recovered result and an approximated one must not look the same to the user.</li>
+<li>Every item needs the drawing entities behind it, so the assistant can show its evidence.</li>
+</ul>
+</div>
+
 <h3>4.1 Structured knowledge</h3>
 <pre><code>For one drawing
 ├── Spaces           name, kind, area, confidence, evidence
@@ -240,6 +270,11 @@ to the drawing. That is what allows the assistant to highlight its own evidence.
 <p><strong>Confidence is explicit.</strong> A result that was recovered cleanly and one that was
 approximated are not presented as the same thing, and anything judged on top of an
 approximate result inherits that lower confidence.</p>
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>What the system recovered, drawn over the plan: spaces, openings and fixtures, each with its confidence.</figcaption>
+</figure>
+
 <h3>4.2 From a user's point of view</h3>
 <pre class="mermaid">flowchart TD
     A[Open a drawing in CAD] --> B[Extract]
@@ -252,6 +287,11 @@ approximate result inherits that lower confidence.</p>
     D --> I[Propose a change]
     I --> J[Approve or reject]
 </pre>
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>The extraction browser: the list of spaces, objects and openings found in a drawing.</figcaption>
+</figure>
+
 <h3>4.3 Capability inventory</h3>
 <pre><code>Capabilities
 ├── Reading
@@ -284,8 +324,16 @@ approximate result inherits that lower confidence.</p>
 </code></pre>
 <hr />
 <h2 id="5-why-an-ai-agent">5. Why an AI agent</h2>
-<p>A fixed set of reports only answers the questions someone thought of in advance.
-Real users ask sideways questions:</p>
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>A fixed set of reports only answers the questions someone thought of in advance.</li>
+<li>Real users ask sideways questions that combine finding, counting, measuring and relating.</li>
+<li>A language model cannot be trusted with exact geometry, counting, or a file far larger than its context.</li>
+</ul>
+</div>
+
+<p>Real users ask sideways questions:</p>
 <ul>
 <li><em>Which bathrooms have no ventilation?</em></li>
 <li><em>Make a table of the structure around this kitchen, with lengths.</em></li>
@@ -303,6 +351,11 @@ result. It is not asked to understand the drawing. It is asked to understand the
     O --> M
     M --> A[Answer + highlight]
 </pre>
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>A question asked in chat and its answer, with the evidence highlighted on the drawing.</figcaption>
+</figure>
+
 <h3>5.1 Why not simply give the model the file</h3>
 <div class="table-scroll"><table class="component-table">
 <thead>
@@ -395,6 +448,16 @@ sees in the activity log:</p>
 and are not described here.</p>
 <hr />
 <h2 id="6-the-agent-harness">6. The agent harness</h2>
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>A model on its own retries silently, drifts out of scope, and loses track of long sessions.</li>
+<li>Numbers must not change with the model that happens to be configured.</li>
+<li>Cost, timing and failures have to be visible, or an agent cannot be debugged.</li>
+<li>Some drawings may not leave the building, so a self-hosted model must be an option.</li>
+</ul>
+</div>
+
 <p>The model is a small part of an agent. The harness is the rest, and it decides
 whether the thing survives real use.</p>
 <pre><code>Harness
@@ -438,11 +501,25 @@ or a tool returned the wrong thing. That single distinction is most of debugging
 agent system.</p>
 <hr />
 <h2 id="7-interaction-and-safety">7. Interaction and safety</h2>
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>An answer that cannot be seen on the drawing is hard to trust.</li>
+<li>Evidence drawn on the canvas must never alter the customer's file.</li>
+<li>Changing a drawing is irreversible, so it must be slow, explicit and reviewable.</li>
+</ul>
+</div>
+
 <h3>7.1 Showing the work</h3>
-<p>An answer that cannot be seen is hard to trust. Results are drawn directly on the
-CAD canvas without altering the drawing: evidence appears as temporary graphics that
-disappear when cleared. Spaces can be shown as outlines or filled with a see-through
-mask, so a space reads as an area while the plan stays readable underneath.</p>
+<p>Results are drawn directly on the CAD canvas without altering the drawing: evidence
+appears as temporary graphics that disappear when cleared. Spaces can be shown as
+outlines or filled with a see-through mask, so a space reads as an area while the
+plan stays readable underneath.</p>
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>A space shown with the see-through mask on the canvas, with its evidence outlined.</figcaption>
+</figure>
+
 <h3>7.2 Changing a drawing</h3>
 <p>This is the only irreversible thing the system can do, so it is deliberately slow.</p>
 <pre class="mermaid">flowchart LR
@@ -457,10 +534,22 @@ mask, so a space reads as an area while the plan stays readable underneath.</p>
 <p>The approval is a button, not a typed word. The assistant cannot propose and apply
 in the same breath, and the outcome of the click is fed back, so it knows what
 actually happened rather than what it suggested.</p>
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>A proposed change shown on the drawing, waiting for the approve or reject decision.</figcaption>
+</figure>
+
 <hr />
 <h2 id="8-reliability-engineering">8. Reliability engineering</h2>
-<p>Correctness on one drawing is luck. The project is built around proving it on
-drawings it was not developed against.</p>
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>Correctness on one drawing is luck; it has to be proven on drawings the system was not developed against.</li>
+<li>Benchmarks that leak names, identifiers or numbers can be gamed.</li>
+<li>A fix for one case can quietly damage twenty others.</li>
+</ul>
+</div>
+
 <pre><code>Quality approach
 ├── Benchmarks that cannot be gamed
 │   ├── no name, identifier or number appears in a test prompt
@@ -483,6 +572,16 @@ quietly altered twenty others. The before-and-after comparison showed it in one 
 Without that discipline, the improvement would have shipped with the damage attached.</p>
 <hr />
 <h2 id="9-results">9. Results</h2>
+<div class="callout callout-result">
+<h4>Measured on an unseen test plan</h4>
+<ul>
+<li>Roughly 25,000 entities read and resolved.</li>
+<li>66 spaces recovered across six repeated unit types; the large majority cleanly, the rest reported as approximate rather than presented as exact.</li>
+<li>Identical results in millimetres, in inches, and with the plan rotated.</li>
+<li>The same question returns the same numbers across runs and models, in Korean and in English.</li>
+</ul>
+</div>
+
 <div class="table-scroll"><table class="component-table">
 <thead>
 <tr>
@@ -522,20 +621,19 @@ Without that discipline, the improvement would have shipped with the damage atta
 </tbody>
 </table></div>
 <h3>9.1 Visual results</h3>
-<p>The figures below are illustrative placeholders drawn to the same layout as the
-real screens; they will be replaced with CAD screenshots.</p>
-<p><img alt="The drawing as it comes from CAD" src="../../data/projects/cad-inspection-agent/images/plan-original.svg" loading="lazy" />
-<em>Figure 1. The drawing as it comes from CAD: geometry, text and symbols with no meaning attached.</em></p>
-<p><img alt="What the system recovered, drawn over the plan" src="../../data/projects/cad-inspection-agent/images/spaces-detected.svg" loading="lazy" />
-<em>Figure 2. What the system recovered, drawn over the plan: spaces, openings and fixtures, each with a confidence.</em></p>
-<p><img alt="A space shown with the see-through mask" src="../../data/projects/cad-inspection-agent/images/space-mask.svg" loading="lazy" />
-<em>Figure 3. A space shown with the see-through mask, so it reads as an area while the plan stays readable underneath.</em></p>
-<p><img alt="The graph database view" src="../../data/projects/cad-inspection-agent/images/graph-db.svg" loading="lazy" />
-<em>Figure 4. The graph database view: a selected node with its direct connections, linked back to the canvas.</em></p>
-<p><img alt="A page of the inspection report" src="../../data/projects/cad-inspection-agent/images/report-sample.svg" loading="lazy" />
-<em>Figure 5. A page of the inspection report, Korean and English together, with the evidence behind each finding.</em></p>
+<div class="figure-row">
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>Before: the drawing as it comes from CAD.</figcaption>
+</figure>
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>After: every recovered space, opening and fixture drawn over the same plan.</figcaption>
+</figure>
+</div>
+
 <h3>9.2 Demonstrations</h3>
-<p><em>(Add demo videos here.)</em></p>
+<p>Short recordings will be added for:</p>
 <ul>
 <li>A question asked and answered end to end, with the evidence highlighted.</li>
 <li>A full inspection run, from extraction to exported report.</li>
@@ -543,6 +641,15 @@ real screens; they will be replaced with CAD screenshots.</p>
 </ul>
 <hr />
 <h2 id="10-inspection-and-reporting">10. Inspection and reporting</h2>
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>Rules have to be judged per space, and some cannot be judged on a given drawing at all.</li>
+<li>A pass/fail-only tool hides the cases a reviewer most needs to see.</li>
+<li>Findings must become an editable, bilingual document with the evidence attached.</li>
+</ul>
+</div>
+
 <p>The inspection layer asks whether each space contains what it must contain.</p>
 <pre><code>Inspection
 ├── Rule set        requirements on a kind of space and its contents
@@ -560,12 +667,25 @@ real screens; they will be replaced with CAD screenshots.</p>
 <p>The states that are neither pass nor fail matter most. A rule that cannot be judged
 on this drawing says so. That is the difference between a tool a reviewer trusts and
 one they stop reading.</p>
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>A page of the inspection report: Korean and English together, with the evidence behind each finding.</figcaption>
+</figure>
+
 <hr />
 <h2 id="11-graph-database">11. Graph database</h2>
-<p>A drawing is not a list. It is a web of things that refer to each other: a mark
-describes a door, a door joins two spaces, a space touches another space, a fixture
-belongs to a space. Storing that as a graph lets a question be answered by walking
-from one thing to the next, instead of scanning everything each time.</p>
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>A drawing is a web of things that refer to each other, not a list; questions about it are relational.</li>
+<li>In tables, every new relational question is another join; the schema has to be reshaped for each new relation type.</li>
+<li>A relation that cannot be traced back to the drawing is just an assertion.</li>
+</ul>
+</div>
+
+<p>A mark describes a door, a door joins two spaces, a space touches another space, a
+fixture belongs to a space. Storing that as a graph lets a question be answered by
+walking from one thing to the next, instead of scanning everything each time.</p>
 <pre class="mermaid">graph LR
     M[Mark<br/>code] -- describes --> D[Door]
     D -- connects --> R1[Space A]
@@ -623,6 +743,11 @@ and traced back to the drawing.</p>
 </tr>
 </tbody>
 </table></div>
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>The graph database view: a selected node with its direct connections, linked back to the canvas.</figcaption>
+</figure>
+
 <h3>11.3 Why a graph rather than tables</h3>
 <p>Questions in this domain are relational by nature: <em>which spaces does this door
 join</em>, <em>what opens off this corridor</em>, <em>which spaces have no opening at all</em>, <em>what
@@ -709,12 +834,11 @@ reshaping what is already stored.</p>
 </ul>
 <hr />
 <h2 id="15-summary">15. Summary</h2>
-<p>I built a system that reads an architectural drawing the way a person does: it
-parses the raw geometry, resolves the symbols, works out what the drawing is made
-of, records how everything connects as a graph, and lets an AI assistant answer
-questions about the result with evidence attached to every number. It states its
-confidence, it shows its work on the drawing, and it never changes a customer's file
-without a human decision.</p>
+<div class="callout callout-note">
+<h4>In one paragraph</h4>
+<p>I built a system that reads an architectural drawing the way a person does: it parses the raw geometry, resolves the symbols, works out what the drawing is made of, records how everything connects as a graph, and lets an AI assistant answer questions about the result with evidence attached to every number. It states its confidence, it shows its work on the drawing, and it never changes a customer's file without a human decision.</p>
+</div>
+
 <p>The hard part was not the AI. It was making the drawing understandable enough that
 the AI never has to guess.</p>
 </div>
@@ -1412,6 +1536,6 @@ the AI never has to guess.</p>
         });
       })();
     </script>
-    <script src="../project.js?v=20261029"></script>
+    <script src="../project.js?v=20261103"></script>
   </body>
 </html>

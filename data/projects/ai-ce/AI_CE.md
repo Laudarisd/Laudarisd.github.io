@@ -4,23 +4,51 @@
 >
 > Public project overview. Infrastructure values are placeholders. Model workflows describe engineering responsibilities without exposing proprietary processing logic. Illustrative OCR dimensions do not disclose deployed model configurations.
 
+<div class="fact-grid">
+<div class="fact"><span class="fact-label">Input</span><span class="fact-value">Floor-plan images</span></div>
+<div class="fact"><span class="fact-label">Output</span><span class="fact-value">Structured JSON, visualizations, records</span></div>
+<div class="fact"><span class="fact-label">Models</span><span class="fact-value">Detection · segmentation · OCR</span></div>
+<div class="fact"><span class="fact-label">Serving</span><span class="fact-value">FastAPI · batch and API</span></div>
+<div class="fact"><span class="fact-label">Operations</span><span class="fact-value">systemd · nginx · Redis</span></div>
+<div class="fact"><span class="fact-label">Monitoring</span><span class="fact-value">Prometheus · Grafana</span></div>
+</div>
+
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>Project cover: a sanitized floor-plan image next to its structured result.</figcaption>
+</figure>
+
 ## 1. Project overview
 
 AI CE Image Mode processes floor-plan images for object detection, classification, segmentation, wall analysis, and text recognition. It supports local batch processing and an API workflow, producing structured JSON and optional visualizations, database records, and transferable result archives.
 
-The engineering challenge spans more than prediction: large drawings need consistent image preparation; different information types need coordinated processing; outputs need traceability; and a long-running service needs deployment controls, failure visibility, and reliable artifact handling.
+<div class="callout callout-problem">
+<h4>Problems this project addresses</h4>
+<ul>
+<li>A drawing image is only pixels: objects, walls, dimensions, and space labels have to be recovered before any engineering application can use them.</li>
+<li>Large drawings need consistent image preparation, or small text and fine details are lost.</li>
+<li>Different information types (objects, regions, text) need coordinated processing and a single structured output.</li>
+<li>Outputs need traceability, so every result can be reviewed and traced back to its input.</li>
+<li>A long-running service needs deployment controls, failure visibility, and reliable artifact handling.</li>
+</ul>
+</div>
 
-### Goals
+### 1.1 Goals
 
-- Convert drawings into structured information that downstream engineering applications can consume.
-- Support image rescaling and noise reduction while retaining small text and fine drawing details.
-- Recognize symbols, dimensions, and space labels with OCR.
-- Keep model execution modular so individual components can evolve independently.
-- Support repeatable evaluation, batch experiments, and API-based inference.
-- Make service health, request outcomes, database activity, and archive transfers observable.
-- Prepare a controlled feedback path from operational results to model evaluation and improvement.
+<div class="callout callout-goal">
+<h4>Goals</h4>
+<ul>
+<li>Convert drawings into structured information that downstream engineering applications can consume.</li>
+<li>Support image rescaling and noise reduction while retaining small text and fine drawing details.</li>
+<li>Recognize symbols, dimensions, and space labels with OCR.</li>
+<li>Keep model execution modular so individual components can evolve independently.</li>
+<li>Support repeatable evaluation, batch experiments, and API-based inference.</li>
+<li>Make service health, request outcomes, database activity, and archive transfers observable.</li>
+<li>Prepare a controlled feedback path from operational results to model evaluation and improvement.</li>
+</ul>
+</div>
 
-### Portfolio project areas
+### 1.2 Portfolio project areas
 
 | Area | Engineering focus | Deliverable |
 |---|---|---|
@@ -50,6 +78,14 @@ These are workstreams within one system, rather than unrelated products.
 | Artifact transport | Secure remote transfer | Moving approved result archives between environments |
 
 ## 3. Project structure
+
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>Several model tasks, a service, persistence, transfer, and operations assets have to live in one codebase without tangling.</li>
+<li>Private configuration, weights, customer inputs, and result identifiers must stay out of anything public.</li>
+</ul>
+</div>
 
 ![Project component structure](project-structure.svg)
 
@@ -89,6 +125,15 @@ AI-CE-Image-Mode/
 ```
 
 ## 4. System architecture
+
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>One drawing has to flow through validation, preparation, three kinds of models, and result assembly without losing track of where each result came from.</li>
+<li>Processing, persistence, and transfer each fail in their own way; the architecture has to make those failures visible.</li>
+<li>Consumers need a stable input/output contract that does not expose internal processing rules.</li>
+</ul>
+</div>
 
 ![End-to-end processing flowchart](pipeline-flow.svg)
 
@@ -135,7 +180,20 @@ flowchart TD
     L --> N[Metrics and JSON snapshot]
 ```
 
-### Public input/output contract
+### 4.1 Input and output
+
+<div class="figure-row">
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>Sanitized input drawing as received by the service.</figcaption>
+</figure>
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>Structured result visualization: detected objects, regions, and recognized text drawn over the plan.</figcaption>
+</figure>
+</div>
+
+### 4.2 Public input/output contract
 
 ```json
 {
@@ -155,7 +213,17 @@ This is an illustrative response schema, not a promise about the current API's e
 
 ## 5. Model development with PyTorch
 
-### Detection and classification model
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>Drawing elements must be located and classified from image data alone.</li>
+<li>Regions and walls need structured masks that preserve fine, continuous structures.</li>
+<li>Text crops must become character sequences, with punctuation and numeric dimensions read correctly.</li>
+<li>Training and inference have to be reproducible: the same weights, preprocessing, vocabulary, and environment every time.</li>
+</ul>
+</div>
+
+### 5.1 Detection and classification model
 
 The detection component identifies relevant objects in architectural drawings and assigns semantic categories. PyTorch provides the model execution and tensor-processing foundation. The public architecture is described through its input and output contract; private model design, filtering rules, and decision thresholds remain internal.
 
@@ -166,11 +234,11 @@ DRAWING TENSOR → VISUAL FEATURES → DETECTION / CLASSIFICATION → OBJECT REC
 
 Model development involves organizing approved annotated drawings, validating class labels, splitting data by source drawing, training candidate models, and evaluating held-out examples. A release pairs approved weights with the preprocessing contract, class vocabulary, dependency environment, and evaluation report. This describes the development workflow; it does not assert that training scripts or measured results are included in this repository.
 
-### Segmentation and wall analysis
+### 5.2 Segmentation and wall analysis
 
 The segmentation component represents image regions as structured masks. Wall analysis adds domain-specific categories to drawing elements. Evaluation should include overlap quality, continuity of fine structures, and failure review on complex drawings. Production reconciliation and geometric processing are not disclosed.
 
-### OCR recognition model
+### 5.3 OCR recognition model
 
 ![CRNN architecture flowchart](ocr-architecture.svg)
 
@@ -195,7 +263,7 @@ The following is an illustrative CRNN design, not the deployed architecture:
 
 `B` is batch size and `K` includes the vocabulary and alignment blank. Exact Paddle OCR layers and activations depend on the selected configuration and are not inferred from the framework name.
 
-### Architecture plot
+### 5.4 Architecture plots
 
 ![OCR spatial dimension line plot](ocr-spatial-plot.png)
 
@@ -205,7 +273,7 @@ The line plot shows how image height and width change through the illustrative O
 
 This plot compares feature dimensions in the illustrative architecture. It is not an accuracy or performance claim.
 
-### PyTorch training lifecycle
+### 5.5 PyTorch training lifecycle
 
 ```text
 APPROVED DATASET
@@ -227,7 +295,7 @@ HELD-OUT EVALUATION → CHECKPOINT SELECTION → VERSIONED MODEL ARTIFACT
 
 Training concerns include vocabulary consistency, valid sequence lengths, gradient stability, reproducibility, and validation on unseen drawings. Mixed precision can be evaluated for compatible hardware. Fine-tuning may freeze visual features while adapting recognition layers, with normalization state controlled consistently.
 
-### PyTorch inference lifecycle
+### 5.6 PyTorch inference lifecycle
 
 ```text
 APPROVED CHECKPOINT + VERSIONED CONFIGURATION
@@ -252,7 +320,16 @@ Inference engineering covers device placement, GPU memory use, model reuse, cont
 
 ## 6. OCR training and integration
 
-### CRNN training workflow
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>Drawing text is small, dense, and mixes symbols, numeric dimensions, and space names, so generic OCR is not enough.</li>
+<li>Aggressive augmentation can change the meaning of a dimension or erase punctuation.</li>
+<li>Two recognition paths (CRNN and Paddle OCR) must be evaluated on the same subsets with the same protocol.</li>
+</ul>
+</div>
+
+### 6.1 CRNN training workflow
 
 ```mermaid
 flowchart TD
@@ -273,7 +350,12 @@ flowchart TD
 
 Candidate augmentations include mild brightness variation, controlled noise, and small geometric changes. Validate each against drawing-specific text; aggressive transformations can change dimension meaning or erase punctuation.
 
-### Paddle OCR integration
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>Dimension and space text recognition examples: cropped regions with the recognized strings.</figcaption>
+</figure>
+
+### 6.2 Paddle OCR integration
 
 The repository supports Paddle OCR as an alternative for dimension and space text recognition, alongside CRNN paths. Paddle OCR is a framework with multiple model configurations; exact layer sizes, activations, and training objectives depend on the selected configuration and checkpoint. They cannot be inferred from the framework name alone.
 
@@ -290,7 +372,7 @@ A training plan for a selected Paddle OCR configuration follows this public arch
 
 Before training, record the framework version, selected configuration, pretrained artifact provenance, input normalization, vocabulary, train/validation manifests, and evaluation protocol. This portfolio does not claim that a Paddle OCR training run or a particular Paddle architecture was verified in this repository.
 
-### Evaluation plan
+### 6.3 Evaluation plan
 
 - OCR: character error rate, word error rate, exact text match, and errors on punctuation or numeric dimensions.
 - Detection and classification: class-level precision and recall, localization quality, and representative failure categories.
@@ -300,6 +382,15 @@ Before training, record the framework version, selected configuration, pretraine
 Report dataset size, split policy, hardware context, and model version alongside any future results. No fabricated accuracy, speedup, or production-volume claims are included.
 
 ## 7. Redis: shared state and operational control
+
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>Several worker processes need one consistent view of counters, request state, and recent events.</li>
+<li>Monitoring must keep working, with reduced guarantees, when Redis is unavailable.</li>
+<li>Counters, bounded histories, and retention each need an explicit policy, or totals drift and lists grow without limit.</li>
+</ul>
+</div>
 
 In the inspected application, Redis supports **observability state**: counters, request state, recent events, and history shared across processes. It is not evidence of a Redis inference job queue. Database queue instrumentation and Redis observability should be described separately.
 
@@ -315,7 +406,7 @@ flowchart LR
     G --> H[Monitoring consumers]
 ```
 
-### Control strategy
+### 7.1 Control strategy
 
 | Concern | Approach |
 |---|---|
@@ -330,19 +421,26 @@ flowchart LR
 
 Operational state uses atomic counter updates, bounded recent-event lists, and explicit retention policies. Key naming and connection settings remain private.
 
-
-
 Expiration alone does not impose a fixed list size; bounded history and expiration solve different problems. Global counters need an explicit reset/retention policy and should not expire unexpectedly during monitoring windows.
 
 Redis interruption should raise an operational event. A local fallback preserves partial visibility, but it does not provide durable global accounting or cross-worker consistency. Redis recovery and state reconciliation should be tested before relying on combined totals.
 
 ## 8. Deployment
 
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>A GPU inference service must survive crashes and reboots without manual attention.</li>
+<li>Public traffic, TLS, and upload limits belong in a reverse proxy, not in the application.</li>
+<li>A release must be reproducible (source, locked dependencies, model manifest, configuration) and reversible when health checks fail.</li>
+</ul>
+</div>
+
 ![Deployment, Redis, MLOps, and monitoring topology](deployment-flow.svg)
 
 The repository contains systemd, reverse-proxy, Prometheus, alert, and Grafana assets. The examples below are sanitized deployment patterns; they are not a record of a verified live deployment.
 
-### Deployment topology
+### 8.1 Deployment topology
 
 ```mermaid
 flowchart TD
@@ -360,7 +458,7 @@ flowchart TD
     A -. private JSON snapshot .-> W[Custom dashboard integration]
 ```
 
-### Release flow
+### 8.2 Release flow
 
 ```mermaid
 flowchart LR
@@ -377,7 +475,7 @@ flowchart LR
 
 A release bundle should pair source revision, dependency lock, model manifest, and configuration schema. Keep environment secrets outside the bundle. A restart may interrupt requests; zero-downtime rollout requires additional routing and draining infrastructure.
 
-### Deployment control flow
+### 8.3 Deployment control flow
 
 ```text
 REVIEWED RELEASE → CI CHECKS → STAGED INSTALL → MODEL VERIFICATION
@@ -395,7 +493,12 @@ REVIEWED RELEASE → CI CHECKS → STAGED INSTALL → MODEL VERIFICATION
 
 The deployment diagram shows control flow rather than invented rollout percentages. Performance graphs can be added when measured latency and service metrics are available.
 
-### systemd service example
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>Sanitized deployment screenshot: service status and recent journal output on the deployment host.</figcaption>
+</figure>
+
+### 8.4 systemd service example
 
 Every username and filesystem path below is fictional. The `current` directory represents an activated release. The environment file is supplied privately by the operator.
 
@@ -466,7 +569,7 @@ sudo systemctl start example-ai-ce.service
 
 `enable` configures startup at boot; `Restart=on-failure` supervises crashes. Neither command fetches source, trains models, or automatically deploys new releases. Automated deployment requires a separate release job that installs a reviewed bundle, switches the release directory, restarts the service, checks health, and restores the previous release if necessary.
 
-### Reverse-proxy example
+### 8.5 Reverse-proxy example
 
 ```nginx
 # Conceptual example. Replace xxx with the configured internal application port.
@@ -492,7 +595,16 @@ The nginx fragment contains a deliberately nonnumeric port placeholder and must 
 
 ## 9. Monitoring: Prometheus, Grafana, and custom dashboards
 
-### What is supported by repository evidence
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>Operators need to know whether the service is reachable, how requests are ending, and whether processing is getting slower.</li>
+<li>Historical trends and recent event detail are different needs and need different sources.</li>
+<li>Stale or missing data must look different from a healthy zero.</li>
+</ul>
+</div>
+
+### 9.1 What is supported by repository evidence
 
 - A health route for basic availability checks.
 - A Prometheus text endpoint at `/metrics`.
@@ -503,7 +615,7 @@ The nginx fragment contains a deliberately nonnumeric port placeholder and must 
 
 These assets demonstrate the Grafana integration approach and custom-dashboard foundation. They do not establish that a Grafana connection succeeded in a particular environment or that a finished custom dashboard UI is deployed.
 
-### Grafana integration approach
+### 9.2 Grafana integration approach
 
 1. Confirm the service produces valid metrics on a trusted internal route.
 2. Configure Prometheus to scrape that route and inspect target health.
@@ -531,7 +643,18 @@ scrape_configs:
 
 The example metrics gateway must authorize the collector; it is separate from the public nginx route denied above. Supply TLS trust and authentication privately.
 
-### Dashboard design
+<div class="figure-row">
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>Grafana overview: the starter dashboard connected to the Prometheus data source.</figcaption>
+</figure>
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>Custom monitoring dashboard built on the JSON snapshot endpoint.</figcaption>
+</figure>
+</div>
+
+### 9.3 Dashboard design
 
 ```text
 ┌──────────────────────────────────────────────────────────────┐
@@ -576,15 +699,13 @@ histogram_quantile(
 )
 ```
 
-### Custom monitoring dashboard approach
+### 9.4 Custom monitoring dashboard approach
 
 A custom frontend can use `/ops/snapshot` for current counters, recent events, and operational status, while using Prometheus-backed queries for historical trends. Poll through an authenticated monitoring gateway. Show stale data explicitly rather than presenting an old successful response as current health.
 
-
-
 Suggested UI behavior: cancel overlapping requests, back off after failures, display sample timestamps, distinguish unavailable values from zeros, and allow operators to filter events by category. The actual snapshot schema must be inspected when implementing the UI.
 
-### Alerts and response
+### 9.5 Alerts and response
 
 | Signal | Candidate response |
 |---|---|
@@ -598,6 +719,15 @@ Suggested UI behavior: cancel overlapping requests, back off after failures, dis
 Alert thresholds should come from an observed baseline and agreed operating goals; this document does not invent service-level results.
 
 ## 10. Sending data to another server for MLOps
+
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>Results produced in operation have to reach a separate environment for review and retraining without exposing customer data or credentials.</li>
+<li>Transfers fail, repeat, and arrive incomplete; each case needs a visible, recoverable state.</li>
+<li>Predictions must never silently become training labels.</li>
+</ul>
+</div>
 
 The repository includes remote archive synchronization and transfer-event instrumentation. That establishes artifact-transfer capability. The full feedback, labeling, retraining, and release loop below is a proposed extension rather than a verified automated training platform.
 
@@ -620,7 +750,7 @@ sequenceDiagram
     M-->>A: Reviewed versioned model release
 ```
 
-### Transfer contract
+### 10.1 Transfer contract
 
 A mature receiving environment should validate a manifest such as:
 
@@ -639,7 +769,7 @@ A mature receiving environment should validate a manifest such as:
 
 This is a proposed schema. It does not expose actual filenames, customer identifiers, storage locations, or credentials.
 
-### Reliability and control
+### 10.2 Reliability and control
 
 - Transfer only completed artifact sets; stage incomplete uploads away from consumers.
 - Use stable artifact IDs and content digests to recognize duplicate transfers.
@@ -652,7 +782,7 @@ This is a proposed schema. It does not expose actual filenames, customer identif
 
 These are target reliability controls to validate against the transfer implementation, not assertions that every control already exists.
 
-### MLOps lifecycle
+### 10.3 MLOps lifecycle
 
 ```text
 Operational artifacts
@@ -681,6 +811,16 @@ Operational artifacts
 
 ## 12. Results and evidence to add
 
+<div class="callout callout-result">
+<h4>What is demonstrated today</h4>
+<ul>
+<li>Implemented components for image preparation, detection, segmentation, OCR, and structured output.</li>
+<li>Batch and API workflows with validation and result packaging.</li>
+<li>Operational templates: systemd, nginx, Prometheus, alert rules, and a Grafana starter dashboard.</li>
+<li>Artifact transfer with transfer-event instrumentation.</li>
+</ul>
+</div>
+
 The repository demonstrates implemented components and operational templates. Quantitative outcomes should be added only after reproducible measurement.
 
 | Evidence item | Value / link to fill |
@@ -697,13 +837,11 @@ The repository demonstrates implemented components and operational templates. Qu
 
 ## 13. Images, videos, and demonstrations
 
-Approved, sanitized media will be added here as it is cleared for publication:
+The image placeholders throughout this page mark where approved, sanitized media will go: a project cover, an input drawing next to its structured result, OCR examples, a deployment screenshot, and the Grafana and custom dashboards. Short videos will follow for:
 
-- a project cover,
-- an input drawing shown next to its structured result visualization,
-- dimension and space text recognition examples,
-- a deployment diagram or screenshot, Grafana integration evidence, and the custom monitoring dashboard,
-- short videos of end-to-end processing, deployment and recovery, and monitoring.
+- end-to-end processing of one drawing,
+- a deployment and recovery walkthrough,
+- a monitoring demonstration.
 
 Before publishing media, remove visible credentials, terminals containing connection strings, browser address bars showing private infrastructure, customer drawing identifiers, and embedded sensitive metadata.
 

@@ -1778,3 +1778,164 @@ html[lang="ko"] .project-status {
     columns: 1;
   }
 }
+
+/* Case-study typography: numbered section bands, dashed subsection rules, and a larger lead paragraph. */
+.project-article h2 {
+  margin: 2.6rem 0 1rem;
+  padding: 0.55rem 1rem;
+  border-top: 0;
+  border-left: 5px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 9%, transparent), transparent 70%);
+  font-size: 1.5rem;
+}
+
+.project-article hr + h2 {
+  margin-top: 0.5rem;
+  padding-top: 0.55rem;
+  border-top: 0;
+}
+
+.project-article h3 {
+  margin: 1.9rem 0 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px dashed var(--line);
+  color: var(--accent-strong);
+  font-size: 1.12rem;
+}
+
+.project-article h2 + p {
+  font-size: 1.04rem;
+}
+
+/* Callout boxes: problems (red bar), goals (green), results (amber), notes (accent). */
+.callout {
+  margin: 1.2rem 0 1.5rem;
+  padding: 0.9rem 1.1rem 0.9rem 1.2rem;
+  border: 1px solid var(--line);
+  border-left-width: 5px;
+  border-radius: var(--radius-sm);
+  background: var(--card-tint);
+}
+
+.callout h4 {
+  margin: 0 0 0.55rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.callout p {
+  margin: 0 0 0.5rem;
+}
+
+.callout ul,
+.callout ol {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.callout li {
+  margin-bottom: 0.35rem;
+}
+
+.callout li:last-child {
+  margin-bottom: 0;
+}
+
+.callout-problem { border-left-color: #c0392b; }
+.callout-problem h4 { color: #c0392b; }
+.callout-goal { border-left-color: #2e7d32; }
+.callout-goal h4 { color: #2e7d32; }
+.callout-result { border-left-color: #b8761f; }
+.callout-result h4 { color: #b8761f; }
+.callout-note { border-left-color: var(--accent); }
+.callout-note h4 { color: var(--accent); }
+
+/* Key-facts strip: small labelled cards in a responsive row. */
+.fact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.8rem;
+  margin: 1.2rem 0 1.6rem;
+}
+
+.fact {
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.fact-label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fact-value {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+/* Image placeholders: a dashed frame with a caption, to be swapped for a real screenshot later. */
+.figure-placeholder {
+  margin: 1.2rem 0 1.5rem;
+}
+
+.placeholder-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 7;
+  max-height: 380px;
+  border: 2px dashed var(--chip-border);
+  border-radius: var(--radius-sm);
+  background:
+    repeating-linear-gradient(135deg, transparent 0 14px, color-mix(in srgb, var(--accent) 5%, transparent) 14px 28px),
+    var(--surface);
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.figure-placeholder figcaption,
+.project-article figure figcaption {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.project-article figure {
+  margin: 1.2rem 0 1.5rem;
+}
+
+.figure-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.figure-row .figure-placeholder,
+.figure-row figure {
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .figure-row {
+    grid-template-columns: 1fr;
+  }
+
+  .project-article h2 {
+    font-size: 1.3rem;
+  }
+}

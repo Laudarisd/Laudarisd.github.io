@@ -5,6 +5,20 @@ answers questions about it. It inspects the whole drawing and prepares the repor
 
 **Code files are not available in this repository because of confidentiality**
 
+<div class="fact-grid">
+<div class="fact"><span class="fact-label">Input</span><span class="fact-value">Architectural drawings (DWG)</span></div>
+<div class="fact"><span class="fact-label">Output</span><span class="fact-value">Structured knowledge · graph · reports</span></div>
+<div class="fact"><span class="fact-label">Interface</span><span class="fact-value">Chat agent inside the CAD canvas</span></div>
+<div class="fact"><span class="fact-label">Languages</span><span class="fact-value">Korean and English</span></div>
+<div class="fact"><span class="fact-label">Safety</span><span class="fact-value">Every change needs human approval</span></div>
+<div class="fact"><span class="fact-label">Platform</span><span class="fact-value">C# / .NET CAD add-on</span></div>
+</div>
+
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>Project cover: the add-on open inside the CAD application, with a drawing, the chat panel, and a highlighted answer.</figcaption>
+</figure>
+
 ---
 
 ## 1. Introduction
@@ -26,14 +40,14 @@ flowchart LR
     E --> F[Answers,<br/>highlights,<br/>reports]
 ```
 
-Three questions shaped every decision in it:
-
-1. **Does it work on a drawing it has never seen?** A system tuned to one file is a
-   demo, not a product.
-2. **Can every answer be traced?** An inspection result that cannot be shown on the
-   drawing is an opinion.
-3. **Can it be wrong safely?** It works on a customer's drawing, so uncertainty must
-   be a visible state, and nothing may change without a human decision.
+<div class="callout callout-problem">
+<h4>Three questions shaped every decision</h4>
+<ol>
+<li><strong>Does it work on a drawing it has never seen?</strong> A system tuned to one file is a demo, not a product.</li>
+<li><strong>Can every answer be traced?</strong> An inspection result that cannot be shown on the drawing is an opinion.</li>
+<li><strong>Can it be wrong safely?</strong> It works on a customer's drawing, so uncertainty must be a visible state, and nothing may change without a human decision.</li>
+</ol>
+</div>
 
 ---
 
@@ -57,29 +71,17 @@ A floor plan file
 
 ### 2.2 Why that is hard
 
-**Geometry carries no meaning.** The file stores shapes and positions. It does not
-store what anything *is*, what belongs to what, or where one thing ends and the next
-begins.
-
-**Everything overlaps.** Furniture, tiling, hatching, dimension lines and
-annotations sit on top of the structure. Treating all geometry equally produces
-nonsense.
-
-**Symbols hide their position.** A symbol's true coordinates exist only after it is
-resolved through insertion, rotation, scale and mirroring, sometimes several levels
-deep. The usual shortcut, exploding everything, destroys the information about what
-each symbol is, which is exactly the information needed.
-
-**Nothing is standardised.** Every office draws differently and names things
-differently, in more than one language, and the same project mixes conventions.
-
-**One file, many flats.** A residential plan repeats the same unit several times,
-some mirrored, some rotated at an angle. Every name repeats with it, so every answer
-must stay unambiguous without the user pointing at coordinates.
-
-**Drawings are not drawn correctly.** Lines that should meet miss by a millimetre.
-Content sits on the wrong grouping. Labels sit outside the thing they name. Real
-files are the test, not clean ones.
+<div class="callout callout-problem">
+<h4>Problems in the raw drawing</h4>
+<ul>
+<li><strong>Geometry carries no meaning.</strong> The file stores shapes and positions. It does not store what anything <em>is</em>, what belongs to what, or where one thing ends and the next begins.</li>
+<li><strong>Everything overlaps.</strong> Furniture, tiling, hatching, dimension lines and annotations sit on top of the structure. Treating all geometry equally produces nonsense.</li>
+<li><strong>Symbols hide their position.</strong> A symbol's true coordinates exist only after it is resolved through insertion, rotation, scale and mirroring, sometimes several levels deep. The usual shortcut, exploding everything, destroys the information about what each symbol is, which is exactly the information needed.</li>
+<li><strong>Nothing is standardised.</strong> Every office draws differently and names things differently, in more than one language, and the same project mixes conventions.</li>
+<li><strong>One file, many flats.</strong> A residential plan repeats the same unit several times, some mirrored, some rotated at an angle. Every name repeats with it, so every answer must stay unambiguous without the user pointing at coordinates.</li>
+<li><strong>Drawings are not drawn correctly.</strong> Lines that should meet miss by a millimetre. Content sits on the wrong grouping. Labels sit outside the thing they name. Real files are the test, not clean ones.</li>
+</ul>
+</div>
 
 ### 2.3 Why the obvious approaches fail
 
@@ -93,9 +95,24 @@ files are the test, not clean ones.
 The system uses none of these alone. It builds a structured understanding first, and
 treats the language model as a reader of that structure rather than of the file.
 
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>A raw DWG drawing as the computer sees it: primitives, text, and nested symbols with no meaning attached.</figcaption>
+</figure>
+
 ---
 
 ## 3. Parsing and storage
+
+<div class="callout callout-problem">
+<h4>Problems this stage solves</h4>
+<ul>
+<li>Geometry inside nested and external symbols has no real-world coordinates until every insertion, rotation, scale and mirror is resolved.</li>
+<li>Exploding symbols to get coordinates destroys their identity.</li>
+<li>Drawings come in different units; later numbers must all mean the same thing.</li>
+<li>Every later answer must be traceable to the exact entity in the drawing.</li>
+</ul>
+</div>
 
 The first stage reads the drawing and writes it down in a form a machine can work
 with.
@@ -135,6 +152,15 @@ graph database.
 
 ## 4. What the system produces
 
+<div class="callout callout-problem">
+<h4>Problems this stage solves</h4>
+<ul>
+<li>Spaces, objects, openings and marks must be recognised and linked to each other, not just listed.</li>
+<li>A cleanly recovered result and an approximated one must not look the same to the user.</li>
+<li>Every item needs the drawing entities behind it, so the assistant can show its evidence.</li>
+</ul>
+</div>
+
 ### 4.1 Structured knowledge
 
 ```
@@ -155,6 +181,11 @@ to the drawing. That is what allows the assistant to highlight its own evidence.
 approximated are not presented as the same thing, and anything judged on top of an
 approximate result inherits that lower confidence.
 
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>What the system recovered, drawn over the plan: spaces, openings and fixtures, each with its confidence.</figcaption>
+</figure>
+
 ### 4.2 From a user's point of view
 
 ```mermaid
@@ -169,6 +200,11 @@ flowchart TD
     D --> I[Propose a change]
     I --> J[Approve or reject]
 ```
+
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>The extraction browser: the list of spaces, objects and openings found in a drawing.</figcaption>
+</figure>
 
 ### 4.3 Capability inventory
 
@@ -207,7 +243,15 @@ Capabilities
 
 ## 5. Why an AI agent
 
-A fixed set of reports only answers the questions someone thought of in advance.
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>A fixed set of reports only answers the questions someone thought of in advance.</li>
+<li>Real users ask sideways questions that combine finding, counting, measuring and relating.</li>
+<li>A language model cannot be trusted with exact geometry, counting, or a file far larger than its context.</li>
+</ul>
+</div>
+
 Real users ask sideways questions:
 
 - *Which bathrooms have no ventilation?*
@@ -228,6 +272,11 @@ flowchart LR
     O --> M
     M --> A[Answer + highlight]
 ```
+
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>A question asked in chat and its answer, with the evidence highlighted on the drawing.</figcaption>
+</figure>
 
 ### 5.1 Why not simply give the model the file
 
@@ -265,6 +314,16 @@ and are not described here.
 ---
 
 ## 6. The agent harness
+
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>A model on its own retries silently, drifts out of scope, and loses track of long sessions.</li>
+<li>Numbers must not change with the model that happens to be configured.</li>
+<li>Cost, timing and failures have to be visible, or an agent cannot be debugged.</li>
+<li>Some drawings may not leave the building, so a self-hosted model must be an option.</li>
+</ul>
+</div>
 
 The model is a small part of an agent. The harness is the rest, and it decides
 whether the thing survives real use.
@@ -315,12 +374,26 @@ agent system.
 
 ## 7. Interaction and safety
 
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>An answer that cannot be seen on the drawing is hard to trust.</li>
+<li>Evidence drawn on the canvas must never alter the customer's file.</li>
+<li>Changing a drawing is irreversible, so it must be slow, explicit and reviewable.</li>
+</ul>
+</div>
+
 ### 7.1 Showing the work
 
-An answer that cannot be seen is hard to trust. Results are drawn directly on the
-CAD canvas without altering the drawing: evidence appears as temporary graphics that
-disappear when cleared. Spaces can be shown as outlines or filled with a see-through
-mask, so a space reads as an area while the plan stays readable underneath.
+Results are drawn directly on the CAD canvas without altering the drawing: evidence
+appears as temporary graphics that disappear when cleared. Spaces can be shown as
+outlines or filled with a see-through mask, so a space reads as an area while the
+plan stays readable underneath.
+
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>A space shown with the see-through mask on the canvas, with its evidence outlined.</figcaption>
+</figure>
 
 ### 7.2 Changing a drawing
 
@@ -341,12 +414,23 @@ The approval is a button, not a typed word. The assistant cannot propose and app
 in the same breath, and the outcome of the click is fed back, so it knows what
 actually happened rather than what it suggested.
 
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>A proposed change shown on the drawing, waiting for the approve or reject decision.</figcaption>
+</figure>
+
 ---
 
 ## 8. Reliability engineering
 
-Correctness on one drawing is luck. The project is built around proving it on
-drawings it was not developed against.
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>Correctness on one drawing is luck; it has to be proven on drawings the system was not developed against.</li>
+<li>Benchmarks that leak names, identifiers or numbers can be gamed.</li>
+<li>A fix for one case can quietly damage twenty others.</li>
+</ul>
+</div>
 
 ```
 Quality approach
@@ -375,6 +459,16 @@ Without that discipline, the improvement would have shipped with the damage atta
 
 ## 9. Results
 
+<div class="callout callout-result">
+<h4>Measured on an unseen test plan</h4>
+<ul>
+<li>Roughly 25,000 entities read and resolved.</li>
+<li>66 spaces recovered across six repeated unit types; the large majority cleanly, the rest reported as approximate rather than presented as exact.</li>
+<li>Identical results in millimetres, in inches, and with the plan rotated.</li>
+<li>The same question returns the same numbers across runs and models, in Korean and in English.</li>
+</ul>
+</div>
+
 | Measure | Outcome |
 |---|---|
 | Entities in a test plan | roughly 25,000 |
@@ -387,27 +481,20 @@ Without that discipline, the improvement would have shipped with the damage atta
 
 ### 9.1 Visual results
 
-The figures below are illustrative placeholders drawn to the same layout as the
-real screens; they will be replaced with CAD screenshots.
-
-![The drawing as it comes from CAD](images/plan-original.svg)
-*Figure 1. The drawing as it comes from CAD: geometry, text and symbols with no meaning attached.*
-
-![What the system recovered, drawn over the plan](images/spaces-detected.svg)
-*Figure 2. What the system recovered, drawn over the plan: spaces, openings and fixtures, each with a confidence.*
-
-![A space shown with the see-through mask](images/space-mask.svg)
-*Figure 3. A space shown with the see-through mask, so it reads as an area while the plan stays readable underneath.*
-
-![The graph database view](images/graph-db.svg)
-*Figure 4. The graph database view: a selected node with its direct connections, linked back to the canvas.*
-
-![A page of the inspection report](images/report-sample.svg)
-*Figure 5. A page of the inspection report, Korean and English together, with the evidence behind each finding.*
+<div class="figure-row">
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>Before: the drawing as it comes from CAD.</figcaption>
+</figure>
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>After: every recovered space, opening and fixture drawn over the same plan.</figcaption>
+</figure>
+</div>
 
 ### 9.2 Demonstrations
 
-*(Add demo videos here.)*
+Short recordings will be added for:
 
 - A question asked and answered end to end, with the evidence highlighted.
 - A full inspection run, from extraction to exported report.
@@ -416,6 +503,15 @@ real screens; they will be replaced with CAD screenshots.
 ---
 
 ## 10. Inspection and reporting
+
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>Rules have to be judged per space, and some cannot be judged on a given drawing at all.</li>
+<li>A pass/fail-only tool hides the cases a reviewer most needs to see.</li>
+<li>Findings must become an editable, bilingual document with the evidence attached.</li>
+</ul>
+</div>
 
 The inspection layer asks whether each space contains what it must contain.
 
@@ -438,14 +534,27 @@ The states that are neither pass nor fail matter most. A rule that cannot be jud
 on this drawing says so. That is the difference between a tool a reviewer trusts and
 one they stop reading.
 
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>A page of the inspection report: Korean and English together, with the evidence behind each finding.</figcaption>
+</figure>
+
 ---
 
 ## 11. Graph database
 
-A drawing is not a list. It is a web of things that refer to each other: a mark
-describes a door, a door joins two spaces, a space touches another space, a fixture
-belongs to a space. Storing that as a graph lets a question be answered by walking
-from one thing to the next, instead of scanning everything each time.
+<div class="callout callout-problem">
+<h4>Problems this section addresses</h4>
+<ul>
+<li>A drawing is a web of things that refer to each other, not a list; questions about it are relational.</li>
+<li>In tables, every new relational question is another join; the schema has to be reshaped for each new relation type.</li>
+<li>A relation that cannot be traced back to the drawing is just an assertion.</li>
+</ul>
+</div>
+
+A mark describes a door, a door joins two spaces, a space touches another space, a
+fixture belongs to a space. Storing that as a graph lets a question be answered by
+walking from one thing to the next, instead of scanning everything each time.
 
 ```mermaid
 graph LR
@@ -485,6 +594,11 @@ and traced back to the drawing.
 | Answering | the assistant walks the graph to answer questions about how things connect |
 | Inspection | rules are evaluated over relations, not only over positions |
 | Persistence | the graph is stored per drawing, so a reopened file brings its relations back |
+
+<figure class="figure-placeholder">
+<div class="placeholder-box"><span>Image to be added</span></div>
+<figcaption>The graph database view: a selected node with its direct connections, linked back to the canvas.</figcaption>
+</figure>
 
 ### 11.3 Why a graph rather than tables
 
@@ -543,12 +657,10 @@ Working method
 
 ## 15. Summary
 
-I built a system that reads an architectural drawing the way a person does: it
-parses the raw geometry, resolves the symbols, works out what the drawing is made
-of, records how everything connects as a graph, and lets an AI assistant answer
-questions about the result with evidence attached to every number. It states its
-confidence, it shows its work on the drawing, and it never changes a customer's file
-without a human decision.
+<div class="callout callout-note">
+<h4>In one paragraph</h4>
+<p>I built a system that reads an architectural drawing the way a person does: it parses the raw geometry, resolves the symbols, works out what the drawing is made of, records how everything connects as a graph, and lets an AI assistant answer questions about the result with evidence attached to every number. It states its confidence, it shows its work on the drawing, and it never changes a customer's file without a human decision.</p>
+</div>
 
 The hard part was not the AI. It was making the drawing understandable enough that
 the AI never has to guess.
