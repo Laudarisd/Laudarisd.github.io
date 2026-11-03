@@ -1940,3 +1940,147 @@ html[lang="ko"] .project-status {
     font-size: 1.3rem;
   }
 }
+
+/* Code blocks in case studies: a card with a language label, a copy button, and VS Code-style colours.
+   Light themes use the "Light+" palette, the dark theme uses "Dark+"; backgrounds follow the site theme. */
+:root {
+  --code-bg: #f6f3ec;
+  --code-head: #ece7dc;
+  --code-text: #1f2933;
+  --code-comment: #008000;
+  --code-keyword: #0000ff;
+  --code-control: #af00db;
+  --code-string: #a31515;
+  --code-number: #098658;
+  --code-function: #795e26;
+  --code-variable: #001080;
+  --code-type: #267f99;
+  --code-attr: #e50000;
+  --code-meta: #0451a5;
+}
+
+html[data-theme="pure-vintage"] {
+  --code-bg: #f5ecd8;
+  --code-head: #e9dcc0;
+}
+
+html[data-theme="simple"] {
+  --code-bg: #f6f8fa;
+  --code-head: #eaeef2;
+}
+
+html[data-theme="dark"] {
+  --code-bg: #1e1e1e;
+  --code-head: #252526;
+  --code-text: #d4d4d4;
+  --code-comment: #6a9955;
+  --code-keyword: #569cd6;
+  --code-control: #c586c0;
+  --code-string: #ce9178;
+  --code-number: #b5cea8;
+  --code-function: #dcdcaa;
+  --code-variable: #9cdcfe;
+  --code-type: #4ec9b0;
+  --code-attr: #9cdcfe;
+  --code-meta: #569cd6;
+}
+
+.code-block {
+  margin: 1rem 0 1.4rem;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--code-bg);
+}
+
+.code-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0.5rem 0.35rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--code-head);
+}
+
+.code-lang {
+  color: var(--muted);
+  font-family: Consolas, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.code-copy {
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.code-copy:hover,
+.code-copy:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: none;
+}
+
+.project-article .code-block pre {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--code-bg);
+  color: var(--code-text);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.project-article .code-block pre code {
+  display: block;
+  color: var(--code-text);
+}
+
+/* highlight.js token classes mapped to the theme variables above. */
+.hljs-comment,
+.hljs-quote { color: var(--code-comment); font-style: italic; }
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-doctag { color: var(--code-keyword); }
+.hljs-built_in,
+.hljs-type,
+.hljs-class .hljs-title,
+.hljs-title.class_ { color: var(--code-type); }
+.hljs-string,
+.hljs-regexp,
+.hljs-addition { color: var(--code-string); }
+.hljs-number,
+.hljs-symbol,
+.hljs-bullet { color: var(--code-number); }
+.hljs-title,
+.hljs-title.function_,
+.hljs-section { color: var(--code-function); }
+.hljs-variable,
+.hljs-template-variable,
+.hljs-params,
+.hljs-property { color: var(--code-variable); }
+.hljs-attr,
+.hljs-attribute,
+.hljs-name,
+.hljs-selector-attr { color: var(--code-attr); }
+.hljs-meta,
+.hljs-meta .hljs-keyword,
+.hljs-tag { color: var(--code-meta); }
+.hljs-deletion { color: var(--code-attr); }
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: 700; }
+/* Shell prompts and flow-control words stand out like in VS Code. */
+.language-bash .hljs-built_in { color: var(--code-function); }
+.language-python .hljs-keyword { color: var(--code-control); }
+.language-python .hljs-keyword.hljs-built_in,
+.language-python .hljs-literal { color: var(--code-keyword); }

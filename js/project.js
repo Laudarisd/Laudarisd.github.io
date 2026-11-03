@@ -17,6 +17,13 @@
   var MERMAID_URL = "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js";
   var mermaidLoaded = null;
 
+  // Code blocks are highlighted with highlight.js (common languages bundle + nginx), loaded on demand.
+  var HLJS_URL = "https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/highlight.min.js";
+  var HLJS_NGINX_URL = "https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/languages/nginx.min.js";
+  var hljsLoaded = null;
+  // Fence names used in the Markdown that highlight.js knows under another name.
+  var LANG_ALIAS = { html: "xml", dotenv: "ini", env: "ini", text: "plaintext", txt: "plaintext", promql: "plaintext", console: "bash", sh: "bash", shell: "bash" };
+
   var LANGS = { en: "en", kr: "ko" };
   var DEFAULT_LANG = "en";
   var STORAGE_KEY = "portfolio-lang"; // same key as site.js so the choice carries over
@@ -172,6 +179,52 @@
     });
   }
 
+  function loadScriptOnce(url) {
+    return new Promise(function (resolve, reject) {
+      var script = document.createElement("script");
+      script.src = url;
+      script.onload = resolve;
+      script.onerror = function () { reject(new Error("failed to load " + url)); };
+      document.head.appendChild(script);
+    });
+  }
+
+  function loadHljs() {
+    if (!hljsLoaded) {
+      hljsLoaded = loadScriptOnce(HLJS_URL).then(function () { return loadScriptOnce(HLJS_NGINX_URL); });
+    }
+    return hljsLoaded;
+  }
+
+  // Wrap every <pre><code> in a card with a language label and a copy button, then highlight it.
+  function renderCode(wrap) {
+    var blocks = [];
+    wrap.querySelectorAll("pre > code").forEach(function (code) {
+      var pre = code.parentNode;
+      if (pre.classList.contains("mermaid") || pre.parentNode.classList.contains("code-block")) return;
+      var match = /language-([\w-]+)/.exec(code.className || "");
+      var lang = match ? match[1].toLowerCase() : "text";
+      var hlLang = LANG_ALIAS[lang] || lang;
+      code.className = "language-" + hlLang;
+
+      var copy = el("button", { class: "code-copy", type: "button", text: "Copy" });
+      copy.addEventListener("click", function () {
+        var done = function () { copy.textContent = "Copied"; setTimeout(function () { copy.textContent = "Copy"; }, 1500); };
+        if (navigator.clipboard) navigator.clipboard.writeText(code.textContent).then(done);
+      });
+      var card = el("div", { class: "code-block" }, [
+        el("div", { class: "code-head" }, [el("span", { class: "code-lang", text: lang }), copy])
+      ]);
+      pre.parentNode.insertBefore(card, pre);
+      card.appendChild(pre);
+      if (hlLang !== "plaintext") blocks.push(code);
+    });
+    if (!blocks.length) return;
+    loadHljs().then(function () {
+      blocks.forEach(function (code) { window.hljs.highlightElement(code); });
+    }).catch(function (error) { console.error("[portfolio] highlight", error); });
+  }
+
   // Show the embedded article for the current language (if the page has one) and draw its diagrams.
   function renderArticle(lang) {
     var panel = byId("panel-article");
@@ -193,6 +246,7 @@
       shown.hidden = false;
     }
     renderMermaid(shown).catch(function (error) { console.error("[portfolio] mermaid", error); });
+    renderCode(shown);
   }
 
   /* ---------- renderers ---------- */
