@@ -6,7 +6,8 @@
   "nav": {
     "about": "About",
     "projects": "Projects",
-    "contact": "Contact"
+    "contact": "Contact",
+    "github": "GitHub"
   },
   "themes": {
     "dark": "Midnight Archive",
