@@ -1895,6 +1895,7 @@ html[lang="ko"] .project-status {
   justify-content: center;
   aspect-ratio: 16 / 7;
   max-height: 380px;
+  margin: 0 auto;
   border: 2px dashed var(--chip-border);
   border-radius: var(--radius-sm);
   background:

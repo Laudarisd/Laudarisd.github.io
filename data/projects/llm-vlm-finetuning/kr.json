@@ -1,15 +1,33 @@
 {
   "title": "LLM/VLM Fine-Tuning",
-  "description": "엔지니어링·CAD 도메인 데이터로 LLM과 VLM을 Fine-Tuning 해요.",
+  "description": "9B Vision-Language 모델을 QLoRA로 Fine-Tuning 해 평면도 이미지 질문에 구조화된 JSON으로 답하게 해요.",
   "image": "thumbnail.svg",
   "image_alt": "LLM과 VLM Fine-Tuning",
   "image_class": "",
   "url": "https://github.com/Laudarisd",
-  "subtitle": "엔지니어링·CAD 도메인 데이터로 LLM과 VLM을 Fine-Tuning 해요.",
+  "subtitle": "Qwen3.5-9B를 QLoRA(Unsloth, TRL, PEFT)로 Fine-Tuning 해서 건축 평면도 이미지를 읽고 방, 개수, 교차점, 폴리곤 주석에 대한 질문에 구조화된 JSON으로 답하게 하는 프로젝트예요.",
   "links": [
     {
       "label": "GitHub",
       "url": "https://github.com/Laudarisd"
     }
+  ],
+  "status": "in_development",
+  "role": "연구 및 개발 (End-to-End)",
+  "context": "산업 R&D",
+  "tags": [
+    "Qwen3.5-9B",
+    "VLM",
+    "QLoRA / LoRA",
+    "Unsloth",
+    "TRL",
+    "PEFT",
+    "PyTorch",
+    "Floor-plan understanding"
+  ],
+  "contributions": [
+    "이미지 + 질문 + JSON 답변 쌍을 담는 채팅형 JSONL 데이터 형식과 원본 평면도 기준 분할 구성",
+    "Unsloth/TRL Fine-Tuning 파이프라인 작성: 4-bit 베이스 로딩, 전체 선형 레이어 LoRA 어댑터, Gradient Checkpointing, 주기적 평가, Early Stopping, 재개",
+    "검증 손실 기준 최적 체크포인트 선택과 어댑터 병합으로 추론용 모델 생성"
   ]
 }
