@@ -5,11 +5,37 @@
   "image_alt": "Vectra logo",
   "image_class": "project-image-logo",
   "url": "https://github.com/Laudarisd/vectra",
-  "subtitle": "Privacy-focused AI coding agent for VS Code with local and cloud models.",
+  "subtitle": "A privacy-first, model-agnostic AI agent platform for VS Code and the web: local GGUF and Ollama models or cloud providers behind one interface, typed and searchable tools, risk-scoped subagents, and human approval for every change.",
   "links": [
+    {
+      "label": "VS Code Marketplace",
+      "url": "https://marketplace.visualstudio.com/items?itemName=laudarisd.vectra-ai"
+    },
     {
       "label": "GitHub",
       "url": "https://github.com/Laudarisd/vectra"
     }
+  ],
+  "status": "completed",
+  "period": "v1.2.2 on VS Code Marketplace",
+  "role": "Independent developer (design, implementation, release)",
+  "context": "Independently developed product",
+  "tags": [
+    "TypeScript",
+    "Node.js",
+    "VS Code Extension",
+    "llama.cpp / GGUF",
+    "Ollama",
+    "OpenAI / Anthropic / Gemini",
+    "Agent Orchestration",
+    "Tool Calling",
+    "SSE Streaming"
+  ],
+  "contributions": [
+    "Designed and built the whole monorepo: VS Code extension, web workspace, shared agent-core, and local-runtime packages.",
+    "Implemented model discovery and management for local GGUF, Ollama, OpenAI-compatible, and cloud providers behind one interface.",
+    "Built the tool catalog with risk classes, tool search, orchestration, plan approval, diff review, and command confirmation.",
+    "Implemented specialised subagents, the agent loop with budgets and cancellation, SSE streaming, and the document, OCR, research, and artifact features of the web app.",
+    "Published and maintain the extension on the VS Code Marketplace."
   ]
 }

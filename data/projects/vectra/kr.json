@@ -5,11 +5,37 @@
   "image_alt": "Vectra 로고",
   "image_class": "project-image-logo",
   "url": "https://github.com/Laudarisd/vectra",
-  "subtitle": "로컬·클라우드 모델을 지원하는 프라이버시 중심 VS Code AI 코딩 Agent예요.",
+  "subtitle": "VS Code와 웹을 위한 프라이버시 우선, 모델 독립적인 AI Agent 플랫폼이에요. 로컬 GGUF·Ollama 모델이나 클라우드 Provider를 하나의 인터페이스로 쓰고, 타입이 정의된 검색 가능한 Tool, 위험 범위가 제한된 Subagent, 모든 변경에 대한 사람의 승인을 갖췄어요.",
   "links": [
+    {
+      "label": "VS Code Marketplace",
+      "url": "https://marketplace.visualstudio.com/items?itemName=laudarisd.vectra-ai"
+    },
     {
       "label": "GitHub",
       "url": "https://github.com/Laudarisd/vectra"
     }
+  ],
+  "status": "completed",
+  "period": "VS Code Marketplace v1.2.2",
+  "role": "개인 개발 (설계, 구현, 배포)",
+  "context": "독립적으로 개발한 제품",
+  "tags": [
+    "TypeScript",
+    "Node.js",
+    "VS Code Extension",
+    "llama.cpp / GGUF",
+    "Ollama",
+    "OpenAI / Anthropic / Gemini",
+    "Agent Orchestration",
+    "Tool Calling",
+    "SSE Streaming"
+  ],
+  "contributions": [
+    "VS Code 확장, 웹 Workspace, 공용 agent-core, local-runtime 패키지까지 Monorepo 전체를 설계·개발",
+    "로컬 GGUF, Ollama, OpenAI 호환, 클라우드 Provider를 하나의 인터페이스로 묶는 모델 탐색·관리 구현",
+    "위험 등급, Tool 검색, 오케스트레이션, 계획 승인, Diff 검토, 명령 확인을 갖춘 Tool 카탈로그 구축",
+    "역할별 Subagent, 예산과 취소가 있는 Agent 루프, SSE 스트리밍, 웹 앱의 문서·OCR·리서치·아티팩트 기능 구현",
+    "VS Code Marketplace에 확장을 배포하고 유지보수"
   ]
 }
