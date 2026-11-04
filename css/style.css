@@ -338,33 +338,6 @@ html[lang="ko"] .site-nav a {
 }
 
 /* Hero section: controls the intro layout, CTA buttons, and portrait framing. */
-.hero {
-  padding: 2.6rem 0 3rem;
-}
-
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.9fr) minmax(220px, 0.7fr);
-  gap: 2rem;
-  align-items: center;
-}
-
-.hero-copy {
-  padding: 1rem 0;
-}
-
-.hero-photo-card {
-  padding: 1rem;
-  background: var(--card-tint);
-  border: 1px solid rgba(216, 206, 192, 0.95);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
-  justify-self: end;
-  width: 100%;
-  max-width: 320px;
-  margin-right: -0.5rem;
-}
-
 .eyebrow {
   margin-bottom: 1rem;
   color: var(--accent);
@@ -381,31 +354,9 @@ html[lang="ko"] .site-nav a {
   letter-spacing: -0.02em;
 }
 
-.hero h1 {
-  max-width: none;
-  margin-bottom: 1.25rem;
-  font-size: clamp(1.9rem, 3.5vw, 3.25rem);
-  line-height: 1.08;
-  white-space: nowrap;
-}
-
 #resume .section-title-compact {
   white-space: nowrap;
   overflow-wrap: normal;
-}
-
-.hero-text {
-  max-width: 62ch;
-  margin-bottom: 1.5rem;
-  color: var(--muted);
-  font-size: 1.05rem;
-}
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.85rem;
-  margin-bottom: 1.5rem;
 }
 
 .button {
@@ -436,31 +387,6 @@ html[lang="ko"] .site-nav a {
 .button-secondary {
   border-color: var(--line);
   background: color-mix(in srgb, var(--surface) 78%, transparent);
-}
-
-.hero-highlights li {
-  position: relative;
-  margin-bottom: 0.8rem;
-  padding-left: 1.1rem;
-  color: var(--muted);
-}
-
-.hero-highlights li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.7rem;
-  width: 0.42rem;
-  height: 0.42rem;
-  border-radius: 50%;
-  background: var(--accent);
-}
-
-.hero-photo {
-  aspect-ratio: 5 / 5;
-  width: 100%;
-  object-fit: cover;
-  border-radius: calc(var(--radius-lg) - 6px);
 }
 
 /* Shared section blocks: reusable section spacing and muted band styling between content groups. */
@@ -593,6 +519,7 @@ html[data-theme="simple"] .site-footer {
 }
 
 /* Skills panel: category bullets with a plain indented keyword line. */
+/* Skills panel: category bullets with a plain indented keyword line. */
 .skills-panel,
 .experience-panel {
   width: 100%;
@@ -621,101 +548,6 @@ html[data-theme="simple"] .site-footer {
   font-family: inherit;
   font-size: 0.72em;
   font-weight: 500;
-}
-
-.skill-sections {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.7rem;
-}
-
-.skill-section {
-  display: grid;
-  grid-template-columns: minmax(9rem, 11rem) minmax(0, 1fr);
-  align-items: baseline;
-  gap: 0.4rem;
-  padding: 0;
-  border: 0;
-}
-
-.skill-section + .skill-section {
-  margin-top: 0;
-}
-
-.skill-section:first-child {
-  padding-top: 0;
-  border-top: 0;
-}
-
-.skill-section h4 {
-  position: relative;
-  margin-bottom: 0;
-  padding-left: 0.85rem;
-  color: var(--text);
-  font-family: inherit;
-  font-size: 0.8rem;
-  line-height: 1.3;
-  letter-spacing: 0;
-}
-
-.skill-section h4::after {
-  content: ":";
-}
-
-.skill-section h4::before {
-  content: "";
-  position: absolute;
-  top: 0.48em;
-  left: 0;
-  width: 0.3rem;
-  height: 0.3rem;
-  border-radius: 50%;
-  background: var(--accent);
-}
-
-.skill-chip-list {
-  display: block;
-  margin: 0;
-  padding: 0;
-}
-
-.skill-chip-list li {
-  display: inline;
-  min-height: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: var(--muted);
-  font-size: 0.74rem;
-  line-height: 1.35;
-  box-shadow: none;
-}
-
-.skill-chip-list li + li::before {
-  content: ", ";
-}
-
-/* Timeline items: adds visual separation between experience entries. */
-.timeline-item + .timeline-item {
-  margin-top: 1.25rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--line);
-}
-
-.timeline-year {
-  display: inline-block;
-  margin-bottom: 0.55rem;
-  color: var(--muted);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.timeline-item h4 {
-  margin-bottom: 0.35rem;
-  font-size: 1rem;
 }
 
 /* Record lists: restores bullet hierarchy for publications, degrees, and patents. */
@@ -867,73 +699,6 @@ html[data-theme="simple"] .site-footer {
   margin-top: 0;
   font-size: 0.82rem;
   line-height: 1.4;
-}
-
-/* Project cards: compact tiles with small text and the buttons pinned to the bottom. */
-.project-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  min-height: 100%;
-  padding: 0.65rem;
-}
-
-.project-card .project-image {
-  aspect-ratio: 2 / 1;
-}
-
-.project-card h3 {
-  margin-bottom: 0;
-  font-size: 0.86rem;
-  line-height: 1.3;
-}
-
-/* Keep every tile the same height: at most three lines of description. */
-.project-card p {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  margin-bottom: 0;
-  font-size: 0.74rem;
-  line-height: 1.4;
-}
-
-.project-image {
-  aspect-ratio: 16 / 9;
-  width: 100%;
-  object-fit: cover;
-  border-radius: calc(var(--radius-md) - 4px);
-  border: 1px solid rgba(216, 206, 192, 0.95);
-}
-
-.project-image-logo {
-  padding: 1.4rem;
-  object-fit: contain;
-  background: #ffffff;
-}
-
-.project-image-paper {
-  object-position: center;
-  filter: sepia(0.18) saturate(0.82) contrast(0.96);
-}
-
-.project-card a {
-  margin-top: auto;
-  color: var(--link-accent);
-  font-weight: 700;
-}
-
-.projects-note {
-  margin-top: 1.5rem;
-  color: var(--muted);
-  font-size: 0.98rem;
-}
-
-.projects-note a {
-  color: var(--link-accent);
-  font-weight: 700;
-  text-decoration: underline;
 }
 
 /* Footer: closes the page with contact links and a stronger vintage paper tone. */
@@ -1181,127 +946,4 @@ html[lang="ko"] #resume .section-title-compact {
 
 html[lang="ko"] .timeline-year {
   letter-spacing: 0.04em;
-}
-
-/* Projects section: category groups, status badges, tags, and link rows on the project cards. */
-.project-groups {
-  display: grid;
-  gap: 1.9rem;
-}
-
-.project-category-heading {
-  margin-bottom: 0.8rem;
-  padding: 0.2rem 0 0.45rem 0.85rem;
-  border-left: 3px solid var(--accent);
-  border-bottom: 1px solid var(--line);
-}
-
-.project-category-heading h3 {
-  margin-bottom: 0.1rem;
-  color: var(--accent);
-  font-family: "Spectral", "Noto Sans KR", serif;
-  font-size: 1.1rem;
-  letter-spacing: 0.01em;
-}
-
-.project-category:nth-child(-n + 2) .project-category-heading h3 {
-  font-size: 1.25rem;
-}
-
-.project-category-heading p {
-  margin-bottom: 0;
-  color: var(--muted);
-  font-size: 0.92rem;
-}
-
-.project-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 0.75rem;
-  color: var(--muted);
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.project-status {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.18rem 0.6rem;
-  border: 1px solid var(--chip-border);
-  border-radius: 999px;
-  color: var(--accent);
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-/* Ongoing work (in development / research) gets a filled badge so it stands out. */
-.project-status-live {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: var(--button-text);
-}
-
-.project-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.project-tags li {
-  padding: 0.2rem 0.55rem;
-  border: 1px solid var(--chip-border);
-  border-radius: 8px;
-  color: var(--muted);
-  font-size: 0.76rem;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-/* Card buttons: "More" (detail page) on the left, "Code" (repository) on the right. */
-.project-links {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: auto;
-}
-
-.project-card .project-btn {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 0;
-  padding: 0.22rem 0.7rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  color: var(--text);
-  font-size: 0.72rem;
-  font-weight: 700;
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.project-card .project-btn-more {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: var(--button-text);
-}
-
-.project-card .project-btn-code {
-  margin-left: auto;
-}
-
-.project-card .project-btn:hover,
-.project-card .project-btn:focus {
-  transform: translateY(-1px);
-  border-color: var(--accent);
-}
-
-@media (max-width: 480px) {
-  .project-grid {
-    grid-template-columns: 1fr;
-  }
 }

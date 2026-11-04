@@ -2,15 +2,14 @@
   Renderer for the project detail pages, projects/<slug>/index.html.
 
   Each page is a shell whose content comes from en.json / kr.json in the same
-  folder, plus shared labels from data/ui/<lang>.json, so the EN / 한국어 switch
-  works exactly like on the main page. A long case study (built from the
+  folder, plus shared labels from ui/<lang>.json and the footer from contact/,
+  so the EN / 한국어 switch works exactly like on the main page. A long case study (built from the
   folder's Markdown by tools/build_articles.py) is embedded in the page itself.
 */
 (function () {
   "use strict";
 
-  var ROOT = "../../"; // pages live in projects/<slug>/, so site assets are two levels up
-  var DATA_DIR = ROOT + "data/";
+  var ROOT = "../../"; // pages live in projects/<slug>/, so site folders are two levels up
   var PROJECT_DIR = "."; // this project's own folder
 
   // Long-form case studies are embedded in the page itself (built from PORTFOLIO*.md by
@@ -32,7 +31,7 @@
   var root = document.documentElement;
   var main = document.querySelector("main[data-project]");
   var slug = main ? main.getAttribute("data-project") : "";
-  var SECTIONS = [DATA_DIR + "ui", DATA_DIR + "contact", PROJECT_DIR];
+  var SECTIONS = [ROOT + "ui", ROOT + "contact", PROJECT_DIR];
   var langToggles = document.querySelectorAll(".lang-toggle");
   var themeToggles = document.querySelectorAll(".theme-toggle");
   var currentLang = null;
@@ -467,10 +466,10 @@
   }
 
   function renderAll(data) {
-    var ui = data[DATA_DIR + "ui"] || {};
+    var ui = data[ROOT + "ui"] || {};
     renderUI(ui);
     renderProject(data[PROJECT_DIR], ui);
-    renderContact(data[DATA_DIR + "contact"]);
+    renderContact(data[ROOT + "contact"]);
   }
 
   /* ---------- language handling (same behaviour as site.js) ---------- */

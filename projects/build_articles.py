@@ -11,7 +11,7 @@ The published page therefore contains the full text itself; nothing is fetched
 at view time. Re-run this script after editing a Markdown file:
 
     pip install markdown      # once
-    python tools/build_articles.py
+    python projects/build_articles.py
 
 ```mermaid fences become <pre class="mermaid"> blocks, which js/project.js draws
 with mermaid in the browser. Image paths are relative to the project folder.
@@ -26,8 +26,7 @@ try:
 except ImportError:  # pragma: no cover
     sys.exit("The 'markdown' package is required: pip install markdown")
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECTS = os.path.join(ROOT, "projects")
+PROJECTS = os.path.dirname(os.path.abspath(__file__))  # this script lives in projects/
 LABELS = {"en": "Contents", "kr": "목차"}
 
 

@@ -1,0 +1,20 @@
+/* Experience timeline: separation and year labels for each entry. */
+
+.timeline-item + .timeline-item {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+.timeline-year {
+  display: inline-block;
+  margin-bottom: 0.55rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.timeline-item h4 {
+  margin-bottom: 0.35rem;
+  font-size: 1rem;
+}
