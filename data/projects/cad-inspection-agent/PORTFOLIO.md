@@ -15,8 +15,8 @@ answers questions about it. It inspects the whole drawing and prepares the repor
 </div>
 
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
-<figcaption>Project cover: the add-on open inside the CAD application, with a drawing, the chat panel, and a highlighted answer.</figcaption>
+<div class="placeholder-box"><span>Image</span></div>
+<figcaption>The add-on open inside the CAD application, with a drawing, the chat panel, and a highlighted answer.</figcaption>
 </figure>
 
 ---
@@ -96,7 +96,7 @@ The system uses none of these alone. It builds a structured understanding first,
 treats the language model as a reader of that structure rather than of the file.
 
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>A raw DWG drawing as the computer sees it: primitives, text, and nested symbols with no meaning attached.</figcaption>
 </figure>
 
@@ -182,7 +182,7 @@ approximated are not presented as the same thing, and anything judged on top of 
 approximate result inherits that lower confidence.
 
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>What the system recovered, drawn over the plan: spaces, openings and fixtures, each with its confidence.</figcaption>
 </figure>
 
@@ -202,7 +202,7 @@ flowchart TD
 ```
 
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>The extraction browser: the list of spaces, objects and openings found in a drawing.</figcaption>
 </figure>
 
@@ -274,7 +274,7 @@ flowchart LR
 ```
 
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>A question asked in chat and its answer, with the evidence highlighted on the drawing.</figcaption>
 </figure>
 
@@ -391,7 +391,7 @@ outlines or filled with a see-through mask, so a space reads as an area while th
 plan stays readable underneath.
 
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>A space shown with the see-through mask on the canvas, with its evidence outlined.</figcaption>
 </figure>
 
@@ -415,7 +415,7 @@ in the same breath, and the outcome of the click is fed back, so it knows what
 actually happened rather than what it suggested.
 
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>A proposed change shown on the drawing, waiting for the approve or reject decision.</figcaption>
 </figure>
 
@@ -483,18 +483,18 @@ Without that discipline, the improvement would have shipped with the damage atta
 
 <div class="figure-row">
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Before: the drawing as it comes from CAD.</figcaption>
 </figure>
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>After: every recovered space, opening and fixture drawn over the same plan.</figcaption>
 </figure>
 </div>
 
 ### 9.2 Demonstrations
 
-Short recordings will be added for:
+Demonstrations cover:
 
 - A question asked and answered end to end, with the evidence highlighted.
 - A full inspection run, from extraction to exported report.
@@ -535,7 +535,7 @@ on this drawing says so. That is the difference between a tool a reviewer trusts
 one they stop reading.
 
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>A page of the inspection report: Korean and English together, with the evidence behind each finding.</figcaption>
 </figure>
 
@@ -596,7 +596,7 @@ and traced back to the drawing.
 | Persistence | the graph is stored per drawing, so a reopened file brings its relations back |
 
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>The graph database view: a selected node with its direct connections, linked back to the canvas.</figcaption>
 </figure>
 

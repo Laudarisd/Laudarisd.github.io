@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>LLM/VLM Fine-Tuning | Sudip Laudari</title>
-    <meta name="description" content="Project detail page from the portfolio of Sudip Laudari." />
+    <meta name="description" content="Project case study by Sudip Laudari." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -104,10 +104,10 @@
             <div class="panel-body">
 <!-- article:start -->
 <div class="project-article" data-lang="en" hidden>
-<nav class="article-toc-wrap"><h4>Contents</h4><ol class="article-toc"><li><a href="#1-introduction">1. Introduction</a></li><li><a href="#2-project-contents">2. Project contents</a></li><li><a href="#3-requirements">3. Requirements</a></li><li><a href="#4-goal">4. Goal</a></li><li><a href="#5-dataset-preparation">5. Dataset preparation</a></li><li><a href="#6-model-preparation-and-fine-tuning-concepts">6. Model preparation and fine-tuning concepts</a></li><li><a href="#7-training-files-and-setup">7. Training files and setup</a></li><li><a href="#8-training-log">8. Training log</a></li><li><a href="#9-output-and-inference">9. Output and inference</a></li><li><a href="#10-portfolio-images">10. Portfolio images</a></li></ol></nav>
+<nav class="article-toc-wrap"><h4>Contents</h4><ol class="article-toc"><li><a href="#1-introduction">1. Introduction</a></li><li><a href="#2-project-contents">2. Project contents</a></li><li><a href="#3-requirements">3. Requirements</a></li><li><a href="#4-goal">4. Goal</a></li><li><a href="#5-dataset-preparation">5. Dataset preparation</a></li><li><a href="#6-model-preparation-and-fine-tuning-concepts">6. Model preparation and fine-tuning concepts</a></li><li><a href="#7-training-files-and-setup">7. Training files and setup</a></li><li><a href="#8-training-log">8. Training log</a></li><li><a href="#9-output-and-inference">9. Output and inference</a></li><li><a href="#10-gallery">10. Gallery</a></li></ol></nav>
 <h1>Fine-Tuning a Vision-Language Model for Floor-Plan Understanding</h1>
 <blockquote>
-<p>Portfolio documentation for this repository. The project fine-tunes Qwen3.5-9B to answer questions about architectural floor-plan images. The current data includes room/object questions, counts and comparisons, junction detection, and polygon-style annotations. This is a visual understanding task; it does not generate new architectural plans.</p>
+<p>The project fine-tunes Qwen3.5-9B to answer questions about architectural floor-plan images. The current data includes room/object questions, counts and comparisons, junction detection, and polygon-style annotations. This is a visual understanding task; it does not generate new architectural plans.</p>
 </blockquote>
 <div class="fact-grid">
 <div class="fact"><span class="fact-label">Base model</span><span class="fact-value">Qwen3.5-9B (VLM)</span></div>
@@ -119,8 +119,8 @@
 </div>
 
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
-<figcaption>Project cover: a floor-plan image, a question, and the model's JSON answer side by side.</figcaption>
+<div class="placeholder-box"><span>Image</span></div>
+<figcaption>A floor-plan image, a question, and the model's JSON answer side by side.</figcaption>
 </figure>
 
 <h2 id="1-introduction">1. Introduction</h2>
@@ -728,26 +728,25 @@ model = AutoModelForImageTextToText.from_pretrained(model_path, device_map=&quot
 # process it with processor, then call model.generate(...).
 </code></pre>
 <p>Use the project's inference script/notebook for the full image and chat-template flow. Evaluate on held-out floor plans and show sample predictions alongside aggregate measures.</p>
-<h2 id="10-portfolio-images">10. Portfolio images</h2>
-<p>The slots below mark where the project images will go.</p>
+<h2 id="10-gallery">10. Gallery</h2>
 <div class="figure-row">
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Dataset example: a floor-plan image with its question and expected JSON answer.</figcaption>
 </figure>
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Training and validation curves from TensorBoard.</figcaption>
 </figure>
 </div>
 
 <div class="figure-row">
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Input and prediction: a held-out floor plan, the question asked, and the model's answer.</figcaption>
 </figure>
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Annotated output: predicted polygons drawn over the plan.</figcaption>
 </figure>
 </div>

@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AI-CE: AI Cost Estimation | Sudip Laudari</title>
-    <meta name="description" content="Project detail page from the portfolio of Sudip Laudari." />
+    <meta name="description" content="Project case study by Sudip Laudari." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -104,11 +104,11 @@
             <div class="panel-body">
 <!-- article:start -->
 <div class="project-article" data-lang="en" hidden>
-<nav class="article-toc-wrap"><h4>Contents</h4><ol class="article-toc"><li><a href="#1-project-overview">1. Project overview</a></li><li><a href="#2-skills-and-tools">2. Skills and tools</a></li><li><a href="#3-project-structure">3. Project structure</a></li><li><a href="#4-system-architecture">4. System architecture</a></li><li><a href="#5-model-development-with-pytorch">5. Model development with PyTorch</a></li><li><a href="#6-ocr-training-and-integration">6. OCR training and integration</a></li><li><a href="#7-redis-shared-state-and-operational-control">7. Redis: shared state and operational control</a></li><li><a href="#8-deployment">8. Deployment</a></li><li><a href="#9-monitoring-prometheus-grafana-and-custom-dashboards">9. Monitoring: Prometheus, Grafana, and custom dashboards</a></li><li><a href="#10-sending-data-to-another-server-for-mlops">10. Sending data to another server for MLOps</a></li><li><a href="#11-engineering-decisions-and-lessons">11. Engineering decisions and lessons</a></li><li><a href="#12-results-and-evidence-to-add">12. Results and evidence to add</a></li><li><a href="#13-images-videos-and-demonstrations">13. Images, videos, and demonstrations</a></li><li><a href="#14-public-disclosure-boundary">14. Public disclosure boundary</a></li></ol></nav>
-<h1>AI CE Image Mode — Computer Vision &amp; MLOps Portfolio</h1>
+<nav class="article-toc-wrap"><h4>Contents</h4><ol class="article-toc"><li><a href="#1-project-overview">1. Project overview</a></li><li><a href="#2-skills-and-tools">2. Skills and tools</a></li><li><a href="#3-project-structure">3. Project structure</a></li><li><a href="#4-system-architecture">4. System architecture</a></li><li><a href="#5-model-development-with-pytorch">5. Model development with PyTorch</a></li><li><a href="#6-ocr-training-and-integration">6. OCR training and integration</a></li><li><a href="#7-redis-shared-state-and-operational-control">7. Redis: shared state and operational control</a></li><li><a href="#8-deployment">8. Deployment</a></li><li><a href="#9-monitoring-prometheus-grafana-and-custom-dashboards">9. Monitoring: Prometheus, Grafana, and custom dashboards</a></li><li><a href="#10-sending-data-to-another-server-for-mlops">10. Sending data to another server for MLOps</a></li><li><a href="#11-engineering-decisions-and-lessons">11. Engineering decisions and lessons</a></li><li><a href="#12-results-and-evidence">12. Results and evidence</a></li><li><a href="#13-media-and-demonstrations">13. Media and demonstrations</a></li><li><a href="#14-public-disclosure-boundary">14. Public disclosure boundary</a></li></ol></nav>
+<h1>AI CE Image Mode — Computer Vision &amp; MLOps</h1>
 <blockquote>
 <p>Turning architectural floor-plan images into structured, reviewable information through image analysis, OCR, and observable service operations.</p>
-<p>Public project overview. Infrastructure values are placeholders. Model workflows describe engineering responsibilities without exposing proprietary processing logic. Illustrative OCR dimensions do not disclose deployed model configurations.</p>
+<p>Public project overview. Infrastructure values are illustrative. Model workflows describe engineering responsibilities without exposing proprietary processing logic. Illustrative OCR dimensions do not disclose deployed model configurations.</p>
 </blockquote>
 <div class="fact-grid">
 <div class="fact"><span class="fact-label">Input</span><span class="fact-value">Floor-plan images</span></div>
@@ -120,8 +120,8 @@
 </div>
 
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
-<figcaption>Project cover: a sanitized floor-plan image next to its structured result.</figcaption>
+<div class="placeholder-box"><span>Image</span></div>
+<figcaption>A sanitized floor-plan image next to its structured result.</figcaption>
 </figure>
 
 <h2 id="1-project-overview">1. Project overview</h2>
@@ -151,7 +151,7 @@
 </ul>
 </div>
 
-<h3>1.2 Portfolio project areas</h3>
+<h3>1.2 Project areas</h3>
 <div class="table-scroll"><table class="component-table">
 <thead>
 <tr>
@@ -301,7 +301,7 @@
 ├── .github/workflows/             # CI configuration
 ├── pyproject.toml
 ├── uv.lock
-└── portfolio.md
+└── README.md
 </code></pre>
 <h2 id="4-system-architecture">4. System architecture</h2>
 <div class="callout callout-problem">
@@ -355,11 +355,11 @@
 <h3>4.1 Input and output</h3>
 <div class="figure-row">
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Sanitized input drawing as received by the service.</figcaption>
 </figure>
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Structured result visualization: detected objects, regions, and recognized text drawn over the plan.</figcaption>
 </figure>
 </div>
@@ -556,7 +556,7 @@ HELD-OUT EVALUATION → CHECKPOINT SELECTION → VERSIONED MODEL ARTIFACT
 </pre>
 <p>Candidate augmentations include mild brightness variation, controlled noise, and small geometric changes. Validate each against drawing-specific text; aggressive transformations can change dimension meaning or erase punctuation.</p>
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Dimension and space text recognition examples: cropped regions with the recognized strings.</figcaption>
 </figure>
 
@@ -604,7 +604,7 @@ HELD-OUT EVALUATION → CHECKPOINT SELECTION → VERSIONED MODEL ARTIFACT
 </tr>
 </tbody>
 </table></div>
-<p>Before training, record the framework version, selected configuration, pretrained artifact provenance, input normalization, vocabulary, train/validation manifests, and evaluation protocol. This portfolio does not claim that a Paddle OCR training run or a particular Paddle architecture was verified in this repository.</p>
+<p>Before training, record the framework version, selected configuration, pretrained artifact provenance, input normalization, vocabulary, train/validation manifests, and evaluation protocol. This document does not claim that a Paddle OCR training run or a particular Paddle architecture was verified in this repository.</p>
 <h3>6.3 Evaluation plan</h3>
 <ul>
 <li>OCR: character error rate, word error rate, exact text match, and errors on punctuation or numeric dimensions.</li>
@@ -735,7 +735,7 @@ HELD-OUT EVALUATION → CHECKPOINT SELECTION → VERSIONED MODEL ARTIFACT
 </code></pre>
 <p>The deployment diagram shows control flow rather than invented rollout percentages. Performance graphs can be added when measured latency and service metrics are available.</p>
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Sanitized deployment screenshot: service status and recent journal output on the deployment host.</figcaption>
 </figure>
 
@@ -816,7 +816,7 @@ location = /ops/snapshot { deny all; }
 sudo systemctl reload nginx
 curl --fail https://api.example.invalid/health
 </code></pre>
-<p>The nginx fragment contains a deliberately nonnumeric port placeholder and must be completed before validation. Set upload limits, request timeouts, TLS, and monitoring access according to the deployment environment.</p>
+<p>The nginx fragment uses a deliberately nonnumeric port value and must be completed before validation. Set upload limits, request timeouts, TLS, and monitoring access according to the deployment environment.</p>
 <h2 id="9-monitoring-prometheus-grafana-and-custom-dashboards">9. Monitoring: Prometheus, Grafana, and custom dashboards</h2>
 <div class="callout callout-problem">
 <h4>Problems this section addresses</h4>
@@ -863,11 +863,11 @@ scrape_configs:
 <p>The example metrics gateway must authorize the collector; it is separate from the public nginx route denied above. Supply TLS trust and authentication privately.</p>
 <div class="figure-row">
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Grafana overview: the starter dashboard connected to the Prometheus data source.</figcaption>
 </figure>
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Custom monitoring dashboard built on the JSON snapshot endpoint.</figcaption>
 </figure>
 </div>
@@ -1098,7 +1098,7 @@ histogram_quantile(
 </tr>
 </tbody>
 </table></div>
-<h2 id="12-results-and-evidence-to-add">12. Results and evidence to add</h2>
+<h2 id="12-results-and-evidence">12. Results and evidence</h2>
 <div class="callout callout-result">
 <h4>What is demonstrated today</h4>
 <ul>
@@ -1109,63 +1109,51 @@ histogram_quantile(
 </ul>
 </div>
 
-<p>The repository demonstrates implemented components and operational templates. Quantitative outcomes should be added only after reproducible measurement.</p>
+<p>Quantitative outcomes are reported only on the basis of reproducible measurement, with the dataset, split policy, hardware category, and model version stated alongside them.</p>
 <div class="table-scroll"><table class="component-table">
 <thead>
 <tr>
-<th>Evidence item</th>
-<th>Value / link to fill</th>
+<th>Measure</th>
+<th>Reporting basis</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Approved evaluation dataset and split</td>
-<td><code>xxx</code></td>
+<td>Detection / classification</td>
+<td>Class-level precision and recall and localization quality on an approved held-out split</td>
 </tr>
 <tr>
-<td>Detection / classification evaluation</td>
-<td><code>xxx</code></td>
+<td>Segmentation</td>
+<td>Overlap quality and continuity of fine structures, with visual review on complex drawings</td>
 </tr>
 <tr>
-<td>Segmentation evaluation</td>
-<td><code>xxx</code></td>
+<td>OCR</td>
+<td>Character error rate, word error rate, and exact match, reported separately for dimensions, symbols, and space labels</td>
 </tr>
 <tr>
-<td>OCR character and exact-match results</td>
-<td><code>xxx</code></td>
+<td>Service</td>
+<td>Request success rate, end-to-end latency distribution, persistence and transfer outcomes</td>
 </tr>
 <tr>
-<td>End-to-end latency distribution</td>
-<td><code>xxx</code></td>
+<td>Operations</td>
+<td>Grafana integration and the custom monitoring dashboard, shown on sanitized screens</td>
 </tr>
 <tr>
-<td>Hardware category, without host identity</td>
-<td><code>xxx</code></td>
-</tr>
-<tr>
-<td>Grafana connection screenshot</td>
-<td><code>xxx</code></td>
-</tr>
-<tr>
-<td>Custom dashboard screenshot / implementation link</td>
-<td><code>xxx</code></td>
-</tr>
-<tr>
-<td>Deployment and recovery demonstration</td>
-<td><code>xxx</code></td>
+<td>Deployment</td>
+<td>Release, health check, and rollback demonstrated on the supervised service</td>
 </tr>
 </tbody>
 </table></div>
-<h2 id="13-images-videos-and-demonstrations">13. Images, videos, and demonstrations</h2>
-<p>The image placeholders throughout this page mark where approved, sanitized media will go: a project cover, an input drawing next to its structured result, OCR examples, a deployment screenshot, and the Grafana and custom dashboards. Short videos will follow for:</p>
+<h2 id="13-media-and-demonstrations">13. Media and demonstrations</h2>
+<p>All media on this page is sanitized before publication: visible credentials, terminals containing connection strings, browser address bars showing private infrastructure, customer drawing identifiers, and embedded metadata are removed.</p>
+<p>Demonstrations cover:</p>
 <ul>
 <li>end-to-end processing of one drawing,</li>
 <li>a deployment and recovery walkthrough,</li>
-<li>a monitoring demonstration.</li>
+<li>monitoring during normal operation and under failure.</li>
 </ul>
-<p>Before publishing media, remove visible credentials, terminals containing connection strings, browser address bars showing private infrastructure, customer drawing identifiers, and embedded sensitive metadata.</p>
 <h2 id="14-public-disclosure-boundary">14. Public disclosure boundary</h2>
-<p>This portfolio describes goals, engineering responsibilities, conceptual architecture, and independent educational code. Deployment identities, domains, addresses, ports, private configuration, training datasets, deployed weight details, and proprietary decision rules are intentionally absent. CRNN and Paddle OCR are discussed as permitted OCR technologies; other model capabilities are described generically.</p>
+<p>This page describes goals, engineering responsibilities, conceptual architecture, and independent educational code. Deployment identities, domains, addresses, ports, private configuration, training datasets, deployed weight details, and proprietary decision rules are intentionally absent. CRNN and Paddle OCR are discussed as permitted OCR technologies; other model capabilities are described generically.</p>
 </div>
 <!-- article:end -->
             </div>

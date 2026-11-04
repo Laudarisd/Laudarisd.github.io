@@ -1,8 +1,8 @@
-# AI CE Image Mode — Computer Vision & MLOps Portfolio
+# AI CE Image Mode — Computer Vision & MLOps
 
 > Turning architectural floor-plan images into structured, reviewable information through image analysis, OCR, and observable service operations.
 >
-> Public project overview. Infrastructure values are placeholders. Model workflows describe engineering responsibilities without exposing proprietary processing logic. Illustrative OCR dimensions do not disclose deployed model configurations.
+> Public project overview. Infrastructure values are illustrative. Model workflows describe engineering responsibilities without exposing proprietary processing logic. Illustrative OCR dimensions do not disclose deployed model configurations.
 
 <div class="fact-grid">
 <div class="fact"><span class="fact-label">Input</span><span class="fact-value">Floor-plan images</span></div>
@@ -14,8 +14,8 @@
 </div>
 
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
-<figcaption>Project cover: a sanitized floor-plan image next to its structured result.</figcaption>
+<div class="placeholder-box"><span>Image</span></div>
+<figcaption>A sanitized floor-plan image next to its structured result.</figcaption>
 </figure>
 
 ## 1. Project overview
@@ -48,7 +48,7 @@ AI CE Image Mode processes floor-plan images for object detection, classificatio
 </ul>
 </div>
 
-### 1.2 Portfolio project areas
+### 1.2 Project areas
 
 | Area | Engineering focus | Deliverable |
 |---|---|---|
@@ -121,7 +121,7 @@ AI-CE-Image-Mode/
 ├── .github/workflows/             # CI configuration
 ├── pyproject.toml
 ├── uv.lock
-└── portfolio.md
+└── README.md
 ```
 
 ## 4. System architecture
@@ -184,11 +184,11 @@ flowchart TD
 
 <div class="figure-row">
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Sanitized input drawing as received by the service.</figcaption>
 </figure>
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Structured result visualization: detected objects, regions, and recognized text drawn over the plan.</figcaption>
 </figure>
 </div>
@@ -351,7 +351,7 @@ flowchart TD
 Candidate augmentations include mild brightness variation, controlled noise, and small geometric changes. Validate each against drawing-specific text; aggressive transformations can change dimension meaning or erase punctuation.
 
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Dimension and space text recognition examples: cropped regions with the recognized strings.</figcaption>
 </figure>
 
@@ -370,7 +370,7 @@ A training plan for a selected Paddle OCR configuration follows this public arch
 | Decoder | Scores → text | Keep decoding consistent with training |
 | Evaluation | Text and references → recognition metrics | Report dimension, symbol, and space subsets separately |
 
-Before training, record the framework version, selected configuration, pretrained artifact provenance, input normalization, vocabulary, train/validation manifests, and evaluation protocol. This portfolio does not claim that a Paddle OCR training run or a particular Paddle architecture was verified in this repository.
+Before training, record the framework version, selected configuration, pretrained artifact provenance, input normalization, vocabulary, train/validation manifests, and evaluation protocol. This document does not claim that a Paddle OCR training run or a particular Paddle architecture was verified in this repository.
 
 ### 6.3 Evaluation plan
 
@@ -494,7 +494,7 @@ REVIEWED RELEASE → CI CHECKS → STAGED INSTALL → MODEL VERIFICATION
 The deployment diagram shows control flow rather than invented rollout percentages. Performance graphs can be added when measured latency and service metrics are available.
 
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Sanitized deployment screenshot: service status and recent journal output on the deployment host.</figcaption>
 </figure>
 
@@ -591,7 +591,7 @@ sudo systemctl reload nginx
 curl --fail https://api.example.invalid/health
 ```
 
-The nginx fragment contains a deliberately nonnumeric port placeholder and must be completed before validation. Set upload limits, request timeouts, TLS, and monitoring access according to the deployment environment.
+The nginx fragment uses a deliberately nonnumeric port value and must be completed before validation. Set upload limits, request timeouts, TLS, and monitoring access according to the deployment environment.
 
 ## 9. Monitoring: Prometheus, Grafana, and custom dashboards
 
@@ -645,11 +645,11 @@ The example metrics gateway must authorize the collector; it is separate from th
 
 <div class="figure-row">
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Grafana overview: the starter dashboard connected to the Prometheus data source.</figcaption>
 </figure>
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Custom monitoring dashboard built on the JSON snapshot endpoint.</figcaption>
 </figure>
 </div>
@@ -809,7 +809,7 @@ Operational artifacts
 | Monitoring integration | Prometheus plus JSON snapshots | Historical metrics and recent event detail serve different needs |
 | Continuous improvement | Artifact transfer followed by reviewed feedback | Predictions need validation before becoming training labels |
 
-## 12. Results and evidence to add
+## 12. Results and evidence
 
 <div class="callout callout-result">
 <h4>What is demonstrated today</h4>
@@ -821,30 +821,27 @@ Operational artifacts
 </ul>
 </div>
 
-The repository demonstrates implemented components and operational templates. Quantitative outcomes should be added only after reproducible measurement.
+Quantitative outcomes are reported only on the basis of reproducible measurement, with the dataset, split policy, hardware category, and model version stated alongside them.
 
-| Evidence item | Value / link to fill |
+| Measure | Reporting basis |
 |---|---|
-| Approved evaluation dataset and split | `xxx` |
-| Detection / classification evaluation | `xxx` |
-| Segmentation evaluation | `xxx` |
-| OCR character and exact-match results | `xxx` |
-| End-to-end latency distribution | `xxx` |
-| Hardware category, without host identity | `xxx` |
-| Grafana connection screenshot | `xxx` |
-| Custom dashboard screenshot / implementation link | `xxx` |
-| Deployment and recovery demonstration | `xxx` |
+| Detection / classification | Class-level precision and recall and localization quality on an approved held-out split |
+| Segmentation | Overlap quality and continuity of fine structures, with visual review on complex drawings |
+| OCR | Character error rate, word error rate, and exact match, reported separately for dimensions, symbols, and space labels |
+| Service | Request success rate, end-to-end latency distribution, persistence and transfer outcomes |
+| Operations | Grafana integration and the custom monitoring dashboard, shown on sanitized screens |
+| Deployment | Release, health check, and rollback demonstrated on the supervised service |
 
-## 13. Images, videos, and demonstrations
+## 13. Media and demonstrations
 
-The image placeholders throughout this page mark where approved, sanitized media will go: a project cover, an input drawing next to its structured result, OCR examples, a deployment screenshot, and the Grafana and custom dashboards. Short videos will follow for:
+All media on this page is sanitized before publication: visible credentials, terminals containing connection strings, browser address bars showing private infrastructure, customer drawing identifiers, and embedded metadata are removed.
+
+Demonstrations cover:
 
 - end-to-end processing of one drawing,
 - a deployment and recovery walkthrough,
-- a monitoring demonstration.
-
-Before publishing media, remove visible credentials, terminals containing connection strings, browser address bars showing private infrastructure, customer drawing identifiers, and embedded sensitive metadata.
+- monitoring during normal operation and under failure.
 
 ## 14. Public disclosure boundary
 
-This portfolio describes goals, engineering responsibilities, conceptual architecture, and independent educational code. Deployment identities, domains, addresses, ports, private configuration, training datasets, deployed weight details, and proprietary decision rules are intentionally absent. CRNN and Paddle OCR are discussed as permitted OCR technologies; other model capabilities are described generically.
+This page describes goals, engineering responsibilities, conceptual architecture, and independent educational code. Deployment identities, domains, addresses, ports, private configuration, training datasets, deployed weight details, and proprietary decision rules are intentionally absent. CRNN and Paddle OCR are discussed as permitted OCR technologies; other model capabilities are described generically.

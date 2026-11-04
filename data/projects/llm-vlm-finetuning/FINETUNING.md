@@ -1,6 +1,6 @@
 # Fine-Tuning a Vision-Language Model for Floor-Plan Understanding
 
-> Portfolio documentation for this repository. The project fine-tunes Qwen3.5-9B to answer questions about architectural floor-plan images. The current data includes room/object questions, counts and comparisons, junction detection, and polygon-style annotations. This is a visual understanding task; it does not generate new architectural plans.
+> The project fine-tunes Qwen3.5-9B to answer questions about architectural floor-plan images. The current data includes room/object questions, counts and comparisons, junction detection, and polygon-style annotations. This is a visual understanding task; it does not generate new architectural plans.
 
 <div class="fact-grid">
 <div class="fact"><span class="fact-label">Base model</span><span class="fact-value">Qwen3.5-9B (VLM)</span></div>
@@ -12,8 +12,8 @@
 </div>
 
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
-<figcaption>Project cover: a floor-plan image, a question, and the model's JSON answer side by side.</figcaption>
+<div class="placeholder-box"><span>Image</span></div>
+<figcaption>A floor-plan image, a question, and the model's JSON answer side by side.</figcaption>
 </figure>
 
 ## 1. Introduction
@@ -630,28 +630,26 @@ model = AutoModelForImageTextToText.from_pretrained(model_path, device_map="auto
 
 Use the project's inference script/notebook for the full image and chat-template flow. Evaluate on held-out floor plans and show sample predictions alongside aggregate measures.
 
-## 10. Portfolio images
-
-The slots below mark where the project images will go.
+## 10. Gallery
 
 <div class="figure-row">
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Dataset example: a floor-plan image with its question and expected JSON answer.</figcaption>
 </figure>
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Training and validation curves from TensorBoard.</figcaption>
 </figure>
 </div>
 
 <div class="figure-row">
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Input and prediction: a held-out floor plan, the question asked, and the model's answer.</figcaption>
 </figure>
 <figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image to be added</span></div>
+<div class="placeholder-box"><span>Image</span></div>
 <figcaption>Annotated output: predicted polygons drawn over the plan.</figcaption>
 </figure>
 </div>
