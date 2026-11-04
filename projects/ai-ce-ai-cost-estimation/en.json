@@ -1,0 +1,29 @@
+{
+  "title": "AI-CE: AI Cost Estimation",
+  "description": "AI cost estimation from CAD drawings: parsing, detection, and structured models.",
+  "image": "thumbnail.svg",
+  "image_alt": "AI cost estimation from CAD drawings",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd",
+  "subtitle": "AI CE Image Mode: turning architectural floor-plan images into structured, reviewable information through image analysis, OCR, and observable service operations. Computer vision, model serving, and MLOps in one system.",
+  "status": "completed",
+  "period": "Jan 2024 – Apr 2026",
+  "role": "Researcher and developer (end-to-end)",
+  "context": "Industry AI system",
+  "tags": [
+    "Computer Vision",
+    "PyTorch",
+    "OpenCV",
+    "CRNN / Paddle OCR",
+    "FastAPI",
+    "Redis",
+    "systemd / nginx",
+    "Prometheus / Grafana",
+    "MLOps"
+  ],
+  "links": [
+    {
+      "label": "Source code: private / proprietary"
+    }
+  ]
+}

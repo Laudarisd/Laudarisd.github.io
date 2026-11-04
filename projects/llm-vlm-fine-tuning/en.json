@@ -1,0 +1,28 @@
+{
+  "title": "LLM/VLM Fine-Tuning",
+  "description": "QLoRA fine-tuning of a 9B vision-language model to answer questions about floor-plan images in structured JSON.",
+  "image": "thumbnail.svg",
+  "image_alt": "LLM and VLM fine-tuning",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd/finetune-llm-vllm",
+  "subtitle": "Fine-tuning Qwen3.5-9B with QLoRA (Unsloth, TRL, PEFT) so it can read an architectural floor-plan image and answer questions about rooms, counts, junctions, and polygon annotations as structured JSON.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/Laudarisd/finetune-llm-vllm"
+    }
+  ],
+  "status": "in_development",
+  "role": "Researcher and developer (end-to-end)",
+  "context": "Industry R&D",
+  "tags": [
+    "Qwen3.5-9B",
+    "VLM",
+    "QLoRA / LoRA",
+    "Unsloth",
+    "TRL",
+    "PEFT",
+    "PyTorch",
+    "Floor-plan understanding"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "title": "Green Energy Anomaly Detection",
+  "description": "Random Forest demand forecasting up to 30 days ahead and an LSTM autoencoder that flags inverter anomalies with static and dynamic thresholds.",
+  "image": "thumbnail.svg",
+  "image_alt": "Green energy anomaly detection",
+  "image_class": "",
+  "url": "https://github.com/Laudarisd/Data-Science/tree/main/Project-4.Anomaly_Detection/1.LSTM_AutoEncoder",
+  "subtitle": "Energy time-series analytics in two parts: a Random Forest that forecasts daily electricity demand 1 to 30 days ahead (test MAPE 1.1–1.7 %), and a multivariate LSTM autoencoder that reconstructs solar inverter and weather signals and flags global and local anomalies with static and rolling thresholds, served through a Flask API.",
+  "links": [
+    {
+      "label": "GitHub · LSTM autoencoder",
+      "url": "https://github.com/Laudarisd/Data-Science/tree/main/Project-4.Anomaly_Detection/1.LSTM_AutoEncoder"
+    },
+    {
+      "label": "GitHub · demand forecasting",
+      "url": "https://github.com/Laudarisd/Data-Science/tree/main/Project-3.Energy_Data_Analysis"
+    }
+  ],
+  "tags": [
+    "Time-Series",
+    "Random Forest",
+    "LSTM Autoencoder",
+    "Anomaly Detection",
+    "pandas",
+    "scikit-learn",
+    "TensorFlow / Keras",
+    "Flask"
+  ]
+}

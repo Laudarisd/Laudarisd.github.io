@@ -1,9 +1,9 @@
 """
 Build step for long-form project pages.
 
-For every project folder that has a Markdown case study (any "*.md" is English,
-"*_kr.md" is Korean), this converts the Markdown to HTML and writes it directly into
-js/projects/<slug>.html between the two marker comments:
+For every project folder projects/<slug>/ that has a Markdown case study (any
+"*.md" is English, "*_kr.md" is Korean), this converts the Markdown to HTML and
+writes it directly into that folder's index.html between the two marker comments:
 
     <!-- article:start -->  ...generated HTML...  <!-- article:end -->
 
@@ -14,7 +14,7 @@ at view time. Re-run this script after editing a Markdown file:
     python tools/build_articles.py
 
 ```mermaid fences become <pre class="mermaid"> blocks, which js/project.js draws
-with mermaid in the browser. Images use paths relative to the project folder.
+with mermaid in the browser. Image paths are relative to the project folder.
 """
 import html
 import os
@@ -27,8 +27,7 @@ except ImportError:  # pragma: no cover
     sys.exit("The 'markdown' package is required: pip install markdown")
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECTS = os.path.join(ROOT, "data", "projects")
-PAGES = os.path.join(ROOT, "js", "projects")
+PROJECTS = os.path.join(ROOT, "projects")
 LABELS = {"en": "Contents", "kr": "목차"}
 
 
@@ -59,8 +58,8 @@ def convert(md_text, slug, lang):
         return '<pre class="mermaid">' + html.unescape(m.group(1)) + "</pre>"
     body = re.sub(r'<pre><code class="language-mermaid">(.*?)</code></pre>', mermaid, body, flags=re.S)
 
-    # Relative image paths point into the project folder (pages live two levels down).
-    body = re.sub(r'src="(?!https?:|/|data:)([^"]+)"', rf'src="../../data/projects/{slug}/\1" loading="lazy"', body)
+    # Images live in the project folder next to the page, so relative paths work as they are.
+    body = re.sub(r'src="(?!https?:|/|data:)([^"]+)"', r'src="\1" loading="lazy"', body)
 
     # Tables reuse the component-table style and scroll on narrow screens.
     body = body.replace("<table>", '<div class="table-scroll"><table class="component-table">').replace("</table>", "</table></div>")
@@ -80,7 +79,7 @@ def convert(md_text, slug, lang):
 
 
 def build(slug):
-    page_path = os.path.join(PAGES, slug + ".html")
+    page_path = os.path.join(PROJECTS, slug, "index.html")
     if not os.path.exists(page_path):
         print(f"skip {slug}: no page")
         return

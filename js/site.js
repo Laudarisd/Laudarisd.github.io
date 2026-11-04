@@ -4,9 +4,10 @@
   Every section of the page is rendered from a JSON file in /data:
     data/<section>/<lang>.json      e.g. data/hero/en.json, data/hero/kr.json
 
-  Projects are special: data/projects/index.json lists the groups and the
-  order of the project folders, and each folder data/projects/<slug>/ holds
-  en.json, kr.json, and the thumbnail image.
+  Projects are special: projects/index.json lists the groups and the order
+  of the project folders, and each folder projects/<slug>/ is self-contained:
+  index.html (the detail page), en.json, kr.json, the thumbnail, and any
+  case-study text and images.
 
   To add a paper, patent, project, skill, etc. edit the JSON file for both
   languages. The HTML structure and CSS never need to change.
@@ -99,19 +100,19 @@
     });
   }
 
-  // Load one section from data/<section>/<lang>.json; fall back to English if the translation is missing.
-  function loadSection(section, lang) {
-    var primary = DATA_DIR + section + "/" + lang + ".json";
+  // Load <folder>/<lang>.json; fall back to English if the translation is missing.
+  function loadSection(folder, lang) {
+    var primary = folder + "/" + lang + ".json";
     return fetchJSON(primary).catch(function (error) {
       if (lang === DEFAULT_LANG) throw error;
       console.warn("[portfolio] " + primary + " missing, falling back to " + DEFAULT_LANG);
-      return fetchJSON(DATA_DIR + section + "/" + DEFAULT_LANG + ".json");
+      return fetchJSON(folder + "/" + DEFAULT_LANG + ".json");
     });
   }
 
-  // Projects: read index.json for the groups, then every project folder listed in it.
+  // Projects: read projects/index.json for the groups, then every project folder listed in it.
   function loadProjects(lang) {
-    return fetchJSON(DATA_DIR + "projects/index.json").then(function (index) {
+    return fetchJSON("projects/index.json").then(function (index) {
       var slugs = [];
       (index.categories || []).forEach(function (category) {
         (category.items || []).forEach(function (slug) {
@@ -134,7 +135,7 @@
 
   function loadAll(lang) {
     var loaders = SECTIONS.map(function (section) {
-      return loadSection(section, lang);
+      return loadSection(DATA_DIR + section, lang);
     });
     loaders.push(loadProjects(lang));
     return Promise.all(loaders).then(function (results) {
@@ -333,12 +334,12 @@
   }
 
   // One project card: thumbnail, title, description, and two buttons.
-  // "More" opens js/projects/<slug>.html; "Code" opens the project's "url".
+  // "More" opens projects/<slug>/; "Code" opens the project's "url".
   function projectCard(slug, project, labels) {
-    var folder = DATA_DIR + "projects/" + slug + "/";
+    var folder = "projects/" + slug + "/";
     var imageClass = "project-image" + (project.image_class ? " " + project.image_class : "");
     var links = el("div", { class: "project-links" }, [
-      el("a", { class: "project-btn project-btn-more", href: "js/projects/" + slug + ".html", text: labels.more })
+      el("a", { class: "project-btn project-btn-more", href: folder, text: labels.more })
     ]);
     if (project.url) {
       links.appendChild(externalLink(project.url, labels.code_link, "project-btn project-btn-code"));

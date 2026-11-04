@@ -1,0 +1,779 @@
+/* Styles for the project detail pages (projects/<slug>/index.html): hero, panels, architecture flow,
+   case-study article, callouts, figures, and code blocks. Loaded together with style.css. */
+
+/* Detail pages hold long case studies, so they use the wider header width (1320px) instead of 1120px.
+   Change --nav-container at the top of this file to make them wider or narrower. */
+main[data-project] .container {
+  width: min(calc(100% - 2rem), var(--nav-container));
+}
+
+.project-detail-hero {
+  padding: 2.4rem 0 1.5rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.25rem;
+  color: var(--link-accent);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.project-detail-hero h1 {
+  margin-bottom: 0.6rem;
+  font-family: "Spectral", "Noto Sans KR", serif;
+  font-size: clamp(1.9rem, 3.5vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.project-detail-hero .hero-text {
+  max-width: none; /* the summary line spans the full width instead of a 62-character column */
+  margin-bottom: 1rem;
+}
+
+.project-detail-hero .project-meta {
+  margin-bottom: 1rem;
+  font-size: 0.88rem;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.detail-panel-wide {
+  grid-column: 1 / -1;
+}
+
+.detail-panel[hidden] {
+  display: none;
+}
+
+.detail-panel h2 {
+  margin-bottom: 0.9rem;
+  color: var(--accent);
+  font-family: "Spectral", "Noto Sans KR", serif;
+  font-size: 1.25rem;
+}
+
+.detail-panel h4 {
+  margin-top: 1rem;
+  margin-bottom: 0.45rem;
+  font-size: 0.95rem;
+}
+
+.detail-panel h4:first-child {
+  margin-top: 0;
+}
+
+.detail-panel .record-list li + li {
+  margin-top: 0.5rem;
+}
+
+/* Architecture flow: labelled boxes joined by arrows; stacks vertically on narrow screens. */
+.arch-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.arch-step {
+  flex: 1 1 150px;
+  min-width: 0;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--card-tint);
+}
+
+.arch-step strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--accent);
+  font-size: 0.92rem;
+}
+
+.arch-step span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.arch-arrow {
+  color: var(--accent);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.arch-note {
+  margin-top: 0.9rem;
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.stack-groups {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.stack-groups .skill-chip-list {
+  margin-top: 0.35rem;
+}
+
+.detail-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+@media (max-width: 920px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .arch-flow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .arch-step {
+    flex-basis: auto;
+  }
+
+  .arch-arrow {
+    transform: rotate(90deg);
+    text-align: center;
+  }
+}
+
+html[lang="ko"] .project-status {
+  letter-spacing: 0.02em;
+}
+
+/* Detail page extras: numbered process steps, component table, and figure gallery. */
+.arch-flow + h4 {
+  margin-top: 1.1rem;
+}
+
+.process-list {
+  margin: 0;
+  padding-left: 1.6rem;
+  list-style: decimal;
+  counter-reset: none;
+}
+
+.process-list > li {
+  display: list-item;
+  padding-left: 0.3rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.process-list > li + li {
+  margin-top: 0.9rem;
+}
+
+.process-list h4 {
+  margin: 0 0 0.3rem;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.process-list .record-list li {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.component-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.component-table th,
+.component-table td {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.component-table th {
+  color: var(--accent);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.component-table td {
+  color: var(--muted);
+}
+
+.component-table td:first-child {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.figure-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.figure-card {
+  margin: 0;
+  padding: 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--card-tint);
+}
+
+.figure-card img {
+  width: 100%;
+  border-radius: calc(var(--radius-sm) - 4px);
+  background: #fffdf9;
+}
+
+.figure-card figcaption {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 720px) {
+  .figure-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Long-form article (Markdown rendered inside a detail page) and its table of contents. */
+.article-toc-wrap {
+  margin-bottom: 1.5rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--card-tint);
+}
+
+.article-toc-wrap h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.article-toc {
+  margin: 0;
+  padding-left: 1.2rem;
+  columns: 3;
+  column-gap: 1.5rem;
+  list-style: none;
+  font-size: 0.9rem;
+}
+
+.article-toc li {
+  display: list-item;
+  margin-bottom: 0.25rem;
+  break-inside: avoid;
+}
+
+.article-toc a {
+  color: var(--link-accent);
+  text-decoration: none;
+}
+
+/* The contents list sits inside the article, so undo the article's own list styling. */
+.project-article .article-toc {
+  padding-left: 0;
+  list-style: none;
+}
+
+.project-article .article-toc li {
+  margin-bottom: 0.25rem;
+}
+
+.project-article[hidden] {
+  display: none;
+}
+
+.project-article {
+  max-width: none;
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+.project-article h1 {
+  margin-bottom: 0.75rem;
+  font-family: "Spectral", "Noto Sans KR", serif;
+  font-size: 1.7rem;
+  line-height: 1.2;
+}
+
+.project-article h2 {
+  margin: 2.2rem 0 0.8rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--accent);
+  font-family: "Spectral", "Noto Sans KR", serif;
+  font-size: 1.35rem;
+}
+
+.project-article h3 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.project-article h4 {
+  margin: 1.2rem 0 0.4rem;
+  font-size: 0.95rem;
+}
+
+.project-article p,
+.project-article li {
+  color: var(--text);
+}
+
+.project-article ul,
+.project-article ol {
+  margin: 0 0 1rem;
+  padding-left: 1.4rem;
+}
+
+.project-article ul {
+  list-style: disc;
+}
+
+.project-article ol {
+  list-style: decimal;
+}
+
+.project-article li {
+  display: list-item;
+  margin-bottom: 0.35rem;
+}
+
+.project-article blockquote {
+  margin: 1rem 0;
+  padding: 0.6rem 1rem;
+  border-left: 4px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--card-tint);
+  color: var(--muted);
+}
+
+.project-article blockquote p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.project-article code {
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  font-family: Consolas, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.86em;
+}
+
+/* Fenced blocks are used for tree diagrams: keep them monospace and scrollable. */
+.project-article pre {
+  margin: 1rem 0 1.25rem;
+  padding: 0.9rem 1.1rem;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--card-tint);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.project-article pre code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+}
+
+/* Mermaid diagrams render as inline SVG inside this block. */
+.project-article pre.mermaid {
+  display: flex;
+  justify-content: center;
+  background: var(--surface);
+}
+
+.project-article pre.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.project-article .table-scroll {
+  margin: 1rem 0 1.25rem;
+}
+
+.project-article table {
+  font-size: 0.88rem;
+}
+
+.project-article img {
+  margin: 1rem 0 0.4rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+}
+
+/* A line in italics right after an image is treated as its caption. */
+.project-article img + em {
+  display: block;
+  margin-bottom: 1.25rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.project-article hr {
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+/* A rule immediately before a section heading would double the heading's own line. */
+.project-article hr + h2 {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.project-article a {
+  color: var(--link-accent);
+  text-decoration: underline;
+}
+
+@media (max-width: 920px) {
+  .article-toc {
+    columns: 2;
+  }
+}
+
+@media (max-width: 720px) {
+  .article-toc {
+    columns: 1;
+  }
+}
+
+/* Case-study typography: numbered section bands, dashed subsection rules, and a larger lead paragraph. */
+.project-article h2 {
+  margin: 2.6rem 0 1rem;
+  padding: 0.55rem 1rem;
+  border-top: 0;
+  border-left: 5px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 9%, transparent), transparent 70%);
+  font-size: 1.5rem;
+}
+
+.project-article hr + h2 {
+  margin-top: 0.5rem;
+  padding-top: 0.55rem;
+  border-top: 0;
+}
+
+.project-article h3 {
+  margin: 1.9rem 0 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px dashed var(--line);
+  color: var(--accent-strong);
+  font-size: 1.12rem;
+}
+
+.project-article h2 + p {
+  font-size: 1.04rem;
+}
+
+/* Callout boxes: problems (red bar), goals (green), results (amber), notes (accent). */
+.callout {
+  margin: 1.2rem 0 1.5rem;
+  padding: 0.9rem 1.1rem 0.9rem 1.2rem;
+  border: 1px solid var(--line);
+  border-left-width: 5px;
+  border-radius: var(--radius-sm);
+  background: var(--card-tint);
+}
+
+.callout h4 {
+  margin: 0 0 0.55rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.callout p {
+  margin: 0 0 0.5rem;
+}
+
+.callout ul,
+.callout ol {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.callout li {
+  margin-bottom: 0.35rem;
+}
+
+.callout li:last-child {
+  margin-bottom: 0;
+}
+
+.callout-problem { border-left-color: #c0392b; }
+.callout-problem h4 { color: #c0392b; }
+.callout-goal { border-left-color: #2e7d32; }
+.callout-goal h4 { color: #2e7d32; }
+.callout-result { border-left-color: #b8761f; }
+.callout-result h4 { color: #b8761f; }
+.callout-note { border-left-color: var(--accent); }
+.callout-note h4 { color: var(--accent); }
+
+/* Key-facts strip: small labelled cards in a responsive row. */
+.fact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.8rem;
+  margin: 1.2rem 0 1.6rem;
+}
+
+.fact {
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.fact-label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fact-value {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+/* Image placeholders: a dashed frame with a caption, to be swapped for a real screenshot later. */
+.figure-placeholder {
+  margin: 1.2rem 0 1.5rem;
+}
+
+.placeholder-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 7;
+  max-height: 380px;
+  margin: 0 auto;
+  border: 2px dashed var(--chip-border);
+  border-radius: var(--radius-sm);
+  background:
+    repeating-linear-gradient(135deg, transparent 0 14px, color-mix(in srgb, var(--accent) 5%, transparent) 14px 28px),
+    var(--surface);
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.figure-placeholder figcaption,
+.project-article figure figcaption {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.project-article figure {
+  margin: 1.2rem 0 1.5rem;
+}
+
+.figure-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.figure-row .figure-placeholder,
+.figure-row figure {
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .figure-row {
+    grid-template-columns: 1fr;
+  }
+
+  .project-article h2 {
+    font-size: 1.3rem;
+  }
+}
+
+/* Code blocks in case studies: a card with a language label, a copy button, and VS Code-style colours.
+   Light themes use the "Light+" palette, the dark theme uses "Dark+"; backgrounds follow the site theme. */
+:root {
+  --code-bg: #f6f3ec;
+  --code-head: #ece7dc;
+  --code-text: #1f2933;
+  --code-comment: #008000;
+  --code-keyword: #0000ff;
+  --code-control: #af00db;
+  --code-string: #a31515;
+  --code-number: #098658;
+  --code-function: #795e26;
+  --code-variable: #001080;
+  --code-type: #267f99;
+  --code-attr: #e50000;
+  --code-meta: #0451a5;
+}
+
+html[data-theme="pure-vintage"] {
+  --code-bg: #f5ecd8;
+  --code-head: #e9dcc0;
+}
+
+html[data-theme="simple"] {
+  --code-bg: #f6f8fa;
+  --code-head: #eaeef2;
+}
+
+html[data-theme="dark"] {
+  --code-bg: #1e1e1e;
+  --code-head: #252526;
+  --code-text: #d4d4d4;
+  --code-comment: #6a9955;
+  --code-keyword: #569cd6;
+  --code-control: #c586c0;
+  --code-string: #ce9178;
+  --code-number: #b5cea8;
+  --code-function: #dcdcaa;
+  --code-variable: #9cdcfe;
+  --code-type: #4ec9b0;
+  --code-attr: #9cdcfe;
+  --code-meta: #569cd6;
+}
+
+.code-block {
+  margin: 1rem 0 1.4rem;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--code-bg);
+}
+
+.code-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0.5rem 0.35rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--code-head);
+}
+
+.code-lang {
+  color: var(--muted);
+  font-family: Consolas, "SFMono-Regular", Menlo, monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.code-copy {
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.code-copy:hover,
+.code-copy:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: none;
+}
+
+.project-article .code-block pre {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--code-bg);
+  color: var(--code-text);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.project-article .code-block pre code {
+  display: block;
+  color: var(--code-text);
+}
+
+/* highlight.js token classes mapped to the theme variables above. */
+.hljs-comment,
+.hljs-quote { color: var(--code-comment); font-style: italic; }
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-doctag { color: var(--code-keyword); }
+.hljs-built_in,
+.hljs-type,
+.hljs-class .hljs-title,
+.hljs-title.class_ { color: var(--code-type); }
+.hljs-string,
+.hljs-regexp,
+.hljs-addition { color: var(--code-string); }
+.hljs-number,
+.hljs-symbol,
+.hljs-bullet { color: var(--code-number); }
+.hljs-title,
+.hljs-title.function_,
+.hljs-section { color: var(--code-function); }
+.hljs-variable,
+.hljs-template-variable,
+.hljs-params,
+.hljs-property { color: var(--code-variable); }
+.hljs-attr,
+.hljs-attribute,
+.hljs-name,
+.hljs-selector-attr { color: var(--code-attr); }
+.hljs-meta,
+.hljs-meta .hljs-keyword,
+.hljs-tag { color: var(--code-meta); }
+.hljs-deletion { color: var(--code-attr); }
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: 700; }
+/* Shell prompts and flow-control words stand out like in VS Code. */
+.language-bash .hljs-built_in { color: var(--code-function); }
+.language-python .hljs-keyword { color: var(--code-control); }
+.language-python .hljs-keyword.hljs-built_in,
+.language-python .hljs-literal { color: var(--code-keyword); }

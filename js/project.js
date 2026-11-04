@@ -1,16 +1,17 @@
 /*
-  Renderer for the project detail pages in js/projects/*.html.
+  Renderer for the project detail pages, projects/<slug>/index.html.
 
-  Each page is an empty shell with data-project="<slug>" on <main>.
-  Content comes from its own folder, data/projects/<slug>/<lang>.json, plus
-  shared labels from data/ui/<lang>.json, so the EN / 한국어 switch works
-  exactly like on the main page.
+  Each page is a shell whose content comes from en.json / kr.json in the same
+  folder, plus shared labels from data/ui/<lang>.json, so the EN / 한국어 switch
+  works exactly like on the main page. A long case study (built from the
+  folder's Markdown by tools/build_articles.py) is embedded in the page itself.
 */
 (function () {
   "use strict";
 
-  var ROOT = "../../"; // pages live in js/projects/, so site assets are two levels up
+  var ROOT = "../../"; // pages live in projects/<slug>/, so site assets are two levels up
   var DATA_DIR = ROOT + "data/";
+  var PROJECT_DIR = "."; // this project's own folder
 
   // Long-form case studies are embedded in the page itself (built from PORTFOLIO*.md by
   // tools/build_articles.py). Mermaid, loaded on demand, draws their ```mermaid diagrams.
@@ -31,8 +32,7 @@
   var root = document.documentElement;
   var main = document.querySelector("main[data-project]");
   var slug = main ? main.getAttribute("data-project") : "";
-  var PROJECT_FILE = "projects/" + slug; // -> data/projects/<slug>/<lang>.json
-  var SECTIONS = ["ui", "contact", PROJECT_FILE];
+  var SECTIONS = [DATA_DIR + "ui", DATA_DIR + "contact", PROJECT_DIR];
   var langToggles = document.querySelectorAll(".lang-toggle");
   var themeToggles = document.querySelectorAll(".theme-toggle");
   var currentLang = null;
@@ -109,13 +109,13 @@
     });
   }
 
-  // Load one section from data/<section>/<lang>.json; fall back to English if the translation is missing.
-  function loadSection(section, lang) {
-    var primary = DATA_DIR + section + "/" + lang + ".json";
+  // Load <folder>/<lang>.json; fall back to English if the translation is missing.
+  function loadSection(folder, lang) {
+    var primary = folder + "/" + lang + ".json";
     return fetchJSON(primary).catch(function (error) {
       if (lang === DEFAULT_LANG) throw error;
       console.warn("[portfolio] " + primary + " missing, falling back to " + DEFAULT_LANG);
-      return fetchJSON(DATA_DIR + section + "/" + DEFAULT_LANG + ".json");
+      return fetchJSON(folder + "/" + DEFAULT_LANG + ".json");
     });
   }
 
@@ -349,7 +349,7 @@
     figures.forEach(function (figure) {
       grid.appendChild(
         el("figure", { class: "figure-card" }, [
-          el("img", { src: DATA_DIR + PROJECT_FILE + "/" + figure.file, alt: figure.alt || figure.caption || "" }),
+          el("img", { src: figure.file, alt: figure.alt || figure.caption || "" }),
           figure.caption ? el("figcaption", { text: figure.caption }) : null
         ])
       );
@@ -412,9 +412,6 @@
     renderArticle(currentLang);
     fillPanel("panel-overview", [project.overview ? el("p", { text: project.overview }) : null]);
     fillPanel("panel-problem", [project.problem && project.problem.length ? bulletList(project.problem) : null]);
-    fillPanel("panel-contributions", [
-      project.contributions && project.contributions.length ? bulletList(project.contributions) : null
-    ]);
     fillPanel(
       "panel-architecture",
       architectureFlows(project.architecture).concat([
@@ -470,10 +467,10 @@
   }
 
   function renderAll(data) {
-    var ui = data.ui || {};
+    var ui = data[DATA_DIR + "ui"] || {};
     renderUI(ui);
-    renderProject(data[PROJECT_FILE], ui);
-    renderContact(data.contact);
+    renderProject(data[PROJECT_DIR], ui);
+    renderContact(data[DATA_DIR + "contact"]);
   }
 
   /* ---------- language handling (same behaviour as site.js) ---------- */
