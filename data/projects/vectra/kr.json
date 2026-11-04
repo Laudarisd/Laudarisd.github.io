@@ -1,11 +1,11 @@
 {
   "title": "Vectra",
-  "description": "로컬·클라우드 모델을 지원하는 프라이버시 중심 VS Code AI 코딩 Agent예요.",
+  "description": "내 PC에서 돌아가는 안전한 로컬 AI Agent 시스템이에요. 내 모델을 완전히 오프라인으로 쓰거나, 원할 때만 API를 연결해요.",
   "image": "thumbnail.png",
   "image_alt": "Vectra 로고",
   "image_class": "project-image-logo",
   "url": "https://github.com/Laudarisd/vectra",
-  "subtitle": "VS Code와 웹을 위한 프라이버시 우선, 모델 독립적인 AI Agent 플랫폼이에요. 로컬 GGUF·Ollama 모델이나 클라우드 Provider를 하나의 인터페이스로 쓰고, 타입이 정의된 검색 가능한 Tool, 위험 범위가 제한된 Subagent, 모든 변경에 대한 사람의 승인을 갖췄어요.",
+  "subtitle": "내 PC에서 VS Code와 브라우저 안에서 동작하는 안전한 AI Agent 시스템이에요. 모델은 직접 고를 수 있어요. 로컬 GGUF·Ollama 모델은 모든 파일과 프롬프트를 내 컴퓨터 안에 두고, API Provider(OpenAI, Anthropic, Gemini)는 데이터가 그 서비스로 전송된다는 점을 감안해 선택적으로 연결해요. 어느 쪽이든 Agent는 타입이 정의된 검색 가능한 Tool로만 일하고, 모든 변경은 사용자의 승인을 거쳐요.",
   "links": [
     {
       "label": "VS Code Marketplace",

@@ -1,6 +1,8 @@
 # VECTRA — Local AI Agent Orchestra
 
-### A privacy-first, model-agnostic AI workspace for VS Code and the web
+### A secure local AI agent system for your own PC, in VS Code and the browser
+
+You choose the model: a local model keeps every file and prompt on your machine, or an API provider when you accept that your data is sent to their service.
 
 **Local models · Cloud providers · Tool orchestration · Multi-agent workflows · Human approval**
 
