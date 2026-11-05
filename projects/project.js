@@ -1,19 +1,15 @@
-/*
-  Renderer for the project detail pages, projects/<slug>/index.html.
-
-  Each page is a shell whose content comes from en.json / kr.json in the same
-  folder, plus shared labels from ui/<lang>.json and the footer from contact/,
-  so the EN / 한국어 switch works exactly like on the main page. A long case study (built from the
-  folder's Markdown by tools/build_articles.py) is embedded in the page itself.
-*/
+/* Project detail page renderer (projects/<slug>/index.html).
+   The page's content comes from <slug>.js in the same folder (Portfolio.project), labels from ui/ui.js,
+   and the footer from contact/. A long case study (built from the folder's Markdown by
+   projects/build_articles.py) is embedded in the page itself; this file draws its diagrams
+   and highlights its code blocks. */
 (function () {
   "use strict";
-
-  var ROOT = "../../"; // pages live in projects/<slug>/, so site folders are two levels up
-  var PROJECT_DIR = "."; // this project's own folder
+  var el = Portfolio.el, externalLink = Portfolio.externalLink, clear = Portfolio.clear;
+  var byId = Portfolio.byId, setText = Portfolio.setText;
 
   // Long-form case studies are embedded in the page itself (built from PORTFOLIO*.md by
-  // tools/build_articles.py). Mermaid, loaded on demand, draws their ```mermaid diagrams.
+  // projects/build_articles.py). Mermaid, loaded on demand, draws their ```mermaid diagrams.
   var MERMAID_URL = "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js";
   var mermaidLoaded = null;
 
@@ -24,71 +20,6 @@
   // Fence names used in the Markdown that highlight.js knows under another name.
   var LANG_ALIAS = { html: "xml", dotenv: "ini", env: "ini", text: "plaintext", txt: "plaintext", promql: "plaintext", console: "bash", sh: "bash", shell: "bash" };
 
-  var LANGS = { en: "en", kr: "ko" };
-  var DEFAULT_LANG = "en";
-  var STORAGE_KEY = "portfolio-lang"; // same key as site.js so the choice carries over
-
-  var root = document.documentElement;
-  var main = document.querySelector("main[data-project]");
-  var slug = main ? main.getAttribute("data-project") : "";
-  var SECTIONS = [ROOT + "ui", ROOT + "contact", PROJECT_DIR];
-  var langToggles = document.querySelectorAll(".lang-toggle");
-  var themeToggles = document.querySelectorAll(".theme-toggle");
-  var currentLang = null;
-
-  /* ---------- small DOM helpers (same as site.js) ---------- */
-
-  function el(tag, attrs, children) {
-    var node = document.createElement(tag);
-    if (attrs) {
-      Object.keys(attrs).forEach(function (key) {
-        var value = attrs[key];
-        if (value === null || value === undefined || value === "") return;
-        if (key === "text") {
-          node.textContent = value;
-        } else if (key === "class") {
-          node.className = value;
-        } else {
-          node.setAttribute(key, value);
-        }
-      });
-    }
-    if (children) {
-      children.forEach(function (child) {
-        if (child === null || child === undefined) return;
-        node.appendChild(
-          typeof child === "string" ? document.createTextNode(child) : child
-        );
-      });
-    }
-    return node;
-  }
-
-  function externalLink(href, label, className) {
-    var attrs = { href: href, target: "_blank", rel: "noopener noreferrer" };
-    if (className) attrs.class = className;
-    attrs.text = label;
-    return el("a", attrs);
-  }
-
-  function clear(node) {
-    while (node && node.firstChild) node.removeChild(node.firstChild);
-  }
-
-  function byId(id) {
-    return document.getElementById(id);
-  }
-
-  function setText(id, value) {
-    var node = byId(id);
-    if (node && value !== undefined) node.textContent = value;
-  }
-
-  function getPath(obj, path) {
-    return path.split(".").reduce(function (acc, key) {
-      return acc && acc[key] !== undefined ? acc[key] : undefined;
-    }, obj);
-  }
 
   // Bulleted list that reuses the record-list style from the main page.
   function bulletList(items) {
@@ -99,38 +30,6 @@
     return list;
   }
 
-  /* ---------- data loading ---------- */
-
-  function fetchJSON(url) {
-    return fetch(url, { cache: "no-cache" }).then(function (response) {
-      if (!response.ok) throw new Error(url + " -> " + response.status);
-      return response.json();
-    });
-  }
-
-  // Load <folder>/<lang>.json; fall back to English if the translation is missing.
-  function loadSection(folder, lang) {
-    var primary = folder + "/" + lang + ".json";
-    return fetchJSON(primary).catch(function (error) {
-      if (lang === DEFAULT_LANG) throw error;
-      console.warn("[portfolio] " + primary + " missing, falling back to " + DEFAULT_LANG);
-      return fetchJSON(folder + "/" + DEFAULT_LANG + ".json");
-    });
-  }
-
-  function loadAll(lang) {
-    return Promise.all(
-      SECTIONS.map(function (section) {
-        return loadSection(section, lang);
-      })
-    ).then(function (results) {
-      var data = {};
-      SECTIONS.forEach(function (section, index) {
-        data[section] = results[index];
-      });
-      return data;
-    });
-  }
 
   function loadMermaid() {
     if (!mermaidLoaded) {
@@ -156,7 +55,7 @@
     // Wait for web fonts so mermaid measures labels with the final font (otherwise boxes clip text).
     var fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
     return Promise.all([loadMermaid(), fontsReady]).then(function () {
-      var css = getComputedStyle(root);
+      var css = getComputedStyle(document.documentElement);
       var pick = function (name, fallback) { return css.getPropertyValue(name).trim() || fallback; };
       window.mermaid.initialize({
         startOnLoad: false,
@@ -241,38 +140,13 @@
       if (match) shown = article;
     });
     if (!shown) { // no translation: fall back to English
-      shown = panel.querySelector('.project-article[data-lang="' + DEFAULT_LANG + '"]') || articles[0];
+      shown = panel.querySelector('.project-article[data-lang="en"]') || articles[0];
       shown.hidden = false;
     }
     renderMermaid(shown).catch(function (error) { console.error("[portfolio] mermaid", error); });
     renderCode(shown);
   }
 
-  /* ---------- renderers ---------- */
-
-  function renderUI(ui) {
-    if (!ui) return;
-    setText("brand", ui.brand);
-
-    // Any element with data-ui="dotted.path" gets its text from ui json.
-    document.querySelectorAll("[data-ui]").forEach(function (node) {
-      var value = getPath(ui, node.getAttribute("data-ui"));
-      if (value !== undefined) node.textContent = value;
-    });
-
-    // Theme switcher tooltips / accessible labels.
-    if (ui.themes) {
-      themeToggles.forEach(function (toggle) {
-        var key = toggle.getAttribute("data-theme-target");
-        var name = ui.themes[key];
-        if (!name) return;
-        var aria = (ui.themes.switch_to || "Switch to {name} theme").replace("{name}", name);
-        toggle.setAttribute("data-theme-label", name);
-        toggle.setAttribute("aria-label", aria);
-        toggle.setAttribute("title", name);
-      });
-    }
-  }
 
   // Fill a panel body; hide the whole panel when there is nothing to show.
   function fillPanel(id, children) {
@@ -341,7 +215,7 @@
     return el("div", { class: "table-scroll" }, [el("table", { class: "component-table" }, [el("thead", null, [head]), body])]);
   }
 
-  // Figures live next to the project JSON: data/projects/<slug>/<file>.
+  // Figures live in the project folder next to the page.
   function figureGrid(figures) {
     if (!figures || !figures.length) return null;
     var grid = el("div", { class: "figure-grid" });
@@ -408,7 +282,6 @@
       });
     }
 
-    renderArticle(currentLang);
     fillPanel("panel-overview", [project.overview ? el("p", { text: project.overview }) : null]);
     fillPanel("panel-problem", [project.problem && project.problem.length ? bulletList(project.problem) : null]);
     fillPanel(
@@ -451,98 +324,19 @@
     fillPanel("panel-links", [linkChildren]);
   }
 
-  function renderContact(contact) {
-    if (!contact) return;
-    setText("contact-heading", contact.heading);
-    var links = byId("contact-links");
-    if (!links) return;
-    clear(links);
-    (contact.links || []).forEach(function (link) {
-      var isMail = /^mailto:/i.test(link.url || "");
-      links.appendChild(
-        isMail ? el("a", { href: link.url, text: link.label }) : externalLink(link.url, link.label)
-      );
-    });
+
+  // The slug is on <main data-project="...">; its content was registered by <slug>.js.
+  function currentContent(lang) {
+    var main = document.querySelector("main[data-project]");
+    var content = main ? Portfolio.projects[main.getAttribute("data-project")] : null;
+    return Promise.resolve(content ? content[lang] || content.en : null);
   }
 
-  function renderAll(data) {
-    var ui = data[ROOT + "ui"] || {};
-    renderUI(ui);
-    renderProject(data[PROJECT_DIR], ui);
-    renderContact(data[ROOT + "contact"]);
-  }
-
-  /* ---------- language handling (same behaviour as site.js) ---------- */
-
-  function normaliseLang(value) {
-    if (!value) return null;
-    value = String(value).toLowerCase();
-    if (value === "ko" || value === "kr" || value.indexOf("ko-") === 0) return "kr";
-    if (value === "en" || value.indexOf("en-") === 0) return "en";
-    return LANGS[value] ? value : null;
-  }
-
-  function initialLang() {
-    var fromUrl = normaliseLang(new URLSearchParams(window.location.search).get("lang"));
-    if (fromUrl) return fromUrl;
-    try {
-      var stored = normaliseLang(localStorage.getItem(STORAGE_KEY));
-      if (stored) return stored;
-    } catch (e) { /* storage unavailable */ }
-    var browser = normaliseLang(navigator.language || "");
-    return browser || DEFAULT_LANG;
-  }
-
-  function markActiveLang(lang) {
-    langToggles.forEach(function (toggle) {
-      var isActive = toggle.getAttribute("data-lang") === lang;
-      toggle.classList.toggle("is-active", isActive);
-      toggle.setAttribute("aria-pressed", isActive ? "true" : "false");
-    });
-  }
-
-  function showLoadError(lang, error) {
-    console.error("[portfolio] failed to load content", error);
-    var target = byId("detail-subtitle");
-    if (!target) return;
-    target.textContent =
-      lang === "kr"
-        ? "콘텐츠를 불러오지 못했어요. HTTP 서버(예: python3 -m http.server)로 사이트를 실행한 뒤 새로 고침해 주세요."
-        : "Content could not be loaded. Please serve this site over HTTP (for example: python3 -m http.server) and reload.";
-  }
-
-  function applyLang(lang, updateUrl) {
-    lang = LANGS[lang] ? lang : DEFAULT_LANG;
-    currentLang = lang;
-    root.setAttribute("lang", LANGS[lang]);
-    root.setAttribute("data-lang", lang);
-    markActiveLang(lang);
-
-    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* ignore */ }
-
-    if (updateUrl && window.history && window.history.replaceState) {
-      var url = new URL(window.location.href);
-      url.searchParams.set("lang", lang);
-      window.history.replaceState(null, "", url.toString());
+  Portfolio.register("project", {
+    load: currentContent,
+    render: function (project, ctx) {
+      renderProject(project, ctx.ui);
+      renderArticle(ctx.lang);
     }
-
-    return loadAll(lang)
-      .then(function (data) {
-        if (currentLang !== lang) return; // a newer switch won
-        renderAll(data);
-        root.classList.add("content-ready");
-      })
-      .catch(function (error) {
-        showLoadError(lang, error);
-      });
-  }
-
-  langToggles.forEach(function (toggle) {
-    toggle.addEventListener("click", function () {
-      var lang = toggle.getAttribute("data-lang");
-      if (lang !== currentLang) applyLang(lang, true);
-    });
   });
-
-  applyLang(initialLang(), false);
 })();

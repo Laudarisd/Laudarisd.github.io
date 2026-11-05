@@ -1,11 +1,56 @@
-/* Projects: card grid from projects/index.json and each projects/<slug>/<lang>.json. */
+/* Projects: the card grid on the main page.
+   Everything this section needs is in this folder: projects.html (markup), projects.js (content + renderer), projects.css (card styles).
+   GROUPS lists the groups and the order of project folders; each project keeps its own content in projects/<slug>/<slug>.js. */
 (function () {
   "use strict";
   var el = Portfolio.el, externalLink = Portfolio.externalLink, clear = Portfolio.clear;
   var byId = Portfolio.byId, setText = Portfolio.setText;
 
-  // One project card: thumbnail, title, description, and two buttons.
-  // "More" opens projects/<slug>/; "Code" opens the project's "url".
+  var GROUPS = {
+    "more_url": "https://github.com/Laudarisd",
+    "categories": [
+      {
+        "name": {
+          "en": "Main Projects",
+          "kr": "주요 프로젝트"
+        },
+        "items": [
+          "cad-parser-agent-system",
+          "vectra",
+          "ai-ce-ai-cost-estimation",
+          "llm-vlm-fine-tuning",
+          "green-energy-anomaly-detection"
+        ]
+      },
+      {
+        "name": {
+          "en": "Secondary Projects",
+          "kr": "보조 프로젝트"
+        },
+        "items": [
+          "agent-collection",
+          "computer-vision-ml",
+          "ocr",
+          "digital-twin",
+          "smart-retail-ai"
+        ]
+      },
+      {
+        "name": {
+          "en": "Research",
+          "kr": "연구"
+        },
+        "items": [
+          "dmp",
+          "research",
+          "knee-abnormality-detection",
+          "geohazard-penetration-prediction",
+          "pdf-to-cad-text-processing"
+        ]
+      }
+    ]
+  };
+
   function projectCard(slug, project, labels) {
     var folder = "projects/" + slug + "/";
     var imageClass = "project-image" + (project.image_class ? " " + project.image_class : "");
@@ -70,9 +115,26 @@
     });
   }
 
+  // Load each listed project's <slug>/<slug>.js (which calls Portfolio.project) and pick the language.
+  function loadProjects(lang) {
+    var slugs = [];
+    GROUPS.categories.forEach(function (category) {
+      category.items.forEach(function (slug) { slugs.push(slug); });
+    });
+    return Promise.all(slugs.map(function (slug) {
+      return Portfolio.loadScript("projects/" + slug + "/" + slug + ".js");
+    })).then(function () {
+      var items = {};
+      slugs.forEach(function (slug) {
+        var content = Portfolio.projects[slug] || {};
+        items[slug] = content[lang] || content.en;
+      });
+      return { index: GROUPS, items: items };
+    });
+  }
+
   Portfolio.register("projects", {
     load: loadProjects,
     render: function (projects, ctx) { renderProjects(projects, ctx.labels, ctx.lang); }
   });
-
 })();

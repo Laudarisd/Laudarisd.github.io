@@ -37,26 +37,26 @@ The site is responsive, bilingual (English / Korean), and includes four selectab
 
 ## Repository structure
 
-Every section of the site is a folder of its own, so a section can be edited, restyled, or extended without touching the rest:
+There are no data files. Every section of the site is a folder holding its own markup, script, and styles, and the script carries the content in both languages:
 
 ```text
 .
 ├── index.html            # Page shell: header, section wrappers, and a placeholder per section
 ├── css/style.css         # Shared tokens, base layout, header, panels, footer, themes
-├── js/site.js            # Core loader: helpers, fragment includes, language switching
-├── ui/                   # Labels, menu text, section titles (en.json, kr.json)
-├── hero/                 # hero.html, hero.js, hero.css, en.json, kr.json
-├── experience/           # experience.html, experience.js, experience.css, en.json, kr.json
-├── skills/               # skills.html, skills.js, skills.css, en.json, kr.json
-├── education/            # degrees.html, honours.html, education.js, en.json, kr.json
-├── publications/         # publications.html, publications.js, en.json, kr.json
-├── patents/              # patents.html, patents.js, en.json, kr.json
-├── contact/              # contact.html, contact.js, en.json, kr.json
-├── projects/             # projects.html + projects.js + projects.css (card grid), index.json (groups),
+├── js/site.js            # Core loader: loads the section scripts, pulls in fragments, switches language
+├── ui/ui.js              # Labels, menu text, section titles (both languages)
+├── hero/                 # hero.html, hero.js, hero.css
+├── experience/           # experience.html, experience.js, experience.css
+├── skills/               # skills.html, skills.js, skills.css
+├── education/            # degrees.html, honours.html, education.js
+├── publications/         # publications.html, publications.js
+├── patents/              # patents.html, patents.js
+├── contact/              # contact.html, contact.js
+├── projects/             # projects.html, projects.js (groups + card grid), projects.css,
 │   ├── project.css       #   styles for the detail pages
 │   ├── project.js        #   renderer for the detail pages
 │   ├── build_articles.py #   embeds each project's Markdown case study into its index.html
-│   └── <slug>/           #   index.html, en.json, kr.json, thumbnail, case-study Markdown, images/
+│   └── <slug>/           #   index.html, <slug>.js (content), thumbnail, case-study Markdown, images/
 ├── img/                  # Portrait artwork
 └── fonts/                # Local font assets
 ```
@@ -66,30 +66,31 @@ Each section folder contains:
 | File | Purpose |
 | --- | --- |
 | `<section>.html` | The markup fragment. `index.html` pulls it in where `<div data-include="<section>/<section>.html">` stands. |
-| `<section>.js` | The renderer. It calls `Portfolio.register("<section>", { render: ... })`, and the core loads `<section>/<lang>.json` and passes it in. |
+| `<section>.js` | The content for both languages (`content: { en: {...}, kr: {...} }`) and the function that renders it, registered with `Portfolio.register("<section>", {...})`. |
 | `<section>.css` | Styles that only this section uses (present for hero, experience, skills, projects). Shared styles stay in `css/style.css`. |
-| `en.json`, `kr.json` | The content in both languages. |
+
+`js/site.js` lists the section scripts in `SECTION_FILES`, loads them in that order, and renders each one. A project page uses the same core with its own list in the `data-sections` attribute of its script tag.
 
 ## Editing content (no HTML changes needed)
 
-To add an item, copy an existing entry in the section's `en.json` and `kr.json` and edit its values. For example, a new paper in `publications/en.json`:
+Open the section's `.js` file and edit the text under `content`. To add an item, copy an existing entry in both `en` and `kr`. For example, a new paper in `publications/publications.js`:
 
-```json
+```js
 {
-  "title": "Paper title",
-  "url": "https://...",
-  "venue": "Journal, 2026",
-  "code_url": "https://github.com/..."
+  title: "Paper title",
+  url: "https://...",
+  venue: "Journal, 2026",
+  code_url: "https://github.com/..."
 }
 ```
 
-`code_url` is optional. If a Korean file is missing for a section, the English file is used for that section.
+`code_url` is optional. If a section has no `kr` content, the `en` content is shown in both languages.
 
 ### Projects
 
-Each project is a self-contained folder `projects/<slug>/`, named after the project title, containing `index.html` (the detail page), `en.json`, `kr.json`, the thumbnail image, and any case-study Markdown and images. The JSON holds the card (`title`, `description`, `image`, `image_alt`, `image_class`, `url` for the Code button) and the detail page (`subtitle`, `status`, `period`, `role`, `context`, `tags`, `overview`, `problem`, `architecture` (`steps`, or several named `flows`), `process`, `pipeline`, `stack`, `components`, `figures`, `results`, `challenges`, `links`). Sections left empty are hidden. `status` is one of `completed`, `in_development`, `research`, `poc`; `image_class` can be `""`, `"project-image-logo"` (padded logo), or `"project-image-paper"` (paper figure).
+Each project is a self-contained folder `projects/<slug>/`, named after the project title, containing `index.html` (the detail page), `<slug>.js` (the content in both languages, registered with `Portfolio.project("<slug>", { en: {...}, kr: {...} })`), the thumbnail image, and any case-study Markdown and images. The content holds the card (`title`, `description`, `image`, `image_alt`, `image_class`, `url` for the Code button) and the detail page (`subtitle`, `status`, `period`, `role`, `context`, `tags`, `overview`, `problem`, `architecture` (`steps`, or several named `flows`), `process`, `pipeline`, `stack`, `components`, `figures`, `results`, `challenges`, `links`). Sections left empty are hidden. `status` is one of `completed`, `in_development`, `research`, `poc`; `image_class` can be `""`, `"project-image-logo"` (padded logo), or `"project-image-paper"` (paper figure).
 
-`projects/index.json` defines the groups and the display order of the slugs. To add a project: copy an existing folder to `projects/<slug>/`, edit its `index.html` title, `en.json`, `kr.json`, and thumbnail, and add the slug to a group in `index.json`. The page URL is `projects/<slug>/`.
+`GROUPS` at the top of `projects/projects.js` defines the groups and the display order of the slugs. To add a project: copy an existing folder to `projects/<slug>/`, rename and edit its `<slug>.js`, edit the `<title>` and `data-project` in its `index.html` and the `data-sections` list at the bottom of that file, replace the thumbnail, and add the slug to a group in `GROUPS`. The page URL is `projects/<slug>/`.
 
 A project can also carry a full case study. Write it as a Markdown file in the project folder (any `*.md` is English; a `*_kr.md` file is Korean), then run `python projects/build_articles.py` (needs `pip install markdown` once). The script converts the Markdown to HTML and embeds both languages directly in that folder's `index.html`, so the published page contains the whole text; nothing is fetched at view time. Markdown supports headings (a table of contents is built from `##` headings), tables, fenced code blocks (syntax-highlighted), images with paths relative to the project folder, and ```mermaid diagrams.
 
@@ -99,7 +100,7 @@ The header has an `EN / 한국어` toggle. The chosen language is remembered in 
 
 ## Local preview
 
-Content is fetched from the section folders, so the site must be served over HTTP (opening `index.html` directly from disk will not load the content):
+Section fragments are fetched over HTTP, so the site must be served by a web server (opening `index.html` directly from disk will not load the content):
 
 ```bash
 python3 -m http.server 8000

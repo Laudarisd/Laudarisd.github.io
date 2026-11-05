@@ -11,14 +11,14 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Spectral:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../../css/style.css?v=20261104b" />
-    <link rel="stylesheet" href="../projects.css?v=20261104b" />
-    <link rel="stylesheet" href="../project.css?v=20261104b" />
+    <link rel="stylesheet" href="../../css/style.css?v=20261105" />
+    <link rel="stylesheet" href="../projects.css?v=20261105" />
+    <link rel="stylesheet" href="../project.css?v=20261105" />
   </head>
   <body>
     <!--
       Project detail page. This file is only the layout: all text comes from
-      en.json / kr.json in this folder, ui/<lang>.json, and contact/<lang>.json,
+      dmp.js in this folder (content), ui/ui.js (labels), and contact/ (footer),
       rendered by projects/project.js. To add a project, copy this folder and edit its files.
     -->
     <header class="site-header">
@@ -148,14 +148,9 @@
       </section>
     </main>
 
-    <!-- Contact: contact/<lang>.json (same footer as the main page) -->
+    <!-- Contact: same footer as the main page -->
     <footer id="contact" class="site-footer">
-      <div class="container footer-shell">
-        <div>
-          <h2 id="contact-heading"></h2>
-        </div>
-        <div class="footer-links" id="contact-links"></div>
-      </div>
+      <div data-include="../../contact/contact.html"></div>
     </footer>
 
     <script>
@@ -188,6 +183,6 @@
         });
       })();
     </script>
-    <script src="../project.js?v=20261104b"></script>
+    <script src="../../js/site.js?v=20261105" data-sections="../../ui/ui.js,../../contact/contact.js,../project.js,dmp.js"></script>
   </body>
 </html>

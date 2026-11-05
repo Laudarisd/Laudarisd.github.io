@@ -1,17 +1,22 @@
 /*
   Core loader for the portfolio.
 
-  Each section of the page is a folder of its own (hero/, experience/, skills/,
-  education/, projects/, publications/, patents/, contact/) holding:
+  There are no data files: each section of the page is a folder of its own
+  (hero/, experience/, skills/, education/, projects/, publications/, patents/,
+  contact/) holding
     <section>.html   the markup fragment, pulled into index.html where a
                      <div data-include="..."> placeholder stands
-    <section>.js     the renderer, registered with Portfolio.register(...)
+    <section>.js     the content (both languages) and the renderer,
+                     registered with Portfolio.register(...)
     <section>.css    styles that only that section needs (optional)
-    en.json, kr.json the content in both languages
+  and every project is a folder projects/<slug>/ with index.html, <slug>.js
+  (its content), a thumbnail, and any case-study text and images.
 
-  This file provides the shared helpers, loads the fragments, loads ui/<lang>.json
-  (labels) and every registered section's JSON, and calls the renderers. To edit
-  content, change the JSON; to change a section's layout, edit its own folder.
+  This file loads the section scripts listed in SECTION_FILES (a page can give
+  its own list in the data-sections attribute of its <script> tag), pulls in
+  the fragments, and renders every registered section in the active language.
+  To edit content, open the section's .js file; to change its layout, edit its
+  .html and .css.
 */
 (function () {
   "use strict";
@@ -20,7 +25,29 @@
   var LANGS = { en: "en", kr: "ko" };
   var DEFAULT_LANG = "en";
   var STORAGE_KEY = "portfolio-lang";
-  var sections = []; // registered by each <section>/<section>.js
+
+  // Scripts that make up the main page, in render order. Each one registers itself with Portfolio.
+  var SECTION_FILES = [
+    "ui/ui.js",
+    "hero/hero.js",
+    "experience/experience.js",
+    "skills/skills.js",
+    "education/education.js",
+    "projects/projects.js",
+    "publications/publications.js",
+    "patents/patents.js",
+    "contact/contact.js"
+  ];
+  var thisScript = document.currentScript;
+  var VERSION = thisScript && /[?&]v=([^&]+)/.test(thisScript.src) ? RegExp.$1 : "";
+  if (thisScript && thisScript.getAttribute("data-sections")) {
+    SECTION_FILES = thisScript.getAttribute("data-sections").split(",").map(function (s) { return s.trim(); });
+  }
+
+  var sections = [];      // registered by each <section>.js, in load order
+  var uiContent = {};     // { en: {...}, kr: {...} } from ui/ui.js
+  var projects = {};      // { slug: { en: {...}, kr: {...} } } from projects/<slug>/<slug>.js
+  var loadedScripts = {}; // url -> promise, so a script is fetched once
 
   var root = document.documentElement;
   var langToggles = document.querySelectorAll(".lang-toggle");
@@ -81,23 +108,27 @@
     }, obj);
   }
 
-  /* ---------- data loading ---------- */
+  /* ---------- loading ---------- */
 
-  function fetchJSON(url) {
-    return fetch(url, { cache: "no-cache" }).then(function (response) {
-      if (!response.ok) throw new Error(url + " -> " + response.status);
-      return response.json();
-    });
+  // Add a <script> tag once and resolve when it has run.
+  function loadScript(url) {
+    if (!loadedScripts[url]) {
+      loadedScripts[url] = new Promise(function (resolve, reject) {
+        var script = document.createElement("script");
+        script.src = url + (VERSION && url.indexOf("?") < 0 ? "?v=" + VERSION : "");
+        script.onload = resolve;
+        script.onerror = function () { reject(new Error("failed to load " + url)); };
+        document.head.appendChild(script);
+      });
+    }
+    return loadedScripts[url];
   }
 
-  // Load <folder>/<lang>.json; fall back to English if the translation is missing.
-  function loadLang(folder, lang) {
-    var primary = folder + "/" + lang + ".json";
-    return fetchJSON(primary).catch(function (error) {
-      if (lang === DEFAULT_LANG) throw error;
-      console.warn("[portfolio] " + primary + " missing, falling back to " + DEFAULT_LANG);
-      return fetchJSON(folder + "/" + DEFAULT_LANG + ".json");
-    });
+  // Load the section scripts one after another so they register in page order.
+  function loadSectionScripts() {
+    return SECTION_FILES.reduce(function (chain, url) {
+      return chain.then(function () { return loadScript(url); });
+    }, Promise.resolve());
   }
 
   // Replace every <div data-include="path"> with the markup of that file (done once).
@@ -116,13 +147,15 @@
     }));
   }
 
-  // Labels first, then every registered section (each either loads <name>/<lang>.json or brings its own loader).
+  // Each section either carries its content (content.en / content.kr) or brings its own loader.
   function loadAll(lang) {
-    var loaders = [loadLang("ui", lang)].concat(sections.map(function (section) {
-      return section.load ? section.load(lang) : loadLang(section.name, lang);
-    }));
+    var loaders = sections.map(function (section) {
+      if (section.load) return section.load(lang);
+      var content = section.content || {};
+      return Promise.resolve(content[lang] || content[DEFAULT_LANG] || null);
+    });
     return Promise.all(loaders).then(function (results) {
-      return { ui: results[0], sections: results.slice(1) };
+      return { ui: uiContent[lang] || uiContent[DEFAULT_LANG] || {}, sections: results };
     });
   }
 
@@ -248,18 +281,21 @@
     byId: byId,
     setText: setText,
     getPath: getPath,
-    fetchJSON: fetchJSON,
-    loadLang: loadLang,
-    // Portfolio.register("hero", { render: function (data, ctx) {...}, load: optional function (lang) })
+    loadScript: loadScript,
+    projects: projects,
+    // Portfolio.ui({ en: {...}, kr: {...} }) from ui/ui.js
+    ui: function (content) { uiContent = content || {}; },
+    // Portfolio.project("slug", { en: {...}, kr: {...} }) from projects/<slug>/<slug>.js
+    project: function (slug, content) { projects[slug] = content; },
+    // Portfolio.register("hero", { content: { en, kr }, render: function (data, ctx) {...} })
+    // or, for sections that load their own data: { load: function (lang) {...}, render: ... }
     register: function (name, section) {
-      sections.push({ name: name, render: section.render, load: section.load });
+      sections.push({ name: name, content: section.content, load: section.load, render: section.render });
     }
   };
 
-  // Section scripts register themselves after this file; start once they have all run.
-  document.addEventListener("DOMContentLoaded", function () {
-    includeFragments()
-      .then(function () { return applyLang(initialLang(), false); })
-      .catch(function (error) { showLoadError(initialLang(), error); });
-  });
+  // Load the section scripts, pull in the fragments, then render in the active language.
+  Promise.all([loadSectionScripts(), includeFragments()])
+    .then(function () { return applyLang(initialLang(), false); })
+    .catch(function (error) { showLoadError(initialLang(), error); });
 })();
