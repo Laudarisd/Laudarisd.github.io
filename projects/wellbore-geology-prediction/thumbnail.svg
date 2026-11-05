@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" font-family="Manrope, Arial, sans-serif" role="img" aria-label="Subsurface rock layers with a vertical reference well, its gamma-ray log, and a horizontal well steered through the target layer">
+<defs>
+<filter id="sh" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#1f2933" flood-opacity="0.18"/></filter>
+<linearGradient id="l1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8d7b3"/><stop offset="1" stop-color="#d8c293"/></linearGradient>
+<linearGradient id="l2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cdae7c"/><stop offset="1" stop-color="#b8945c"/></linearGradient>
+<linearGradient id="l3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fb3a6"/><stop offset="1" stop-color="#6f998a"/></linearGradient>
+<linearGradient id="l4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a08a73"/><stop offset="1" stop-color="#7c6650"/></linearGradient>
+</defs>
+<rect width="400" height="200" fill="#ffffff"/>
+<!-- gently dipping formation layers -->
+<path d="M0 44 C120 40 260 54 400 64 V96 C260 86 120 72 0 76 Z" fill="url(#l1)"/>
+<path d="M0 76 C120 72 260 86 400 96 V120 C260 110 120 96 0 100 Z" fill="url(#l3)"/>
+<path d="M0 100 C120 96 260 110 400 120 V150 C260 140 120 126 0 130 Z" fill="url(#l2)"/>
+<path d="M0 130 C120 126 260 140 400 150 V200 H0 Z" fill="url(#l4)"/>
+<!-- formation tops labels -->
+<text x="8" y="70" font-size="6.5" font-weight="700" fill="#6f604f" text-anchor="start">EGFDU</text>
+<text x="8" y="116" font-size="6.5" font-weight="700" fill="#38564c" text-anchor="start">ANCC · target</text>
+<!-- vertical reference well (typewell) with gamma-ray curve -->
+<rect x="70" y="18" width="4" height="162" fill="#ffffff" stroke="#1f2933" stroke-width="1"/>
+<text x="72" y="13" font-size="6.5" font-weight="800" fill="#1f2933" text-anchor="middle">typewell</text>
+<path d="M62 24 q10 8 -2 16 q-10 8 4 16 q12 7 -3 15 q-11 8 5 16 q13 7 -2 15 q-12 8 3 16 q11 7 -2 14" fill="none" stroke="#2a9fd8" stroke-width="1.6"/>
+<text x="54" y="150" font-size="6" font-weight="700" fill="#2a9fd8" text-anchor="middle" transform="rotate(-90 54 150)">GR log</text>
+<!-- horizontal well: vertical then landed into the target layer -->
+<path d="M150 20 C150 70 150 96 196 108 C250 121 320 121 392 123" fill="none" stroke="#1f2933" stroke-width="3" stroke-linecap="round"/>
+<text x="150" y="14" font-size="6.5" font-weight="800" fill="#1f2933" text-anchor="middle">well</text>
+<!-- predicted TVT path (dashed) tracking the target layer -->
+<path d="M196 112 C250 125 320 125 392 127" fill="none" stroke="#e4506e" stroke-width="2" stroke-dasharray="6 4"/>
+<!-- gamma-ray wiggle recorded along the horizontal section -->
+<path d="M210 100 q8 -6 14 0 q7 6 15 -2 q9 -7 16 2 q8 7 16 -2 q9 -6 16 1 q8 6 15 -1" fill="none" stroke="#2a9fd8" stroke-width="1.4" opacity="0.9"/>
+<!-- known vs predicted split marker -->
+<line x1="196" y1="60" x2="196" y2="150" stroke="#9fb3b8" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="176" y="56" font-size="6" font-weight="700" fill="#5a6b70" text-anchor="middle">known</text>
+<text x="230" y="56" font-size="6" font-weight="700" fill="#e4506e" text-anchor="middle">predicted</text>
+<!-- result chip -->
+<g transform="translate(318 150)" filter="url(#sh)"><rect x="-44" y="-16" width="88" height="34" rx="7" fill="#ffffff"/><text x="0" y="-3" font-size="7" font-weight="800" fill="#1f2933" text-anchor="middle">TVT predicted</text><text x="0" y="10" font-size="7" font-weight="700" fill="#e4506e" text-anchor="middle">per well · RMSE</text></g>
+</svg>

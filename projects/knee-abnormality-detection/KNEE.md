@@ -105,21 +105,79 @@ StudyInstanceUID,ACL,MCL,Medial Meniscus,Lateral Meniscus,Medial OA,Lateral OA,P
 <div class="callout callout-problem">
 <h4>Problems the solution has to solve</h4>
 <ul>
-<li>Read hundreds of thousands of DICOM slices in several transfer syntaxes quickly enough to train and to infer within the 9-hour limit.</li>
-<li>Turn a variable number of series and slices per study, across three planes, into one fixed representation per study.</li>
-<li>Label the unlabelled training studies from reports written in several languages, without using text at test time.</li>
-<li>Produce calibrated probabilities for twelve findings whose prevalence differs between splits.</li>
+<li>The competition gives 4,407 studies but structured labels for only 58 of them; every other study arrives with a free-text radiology report and nothing more.</li>
+<li>No two studies look alike: a study holds several DICOM series shot in different planes, the number of series varies, and the number of slices per series varies more, yet the network needs a fixed-size input.</li>
+<li>Different sequences show different things, and the twelve findings are split across them: fluid-sensitive sequences show swelling, effusion and acute injury; the others show anatomy and cartilage.</li>
+<li>Half a million slices in several transfer syntaxes have to be read fast enough to infer within the nine-hour limit, with no internet.</li>
 </ul>
 </div>
 
-The solution is developed as a Kaggle notebook under the constraints above: DICOM decoding and slice preparation, per-study aggregation across sagittal, coronal, and axial series, a multi-label image model trained on the labelled studies with report-derived labels for the rest, and offline inference that writes `submission.csv`.
+The solution scores **0.924 on the public leaderboard with a single model**, no ensembling and no test-time augmentation. The model is trained separately; this notebook is the inference half, which loads the attached weights and predicts.
 
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>Solution pipeline: DICOM series → slice preparation → per-plane encoders → study-level aggregation → twelve probabilities.</figcaption>
-</figure>
+### 4.1 Labels from the radiology reports
 
-## 5. Links
+Because only 58 studies carry structured labels, the labels behind the weights were made by reading the free-text reports with a language model and turning each into twelve probabilities rather than twelve yes/no answers. A report that says a tear is *suspected* becomes a number near 0.8, not a 1, which is a fairer target than forcing every hedged sentence into a hard label. That yields **4,349 studies to train on**. The 58 real-labelled studies are never trained on and are used to check the result honestly; the model reaches **0.9167 macro-AUC** on them.
+
+### 4.2 A fixed input from studies that are all shaped differently
+
+The hard part is not the network, it is that no two studies look alike. The approach fills five fixed slots per study, always in the same order, into one slice stack. Preferring a fluid-sensitive series for some slots and not for others is deliberate: the twelve findings are split across both kinds of sequence. If a study has no series for a slot, the slot is left as zeros and the model is told to skip it rather than being fed something misleading.
+
+```python
+# Five fixed slots per study, always in the same order (plane, prefer-fluid-sensitive, slice count).
+# A missing slot stays zeros and is masked out so the model skips it.
+SLOTS = [
+    ("Sagittal",  1, 26),   # fluid-sensitive sagittal (T2 / PD / STIR): swelling, effusion, acute injury
+    ("Sagittal",  0, 22),   # non-fluid sagittal:        anatomy and cartilage
+    ("Coronal",   1, 18),   # fluid-sensitive coronal
+    ("Coronal",   0, 12),   # non-fluid coronal
+    ("Axial",    -1, 18),   # axial (either sequence)
+]
+```
+
+Within a series, slices are taken evenly across the stack rather than from the middle, because the collateral ligaments and the lateral meniscus sit in the outer slices and cutting them was measurably costing accuracy on exactly those findings. Every slice is cropped to a 140 mm box using the pixel spacing from the DICOM header, then resized, so a knee occupies the same fraction of the frame whether the scan was acquired at 0.3 or 0.5 mm per pixel.
+
+```python
+# Even span across the series (not the middle): peripheral slices hold the collateral
+# ligaments and the lateral meniscus.
+n = len(files)
+lo, hi = int(n * 0.02), int(n * 0.98) - 1
+picks = np.linspace(lo, hi, k).round().astype(int)
+
+# Crop a fixed 140 mm box using the DICOM pixel spacing, then resize — so scale carries
+# no medical information the model has to learn.
+cpx = int(round(CROP_MM / pixel_spacing))          # CROP_MM = 140.0
+a = a[y0:y0 + cpx, x0:x0 + cpx]
+a = cv2.resize(a, (IMG, IMG), interpolation=cv2.INTER_AREA)
+```
+
+### 4.3 How the model reads the stack
+
+Three neighbouring slices are stacked into the three channels of one image, so the network sees a little of what lies above and below the middle slice, most of the benefit of a 3D model at the cost of a 2D one. Each three-slice window is passed through a **CoAtNet backbone at 384 pixels**. The windows are combined with an attention layer that has **separate weights for each of the twelve findings** — the part that matters most. A cruciate tear may be visible on two sagittal slices while osteoarthritis is spread across many coronal ones, and a single pooled score forces those two to share one notion of which slices matter; per-finding attention lets each one draw on the slices that actually show it.
+
+### 4.4 Running it
+
+Scoring uses 42 windows per study. Inference runs in half precision and automatically retries a study in full precision if it fails, so no study is ever dropped from the submission. The notebook needs no internet: the backbone is loaded from the attached weights rather than downloaded, and a fast DICOM reader decodes the common uncompressed little-endian sequences directly, falling back to pydicom for anything unusual.
+
+```python
+# Scored run: verify the exact checkpoint, require a GPU, keep internet off.
+assert torch.cuda.is_available(), "this scored pipeline requires CUDA"
+assert sha256(weights) == "7e5315dad125b99fc65b340b3de41de628e9be51ff5835355dd61c86472244ef"
+```
+
+## 5. Results
+
+<div class="callout callout-result">
+<h4>Outcome</h4>
+<ul>
+<li><strong>0.924 macro-averaged ROC AUC</strong> on the public leaderboard, from a single model with no ensembling and no test-time augmentation.</li>
+<li><strong>0.9167 macro-AUC</strong> on the 58 studies that carry real structured labels, which were held out of training entirely.</li>
+<li>Labels for the other 4,349 studies were derived from their radiology reports as soft probabilities, not hard 0/1 targets.</li>
+<li>One CoAtNet model over a fixed five-slot slice stack, with per-finding attention across 42 windows per study, inside the nine-hour offline notebook limit.</li>
+</ul>
+</div>
+
+## 6. Links
 
 - [Competition page](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection): overview, data description, evaluation, and timeline.
-- [Notebook](https://www.kaggle.com/code/laudari/notebook247d4dbb42): the solution notebook on Kaggle.
+- [Notebook](https://www.kaggle.com/code/laudari/notebook247d4dbb42): the inference notebook on Kaggle.
+- [Model weights](https://www.kaggle.com/datasets/dreaddevelopment/raptor-knee-widedense): the trained weights the notebook loads.

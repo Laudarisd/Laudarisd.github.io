@@ -44,7 +44,7 @@
           "dmp",
           "research",
           "knee-abnormality-detection",
-          "geohazard-penetration-prediction",
+          "wellbore-geology-prediction",
           "pdf-to-cad-text-processing"
         ]
       }

@@ -380,13 +380,13 @@ flowchart LR
 
 ### 9.1 시각적 결과
 
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
+<figure>
+<img src="images/raw-dwg.png" alt="CAD에서 열린 원본 도면: 의미가 붙지 않은 기하 요소, 텍스트, 기호">
 <figcaption>CAD에서 열린 원본 도면: 의미가 붙어 있지 않은 기하 요소, 텍스트, 기호.</figcaption>
 </figure>
 
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
+<figure>
+<img src="images/addon-overview.png" alt="CAD 애플리케이션 안에서 열린 CAD Parser 애드온: 도면, 채팅 패널, 강조된 공간 마스크">
 <figcaption>시스템이 복원한 내용을 평면 위에 그린 모습: 공간, 개구부, 기구, 각각의 신뢰도.</figcaption>
 </figure>
 
@@ -400,8 +400,8 @@ flowchart LR
 <figcaption>그래프 데이터베이스 뷰: 선택한 노드와 직접 연결, 캔버스와 연동.</figcaption>
 </figure>
 
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
+<figure>
+<img src="images/inspection-report.png" alt="검사 보고서의 한 페이지: 한국어 문 요약 표와 에이전트 도구 로그">
 <figcaption>검사 보고서의 한 페이지: 한국어와 영어 함께, 판정마다 근거 표시.</figcaption>
 </figure>
 

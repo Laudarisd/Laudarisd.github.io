@@ -14,8 +14,8 @@ answers questions about it. It inspects the whole drawing and prepares the repor
 <div class="fact"><span class="fact-label">Platform</span><span class="fact-value">C# / .NET CAD add-on</span></div>
 </div>
 
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
+<figure>
+<img src="images/addon-overview.png" alt="CAD Parser add-on open inside the CAD application, showing a floor plan, the chat panel, and highlighted space masks">
 <figcaption>The add-on open inside the CAD application, with a drawing, the chat panel, and a highlighted answer.</figcaption>
 </figure>
 
@@ -95,8 +95,8 @@ A floor plan file
 The system uses none of these alone. It builds a structured understanding first, and
 treats the language model as a reader of that structure rather than of the file.
 
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
+<figure>
+<img src="images/raw-dwg.png" alt="A raw DWG floor plan drawn as plain vectors and text, with no meaning attached">
 <figcaption>A raw DWG drawing as the computer sees it: primitives, text, and nested symbols with no meaning attached.</figcaption>
 </figure>
 
@@ -201,8 +201,8 @@ flowchart TD
     I --> J[Approve or reject]
 ```
 
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
+<figure>
+<img src="images/extraction-browser.png" alt="The extraction browser listing the entities found in a drawing: lines, polylines, arcs, splines and text">
 <figcaption>The extraction browser: the list of spaces, objects and openings found in a drawing.</figcaption>
 </figure>
 
@@ -273,8 +273,8 @@ flowchart LR
     M --> A[Answer + highlight]
 ```
 
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
+<figure>
+<img src="images/chat-answer.png" alt="A question answered in chat as a table of doors with their codes, sizes and connected rooms">
 <figcaption>A question asked in chat and its answer, with the evidence highlighted on the drawing.</figcaption>
 </figure>
 
@@ -534,8 +534,8 @@ The states that are neither pass nor fail matter most. A rule that cannot be jud
 on this drawing says so. That is the difference between a tool a reviewer trusts and
 one they stop reading.
 
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
+<figure>
+<img src="images/inspection-report.png" alt="A page of the inspection report in Korean, with a door summary table and the agent's tool log">
 <figcaption>A page of the inspection report: Korean and English together, with the evidence behind each finding.</figcaption>
 </figure>
 
