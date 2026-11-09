@@ -383,8 +383,8 @@ checks that every claim is backed by drawing evidence, records cost and timing, 
 <figcaption>Wall inspection: a wall polygon summary added to the report, in Korean and English.</figcaption>
 </figure>
 <figure>
-<img src="1_main_view.png" alt="The CAD canvas with the entity browser, chat, AI log and the inspection report window showing a door summary table">
-<figcaption>Inspection report: the door summary table generated for a drawing, next to the chat and the AI log.</figcaption>
+<img src="non_load_bearing_walls.png" alt="The inspection report listing load-bearing and non-load-bearing walls with thickness, length, type and rooms involved, with the walls highlighted on the drawing">
+<figcaption>Wall classification: the report lists load-bearing and non-load-bearing walls with their thickness, length, type and the rooms involved, and highlights them on the drawing.</figcaption>
 </figure>
 </div>
 
