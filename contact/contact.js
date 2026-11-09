@@ -34,10 +34,6 @@
           {
             "label": "LinkedIn",
             "url": "https://www.linkedin.com/in/laudari-sudip/"
-          },
-          {
-            "label": "your.email@example.com",
-            "url": "mailto:your.email@example.com"
           }
         ]
       },
@@ -51,10 +47,6 @@
           {
             "label": "LinkedIn",
             "url": "https://www.linkedin.com/in/laudari-sudip/"
-          },
-          {
-            "label": "your.email@example.com",
-            "url": "mailto:your.email@example.com"
           }
         ]
       }

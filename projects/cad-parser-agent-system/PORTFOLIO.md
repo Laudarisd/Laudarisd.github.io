@@ -321,123 +321,43 @@ flowchart LR
 ---
 
 ## 6. The agent harness
-
-The model is a small part of an agent. The harness is the rest, and it decides
-whether the thing survives real use.
-
-```
-Harness
-├── Conversation control
-│   ├── a working budget per question, and a clear stop
-│   ├── partial answers that say what is still missing
-│   └── no silent retry of a question already answered
-├── Grounding
-│   ├── every claim carries the drawing evidence behind it
-│   ├── the highlight shows exactly what the answer talked about
-│   └── anything that cannot be grounded is reported as unknown
-├── Scope discipline
-│   ├── "only these" means only these
-│   └── a narrowing word in the question narrows the result
-├── Context strategy
-│   ├── the drawing is introduced once, not repeated
-│   ├── tool results are reasoned over as they came back
-│   └── history is managed so long sessions stay coherent
-├── Determinism
-│   ├── the same question twice returns the same numbers
-│   └── numbers never depend on which model is configured
-├── Idempotence
-│   └── repeating an action does not duplicate its result
-├── Bilingual operation
-│   ├── answers in the language of the question
-│   └── report content stored in both languages at once
-├── Cost and observability
-│   ├── tokens and estimated cost shown per answer
-│   ├── every tool call traced with timing and outcome
-│   └── failures surfaced as information, not as crashes
-├── Model flexibility
-│   ├── hosted frontier models
-│   └── a self-hosted model for drawings that may not leave the building
-└── Safety
-    ├── proposal and approval are separate steps
-    ├── nothing is written without an explicit human click
-    └── everything applied is journalled
-```
-
-When an answer is wrong, the trace shows whether the agent asked the wrong question
-or a tool returned the wrong thing. That single distinction is most of debugging an
-agent system.
+<p>The model is only a small part of the agent. The harness around it runs each question: it sets a budget, keeps the context small,
+checks that every claim is backed by drawing evidence, records cost and timing, and keeps a proposed change separate from applying it.</p>
+<pre class="mermaid">flowchart LR
+    Q[Question]:::input --> B[Budget and scope<br/>for this question]:::process
+    B --> L[Agent loop<br/>tool call, result, reason]:::agent
+    L --> G{Backed by<br/>drawing evidence?}:::decision
+    G -- yes --> A[Answer + highlight]:::output
+    G -- no --> U[Reported as unknown]:::note
+    L --> T[(Trace: tool calls,<br/>timing, tokens, cost)]:::store
+    M[Hosted or<br/>self-hosted model]:::tool -.-> L
+</pre>
+<ul>
+<li><strong>Grounded.</strong> Every claim carries the drawing entities behind it. What cannot be grounded is reported as unknown.</li>
+<li><strong>Deterministic.</strong> Numbers come from code, so the same question gives the same numbers on any model.</li>
+<li><strong>Observable.</strong> Every tool call is traced with its timing and outcome, and the cost is shown per answer.</li>
+<li><strong>Bilingual.</strong> Answers follow the language of the question, and report content is stored in Korean and English.</li>
+</ul>
 
 ---
 
 ## 7. Interaction and safety
-
-### 7.1 Showing the work
-
-Results are drawn directly on the CAD canvas without altering the drawing: evidence
-appears as temporary graphics that disappear when cleared. Spaces can be shown as
-outlines or filled with a see-through mask, so a space reads as an area while the
-plan stays readable underneath.
-
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>A space shown with the see-through mask on the canvas, with its evidence outlined.</figcaption>
-</figure>
-
-### 7.2 Changing a drawing
-
-This is the only irreversible thing the system can do, so it is deliberately slow.
-
-```mermaid
-flowchart LR
-    A[Request]:::input --> B[Exactly which items<br/>are affected]:::process
-    B --> C[A proposal:<br/>what, what was skipped,<br/>what is risky]:::process
-    C --> D[Shown on the drawing]:::process
-    D --> E{Human decision}:::decision
-    E -- Approve --> F[Applied in one step]:::store
-    E -- Reject --> G[Nothing happens]:::note
-    F --> H[Journal and refresh]:::output
-```
-
-The approval is a button, not a typed word. The assistant cannot propose and apply
-in the same breath, and the outcome of the click is fed back, so it knows what
-actually happened rather than what it suggested.
-
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>A proposed change shown on the drawing, waiting for the approve or reject decision.</figcaption>
-</figure>
+<p>The system shows its work on the drawing and never changes the file on its own.</p>
+<ul>
+<li><strong>Evidence is temporary.</strong> Answers are drawn on the CAD canvas as highlights and see-through masks that disappear when cleared. The drawing itself is not altered.</li>
+<li><strong>Changes are proposals.</strong> A change is first shown on the drawing and applied only after a person clicks approve.</li>
+<li><strong>Everything is journalled.</strong> Each applied change is recorded, and the outcome is fed back to the agent.</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    A[Change request]:::input --> P[Proposal shown<br/>on the drawing]:::process
+    P --> D{Human decision}:::decision
+    D -- Approve --> F[Applied and<br/>journalled]:::store
+    D -- Reject --> N[Nothing happens]:::note
+</pre>
 
 ---
 
-## 8. Reliability engineering
-
-```
-Quality approach
-├── Benchmarks that cannot be gamed
-│   ├── no name, identifier or number appears in a test prompt
-│   ├── expected results are relations the drawing itself defines
-│   ├── every test is run on unrelated drawings, in both languages
-│   └── "nothing found" is a correct answer when it is true
-├── Staged scope
-│   ├── stage one: reading, classifying, counting, relating, grouping
-│   └── later stages do not start until stage one passes everywhere
-├── Fast measurement
-│   ├── the heavy stages can be run outside CAD on exported drawings
-│   └── a change can be measured in seconds instead of a manual session
-└── Regression discipline
-    ├── every result compared before and after a change
-    ├── spatial checks that results do not collide with each other
-    └── the same drawing re-tested in different units and rotated
-```
-
-A concrete example of what this catches: a change meant to improve one result
-quietly altered twenty others. The before-and-after comparison showed it in one run.
-Without that discipline, the improvement would have shipped with the damage attached.
-
----
-
-## 9. Results
-
+## 8. Results
 <div class="callout callout-result">
 <h4>Measured on an unseen test plan</h4>
 <ul>
@@ -447,181 +367,60 @@ Without that discipline, the improvement would have shipped with the damage atta
 <li>The same question returns the same numbers across runs and models, in Korean and in English.</li>
 </ul>
 </div>
-
-| Measure | Outcome |
-|---|---|
-| Entities in a test plan | roughly 25,000 |
-| Spaces recovered in it | 66, across six repeated unit types |
-| Quality | the large majority recovered cleanly; the rest reported as approximate rather than presented as exact |
-| Language coverage | Korean and English, across both test sets |
-| Independence | identical results in millimetres, in inches, and with the plan rotated |
-| Integrity | results checked against each other on every change |
-| Repeatability | the same question returns the same numbers across runs and models |
-
-### 9.1 Visual results
-
-<div class="figure-row">
-<figure>
-<img src="3_inspecting_walls.png" alt="The assistant adds a wall polygon summary to the inspection report, shown in Korean in the report window">
-<figcaption>Wall inspection: the assistant adds a wall polygon summary to the report, written in Korean and English.</figcaption>
-</figure>
+<div class="figure-row figure-row-small figure-row-equal">
 <figure>
 <img src="4_inspecting_doors.png" alt="A door table in chat with code, width, height, source and connected rooms, and the matching doors highlighted on the drawing">
-<figcaption>Door inspection: every door with its code, size and the rooms it connects, and the matching doors highlighted on the drawing.</figcaption>
+<figcaption>Door inspection: every door with its code, size and the rooms it connects, highlighted on the drawing.</figcaption>
 </figure>
-</div>
 <figure>
 <img src="5_more_results.png" alt="Only the Bedroom 1 room masks highlighted on a different drawing, with their areas listed in chat">
-<figcaption>A follow-up question on another drawing: only the Bedroom 1 spaces are highlighted, with the area of each listed in the chat.</figcaption>
+<figcaption>A follow-up question on another drawing: only the Bedroom 1 spaces are highlighted, with the area of each.</figcaption>
 </figure>
-
-### 9.2 Demonstrations
-
-Demonstrations cover:
-
-- A question asked and answered end to end, with the evidence highlighted.
-- A full inspection run, from extraction to exported report.
-- A proposed change, reviewed and approved.
-
----
-
-## 10. Inspection and reporting
-
-The inspection layer asks whether each space contains what it must contain.
-
-```
-Inspection
-├── Rule set        requirements on a kind of space and its contents
-├── Result states   pass, fail, warning, review required,
-│                   insufficient data, not applicable, not evaluated
-├── Evidence        the drawing entities behind every judgement
-├── Confidence      inherited from how well the result itself was recovered
-└── Report
-    ├── one document per drawing
-    ├── Korean and English stored together
-    ├── content added directly from the conversation
-    ├── editable: update, replace, remove, retitle
-    └── exported to office formats
-```
-
-The states that are neither pass nor fail matter most. A rule that cannot be judged
-on this drawing says so. That is the difference between a tool a reviewer trusts and
-one they stop reading.
-
+</div>
+<div class="figure-row figure-row-small figure-row-equal">
+<figure>
+<img src="3_inspecting_walls.png" alt="The assistant adds a wall polygon summary to the inspection report, shown in Korean in the report window">
+<figcaption>Wall inspection: a wall polygon summary added to the report, in Korean and English.</figcaption>
+</figure>
+<figure>
+<img src="1_main_view.png" alt="The CAD canvas with the entity browser, chat, AI log and the inspection report window showing a door summary table">
+<figcaption>Inspection report: the door summary table generated for a drawing, next to the chat and the AI log.</figcaption>
+</figure>
+</div>
 
 ---
 
-## 11. Graph database
-
-A mark describes a door, a door joins two spaces, a space touches another space, a
-fixture belongs to a space. Storing that as a graph lets a question be answered by
-walking from one thing to the next, instead of scanning everything each time.
-
-```mermaid
-graph LR
+## 9. Graph database foundation
+<p>Everything the system recovers is stored as a graph, one per drawing. Each node is a thing on the plan, such as a Room, Wall, Door, Window, Fixture or Mark,
+with its properties and the drawing entity it came from. Each edge is a named relation such as hasWall, hasDoor, adjacent or markedBy.
+Questions about how things connect are answered by walking this graph, and selecting a node highlights it on the CAD canvas.</p>
+<pre class="mermaid">graph LR
     M[Mark<br/>code]:::input -- describes --> D[Door]:::process
     D -- connects --> R1[Space A]:::store
     D -- connects --> R2[Space B]:::store
     R1 -- touches --> R2
     F[Fixture]:::agent -- belongs to --> R1
     W[Window]:::process -- opens from --> R1
-```
-
-### 11.1 What is in it
-
-```
-Graph database
-├── Nodes       one per meaningful thing: space, opening, mark, fixture,
-│               and the structural pieces around a space
-│   ├── class   what kind of thing it is
-│   ├── origin  the drawing entity it was built from
-│   └── values  its own properties, such as a code or a size
-├── Edges       directed, named relations between two nodes
-│   └── evidence   why the relation exists, kept on the edge itself
-└── One graph per drawing, saved and reloaded by drawing identity
-```
-
-**Edges carry their evidence.** A relation is not an assertion, it is a claim with a
-reason attached. That makes the graph auditable: any connection can be questioned
-and traced back to the drawing.
-
-### 11.2 What it is used for
-
-| Use | What it gives |
-|---|---|
-| Exploration | a window listing every node with its class, origin and how many connections it has |
-| Visualisation | a selected node drawn with its direct connections, so the local picture is immediate |
-| Linking to the drawing | selecting a node highlights it and its connections on the CAD canvas |
-| Answering | the assistant walks the graph to answer questions about how things connect |
-| Inspection | rules are evaluated over relations, not only over positions |
-| Persistence | the graph is stored per drawing, so a reopened file brings its relations back |
-
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>The graph database view: a selected node with its direct connections, linked back to the canvas.</figcaption>
+</pre>
+<div class="figure-row figure-row-small figure-row-equal">
+<figure>
+<img src="ontology_1.png" alt="The ontology view for one drawing: the Room class with 19 instances, the selected room's properties, and the class diagram">
+<figcaption>Ontology view for one drawing: the Room class has 19 instances. Selecting a room lists its properties and highlights it and its connections in CAD.</figcaption>
+</figure>
+<figure>
+<img src="ontology_2.png" alt="Close-up of the Room class with its properties and the relations hasWall, hasWallLine, adjacent and sharesWall">
+<figcaption>Relations around Room: hasWall, hasWallLine, adjacent and sharesWall, each with its count in this drawing.</figcaption>
+</figure>
+</div>
+<figure class="figure-small">
+<img src="ontology_3_instances.png" alt="The Instances view: rooms, doors, windows, marks and fixtures of a drawing as nodes with relations drawn between them, and the selected room highlighted on the CAD canvas">
+<figcaption>Instances view: every room, door, window, mark and fixture of the drawing as a node, with the relations drawn between them. The selected room is highlighted on the canvas.</figcaption>
 </figure>
 
-### 11.3 Why a graph rather than tables
-
-Questions in this domain are relational by nature: *which spaces does this door
-join*, *what opens off this corridor*, *which spaces have no opening at all*, *what
-surrounds this space*. In a table these are joins that grow with every new question.
-As a graph they are short walks, and new relation types can be added without
-reshaping what is already stored.
-
 ---
 
-## 12. Technology and skills
-
-| Area | What this project demanded |
-|---|---|
-| Language and platform | C#, .NET, Windows desktop application development |
-| CAD integration | commercial CAD add-on development, drawing database access, non-destructive on-canvas rendering, document and transaction handling |
-| Computational geometry | spatial computation on unstructured drawing data, independence from unit and orientation |
-| Data engineering | structured storage per drawing, content-based identity, vector search for free text, change journalling |
-| Graph modelling | node and edge design, evidence-carrying relations, persistence, visualisation, traversal for question answering |
-| AI engineering | tool-calling agents, multi-round control, grounding and evidence, prompt and configuration design, token and cost accounting, model routing |
-| Model operations | hosted frontier models and a self-hosted model server for private data |
-| Natural language | Korean and English throughout |
-| Documents | bilingual document generation and export |
-| Product thinking | confidence as a first-class output, approval gates, traceability, staged delivery |
-| Quality engineering | drawing-independent benchmarks, offline measurement harness, regression comparison on every change |
-
----
-
-## 13. How the work was run
-
-```
-Working method
-├── One problem at a time, measured before and after
-├── Every change verified on more than one drawing
-├── Nothing accepted because it looked right in one screenshot
-├── Configuration kept in one place, so behaviour is tunable
-├── Documentation written alongside, in plain language
-└── Scope held: a fix that improves one case and damages another is not a fix
-```
-
----
-
-## 14. Roadmap
-
-- **Recognition without names.** Classify drawing content by what it is, so a file
-  with meaningless naming still works.
-- **Drawing back into the file.** The system proposes changes today; the next stage
-  is generating new geometry to resolve what the inspection found.
-- **Learning across projects.** Each drawing read makes the next one easier.
-- **Wider rule sets.** Customer-specific and regulation-specific checks on top of
-  the same structured knowledge.
-- **Richer graph.** More relation types, and queries that span several drawings.
-
----
-
-## 15. Summary
-
-<div class="callout callout-note">
-<h4>In one paragraph</h4>
-<p>I built a system that reads an architectural drawing the way a person does: it parses the raw geometry, resolves the symbols, works out what the drawing is made of, records how everything connects as a graph, and lets an AI assistant answer questions about the result with evidence attached to every number. It states its confidence, it shows its work on the drawing, and it never changes a customer's file without a human decision.</p>
-</div>
-
-The hard part was not the AI. It was making the drawing understandable enough that
-the AI never has to guess.
+## 10. Summary
+<p>The system reads a DWG drawing, parses every entity into a database, recovers spaces, walls, openings and marks, and stores their relations in a graph.
+An AI agent then answers questions, inspects the drawing and writes bilingual reports through a small set of tools, with every answer highlighted on the drawing as evidence.
+Nothing in the drawing changes without human approval.
+The project is in development and is tested on real residential drawings, from a single flat to a whole block.</p>
