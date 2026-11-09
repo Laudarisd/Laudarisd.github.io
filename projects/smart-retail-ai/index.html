@@ -13,7 +13,7 @@
     />
     <link rel="stylesheet" href="../../css/style.css?v=20261105" />
     <link rel="stylesheet" href="../projects.css?v=20261105" />
-    <link rel="stylesheet" href="../project.css?v=20261105" />
+    <link rel="stylesheet" href="../project.css?v=20261109" />
   </head>
   <body>
     <!--
@@ -99,7 +99,15 @@
 
       <!-- Detail panels: each one is hidden automatically when the entry has no content for it -->
       <section class="section">
-        <div class="container detail-grid">
+        <div class="container detail-layout">
+          <!-- Left column: "Contents" links to the sections of this page, filled by projects/project.js -->
+          <aside class="detail-aside" id="detail-aside" hidden>
+            <nav class="article-toc-wrap">
+              <h4 data-ui="project_page.contents">Contents</h4>
+              <ol class="article-toc" id="detail-toc"></ol>
+            </nav>
+          </aside>
+          <div class="detail-grid">
           <article class="panel detail-panel detail-panel-wide" id="panel-article">
             <h2 data-ui="project_page.article"></h2>
             <div class="panel-body"></div>
@@ -145,6 +153,7 @@
             <div class="panel-body"></div>
           </article>
         </div>
+        </div>
       </section>
     </main>
 
@@ -183,6 +192,6 @@
         });
       })();
     </script>
-    <script src="../../js/site.js?v=20261105" data-sections="../../ui/ui.js,../../contact/contact.js,../project.js,smart-retail-ai.js"></script>
+    <script src="../../js/site.js?v=20261105" data-sections="../../ui/ui.js,../../contact/contact.js,../project.js?v=20261109,smart-retail-ai.js"></script>
   </body>
 </html>

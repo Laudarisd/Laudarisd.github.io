@@ -37,6 +37,57 @@ main[data-project] .container {
   font-size: 0.88rem;
 }
 
+/* Detail layout: a "Contents" column on the left and the panels on the right.
+   The column sticks while scrolling on wide screens and stacks on top on narrow ones. */
+.detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.detail-aside[hidden] {
+  display: none;
+}
+
+.detail-aside .article-toc-wrap {
+  margin-bottom: 0;
+}
+
+@media (min-width: 1100px) {
+  .detail-layout {
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .detail-aside {
+    position: sticky;
+    top: 5rem; /* below the sticky site header */
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+  }
+
+  .detail-aside .article-toc {
+    columns: 1;
+  }
+
+  .detail-aside .article-toc li {
+    margin-bottom: 0.45rem;
+    line-height: 1.4;
+  }
+}
+
+/* The contents list now lives in the side column, so the copy inside the article is not shown. */
+.detail-grid .project-article .article-toc-wrap {
+  display: none;
+}
+
+/* Keep a jumped-to heading clear of the sticky header. */
+.detail-panel,
+.project-article h2[id] {
+  scroll-margin-top: 5rem;
+}
+
 .detail-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

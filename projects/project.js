@@ -126,11 +126,11 @@
   // Show the embedded article for the current language (if the page has one) and draw its diagrams.
   function renderArticle(lang) {
     var panel = byId("panel-article");
-    if (!panel) return;
+    if (!panel) return null;
     var articles = panel.querySelectorAll(".project-article[data-lang]");
     if (!articles.length) {
       panel.hidden = true;
-      return;
+      return null;
     }
     panel.hidden = false;
     var shown = null;
@@ -145,6 +145,27 @@
     }
     renderMermaid(shown).catch(function (error) { console.error("[portfolio] mermaid", error); });
     renderCode(shown);
+    return shown;
+  }
+
+  // Left column: links to the case-study sections (if any) and to every visible panel.
+  function renderContents(article) {
+    var aside = byId("detail-aside"), list = byId("detail-toc");
+    if (!aside || !list) return;
+    clear(list);
+    if (article) {
+      // Reuse the contents list built into the article by projects/build_articles.py.
+      article.querySelectorAll(".article-toc li").forEach(function (item) {
+        list.appendChild(item.cloneNode(true));
+      });
+    }
+    document.querySelectorAll(".detail-panel:not([hidden])").forEach(function (panel) {
+      if (panel.id === "panel-article") return; // its sections are listed above
+      var heading = panel.querySelector("h2");
+      if (!heading || !heading.textContent) return;
+      list.appendChild(el("li", null, [el("a", { href: "#" + panel.id, text: heading.textContent })]));
+    });
+    aside.hidden = !list.children.length;
   }
 
 
@@ -336,7 +357,7 @@
     load: currentContent,
     render: function (project, ctx) {
       renderProject(project, ctx.ui);
-      renderArticle(ctx.lang);
+      renderContents(renderArticle(ctx.lang));
     }
   });
 })();
