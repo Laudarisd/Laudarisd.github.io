@@ -176,7 +176,7 @@ treats the language model as a reader of that structure rather than of the file.
 
 ## 3. Parsing and storage
 
-<div class="callout callout-problem">
+<!-- <div class="callout callout-problem">
 <h4>Problems this stage solves</h4>
 <ul>
 <li>Geometry inside nested and external symbols has no real-world coordinates until every insertion, rotation, scale and mirror is resolved.</li>
@@ -184,41 +184,40 @@ treats the language model as a reader of that structure rather than of the file.
 <li>Drawings come in different units; later numbers must all mean the same thing.</li>
 <li>Every later answer must be traceable to the exact entity in the drawing.</li>
 </ul>
-</div>
+</div> -->
 
-The first stage reads the drawing and writes it down in a form a machine can work
-with.
-
-```mermaid
-flowchart LR
+<p>This stage does two things: it parses the drawing, and it stores the result in a database.
+Every entity is read, symbols and external references are resolved to real-world coordinates, and each entity is saved with a stable identifier so it can be found again later.</p>
+<pre class="mermaid">flowchart LR
     A[DWG] --> B[Read every entity:<br/>lines, polylines, arcs,<br/>circles, hatches, text]
     B --> C[Resolve symbols and<br/>external references]
     C --> D[Real world coordinates,<br/>in metres]
     D --> E[(Stored per drawing)]
-```
-
-```
-Parsing
+</pre>
+<pre><code>Parsing
 ├── Entities          lines, polylines, arcs, circles, hatches, text
 ├── Symbols           resolved to the leaf, including nested ones
 ├── External refs     pulled in and marked with their origin
 ├── Units             normalised, so every later number is in metres
 └── Identity          a stable identifier per drawing and per entity
-```
+</code></pre>
 
-Two decisions mattered.
+<p>An example of what is stored in the database:</p>
+<figure>
+<img src="db.png" alt="The database browser: a list of parsed drawings with their entity counts, the count of each entity type, the entities on one layer, and the full record of one polyline">
+<figcaption>The database browser. Left: parsed drawings and their entity counts. Middle: how many entities of each type. Right: the polylines on one layer, and the full record of one of them with its id, layer, appearance, owner block and geometry.</figcaption>
+</figure>
 
-**Nothing is exploded.** Each piece of geometry keeps a path back to the symbol it
+<!-- <p>Two decisions mattered.</p>
+<p><strong>Nothing is exploded.</strong> Each piece of geometry keeps a path back to the symbol it
 belongs to, so a symbol is still recognisable as itself while its geometry sits in
-world coordinates.
-
-**Every fact keeps its origin.** The drawing's own identifier for an entity is
+world coordinates.</p>
+<p><strong>Every fact keeps its origin.</strong> The drawing's own identifier for an entity is
 carried through the whole pipeline. That is what later lets any number be pointed at
-on screen, and lets a reviewer disagree with one line rather than the whole report.
-
-Parsed drawings are stored, not re-read. A drawing is processed once and the result
+on screen, and lets a reviewer disagree with one line rather than the whole report.</p>
+<p>Parsed drawings are stored, not re-read. A drawing is processed once and the result
 is reused for every later question, by the assistant, by the inspection, and by the
-graph database.
+graph database.</p> -->
 
 ---
 
