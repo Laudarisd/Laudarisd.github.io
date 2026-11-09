@@ -117,7 +117,8 @@
 <h1>Agentic CAD Parsing System - Parsing CAD DATA</h1>
 <p>A system for a CAD that reads a DWG drawing, extracts what is in it, organizes entitites, objects and
 answers questions about it. It inspects the whole drawing and prepares the reports based on users desired and goals.</p>
-<p><strong>Code files are not available in this repository because of confidentiality</strong></p>
+<!-- <p><strong>Code files are not available in this repository because of confidentiality</strong></p> -->
+<p><strong>Main Process</strong></p>
 <div class="fact-grid">
 <div class="fact"><span class="fact-label">Input</span><span class="fact-value">Architectural drawings (DWG)</span></div>
 <div class="fact"><span class="fact-label">Output</span><span class="fact-value">Structured knowledge · graph · reports</span></div>
@@ -134,32 +135,42 @@ answers questions about it. It inspects the whole drawing and prepares the repor
 
 <hr />
 <h2 id="1-introduction">1. Introduction</h2>
-<p>An architectural drawing contains everything a building needs, but a computer does
-not see rooms, doors or bathrooms in it. It sees tens of thousands of lines, arcs,
-texts and symbols with no meaning attached to any of them. A person reads the plan
-in seconds. Software has to rebuild that understanding from nothing.</p>
-<p>This project does that rebuilding, and then puts an AI assistant on top of it, so
-that a user can simply ask.</p>
-<pre class="mermaid">flowchart LR
+<p>An architectural drawing contains lots of information about building, machinery, Pipeing and HVAC systems, and many other designs. 
+  Understanding such architectural designs need a professional. For instance  making a report that contains wall thickness to classifying them( as load bearing/non-load bearing) 
+  or finding connections in Piping systems consumes lots of time, efforst where we can't avoid human error. So to minimize such factors we need a system that actually analyze the 
+  drawings and makes reports. This project does that rebuilding, and then puts an AI assistant on top of it, so
+  that a user can simply anlayze, extracts the necessary information from the uploaded complex drawings.</p>
+
+  <pre class="mermaid">flowchart LR
     A[DWG drawing] --> B[Parse]
     B --> C[(Structured<br/>knowledge)]
     C --> D[Graph<br/>database]
     C --> E[AI agent]
-    E --> F[Answers,<br/>highlights,<br/>reports]
+    E --> F[Answers,  <br/>Analyze, <br/>highlights,<br/>reports]
 </pre>
-<div class="callout callout-problem">
+
+<!-- <div class="callout callout-problem">
 <h4>Three questions shaped every decision</h4>
 <ol>
 <li><strong>Does it work on a drawing it has never seen?</strong> A system tuned to one file is a demo, not a product.</li>
 <li><strong>Can every answer be traced?</strong> An inspection result that cannot be shown on the drawing is an opinion.</li>
 <li><strong>Can it be wrong safely?</strong> It works on a customer's drawing, so uncertainty must be a visible state, and nothing may change without a human decision.</li>
 </ol>
-</div>
+</div> -->
 
 <hr />
-<h2 id="2-the-problem-a-drawing-is-not-a-model">2. The problem: a drawing is not a model</h2>
-<p>A DWG file is a picture made of geometry. Nothing in it says "this is a bedroom".
-Everything that follows exists because of that one fact.</p>
+<h2 id="2-the-problem-a-drawing-is-not-a-model">2. The problem: a DWG is not a model or normal pixel or raster files</h2>
+<p>A DWG file is a vector data which are encrypted which are difficult to read with simple algorithm or systems. 
+Nothing in it says "this is a bedroom" or " Here is a pipeing systems". Forenctance see following image.</p>
+
+<!-- Add this image here with smaller size and caption -->
+
+In same row
+1_dwg sample   | 1_vector data samepl
+
+<!-- ===================================================================== -->
+
+
 <h3>2.1 What the file actually contains</h3>
 <pre><code>A floor plan file
 ├── Primitives      lines, polylines, arcs, circles, hatches
