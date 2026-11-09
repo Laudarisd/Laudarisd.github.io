@@ -56,7 +56,7 @@ flowchart LR
 <p>A DWG file is vector data stored in a closed binary format, which is difficult to read with simple algorithms or systems.
 Nothing in it says "this is a bedroom" or "here is a piping system". For instance, see the following images.</p>
 
-<div class="figure-row figure-row-small">
+<div class="figure-row figure-row-small figure-row-equal">
 <figure>
 <img src="1_dwg_example.png" alt="A DWG sample: a unit floor plan with walls, doors, fixtures, marks and dimensions as the CAD canvas draws it">
 <figcaption>DWG sample: a unit floor plan as the CAD canvas draws it.</figcaption>
@@ -116,7 +116,7 @@ Nothing in it says "this is a bedroom" or "here is a piping system". For instanc
 <tr><td>Manual templates per project</td><td>Does not scale; every customer draws differently</td></tr>
 </tbody>
 </table></div>
-<p>The drawings themselves also vary. The system has been run on the range below, from a single flat to a whole block.</p>
+<p>For instance, analyzing different floor plans gives a different number of entities. See the following table.</p>
 <div class="table-scroll"><table class="component-table">
 <thead>
 <tr>
