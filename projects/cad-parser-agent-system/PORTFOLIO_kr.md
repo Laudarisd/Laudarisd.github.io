@@ -1,15 +1,15 @@
-# CAD Parser — 건축 도면을 답으로 바꾸는 시스템
+# Agentic CAD Parsing System — 건축 도면을 답으로 바꾸는 시스템
 
-CAD 프로그램용 애드온이에요. DWG 평면도를 읽고, 그 안에 무엇이 있는지 파악하고,
+CAD 프로그램 안에서 실행되는 시스템이에요. DWG 평면도를 읽고, 그 안에 무엇이 있는지 파악하고,
 도면에 대한 질문에 답해요. 공간과 그 안의 객체를 식별하고, 문과 창을 그것이 연결하는
 공간에 묶고, 검사 규칙에 따라 도면을 점검한 뒤, 한·영 이중 언어 보고서를 만들어요.
 
 > **이 문서에 담긴 내용에 대하여.** 이 문서는 문제, 기능, 결과를 설명해요. 그 뒤에 있는
 > 방법은 의도적으로 적지 않았어요. 방법 자체가 제품이기 때문이에요.
 
-<figure>
-<img src="1_main_view.png" alt="CAD 애플리케이션 안의 CAD Parser 애드온: 평면도, Entity 브라우저, Chat, AI Log, 검사 보고서 창">
-<figcaption>CAD 애플리케이션 안에서 열린 애드온: 왼쪽은 도면, 오른쪽은 Entity 브라우저·Chat·AI Log, 아래는 검사 보고서 창이에요.</figcaption>
+<figure class="figure-small">
+<img src="1_main_view.png" alt="CAD 애플리케이션 안의 Agentic CAD Parsing System: 평면도, Entity 브라우저, Chat, AI Log, 검사 보고서 창">
+<figcaption>CAD 애플리케이션 안에서 실행되는 시스템: 왼쪽은 도면, 오른쪽은 Entity 브라우저·Chat·AI Log, 아래는 검사 보고서 창이에요.</figcaption>
 </figure>
 
 ---

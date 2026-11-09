@@ -1,9 +1,11 @@
-# CAD Parser - turning architectural drawings into answers
+# Agentic CAD Parsing System - Parsing CAD Data
 
-An add-on for a CAD application that reads a DWG drawing, extracts what is in it, organizes entitites, objects and
-answers questions about it. It inspects the whole drawing and prepares the reports based on users desired and goals.
+A system that runs inside a CAD application. It reads a DWG drawing, extracts what is in it, organizes the entities and objects,
+and answers questions about it. It inspects the whole drawing and prepares reports based on the user's needs and goals.
 
-**Code files are not available in this repository because of confidentiality**
+<!-- **Code files are not available in this repository because of confidentiality** -->
+
+**Main Process**
 
 <div class="fact-grid">
 <div class="fact"><span class="fact-label">Input</span><span class="fact-value">Architectural drawings (DWG)</span></div>
@@ -11,25 +13,23 @@ answers questions about it. It inspects the whole drawing and prepares the repor
 <div class="fact"><span class="fact-label">Interface</span><span class="fact-value">Chat agent inside the CAD canvas</span></div>
 <div class="fact"><span class="fact-label">Languages</span><span class="fact-value">Korean and English</span></div>
 <div class="fact"><span class="fact-label">Safety</span><span class="fact-value">Every change needs human approval</span></div>
-<div class="fact"><span class="fact-label">Platform</span><span class="fact-value">C# / .NET CAD add-on</span></div>
+<div class="fact"><span class="fact-label">Platform</span><span class="fact-value">C# / .NET, inside the CAD application</span></div>
 </div>
 
-<figure>
-<img src="1_main_view.png" alt="The CAD Parser add-on inside the CAD application: floor plan, entity browser, chat, AI log, and the inspection report window">
-<figcaption>The add-on inside the CAD application: the drawing on the left, the entity browser, chat and AI log on the right, and the inspection report window below.</figcaption>
+<figure class="figure-small">
+<img src="1_main_view.png" alt="The system inside the CAD application: floor plan, entity browser, chat, AI log, and the inspection report window">
+<figcaption>The system inside the CAD application: the drawing on the left, the entity browser, chat and AI log on the right, and the inspection report window below.</figcaption>
 </figure>
 
 ---
 
 ## 1. Introduction
 
-An architectural drawing contains everything a building needs, but a computer does
-not see rooms, doors or bathrooms in it. It sees tens of thousands of lines, arcs,
-texts and symbols with no meaning attached to any of them. A person reads the plan
-in seconds. Software has to rebuild that understanding from nothing.
-
-This project does that rebuilding, and then puts an AI assistant on top of it, so
-that a user can simply ask.
+An architectural drawing contains a lot of information about the building, machinery, piping and HVAC systems, and many other designs.
+Understanding such drawings needs a professional. For instance, making a report that lists wall thicknesses and classifies them (as load-bearing or non-load-bearing),
+or finding the connections in a piping system, takes a lot of time and effort, and human error cannot be avoided. To minimize such factors we need a system that actually analyzes the
+drawings and makes the reports. This project does that, and then puts an AI assistant on top of it, so
+that a user can simply analyze and extract the necessary information from complex uploaded drawings.
 
 ```mermaid
 flowchart LR
@@ -37,24 +37,35 @@ flowchart LR
     B --> C[(Structured<br/>knowledge)]
     C --> D[Graph<br/>database]
     C --> E[AI agent]
-    E --> F[Answers,<br/>highlights,<br/>reports]
+    E --> F[Answers,<br/>analysis,<br/>highlights,<br/>reports]
 ```
 
-<div class="callout callout-problem">
+<!-- <div class="callout callout-problem">
 <h4>Three questions shaped every decision</h4>
 <ol>
 <li><strong>Does it work on a drawing it has never seen?</strong> A system tuned to one file is a demo, not a product.</li>
 <li><strong>Can every answer be traced?</strong> An inspection result that cannot be shown on the drawing is an opinion.</li>
 <li><strong>Can it be wrong safely?</strong> It works on a customer's drawing, so uncertainty must be a visible state, and nothing may change without a human decision.</li>
 </ol>
-</div>
+</div> -->
 
 ---
 
-## 2. The problem: a drawing is not a model
+## 2. The problem: a DWG is not a model or a raster image
 
-A DWG file is a picture made of geometry. Nothing in it says "this is a bedroom".
-Everything that follows exists because of that one fact.
+A DWG file is vector data stored in a closed binary format, which is difficult to read with simple algorithms or systems.
+Nothing in it says "this is a bedroom" or "here is a piping system". For instance, see the following images.
+
+<div class="figure-row figure-row-small">
+<figure>
+<img src="1_dwg_example.png" alt="A DWG sample: a unit floor plan with walls, doors, fixtures, marks and dimensions as the CAD canvas draws it">
+<figcaption>DWG sample: a unit floor plan as the CAD canvas draws it.</figcaption>
+</figure>
+<figure>
+<img src="1_vector_data.png" alt="The same DWG file opened as text: unreadable binary bytes">
+<figcaption>Vector data sample: the same file opened as text. The data is binary, so nothing in it can be read directly.</figcaption>
+</figure>
+</div>
 
 ### 2.1 What the file actually contains
 

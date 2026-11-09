@@ -13,7 +13,7 @@
     />
     <link rel="stylesheet" href="../../css/style.css?v=20261105" />
     <link rel="stylesheet" href="../projects.css?v=20261105" />
-    <link rel="stylesheet" href="../project.css?v=20261109" />
+    <link rel="stylesheet" href="../project.css?v=20261109b" />
   </head>
   <body>
     <!--
@@ -113,10 +113,10 @@
             <div class="panel-body">
 <!-- article:start -->
 <div class="project-article" data-lang="en" hidden>
-<nav class="article-toc-wrap"><h4>Contents</h4><ol class="article-toc"><li><a href="#1-introduction">1. Introduction</a></li><li><a href="#2-the-problem-a-drawing-is-not-a-model">2. The problem: a drawing is not a model</a></li><li><a href="#3-parsing-and-storage">3. Parsing and storage</a></li><li><a href="#4-what-the-system-produces">4. What the system produces</a></li><li><a href="#5-why-an-ai-agent">5. Why an AI agent</a></li><li><a href="#6-the-agent-harness">6. The agent harness</a></li><li><a href="#7-interaction-and-safety">7. Interaction and safety</a></li><li><a href="#8-reliability-engineering">8. Reliability engineering</a></li><li><a href="#9-results">9. Results</a></li><li><a href="#10-inspection-and-reporting">10. Inspection and reporting</a></li><li><a href="#11-graph-database">11. Graph database</a></li><li><a href="#12-technology-and-skills">12. Technology and skills</a></li><li><a href="#13-how-the-work-was-run">13. How the work was run</a></li><li><a href="#14-roadmap">14. Roadmap</a></li><li><a href="#15-summary">15. Summary</a></li></ol></nav>
-<h1>Agentic CAD Parsing System - Parsing CAD DATA</h1>
-<p>A system for a CAD that reads a DWG drawing, extracts what is in it, organizes entitites, objects and
-answers questions about it. It inspects the whole drawing and prepares the reports based on users desired and goals.</p>
+<nav class="article-toc-wrap"><h4>Contents</h4><ol class="article-toc"><li><a href="#1-introduction">1. Introduction</a></li><li><a href="#2-the-problem-a-drawing-is-not-a-model">2. The problem: a DWG is not a model or a raster image</a></li><li><a href="#3-parsing-and-storage">3. Parsing and storage</a></li><li><a href="#4-what-the-system-produces">4. What the system produces</a></li><li><a href="#5-why-an-ai-agent">5. Why an AI agent</a></li><li><a href="#6-the-agent-harness">6. The agent harness</a></li><li><a href="#7-interaction-and-safety">7. Interaction and safety</a></li><li><a href="#8-reliability-engineering">8. Reliability engineering</a></li><li><a href="#9-results">9. Results</a></li><li><a href="#10-inspection-and-reporting">10. Inspection and reporting</a></li><li><a href="#11-graph-database">11. Graph database</a></li><li><a href="#12-technology-and-skills">12. Technology and skills</a></li><li><a href="#13-how-the-work-was-run">13. How the work was run</a></li><li><a href="#14-roadmap">14. Roadmap</a></li><li><a href="#15-summary">15. Summary</a></li></ol></nav>
+<h1>Agentic CAD Parsing System - Parsing CAD Data</h1>
+<p>A system that runs inside a CAD application. It reads a DWG drawing, extracts what is in it, organizes the entities and objects,
+and answers questions about it. It inspects the whole drawing and prepares reports based on the user's needs and goals.</p>
 <!-- <p><strong>Code files are not available in this repository because of confidentiality</strong></p> -->
 <p><strong>Main Process</strong></p>
 <div class="fact-grid">
@@ -125,28 +125,28 @@ answers questions about it. It inspects the whole drawing and prepares the repor
 <div class="fact"><span class="fact-label">Interface</span><span class="fact-value">Chat agent inside the CAD canvas</span></div>
 <div class="fact"><span class="fact-label">Languages</span><span class="fact-value">Korean and English</span></div>
 <div class="fact"><span class="fact-label">Safety</span><span class="fact-value">Every change needs human approval</span></div>
-<div class="fact"><span class="fact-label">Platform</span><span class="fact-value">C# / .NET CAD add-on</span></div>
+<div class="fact"><span class="fact-label">Platform</span><span class="fact-value">C# / .NET, inside the CAD application</span></div>
 </div>
 
-<figure>
-<img src="1_main_view.png" loading="lazy" alt="The CAD Parser add-on inside the CAD application: floor plan, entity browser, chat, AI log, and the inspection report window">
-<figcaption>The add-on inside the CAD application: the drawing on the left, the entity browser, chat and AI log on the right, and the inspection report window below.</figcaption>
+<figure class="figure-small">
+<img src="1_main_view.png" loading="lazy" alt="The system inside the CAD application: floor plan, entity browser, chat, AI log, and the inspection report window">
+<figcaption>The system inside the CAD application: the drawing on the left, the entity browser, chat and AI log on the right, and the inspection report window below.</figcaption>
 </figure>
 
 <hr />
 <h2 id="1-introduction">1. Introduction</h2>
-<p>An architectural drawing contains lots of information about building, machinery, Pipeing and HVAC systems, and many other designs. 
-  Understanding such architectural designs need a professional. For instance  making a report that contains wall thickness to classifying them( as load bearing/non-load bearing) 
-  or finding connections in Piping systems consumes lots of time, efforst where we can't avoid human error. So to minimize such factors we need a system that actually analyze the 
-  drawings and makes reports. This project does that rebuilding, and then puts an AI assistant on top of it, so
-  that a user can simply anlayze, extracts the necessary information from the uploaded complex drawings.</p>
+<p>An architectural drawing contains a lot of information about the building, machinery, piping and HVAC systems, and many other designs.
+  Understanding such drawings needs a professional. For instance, making a report that lists wall thicknesses and classifies them (as load-bearing or non-load-bearing),
+  or finding the connections in a piping system, takes a lot of time and effort, and human error cannot be avoided. To minimize such factors we need a system that actually analyzes the
+  drawings and makes the reports. This project does that, and then puts an AI assistant on top of it, so
+  that a user can simply analyze and extract the necessary information from complex uploaded drawings.</p>
 
   <pre class="mermaid">flowchart LR
     A[DWG drawing] --> B[Parse]
     B --> C[(Structured<br/>knowledge)]
     C --> D[Graph<br/>database]
     C --> E[AI agent]
-    E --> F[Answers,  <br/>Analyze, <br/>highlights,<br/>reports]
+    E --> F[Answers,<br/>analysis,<br/>highlights,<br/>reports]
 </pre>
 
 <!-- <div class="callout callout-problem">
@@ -159,16 +159,20 @@ answers questions about it. It inspects the whole drawing and prepares the repor
 </div> -->
 
 <hr />
-<h2 id="2-the-problem-a-drawing-is-not-a-model">2. The problem: a DWG is not a model or normal pixel or raster files</h2>
-<p>A DWG file is a vector data which are encrypted which are difficult to read with simple algorithm or systems. 
-Nothing in it says "this is a bedroom" or " Here is a pipeing systems". Forenctance see following image.</p>
+<h2 id="2-the-problem-a-drawing-is-not-a-model">2. The problem: a DWG is not a model or a raster image</h2>
+<p>A DWG file is vector data stored in a closed binary format, which is difficult to read with simple algorithms or systems.
+Nothing in it says "this is a bedroom" or "here is a piping system". For instance, see the following images.</p>
 
-<!-- Add this image here with smaller size and caption -->
-
-In same row
-1_dwg sample   | 1_vector data samepl
-
-<!-- ===================================================================== -->
+<div class="figure-row figure-row-small">
+<figure>
+<img src="1_dwg_example.png" loading="lazy" alt="A DWG sample: a unit floor plan with walls, doors, fixtures, marks and dimensions as the CAD canvas draws it">
+<figcaption>DWG sample: a unit floor plan as the CAD canvas draws it.</figcaption>
+</figure>
+<figure>
+<img src="1_vector_data.png" loading="lazy" alt="The same DWG file opened as text: unreadable binary bytes">
+<figcaption>Vector data sample: the same file opened as text. The data is binary, so nothing in it can be read directly.</figcaption>
+</figure>
+</div>
 
 
 <h3>2.1 What the file actually contains</h3>
@@ -863,17 +867,17 @@ the AI never has to guess.</p>
 </div>
 <div class="project-article" data-lang="kr" hidden>
 <nav class="article-toc-wrap"><h4>목차</h4><ol class="article-toc"><li><a href="#1-소개">1. 소개</a></li><li><a href="#2-문제-도면은-모델이-아니다">2. 문제: 도면은 모델이 아니다</a></li><li><a href="#3-파싱과-저장">3. 파싱과 저장</a></li><li><a href="#4-시스템이-만들어-내는-것">4. 시스템이 만들어 내는 것</a></li><li><a href="#5-왜-ai-에이전트인가">5. 왜 AI 에이전트인가</a></li><li><a href="#6-에이전트-하네스">6. 에이전트 하네스</a></li><li><a href="#7-상호작용과-안전">7. 상호작용과 안전</a></li><li><a href="#8-신뢰성-엔지니어링">8. 신뢰성 엔지니어링</a></li><li><a href="#9-결과">9. 결과</a></li><li><a href="#10-검사와-보고">10. 검사와 보고</a></li><li><a href="#11-그래프-데이터베이스">11. 그래프 데이터베이스</a></li><li><a href="#12-기술과-역량">12. 기술과 역량</a></li><li><a href="#13-일하는-방식">13. 일하는 방식</a></li><li><a href="#14-로드맵">14. 로드맵</a></li><li><a href="#15-요약">15. 요약</a></li></ol></nav>
-<h1>CAD Parser — 건축 도면을 답으로 바꾸는 시스템</h1>
-<p>CAD 프로그램용 애드온이에요. DWG 평면도를 읽고, 그 안에 무엇이 있는지 파악하고,
+<h1>Agentic CAD Parsing System — 건축 도면을 답으로 바꾸는 시스템</h1>
+<p>CAD 프로그램 안에서 실행되는 시스템이에요. DWG 평면도를 읽고, 그 안에 무엇이 있는지 파악하고,
 도면에 대한 질문에 답해요. 공간과 그 안의 객체를 식별하고, 문과 창을 그것이 연결하는
 공간에 묶고, 검사 규칙에 따라 도면을 점검한 뒤, 한·영 이중 언어 보고서를 만들어요.</p>
 <blockquote>
 <p><strong>이 문서에 담긴 내용에 대하여.</strong> 이 문서는 문제, 기능, 결과를 설명해요. 그 뒤에 있는
 방법은 의도적으로 적지 않았어요. 방법 자체가 제품이기 때문이에요.</p>
 </blockquote>
-<figure>
-<img src="1_main_view.png" loading="lazy" alt="CAD 애플리케이션 안의 CAD Parser 애드온: 평면도, Entity 브라우저, Chat, AI Log, 검사 보고서 창">
-<figcaption>CAD 애플리케이션 안에서 열린 애드온: 왼쪽은 도면, 오른쪽은 Entity 브라우저·Chat·AI Log, 아래는 검사 보고서 창이에요.</figcaption>
+<figure class="figure-small">
+<img src="1_main_view.png" loading="lazy" alt="CAD 애플리케이션 안의 Agentic CAD Parsing System: 평면도, Entity 브라우저, Chat, AI Log, 검사 보고서 창">
+<figcaption>CAD 애플리케이션 안에서 실행되는 시스템: 왼쪽은 도면, 오른쪽은 Entity 브라우저·Chat·AI Log, 아래는 검사 보고서 창이에요.</figcaption>
 </figure>
 
 <hr />
