@@ -470,6 +470,51 @@ html[lang="ko"] .project-status {
   height: auto;
 }
 
+/* Mermaid bakes colours in when it draws, so override them with the live theme variables. */
+.project-article pre.mermaid svg text,
+.project-article pre.mermaid svg .nodeLabel,
+.project-article pre.mermaid svg .edgeLabel,
+.project-article pre.mermaid svg .label {
+  color: var(--text) !important;
+  fill: var(--text) !important;
+}
+
+.project-article pre.mermaid svg .node rect,
+.project-article pre.mermaid svg .node polygon,
+.project-article pre.mermaid svg .node circle,
+.project-article pre.mermaid svg .node path {
+  fill: var(--surface) !important;
+  stroke: var(--accent) !important;
+}
+
+.project-article pre.mermaid svg .edgePath path,
+.project-article pre.mermaid svg .flowchart-link {
+  stroke: var(--accent) !important;
+}
+
+.project-article pre.mermaid svg marker path {
+  fill: var(--accent) !important;
+  stroke: var(--accent) !important;
+}
+
+.project-article pre.mermaid svg .edgeLabel,
+.project-article pre.mermaid svg .edgeLabel p,
+.project-article pre.mermaid svg .edgeLabel span {
+  background: var(--surface) !important;
+}
+
+/* Smaller figures: a single image or a row of two, centred and narrower than the text column. */
+.project-article figure.figure-small {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.project-article .figure-row-small {
+  max-width: 960px;
+  margin: 1.2rem auto 1.5rem;
+}
+
 .project-article .table-scroll {
   margin: 1rem 0 1.25rem;
 }
@@ -605,15 +650,16 @@ html[lang="ko"] .project-status {
 }
 
 .fact {
-  padding: 0.75rem 0.9rem;
-  border: 1px solid var(--line);
+  padding: 0.8rem 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+  border-left: 4px solid var(--accent);
   border-radius: var(--radius-sm);
-  background: var(--surface);
+  background: color-mix(in srgb, var(--accent) 9%, var(--surface)); /* accent tint follows each theme */
 }
 
 .fact-label {
   display: block;
-  color: var(--muted);
+  color: var(--accent);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.08em;
