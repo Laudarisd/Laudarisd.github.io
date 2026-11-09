@@ -85,6 +85,8 @@ Nothing in it says "this is a bedroom" or "here is a piping system". For instanc
 <figcaption>What one item in the file becomes once it is read: a single line with its layer, endpoints, length and bounds. Still no meaning attached.</figcaption>
 </figure>
 
+
+
 <h3>2.2 Why that is hard</h3>
 <div class="callout callout-problem">
 <h4>Problems in the raw drawing</h4>
@@ -99,6 +101,7 @@ Nothing in it says "this is a bedroom" or "here is a piping system". For instanc
 </div>
 
 <h3>2.3 Why the obvious approaches fail</h3>
+
 <div class="table-scroll"><table class="component-table">
 <thead>
 <tr>
@@ -129,8 +132,35 @@ Nothing in it says "this is a bedroom" or "here is a piping system". For instanc
 <tr><td>Block plan (several buildings on one sheet)</td><td>larger again</td><td>every unit of every building, repeated, with shared site elements</td><td>High</td></tr>
 </tbody>
 </table></div>
-<p>The system uses none of these approaches alone. It builds a structured understanding first, and
-treats the language model as a reader of that structure rather than of the file.</p>
+
+<!-- <div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Approach</th>
+<th>Why it is not enough</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Explode everything and analyse the shapes</td>
+<td>Loses the meaning carried by symbols, and multiplies the data</td>
+</tr>
+<tr>
+<td>Send the drawing to a language model</td>
+<td>Far too large, and models cannot do exact geometry or counting</td>
+</tr>
+<tr>
+<td>Image recognition on a rendered plan</td>
+<td>Loses exact coordinates, units and identity; cannot be traced back</td>
+</tr>
+<tr>
+<td>Manual templates per project</td>
+<td>Does not scale, and every customer draws differently</td>
+</tr>
+</tbody>
+</table></div> -->
+<!-- <p>The system uses none of these alone. It builds a structured understanding first, and
+treats the language model as a reader of that structure rather than of the file.</p> -->
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
 <img src="2_cad_data_line.png" alt="A raw DWG floor plan as the CAD canvas shows it: lines, text and symbols with no meaning attached">
