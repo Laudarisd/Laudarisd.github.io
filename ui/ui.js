@@ -74,7 +74,9 @@ Portfolio.ui({
       "links": "Links & Publications",
       "not_found": "Project not found.",
       "article": "Case Study",
-      "contents": "Contents"
+      "contents": "Contents",
+      "collapse": "Collapse or expand this section",
+      "back_to_top": "Back to top"
     }
   },
   kr: {
@@ -150,7 +152,9 @@ Portfolio.ui({
       "links": "관련 링크",
       "not_found": "프로젝트를 찾을 수 없어요.",
       "article": "상세 사례",
-      "contents": "목차"
+      "contents": "목차",
+      "collapse": "섹션 접기 / 펼치기",
+      "back_to_top": "맨 위로"
     }
   }
 });

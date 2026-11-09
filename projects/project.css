@@ -888,3 +888,69 @@ html[data-theme="dark"] {
 .language-python .hljs-keyword { color: var(--code-control); }
 .language-python .hljs-keyword.hljs-built_in,
 .language-python .hljs-literal { color: var(--code-keyword); }
+
+/* Collapsible sections: the arrow sits at the right end of each numbered heading. */
+.project-article h2[id] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.section-toggle {
+  flex: 0 0 auto;
+  width: 1.9rem;
+  height: 1.9rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.section-toggle:hover {
+  border-color: var(--accent);
+}
+
+.section-toggle[aria-expanded="false"] {
+  transform: rotate(-90deg); /* arrow points right while the section is closed */
+}
+
+.section-body[hidden] {
+  display: none;
+}
+
+/* "Back to top" arrow: fixed at the bottom right, visible only after scrolling down. */
+.back-to-top {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 15;
+  width: 2.6rem;
+  height: 2.6rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  border-color: var(--accent);
+}

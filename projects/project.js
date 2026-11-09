@@ -148,6 +148,52 @@
     return shown;
   }
 
+  // Collapsible sections: each numbered heading gets a small arrow that hides or shows the text
+  // below it (up to the next heading or rule). The wrapping happens once per article.
+  function makeCollapsible(article, label) {
+    if (!article || article.getAttribute("data-collapsible")) return;
+    article.setAttribute("data-collapsible", "true");
+    article.querySelectorAll("h2[id]").forEach(function (heading) {
+      var body = el("div", { class: "section-body" });
+      var next = heading.nextSibling;
+      while (next && !(next.nodeType === 1 && (next.tagName === "H2" || next.tagName === "HR"))) {
+        var node = next;
+        next = next.nextSibling;
+        body.appendChild(node);
+      }
+      heading.parentNode.insertBefore(body, heading.nextSibling);
+      var toggle = el("button", { class: "section-toggle", type: "button", "aria-expanded": "true", "aria-label": label, title: label });
+      toggle.appendChild(el("span", { "aria-hidden": "true", text: "▾" }));
+      toggle.addEventListener("click", function () {
+        var open = body.hidden; // currently hidden -> open it
+        body.hidden = !open;
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+        heading.classList.toggle("is-collapsed", !open);
+      });
+      heading.appendChild(toggle);
+    });
+  }
+
+  // A contents link into a collapsed section opens it first.
+  function expandHashTarget() {
+    var id = decodeURIComponent(window.location.hash.slice(1));
+    var heading = id ? document.getElementById(id) : null;
+    if (heading && heading.classList.contains("is-collapsed")) heading.querySelector(".section-toggle").click();
+  }
+  window.addEventListener("hashchange", expandHashTarget);
+
+  // "Back to top" arrow at the bottom right: shows once the page is scrolled, scrolls smoothly to the top.
+  function addBackToTop(label) {
+    if (byId("back-to-top")) return;
+    var button = el("button", { id: "back-to-top", class: "back-to-top", type: "button", "aria-label": label, title: label });
+    button.appendChild(el("span", { "aria-hidden": "true", text: "↑" }));
+    button.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
+    document.body.appendChild(button);
+    var update = function () { button.classList.toggle("is-visible", window.scrollY > 400); };
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+  }
+
   // Left column: links to the case-study sections (if any) and to every visible panel.
   function renderContents(article) {
     var aside = byId("detail-aside"), list = byId("detail-toc");
@@ -357,7 +403,11 @@
     load: currentContent,
     render: function (project, ctx) {
       renderProject(project, ctx.ui);
-      renderContents(renderArticle(ctx.lang));
+      var labels = ctx.ui.project_page || {};
+      var article = renderArticle(ctx.lang);
+      renderContents(article);
+      makeCollapsible(article, labels.collapse || "Collapse or expand this section");
+      addBackToTop(labels.back_to_top || "Back to top");
     }
   });
 })();
