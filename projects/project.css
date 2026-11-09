@@ -510,9 +510,23 @@ html[lang="ko"] .project-status {
   margin-right: auto;
 }
 
+.project-article figure.figure-xsmall {
+  max-width: 480px; /* for tall, portrait screenshots such as code or JSON */
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .project-article .figure-row-small {
   max-width: 960px;
   margin: 1.2rem auto 1.5rem;
+}
+
+/* Equal-size pair: both images get the same box, and the whole image stays visible inside it. */
+.project-article .figure-row-equal img {
+  width: 100%;
+  height: 280px;
+  object-fit: contain;
+  background: #1e2024; /* dark letterbox to match the CAD and editor screenshots */
 }
 
 .project-article .table-scroll {

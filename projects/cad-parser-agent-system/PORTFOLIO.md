@@ -51,10 +51,10 @@ flowchart LR
 
 ---
 
-## 2. The problem: a DWG is not a model or a raster image
+## 2. The problem: a DWG is not a Model or a Raster Image
 
-A DWG file is vector data stored in a closed binary format, which is difficult to read with simple algorithms or systems.
-Nothing in it says "this is a bedroom" or "here is a piping system". For instance, see the following images.
+<p>A DWG file is vector data stored in a closed binary format, which is difficult to read with simple algorithms or systems.
+Nothing in it says "this is a bedroom" or "here is a piping system". For instance, see the following images.</p>
 
 <div class="figure-row figure-row-small">
 <figure>
@@ -67,10 +67,11 @@ Nothing in it says "this is a bedroom" or "here is a piping system". For instanc
 </figure>
 </div>
 
-### 2.1 What the file actually contains
 
-```
-A floor plan file
+<!-- ======================================================================= -->
+
+<h3>2.1 What the file actually contains</h3>
+<pre><code>A floor plan file
 ├── Primitives      lines, polylines, arcs, circles, hatches
 ├── Text            names, sizes, notes, titles, legends, revisions
 ├── Symbols         reusable blocks: a door, a toilet, an entire flat
@@ -78,35 +79,59 @@ A floor plan file
 │   └── external    geometry that lives in a different file altogether
 ├── Layers          groupings chosen by whoever drew it
 └── Marks           codes that refer to a door or a window
-```
+</code></pre>
+<figure class="figure-xsmall">
+<img src="1_cad_data_all.png" alt="One parsed line entity as JSON: id, handle, type, layer, start and end points, length, angle and bounds">
+<figcaption>What one item in the file becomes once it is read: a single line with its layer, endpoints, length and bounds. Still no meaning attached.</figcaption>
+</figure>
 
-### 2.2 Why that is hard
-
+<h3>2.2 Why that is hard</h3>
 <div class="callout callout-problem">
 <h4>Problems in the raw drawing</h4>
 <ul>
-<li><strong>Geometry carries no meaning.</strong> The file stores shapes and positions. It does not store what anything <em>is</em>, what belongs to what, or where one thing ends and the next begins.</li>
-<li><strong>Everything overlaps.</strong> Furniture, tiling, hatching, dimension lines and annotations sit on top of the structure. Treating all geometry equally produces nonsense.</li>
-<li><strong>Symbols hide their position.</strong> A symbol's true coordinates exist only after it is resolved through insertion, rotation, scale and mirroring, sometimes several levels deep. The usual shortcut, exploding everything, destroys the information about what each symbol is, which is exactly the information needed.</li>
-<li><strong>Nothing is standardised.</strong> Every office draws differently and names things differently, in more than one language, and the same project mixes conventions.</li>
-<li><strong>One file, many flats.</strong> A residential plan repeats the same unit several times, some mirrored, some rotated at an angle. Every name repeats with it, so every answer must stay unambiguous without the user pointing at coordinates.</li>
-<li><strong>Drawings are not drawn correctly.</strong> Lines that should meet miss by a millimetre. Content sits on the wrong grouping. Labels sit outside the thing they name. Real files are the test, not clean ones.</li>
+<li><strong>No meaning.</strong> The file stores shapes and positions, not what anything is or what belongs to what.</li>
+<li><strong>Everything overlaps.</strong> Furniture, hatching, dimensions and notes sit on top of the structure.</li>
+<li><strong>Symbols hide their position.</strong> Real coordinates appear only after insertion, rotation, scale and mirroring are resolved. Exploding them destroys their identity.</li>
+<li><strong>No standard.</strong> Every office draws and names things differently, often in more than one language.</li>
+<li><strong>Repeated units.</strong> The same flat appears many times, mirrored or rotated, with the same names.</li>
+<li><strong>Imperfect drawings.</strong> Lines miss by a millimetre, content sits on the wrong layer, labels sit outside what they name.</li>
 </ul>
 </div>
 
-### 2.3 Why the obvious approaches fail
-
-| Approach | Why it is not enough |
-|---|---|
-| Explode everything and analyse the shapes | Loses the meaning carried by symbols, and multiplies the data |
-| Send the drawing to a language model | Far too large, and models cannot do exact geometry or counting |
-| Image recognition on a rendered plan | Loses exact coordinates, units and identity; cannot be traced back |
-| Manual templates per project | Does not scale, and every customer draws differently |
-
-The system uses none of these alone. It builds a structured understanding first, and
-treats the language model as a reader of that structure rather than of the file.
-
-<div class="figure-row">
+<h3>2.3 Why the obvious approaches fail</h3>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Approach</th>
+<th>Why it is not enough</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Explode everything and analyse the shapes</td><td>Symbols lose their meaning, and the data multiplies</td></tr>
+<tr><td>Send the file to a language model</td><td>Too large, and no exact geometry or counting</td></tr>
+<tr><td>Image recognition on a rendered plan</td><td>Loses coordinates, units and identity</td></tr>
+<tr><td>Manual templates per project</td><td>Does not scale; every customer draws differently</td></tr>
+</tbody>
+</table></div>
+<p>The drawings themselves also vary. The system has been run on the range below, from a single flat to a whole block.</p>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Drawing</th>
+<th>Size</th>
+<th>What it contains</th>
+<th>Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Single unit plan (one flat)</td><td>about 6,000 entities</td><td>rooms, doors, fixtures, marks, dimensions</td><td>Low</td></tr>
+<tr><td>Multi-unit floor plan</td><td>about 25,000 entities</td><td>about 80 rooms across repeated unit types, mirrored and rotated, plus cores, shafts and stairs</td><td>Medium</td></tr>
+<tr><td>Block plan (several buildings on one sheet)</td><td>larger again</td><td>every unit of every building, repeated, with shared site elements</td><td>High</td></tr>
+</tbody>
+</table></div>
+<p>The system uses none of these approaches alone. It builds a structured understanding first, and
+treats the language model as a reader of that structure rather than of the file.</p>
+<div class="figure-row figure-row-small figure-row-equal">
 <figure>
 <img src="2_cad_data_line.png" alt="A raw DWG floor plan as the CAD canvas shows it: lines, text and symbols with no meaning attached">
 <figcaption>The drawing as the CAD canvas shows it: lines, text and symbols, with nothing saying what any of them is.</figcaption>
