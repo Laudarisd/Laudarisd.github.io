@@ -15,8 +15,8 @@ answers questions about it. It inspects the whole drawing and prepares the repor
 </div>
 
 <figure>
-<img src="images/addon-overview.png" alt="CAD Parser add-on open inside the CAD application, showing a floor plan, the chat panel, and highlighted space masks">
-<figcaption>The add-on open inside the CAD application, with a drawing, the chat panel, and a highlighted answer.</figcaption>
+<img src="1_main_view.png" alt="The CAD Parser add-on inside the CAD application: floor plan, entity browser, chat, AI log, and the inspection report window">
+<figcaption>The add-on inside the CAD application: the drawing on the left, the entity browser, chat and AI log on the right, and the inspection report window below.</figcaption>
 </figure>
 
 ---
@@ -95,10 +95,16 @@ A floor plan file
 The system uses none of these alone. It builds a structured understanding first, and
 treats the language model as a reader of that structure rather than of the file.
 
+<div class="figure-row">
 <figure>
-<img src="images/raw-dwg.png" alt="A raw DWG floor plan drawn as plain vectors and text, with no meaning attached">
-<figcaption>A raw DWG drawing as the computer sees it: primitives, text, and nested symbols with no meaning attached.</figcaption>
+<img src="2_cad_data_line.png" alt="A raw DWG floor plan as the CAD canvas shows it: lines, text and symbols with no meaning attached">
+<figcaption>The drawing as the CAD canvas shows it: lines, text and symbols, with nothing saying what any of them is.</figcaption>
 </figure>
+<figure>
+<img src="1_cad_data_all.png" alt="One extracted line entity as JSON: id, handle, type, layer, start and end points, length, angle and bounds">
+<figcaption>The same drawing as data: one line entity with its layer, endpoints, length and bounds. Thousands of these make a plan, and none of them says "wall".</figcaption>
+</figure>
+</div>
 
 ---
 
@@ -181,9 +187,9 @@ to the drawing. That is what allows the assistant to highlight its own evidence.
 approximated are not presented as the same thing, and anything judged on top of an
 approximate result inherits that lower confidence.
 
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>What the system recovered, drawn over the plan: spaces, openings and fixtures, each with its confidence.</figcaption>
+<figure>
+<img src="2_semantic_info_extraction.png" alt="Room and wall masks drawn over the floor plan in their class colours, with the assistant's explanation in the chat panel">
+<figcaption>What the system recovered, drawn over the plan: room and wall masks in their class colours, with the assistant explaining what was highlighted.</figcaption>
 </figure>
 
 ### 4.2 From a user's point of view
@@ -201,10 +207,6 @@ flowchart TD
     I --> J[Approve or reject]
 ```
 
-<figure>
-<img src="images/extraction-browser.png" alt="The extraction browser listing the entities found in a drawing: lines, polylines, arcs, splines and text">
-<figcaption>The extraction browser: the list of spaces, objects and openings found in a drawing.</figcaption>
-</figure>
 
 ### 4.3 Capability inventory
 
@@ -273,10 +275,6 @@ flowchart LR
     M --> A[Answer + highlight]
 ```
 
-<figure>
-<img src="images/chat-answer.png" alt="A question answered in chat as a table of doors with their codes, sizes and connected rooms">
-<figcaption>A question asked in chat and its answer, with the evidence highlighted on the drawing.</figcaption>
-</figure>
 
 ### 5.1 Why not simply give the model the file
 
@@ -482,15 +480,19 @@ Without that discipline, the improvement would have shipped with the damage atta
 ### 9.1 Visual results
 
 <div class="figure-row">
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>Before: the drawing as it comes from CAD.</figcaption>
+<figure>
+<img src="3_inspecting_walls.png" alt="The assistant adds a wall polygon summary to the inspection report, shown in Korean in the report window">
+<figcaption>Wall inspection: the assistant adds a wall polygon summary to the report, written in Korean and English.</figcaption>
 </figure>
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>After: every recovered space, opening and fixture drawn over the same plan.</figcaption>
+<figure>
+<img src="4_inspecting_doors.png" alt="A door table in chat with code, width, height, source and connected rooms, and the matching doors highlighted on the drawing">
+<figcaption>Door inspection: every door with its code, size and the rooms it connects, and the matching doors highlighted on the drawing.</figcaption>
 </figure>
 </div>
+<figure>
+<img src="5_more_results.png" alt="Only the Bedroom 1 room masks highlighted on a different drawing, with their areas listed in chat">
+<figcaption>A follow-up question on another drawing: only the Bedroom 1 spaces are highlighted, with the area of each listed in the chat.</figcaption>
+</figure>
 
 ### 9.2 Demonstrations
 
@@ -534,10 +536,6 @@ The states that are neither pass nor fail matter most. A rule that cannot be jud
 on this drawing says so. That is the difference between a tool a reviewer trusts and
 one they stop reading.
 
-<figure>
-<img src="images/inspection-report.png" alt="A page of the inspection report in Korean, with a door summary table and the agent's tool log">
-<figcaption>A page of the inspection report: Korean and English together, with the evidence behind each finding.</figcaption>
-</figure>
 
 ---
 

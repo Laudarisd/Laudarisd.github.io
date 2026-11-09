@@ -128,8 +128,8 @@ answers questions about it. It inspects the whole drawing and prepares the repor
 </div>
 
 <figure>
-<img src="images/addon-overview.png" loading="lazy" alt="CAD Parser add-on open inside the CAD application, showing a floor plan, the chat panel, and highlighted space masks">
-<figcaption>The add-on open inside the CAD application, with a drawing, the chat panel, and a highlighted answer.</figcaption>
+<img src="1_main_view.png" loading="lazy" alt="The CAD Parser add-on inside the CAD application: floor plan, entity browser, chat, AI log, and the inspection report window">
+<figcaption>The add-on inside the CAD application: the drawing on the left, the entity browser, chat and AI log on the right, and the inspection report window below.</figcaption>
 </figure>
 
 <hr />
@@ -212,10 +212,16 @@ Everything that follows exists because of that one fact.</p>
 </table></div>
 <p>The system uses none of these alone. It builds a structured understanding first, and
 treats the language model as a reader of that structure rather than of the file.</p>
+<div class="figure-row">
 <figure>
-<img src="images/raw-dwg.png" loading="lazy" alt="A raw DWG floor plan drawn as plain vectors and text, with no meaning attached">
-<figcaption>A raw DWG drawing as the computer sees it: primitives, text, and nested symbols with no meaning attached.</figcaption>
+<img src="2_cad_data_line.png" loading="lazy" alt="A raw DWG floor plan as the CAD canvas shows it: lines, text and symbols with no meaning attached">
+<figcaption>The drawing as the CAD canvas shows it: lines, text and symbols, with nothing saying what any of them is.</figcaption>
 </figure>
+<figure>
+<img src="1_cad_data_all.png" loading="lazy" alt="One extracted line entity as JSON: id, handle, type, layer, start and end points, length, angle and bounds">
+<figcaption>The same drawing as data: one line entity with its layer, endpoints, length and bounds. Thousands of these make a plan, and none of them says "wall".</figcaption>
+</figure>
+</div>
 
 <hr />
 <h2 id="3-parsing-and-storage">3. Parsing and storage</h2>
@@ -280,9 +286,9 @@ to the drawing. That is what allows the assistant to highlight its own evidence.
 <p><strong>Confidence is explicit.</strong> A result that was recovered cleanly and one that was
 approximated are not presented as the same thing, and anything judged on top of an
 approximate result inherits that lower confidence.</p>
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>What the system recovered, drawn over the plan: spaces, openings and fixtures, each with its confidence.</figcaption>
+<figure>
+<img src="2_semantic_info_extraction.png" loading="lazy" alt="Room and wall masks drawn over the floor plan in their class colours, with the assistant's explanation in the chat panel">
+<figcaption>What the system recovered, drawn over the plan: room and wall masks in their class colours, with the assistant explaining what was highlighted.</figcaption>
 </figure>
 
 <h3>4.2 From a user's point of view</h3>
@@ -297,10 +303,6 @@ approximate result inherits that lower confidence.</p>
     D --> I[Propose a change]
     I --> J[Approve or reject]
 </pre>
-<figure>
-<img src="images/extraction-browser.png" loading="lazy" alt="The extraction browser listing the entities found in a drawing: lines, polylines, arcs, splines and text">
-<figcaption>The extraction browser: the list of spaces, objects and openings found in a drawing.</figcaption>
-</figure>
 
 <h3>4.3 Capability inventory</h3>
 <pre><code>Capabilities
@@ -361,10 +363,6 @@ result. It is not asked to understand the drawing. It is asked to understand the
     O --> M
     M --> A[Answer + highlight]
 </pre>
-<figure>
-<img src="images/chat-answer.png" loading="lazy" alt="A question answered in chat as a table of doors with their codes, sizes and connected rooms">
-<figcaption>A question asked in chat and its answer, with the evidence highlighted on the drawing.</figcaption>
-</figure>
 
 <h3>5.1 Why not simply give the model the file</h3>
 <div class="table-scroll"><table class="component-table">
@@ -632,15 +630,19 @@ Without that discipline, the improvement would have shipped with the damage atta
 </table></div>
 <h3>9.1 Visual results</h3>
 <div class="figure-row">
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>Before: the drawing as it comes from CAD.</figcaption>
+<figure>
+<img src="3_inspecting_walls.png" loading="lazy" alt="The assistant adds a wall polygon summary to the inspection report, shown in Korean in the report window">
+<figcaption>Wall inspection: the assistant adds a wall polygon summary to the report, written in Korean and English.</figcaption>
 </figure>
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>After: every recovered space, opening and fixture drawn over the same plan.</figcaption>
+<figure>
+<img src="4_inspecting_doors.png" loading="lazy" alt="A door table in chat with code, width, height, source and connected rooms, and the matching doors highlighted on the drawing">
+<figcaption>Door inspection: every door with its code, size and the rooms it connects, and the matching doors highlighted on the drawing.</figcaption>
 </figure>
 </div>
+<figure>
+<img src="5_more_results.png" loading="lazy" alt="Only the Bedroom 1 room masks highlighted on a different drawing, with their areas listed in chat">
+<figcaption>A follow-up question on another drawing: only the Bedroom 1 spaces are highlighted, with the area of each listed in the chat.</figcaption>
+</figure>
 
 <h3>9.2 Demonstrations</h3>
 <p>Demonstrations cover:</p>
@@ -677,10 +679,6 @@ Without that discipline, the improvement would have shipped with the damage atta
 <p>The states that are neither pass nor fail matter most. A rule that cannot be judged
 on this drawing says so. That is the difference between a tool a reviewer trusts and
 one they stop reading.</p>
-<figure>
-<img src="images/inspection-report.png" loading="lazy" alt="A page of the inspection report in Korean, with a door summary table and the agent's tool log">
-<figcaption>A page of the inspection report: Korean and English together, with the evidence behind each finding.</figcaption>
-</figure>
 
 <hr />
 <h2 id="11-graph-database">11. Graph database</h2>
@@ -862,6 +860,11 @@ the AI never has to guess.</p>
 <p><strong>이 문서에 담긴 내용에 대하여.</strong> 이 문서는 문제, 기능, 결과를 설명해요. 그 뒤에 있는
 방법은 의도적으로 적지 않았어요. 방법 자체가 제품이기 때문이에요.</p>
 </blockquote>
+<figure>
+<img src="1_main_view.png" loading="lazy" alt="CAD 애플리케이션 안의 CAD Parser 애드온: 평면도, Entity 브라우저, Chat, AI Log, 검사 보고서 창">
+<figcaption>CAD 애플리케이션 안에서 열린 애드온: 왼쪽은 도면, 오른쪽은 Entity 브라우저·Chat·AI Log, 아래는 검사 보고서 창이에요.</figcaption>
+</figure>
+
 <hr />
 <h2 id="1-소개">1. 소개</h2>
 <p>건축 도면에는 건물에 필요한 모든 것이 담겨 있지만, 컴퓨터는 그 안에서 방, 문, 욕실을
@@ -944,6 +947,17 @@ the AI never has to guess.</p>
 </table></div>
 <p>이 시스템은 이 중 어느 것도 단독으로 쓰지 않아요. 먼저 구조화된 이해를 만들고, 언어
 모델은 파일이 아니라 그 구조를 읽는 독자로 다뤄요.</p>
+<div class="figure-row">
+<figure>
+<img src="2_cad_data_line.png" loading="lazy" alt="CAD 캔버스에 보이는 그대로의 원본 DWG 평면도: 의미가 붙지 않은 선, 텍스트, 기호">
+<figcaption>CAD 캔버스에 보이는 그대로의 도면: 선, 텍스트, 기호뿐이고 무엇인지 말해 주는 정보는 없어요.</figcaption>
+</figure>
+<figure>
+<img src="1_cad_data_all.png" loading="lazy" alt="추출된 Line Entity 하나의 JSON: id, handle, type, layer, 시작점과 끝점, 길이, 각도, bounds">
+<figcaption>같은 도면을 데이터로 본 모습: Line Entity 하나의 Layer, 양 끝점, 길이, Bounds. 이런 것이 수천 개 모여 평면이 되지만 어느 것도 "벽"이라고 말하지 않아요.</figcaption>
+</figure>
+</div>
+
 <hr />
 <h2 id="3-파싱과-저장">3. 파싱과 저장</h2>
 <p>첫 단계는 도면을 읽어 기계가 다룰 수 있는 형태로 적어 두는 일이에요.</p>
@@ -985,6 +999,11 @@ the AI never has to guess.</p>
 유지해요. 그래서 어시스턴트가 자기 근거를 직접 하이라이트할 수 있어요.</p>
 <p><strong>신뢰도는 명시적이에요.</strong> 깨끗하게 복원된 결과와 근사된 결과는 같은 것으로 제시되지
 않고, 근사 결과 위에서 내려진 판정은 그 낮은 신뢰도를 그대로 물려받아요.</p>
+<figure>
+<img src="2_semantic_info_extraction.png" loading="lazy" alt="평면 위에 클래스 색으로 그린 Room·Wall Mask와 Chat 패널의 어시스턴트 설명">
+<figcaption>시스템이 복원한 내용을 평면 위에 그린 모습: Room·Wall Mask를 클래스 색으로 표시하고, 무엇을 하이라이트했는지 어시스턴트가 Chat에서 설명해요.</figcaption>
+</figure>
+
 <h3>4.2 사용자 관점에서</h3>
 <pre class="mermaid">flowchart TD
     A[CAD에서 도면 열기] --> B[추출]
@@ -1265,29 +1284,24 @@ the AI never has to guess.</p>
 </tbody>
 </table></div>
 <h3>9.1 시각적 결과</h3>
+<div class="figure-row">
 <figure>
-<img src="images/raw-dwg.png" loading="lazy" alt="CAD에서 열린 원본 도면: 의미가 붙지 않은 기하 요소, 텍스트, 기호">
-<figcaption>CAD에서 열린 원본 도면: 의미가 붙어 있지 않은 기하 요소, 텍스트, 기호.</figcaption>
+<img src="3_inspecting_walls.png" loading="lazy" alt="어시스턴트가 검사 보고서에 Wall Polygon 요약을 추가하고, 보고서 창에 한국어로 표시된 모습">
+<figcaption>벽 검사: 어시스턴트가 Wall Polygon 요약을 한국어와 영어로 보고서에 추가해요.</figcaption>
 </figure>
-
 <figure>
-<img src="images/addon-overview.png" loading="lazy" alt="CAD 애플리케이션 안에서 열린 CAD Parser 애드온: 도면, 채팅 패널, 강조된 공간 마스크">
-<figcaption>시스템이 복원한 내용을 평면 위에 그린 모습: 공간, 개구부, 기구, 각각의 신뢰도.</figcaption>
+<img src="4_inspecting_doors.png" loading="lazy" alt="Chat의 문 표(코드, 너비, 높이, 출처, 연결된 방)와 도면에 하이라이트된 해당 문">
+<figcaption>문 검사: 모든 문의 코드, 크기, 연결된 방을 표로 정리하고, 해당 문을 도면에 하이라이트해요.</figcaption>
 </figure>
-
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>반투명 마스크로 표시된 공간: 면적으로 읽히면서도 아래 평면은 계속 읽을 수 있어요.</figcaption>
+</div>
+<figure>
+<img src="5_more_results.png" loading="lazy" alt="다른 도면에서 침실1 Room Mask만 하이라이트하고 면적을 Chat에 나열한 모습">
+<figcaption>다른 도면에서의 후속 질문: 침실1 공간만 하이라이트하고, 각 면적을 Chat에 나열해요.</figcaption>
 </figure>
 
 <figure class="figure-placeholder">
 <div class="placeholder-box"><span>Image</span></div>
 <figcaption>그래프 데이터베이스 뷰: 선택한 노드와 직접 연결, 캔버스와 연동.</figcaption>
-</figure>
-
-<figure>
-<img src="images/inspection-report.png" loading="lazy" alt="검사 보고서의 한 페이지: 한국어 문 요약 표와 에이전트 도구 로그">
-<figcaption>검사 보고서의 한 페이지: 한국어와 영어 함께, 판정마다 근거 표시.</figcaption>
 </figure>
 
 <h3>9.2 시연</h3>

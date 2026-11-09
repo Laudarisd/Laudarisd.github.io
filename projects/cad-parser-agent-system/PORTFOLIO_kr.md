@@ -7,6 +7,11 @@ CAD 프로그램용 애드온이에요. DWG 평면도를 읽고, 그 안에 무�
 > **이 문서에 담긴 내용에 대하여.** 이 문서는 문제, 기능, 결과를 설명해요. 그 뒤에 있는
 > 방법은 의도적으로 적지 않았어요. 방법 자체가 제품이기 때문이에요.
 
+<figure>
+<img src="1_main_view.png" alt="CAD 애플리케이션 안의 CAD Parser 애드온: 평면도, Entity 브라우저, Chat, AI Log, 검사 보고서 창">
+<figcaption>CAD 애플리케이션 안에서 열린 애드온: 왼쪽은 도면, 오른쪽은 Entity 브라우저·Chat·AI Log, 아래는 검사 보고서 창이에요.</figcaption>
+</figure>
+
 ---
 
 ## 1. 소개
@@ -91,6 +96,17 @@ DWG 파일은 기하 요소로 이루어진 그림이에요. 그 안의 어떤 �
 이 시스템은 이 중 어느 것도 단독으로 쓰지 않아요. 먼저 구조화된 이해를 만들고, 언어
 모델은 파일이 아니라 그 구조를 읽는 독자로 다뤄요.
 
+<div class="figure-row">
+<figure>
+<img src="2_cad_data_line.png" alt="CAD 캔버스에 보이는 그대로의 원본 DWG 평면도: 의미가 붙지 않은 선, 텍스트, 기호">
+<figcaption>CAD 캔버스에 보이는 그대로의 도면: 선, 텍스트, 기호뿐이고 무엇인지 말해 주는 정보는 없어요.</figcaption>
+</figure>
+<figure>
+<img src="1_cad_data_all.png" alt="추출된 Line Entity 하나의 JSON: id, handle, type, layer, 시작점과 끝점, 길이, 각도, bounds">
+<figcaption>같은 도면을 데이터로 본 모습: Line Entity 하나의 Layer, 양 끝점, 길이, Bounds. 이런 것이 수천 개 모여 평면이 되지만 어느 것도 "벽"이라고 말하지 않아요.</figcaption>
+</figure>
+</div>
+
 ---
 
 ## 3. 파싱과 저장
@@ -149,6 +165,11 @@ flowchart LR
 
 **신뢰도는 명시적이에요.** 깨끗하게 복원된 결과와 근사된 결과는 같은 것으로 제시되지
 않고, 근사 결과 위에서 내려진 판정은 그 낮은 신뢰도를 그대로 물려받아요.
+
+<figure>
+<img src="2_semantic_info_extraction.png" alt="평면 위에 클래스 색으로 그린 Room·Wall Mask와 Chat 패널의 어시스턴트 설명">
+<figcaption>시스템이 복원한 내용을 평면 위에 그린 모습: Room·Wall Mask를 클래스 색으로 표시하고, 무엇을 하이라이트했는지 어시스턴트가 Chat에서 설명해요.</figcaption>
+</figure>
 
 ### 4.2 사용자 관점에서
 
@@ -380,29 +401,24 @@ flowchart LR
 
 ### 9.1 시각적 결과
 
+<div class="figure-row">
 <figure>
-<img src="images/raw-dwg.png" alt="CAD에서 열린 원본 도면: 의미가 붙지 않은 기하 요소, 텍스트, 기호">
-<figcaption>CAD에서 열린 원본 도면: 의미가 붙어 있지 않은 기하 요소, 텍스트, 기호.</figcaption>
+<img src="3_inspecting_walls.png" alt="어시스턴트가 검사 보고서에 Wall Polygon 요약을 추가하고, 보고서 창에 한국어로 표시된 모습">
+<figcaption>벽 검사: 어시스턴트가 Wall Polygon 요약을 한국어와 영어로 보고서에 추가해요.</figcaption>
 </figure>
-
 <figure>
-<img src="images/addon-overview.png" alt="CAD 애플리케이션 안에서 열린 CAD Parser 애드온: 도면, 채팅 패널, 강조된 공간 마스크">
-<figcaption>시스템이 복원한 내용을 평면 위에 그린 모습: 공간, 개구부, 기구, 각각의 신뢰도.</figcaption>
+<img src="4_inspecting_doors.png" alt="Chat의 문 표(코드, 너비, 높이, 출처, 연결된 방)와 도면에 하이라이트된 해당 문">
+<figcaption>문 검사: 모든 문의 코드, 크기, 연결된 방을 표로 정리하고, 해당 문을 도면에 하이라이트해요.</figcaption>
 </figure>
-
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>반투명 마스크로 표시된 공간: 면적으로 읽히면서도 아래 평면은 계속 읽을 수 있어요.</figcaption>
+</div>
+<figure>
+<img src="5_more_results.png" alt="다른 도면에서 침실1 Room Mask만 하이라이트하고 면적을 Chat에 나열한 모습">
+<figcaption>다른 도면에서의 후속 질문: 침실1 공간만 하이라이트하고, 각 면적을 Chat에 나열해요.</figcaption>
 </figure>
 
 <figure class="figure-placeholder">
 <div class="placeholder-box"><span>Image</span></div>
 <figcaption>그래프 데이터베이스 뷰: 선택한 노드와 직접 연결, 캔버스와 연동.</figcaption>
-</figure>
-
-<figure>
-<img src="images/inspection-report.png" alt="검사 보고서의 한 페이지: 한국어 문 요약 표와 에이전트 도구 로그">
-<figcaption>검사 보고서의 한 페이지: 한국어와 영어 함께, 판정마다 근거 표시.</figcaption>
 </figure>
 
 ### 9.2 시연
