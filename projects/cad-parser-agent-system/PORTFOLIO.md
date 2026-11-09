@@ -423,4 +423,4 @@ Questions about how things connect are answered by walking this graph, and selec
 <p>The system reads a DWG drawing, parses every entity into a database, recovers spaces, walls, openings and marks, and stores their relations in a graph.
 An AI agent then answers questions, inspects the drawing and writes bilingual reports through a small set of tools, with every answer highlighted on the drawing as evidence.
 Nothing in the drawing changes without human approval.
-The project is in development and is tested on real residential drawings, from a single flat to a whole block.</p>
+It is tested on real residential drawings, from a single flat to a whole block.</p>
