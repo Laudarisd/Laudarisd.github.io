@@ -264,60 +264,56 @@ hasWall, hasDoor, hasWindow, adjacent, sharesWall and markedBy. Questions about 
 
 ## 5. Why an AI agent
 
-Real users ask sideways questions:
-
-- *Which bathrooms have no ventilation?*
-- *Make a table of the structure around this kitchen, with lengths.*
-- *How many doors of this code are in the drawing, and where?*
-- *Is anything missing in the balconies?*
-- *Put that in the report, in both languages.*
-
-An agent turns an open question into a short chain of exact lookups and explains the
-result. It is not asked to understand the drawing. It is asked to understand the
-*question*, and then to use tools that already understand the drawing.
-
-```mermaid
-flowchart LR
+<p>Users ask open questions such as <em>Which bathrooms have no ventilation?</em>, <em>How many doors of this code are there, and where?</em>
+or <em>Put that in the report, in both languages.</em></p>
+<p>The agent does not read the drawing. It reads the question, calls the tools below, and the tools read the structured knowledge.
+The answer comes back with its evidence highlighted on the drawing.</p>
+<pre class="mermaid">flowchart LR
     U[Question] --> M[Agent]
     M --> T[Tools over the<br/>structured knowledge]
     T --> O[Evidence]
     O --> M
     M --> A[Answer + highlight]
-```
+</pre>
 
+<h3>5.1 Why not simply give the model the file</h3>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th></th>
+<th>Model reads the file</th>
+<th>Model reads the structured knowledge</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Size</td><td>too large for the model</td><td>a small, relevant slice</td></tr>
+<tr><td>Exactness</td><td>approximate</td><td>exact and repeatable</td></tr>
+<tr><td>Traceability</td><td>none</td><td>every value points back to the drawing</td></tr>
+</tbody>
+</table></div>
+<p>Geometry and counting are done by code. The model is used for language and intent, which is what it is good at.</p>
 
-### 5.1 Why not simply give the model the file
-
-| | Model reads the drawing | Model reads the structured knowledge |
-|---|---|---|
-| Size | far beyond a usable context | a small, relevant slice |
-| Exactness | approximate, unstable | exact, repeatable |
-| Cost | pays again for every question | processed once, reused |
-| Traceability | none | every value carries its origin |
-| Reliability | varies per model and per run | the numbers do not depend on the model |
-
-The deterministic work is done deterministically. The model is used for language,
-intent and composition, which is what it is actually good at.
-
-### 5.2 What the agent can reach
-
-The assistant works through a small, named set of tools. The names are what a user
-sees in the activity log:
-
-| Tool | What the user gets |
-|---|---|
-| `find` | the items that match a description |
-| `count` | how many, with the same filters |
-| `measure` | sizes, clear widths, distances, with the source of each number |
-| `relate` | how spaces, openings and structure connect |
-| `highlight` | the answer shown on the drawing |
-| `inspection` | findings written into the report |
-| `modify` | a proposed change, never an applied one |
-| `create_block` | a new symbol built from a selection |
-| `data_scanner` | a raw sweep for anything the structured view missed |
-
-What each tool accepts, and the shape of what it returns, are part of the product
-and are not described here.
+<h3>5.2 What the agent can reach</h3>
+<p>The agent works through a small set of named tools. The tree below shows each tool call and what it gives back.</p>
+<pre class="mermaid">%%{init: {"flowchart": {"nodeSpacing": 10, "rankSpacing": 70}}}%%
+flowchart LR
+    A[AI agent] --> T[Tool calls]
+    T --> Q[Query]
+    Q --> find[find<br/>items matching a description]
+    Q --> count[count<br/>how many]
+    Q --> measure[measure<br/>sizes and distances, with source]
+    Q --> relate[relate<br/>how spaces, openings and walls connect]
+    T --> S[Show]
+    S --> highlight[highlight<br/>the answer drawn on the canvas]
+    T --> R[Report]
+    R --> inspection[inspection<br/>findings written into the report]
+    T --> C[Change]
+    C --> modify[modify<br/>a proposed change, needs approval]
+    C --> create_block[create_block<br/>a new symbol from a selection]
+    T --> X[Raw data]
+    X --> data_scanner[data_scanner<br/>a sweep of all entities]
+</pre>
+<p>What each tool accepts and returns is part of the product and is not described here.</p>
 
 ---
 

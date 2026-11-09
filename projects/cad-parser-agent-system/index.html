@@ -364,20 +364,16 @@ hasWall, hasDoor, hasWindow, adjacent, sharesWall and markedBy. Questions about 
 <figcaption>The ontology behind the graph database: each class with its properties, and the relations that connect them.</figcaption>
 </figure>
 
+
+<!-- ============================================================================= -->
+
 <hr />
 <div class="part-divider"><span>Agentic System</span></div>
 <h2 id="5-why-an-ai-agent">5. Why an AI agent</h2>
-<p>Real users ask sideways questions:</p>
-<ul>
-<li><em>Which bathrooms have no ventilation?</em></li>
-<li><em>Make a table of the structure around this kitchen, with lengths.</em></li>
-<li><em>How many doors of this code are in the drawing, and where?</em></li>
-<li><em>Is anything missing in the balconies?</em></li>
-<li><em>Put that in the report, in both languages.</em></li>
-</ul>
-<p>An agent turns an open question into a short chain of exact lookups and explains the
-result. It is not asked to understand the drawing. It is asked to understand the
-<em>question</em>, and then to use tools that already understand the drawing.</p>
+<p>Users ask open questions such as <em>Which bathrooms have no ventilation?</em>, <em>How many doors of this code are there, and where?</em>
+or <em>Put that in the report, in both languages.</em></p>
+<p>The agent does not read the drawing. It reads the question, calls the tools below, and the tools read the structured knowledge.
+The answer comes back with its evidence highlighted on the drawing.</p>
 <pre class="mermaid">flowchart LR
     U[Question] --> M[Agent]
     M --> T[Tools over the<br/>structured knowledge]
@@ -391,91 +387,39 @@ result. It is not asked to understand the drawing. It is asked to understand the
 <thead>
 <tr>
 <th></th>
-<th>Model reads the drawing</th>
+<th>Model reads the file</th>
 <th>Model reads the structured knowledge</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>Size</td>
-<td>far beyond a usable context</td>
-<td>a small, relevant slice</td>
-</tr>
-<tr>
-<td>Exactness</td>
-<td>approximate, unstable</td>
-<td>exact, repeatable</td>
-</tr>
-<tr>
-<td>Cost</td>
-<td>pays again for every question</td>
-<td>processed once, reused</td>
-</tr>
-<tr>
-<td>Traceability</td>
-<td>none</td>
-<td>every value carries its origin</td>
-</tr>
-<tr>
-<td>Reliability</td>
-<td>varies per model and per run</td>
-<td>the numbers do not depend on the model</td>
-</tr>
+<tr><td>Size</td><td>too large for the model</td><td>a small, relevant slice</td></tr>
+<tr><td>Exactness</td><td>approximate</td><td>exact and repeatable</td></tr>
+<tr><td>Traceability</td><td>none</td><td>every value points back to the drawing</td></tr>
 </tbody>
 </table></div>
-<p>The deterministic work is done deterministically. The model is used for language,
-intent and composition, which is what it is actually good at.</p>
+<p>Geometry and counting are done by code. The model is used for language and intent, which is what it is good at.</p>
+
 <h3>5.2 What the agent can reach</h3>
-<p>The assistant works through a small, named set of tools. The names are what a user
-sees in the activity log:</p>
-<div class="table-scroll"><table class="component-table">
-<thead>
-<tr>
-<th>Tool</th>
-<th>What the user gets</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>find</code></td>
-<td>the items that match a description</td>
-</tr>
-<tr>
-<td><code>count</code></td>
-<td>how many, with the same filters</td>
-</tr>
-<tr>
-<td><code>measure</code></td>
-<td>sizes, clear widths, distances, with the source of each number</td>
-</tr>
-<tr>
-<td><code>relate</code></td>
-<td>how spaces, openings and structure connect</td>
-</tr>
-<tr>
-<td><code>highlight</code></td>
-<td>the answer shown on the drawing</td>
-</tr>
-<tr>
-<td><code>inspection</code></td>
-<td>findings written into the report</td>
-</tr>
-<tr>
-<td><code>modify</code></td>
-<td>a proposed change, never an applied one</td>
-</tr>
-<tr>
-<td><code>create_block</code></td>
-<td>a new symbol built from a selection</td>
-</tr>
-<tr>
-<td><code>data_scanner</code></td>
-<td>a raw sweep for anything the structured view missed</td>
-</tr>
-</tbody>
-</table></div>
-<p>What each tool accepts, and the shape of what it returns, are part of the product
-and are not described here.</p>
+<p>The agent works through a small set of named tools. The tree below shows each tool call and what it gives back.</p>
+<pre class="mermaid">%%{init: {"flowchart": {"nodeSpacing": 10, "rankSpacing": 70}}}%%
+flowchart LR
+    A[AI agent] --> T[Tool calls]
+    T --> Q[Query]
+    Q --> find[find<br/>items matching a description]
+    Q --> count[count<br/>how many]
+    Q --> measure[measure<br/>sizes and distances, with source]
+    Q --> relate[relate<br/>how spaces, openings and walls connect]
+    T --> S[Show]
+    S --> highlight[highlight<br/>the answer drawn on the canvas]
+    T --> R[Report]
+    R --> inspection[inspection<br/>findings written into the report]
+    T --> C[Change]
+    C --> modify[modify<br/>a proposed change, needs approval]
+    C --> create_block[create_block<br/>a new symbol from a selection]
+    T --> X[Raw data]
+    X --> data_scanner[data_scanner<br/>a sweep of all entities]
+</pre>
+<p>What each tool accepts and returns is part of the product and is not described here.</p>
 <hr />
 <h2 id="6-the-agent-harness">6. The agent harness</h2>
 <p>The model is a small part of an agent. The harness is the rest, and it decides
