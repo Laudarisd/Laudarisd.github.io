@@ -516,6 +516,16 @@ html[lang="ko"] .project-status {
   margin-right: auto;
 }
 
+/* Height-limited figure: the image is at most 440px tall and its width follows, keeping the aspect ratio. */
+.project-article figure.figure-short img {
+  display: block;
+  max-height: 400px;
+  width: auto;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .project-article .figure-row-small {
   max-width: 960px;
   margin: 1.2rem auto 1.5rem;
