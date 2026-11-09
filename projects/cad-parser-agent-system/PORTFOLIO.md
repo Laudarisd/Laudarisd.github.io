@@ -51,6 +51,8 @@ flowchart LR
 
 ---
 
+<div class="part-divider"><span>Data Extraction</span></div>
+
 ## 2. The problem: a DWG is not a Model or a Raster Image
 
 <p>A DWG file is vector data stored in a closed binary format, which is difficult to read with simple algorithms or systems.
@@ -221,103 +223,46 @@ graph database.</p> -->
 
 ---
 
-## 4. What the system produces
+## 4. Semantic Relationships
 
-<div class="callout callout-problem">
-<h4>Problems this stage solves</h4>
-<ul>
-<li>Spaces, objects, openings and marks must be recognised and linked to each other, not just listed.</li>
-<li>A cleanly recovered result and an approximated one must not look the same to the user.</li>
-<li>Every item needs the drawing entities behind it, so the assistant can show its evidence.</li>
-</ul>
-</div>
+<p>Once the entities are parsed and stored, the next step is to find what they mean: which lines form a space, which form a wall,
+and how spaces, walls, doors and marks relate to each other. The result is stored in a graph database.</p>
 
-### 4.1 Structured knowledge
-
-```
-For one drawing
-├── Spaces           name, kind, area, confidence, evidence
-├── Objects          kind, position, the space it belongs to, evidence
-├── Openings         doors and windows, with sizes and the source of each size
-├── Marks            official codes and the openings they describe
-├── Relations        opening to spaces, space to space, space to its structure
-├── Inventory        what the drawing is made of, and how much of each
-└── Provenance       for every item, the exact drawing entities behind it
-```
-
-**Provenance is the feature.** Every space, area, size and finding keeps a link back
-to the drawing. That is what allows the assistant to highlight its own evidence.
-
-**Confidence is explicit.** A result that was recovered cleanly and one that was
-approximated are not presented as the same thing, and anything judged on top of an
-approximate result inherits that lower confidence.
-
+<h3>4.1 Semantic Relation Search</h3>
+<pre class="mermaid">flowchart LR
+    A[Input<br/>DWG drawing] --> B[Entity parsing<br/>and database]
+    B --> C[Semantic search:<br/>spaces, walls, openings]
+    C --> D[(Graph database)]
+    D --> E[Output<br/>answers, highlights, reports]
+</pre>
+<h4>4.1.1 Finding polygons for spaces</h4>
+<p>Each space is found as a closed polygon on the plan and stored with its name, its area and the drawing entities behind it.</p>
+<h4>4.1.2 Finding walls and boundaries</h4>
+<p>Wall polygons are found with their thickness and length, and each space is linked to the walls that bound it.</p>
+<div class="figure-row figure-row-small figure-row-equal">
 <figure>
 <img src="2_semantic_info_extraction.png" alt="Room and wall masks drawn over the floor plan in their class colours, with the assistant's explanation in the chat panel">
-<figcaption>What the system recovered, drawn over the plan: room and wall masks in their class colours, with the assistant explaining what was highlighted.</figcaption>
+<figcaption>Spaces: the room and wall masks found in a drawing, drawn over the plan in their class colours.</figcaption>
 </figure>
+<figure>
+<img src="3_inspecting_walls.png" alt="The wall polygon summary in the report window: count, thickness range and length range">
+<figcaption>Walls: the wall polygons found in a drawing, summarised with their count, thickness range and length range.</figcaption>
+</figure>
+</div>
 
-### 4.2 From a user's point of view
-
-```mermaid
-flowchart TD
-    A[Open a drawing in CAD] --> B[Extract]
-    B --> C[Browse what was found]
-    C --> D[Ask questions in chat]
-    D --> E[See the answer highlighted<br/>on the drawing]
-    E --> F[Add findings to the report]
-    F --> G[Export the report]
-    C --> H[Explore the graph database]
-    D --> I[Propose a change]
-    I --> J[Approve or reject]
-```
-
-
-### 4.3 Capability inventory
-
-```
-Capabilities
-├── Reading
-│   ├── full extraction with stable identity
-│   ├── symbol resolution to real world coordinates
-│   ├── external references included
-│   └── unit handling, so every result is in metres
-├── Understanding
-│   ├── spaces of every kind, including service and utility spaces
-│   ├── objects: doors, windows, sanitary fixtures, kitchen fittings, furniture
-│   ├── marks matched to the openings they describe
-│   └── relations between spaces, openings and structure
-├── Asking
-│   ├── find, count and measure anything the system knows about
-│   ├── walk the relations
-│   ├── answer in the language of the question
-│   └── show every answer on the drawing
-├── Inspecting
-│   ├── a rule set over spaces and their contents
-│   ├── a result state per rule per space, including "cannot be judged"
-│   └── findings collected into an editable report
-├── Reporting
-│   ├── one document per drawing, Korean and English together
-│   ├── content added straight from the conversation
-│   └── export to office formats
-└── Changing (always proposed, never automatic)
-    ├── create, edit, delete and reorganise drawing content
-    ├── move or copy content between groupings
-    └── a full journal of everything applied
-```
+<h3>4.2 Relationship Search</h3>
+<p>The recovered items are connected in an ontology: Room, Wall, WallLine, Door, Window, Fixture and Mark, with relations such as
+hasWall, hasDoor, hasWindow, adjacent, sharesWall and markedBy. Questions about the drawing are answered by walking these relations.</p>
+<figure class="figure-small">
+<img src="ontology.png" alt="The ontology graph: Room, Wall, WallLine, Door, Window, Fixture and Mark classes with their properties and the relations between them">
+<figcaption>The ontology behind the graph database: each class with its properties, and the relations that connect them.</figcaption>
+</figure>
 
 ---
 
-## 5. Why an AI agent
+<div class="part-divider"><span>Agentic System</span></div>
 
-<div class="callout callout-problem">
-<h4>Problems this section addresses</h4>
-<ul>
-<li>A fixed set of reports only answers the questions someone thought of in advance.</li>
-<li>Real users ask sideways questions that combine finding, counting, measuring and relating.</li>
-<li>A language model cannot be trusted with exact geometry, counting, or a file far larger than its context.</li>
-</ul>
-</div>
+## 5. Why an AI agent
 
 Real users ask sideways questions:
 
@@ -378,16 +323,6 @@ and are not described here.
 
 ## 6. The agent harness
 
-<div class="callout callout-problem">
-<h4>Problems this section addresses</h4>
-<ul>
-<li>A model on its own retries silently, drifts out of scope, and loses track of long sessions.</li>
-<li>Numbers must not change with the model that happens to be configured.</li>
-<li>Cost, timing and failures have to be visible, or an agent cannot be debugged.</li>
-<li>Some drawings may not leave the building, so a self-hosted model must be an option.</li>
-</ul>
-</div>
-
 The model is a small part of an agent. The harness is the rest, and it decides
 whether the thing survives real use.
 
@@ -437,15 +372,6 @@ agent system.
 
 ## 7. Interaction and safety
 
-<div class="callout callout-problem">
-<h4>Problems this section addresses</h4>
-<ul>
-<li>An answer that cannot be seen on the drawing is hard to trust.</li>
-<li>Evidence drawn on the canvas must never alter the customer's file.</li>
-<li>Changing a drawing is irreversible, so it must be slow, explicit and reviewable.</li>
-</ul>
-</div>
-
 ### 7.1 Showing the work
 
 Results are drawn directly on the CAD canvas without altering the drawing: evidence
@@ -485,15 +411,6 @@ actually happened rather than what it suggested.
 ---
 
 ## 8. Reliability engineering
-
-<div class="callout callout-problem">
-<h4>Problems this section addresses</h4>
-<ul>
-<li>Correctness on one drawing is luck; it has to be proven on drawings the system was not developed against.</li>
-<li>Benchmarks that leak names, identifiers or numbers can be gamed.</li>
-<li>A fix for one case can quietly damage twenty others.</li>
-</ul>
-</div>
 
 ```
 Quality approach
@@ -571,15 +488,6 @@ Demonstrations cover:
 
 ## 10. Inspection and reporting
 
-<div class="callout callout-problem">
-<h4>Problems this section addresses</h4>
-<ul>
-<li>Rules have to be judged per space, and some cannot be judged on a given drawing at all.</li>
-<li>A pass/fail-only tool hides the cases a reviewer most needs to see.</li>
-<li>Findings must become an editable, bilingual document with the evidence attached.</li>
-</ul>
-</div>
-
 The inspection layer asks whether each space contains what it must contain.
 
 ```
@@ -605,15 +513,6 @@ one they stop reading.
 ---
 
 ## 11. Graph database
-
-<div class="callout callout-problem">
-<h4>Problems this section addresses</h4>
-<ul>
-<li>A drawing is a web of things that refer to each other, not a list; questions about it are relational.</li>
-<li>In tables, every new relational question is another join; the schema has to be reshaped for each new relation type.</li>
-<li>A relation that cannot be traced back to the drawing is just an assertion.</li>
-</ul>
-</div>
 
 A mark describes a door, a door joins two spaces, a space touches another space, a
 fixture belongs to a space. Storing that as a graph lets a question be answered by

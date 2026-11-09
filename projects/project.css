@@ -519,7 +519,7 @@ html[lang="ko"] .project-status {
 /* Height-limited figure: the image is at most 440px tall and its width follows, keeping the aspect ratio. */
 .project-article figure.figure-short img {
   display: block;
-  max-height: 400px;
+  max-height: 440px;
   width: auto;
   max-width: 100%;
   margin-left: auto;
@@ -963,4 +963,26 @@ html[data-theme="dark"] {
 
 .back-to-top:hover {
   border-color: var(--accent);
+}
+
+/* Part dividers: a labelled band that splits the case study into its big parts. */
+.project-article .part-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.5rem 0 1.5rem;
+  color: var(--accent);
+  font-family: "Manrope", "Noto Sans KR", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.project-article .part-divider::before,
+.project-article .part-divider::after {
+  content: "";
+  flex: 1;
+  border-top: 2px solid var(--accent);
+  opacity: 0.5;
 }
