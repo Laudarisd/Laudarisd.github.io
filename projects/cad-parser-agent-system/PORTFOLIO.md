@@ -308,8 +308,11 @@ flowchart LR
     T --> R[Report]
     R --> inspection[inspection<br/>findings written into the report]
     T --> C[Change]
-    C --> modify[modify<br/>a proposed change, needs approval]
+    C --> draw[draw<br/>new geometry added to the drawing]
+    C --> modify[modify<br/>a proposed change to existing items]
+    C --> delete[delete<br/>removes the selected items]
     C --> create_block[create_block<br/>a new symbol from a selection]
+    C -.-> AP[every change needs<br/>human approval]
     T --> X[Raw data]
     X --> data_scanner[data_scanner<br/>a sweep of all entities]
 </pre>
