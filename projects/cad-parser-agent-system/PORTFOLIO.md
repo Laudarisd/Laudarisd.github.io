@@ -33,11 +33,11 @@ that a user can simply analyze and extract the necessary information from comple
 
 ```mermaid
 flowchart LR
-    A[DWG drawing] --> B[Parse]
-    B --> C[(Structured<br/>knowledge)]
-    C --> D[Graph<br/>database]
-    C --> E[AI agent]
-    E --> F[Answers,<br/>analysis,<br/>highlights,<br/>reports]
+    A[DWG drawing]:::input --> B[Parse]:::process
+    B --> C[(Structured<br/>knowledge)]:::store
+    C --> D[Graph<br/>database]:::store
+    C --> E[AI agent]:::agent
+    E --> F[Answers,<br/>analysis,<br/>highlights,<br/>reports]:::output
 ```
 
 <!-- <div class="callout callout-problem">
@@ -191,10 +191,10 @@ treats the language model as a reader of that structure rather than of the file.
 <p>This stage does two things: it parses the drawing, and it stores the result in a database.
 Every entity is read, symbols and external references are resolved to real-world coordinates, and each entity is saved with a stable identifier so it can be found again later.</p>
 <pre class="mermaid">flowchart LR
-    A[DWG] --> B[Read every entity:<br/>lines, polylines, arcs,<br/>circles, hatches, text]
-    B --> C[Resolve symbols and<br/>external references]
-    C --> D[Real world coordinates,<br/>in metres]
-    D --> E[(Stored per drawing)]
+    A[DWG]:::input --> B[Read every entity:<br/>lines, polylines, arcs,<br/>circles, hatches, text]:::process
+    B --> C[Resolve symbols and<br/>external references]:::process
+    C --> D[Real world coordinates,<br/>in metres]:::process
+    D --> E[(Stored per drawing)]:::store
 </pre>
 <pre><code>Parsing
 ├── Entities          lines, polylines, arcs, circles, hatches, text
@@ -230,10 +230,10 @@ and how spaces, walls, doors and marks relate to each other. The result is store
 
 <h3>4.1 Semantic Relation Search</h3>
 <pre class="mermaid">flowchart LR
-    A[Input<br/>DWG drawing] --> B[Entity parsing<br/>and database]
-    B --> C[Semantic search:<br/>spaces, walls, openings]
-    C --> D[(Graph database)]
-    D --> E[Output<br/>answers, highlights, reports]
+    A[Input<br/>DWG drawing]:::input --> B[Entity parsing<br/>and database]:::process
+    B --> C[Semantic search:<br/>spaces, walls, openings]:::process
+    C --> D[(Graph database)]:::store
+    D --> E[Output<br/>answers, highlights, reports]:::output
 </pre>
 <h4>4.1.1 Finding polygons for spaces</h4>
 <p>Each space is found as a closed polygon on the plan and stored with its name, its area and the drawing entities behind it.</p>
@@ -269,11 +269,11 @@ or <em>Put that in the report, in both languages.</em></p>
 <p>The agent does not read the drawing. It reads the question, calls the tools below, and the tools read the structured knowledge.
 The answer comes back with its evidence highlighted on the drawing.</p>
 <pre class="mermaid">flowchart LR
-    U[Question] --> M[Agent]
-    M --> T[Tools over the<br/>structured knowledge]
-    T --> O[Evidence]
+    U[Question]:::input --> M[Agent]:::agent
+    M --> T[Tools over the<br/>structured knowledge]:::process
+    T --> O[Evidence]:::store
     O --> M
-    M --> A[Answer + highlight]
+    M --> A[Answer + highlight]:::output
 </pre>
 
 <h3>5.1 Why not simply give the model the file</h3>
@@ -297,24 +297,24 @@ The answer comes back with its evidence highlighted on the drawing.</p>
 <p>The agent works through a small set of named tools. The tree below shows each tool call and what it gives back.</p>
 <pre class="mermaid">%%{init: {"flowchart": {"nodeSpacing": 10, "rankSpacing": 70}}}%%
 flowchart LR
-    A[AI agent] --> T[Tool calls]
-    T --> Q[Query]
-    Q --> find[find<br/>items matching a description]
-    Q --> count[count<br/>how many]
-    Q --> measure[measure<br/>sizes and distances, with source]
-    Q --> relate[relate<br/>how spaces, openings and walls connect]
-    T --> S[Show]
-    S --> highlight[highlight<br/>the answer drawn on the canvas]
-    T --> R[Report]
-    R --> inspection[inspection<br/>findings written into the report]
-    T --> C[Change]
-    C --> draw[draw<br/>new geometry added to the drawing]
-    C --> modify[modify<br/>a proposed change to existing items]
-    C --> delete[delete<br/>removes the selected items]
-    C --> create_block[create_block<br/>a new symbol from a selection]
-    C -.-> AP[every change needs<br/>human approval]
-    T --> X[Raw data]
-    X --> data_scanner[data_scanner<br/>a sweep of all entities]
+    A[AI agent]:::agent --> T[Tool calls]:::process
+    T --> Q[Query]:::group
+    Q --> find[find<br/>items matching a description]:::tool
+    Q --> count[count<br/>how many]:::tool
+    Q --> measure[measure<br/>sizes and distances, with source]:::tool
+    Q --> relate[relate<br/>how spaces, openings and walls connect]:::tool
+    T --> S[Show]:::group
+    S --> highlight[highlight<br/>the answer drawn on the canvas]:::tool
+    T --> R[Report]:::group
+    R --> inspection[inspection<br/>findings written into the report]:::tool
+    T --> C[Change]:::group
+    C --> draw[draw<br/>new geometry added to the drawing]:::tool
+    C --> modify[modify<br/>a proposed change to existing items]:::tool
+    C --> delete[delete<br/>removes the selected items]:::tool
+    C --> create_block[create_block<br/>a new symbol from a selection]:::tool
+    C -.-> AP[every change needs<br/>human approval]:::note
+    T --> X[Raw data]:::group
+    X --> data_scanner[data_scanner<br/>a sweep of all entities]:::tool
 </pre>
 <p>What each tool accepts and returns is part of the product and is not described here.</p>
 
@@ -389,13 +389,13 @@ This is the only irreversible thing the system can do, so it is deliberately slo
 
 ```mermaid
 flowchart LR
-    A[Request] --> B[Exactly which items<br/>are affected]
-    B --> C[A proposal:<br/>what, what was skipped,<br/>what is risky]
-    C --> D[Shown on the drawing]
-    D --> E{Human decision}
-    E -- Approve --> F[Applied in one step]
-    E -- Reject --> G[Nothing happens]
-    F --> H[Journal and refresh]
+    A[Request]:::input --> B[Exactly which items<br/>are affected]:::process
+    B --> C[A proposal:<br/>what, what was skipped,<br/>what is risky]:::process
+    C --> D[Shown on the drawing]:::process
+    D --> E{Human decision}:::decision
+    E -- Approve --> F[Applied in one step]:::store
+    E -- Reject --> G[Nothing happens]:::note
+    F --> H[Journal and refresh]:::output
 ```
 
 The approval is a button, not a typed word. The assistant cannot propose and apply
@@ -519,12 +519,12 @@ walking from one thing to the next, instead of scanning everything each time.
 
 ```mermaid
 graph LR
-    M[Mark<br/>code] -- describes --> D[Door]
-    D -- connects --> R1[Space A]
-    D -- connects --> R2[Space B]
+    M[Mark<br/>code]:::input -- describes --> D[Door]:::process
+    D -- connects --> R1[Space A]:::store
+    D -- connects --> R2[Space B]:::store
     R1 -- touches --> R2
-    F[Fixture] -- belongs to --> R1
-    W[Window] -- opens from --> R1
+    F[Fixture]:::agent -- belongs to --> R1
+    W[Window]:::process -- opens from --> R1
 ```
 
 ### 11.1 What is in it

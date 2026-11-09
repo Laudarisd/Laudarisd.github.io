@@ -986,3 +986,63 @@ html[data-theme="dark"] {
   border-top: 2px solid var(--accent);
   opacity: 0.5;
 }
+
+/* Diagram palette: soft fills with darker outlines, like a slide deck. Dark theme flips to deep fills. */
+:root {
+  --dg-input-bg: #dbeafe;    --dg-input-line: #2563eb;
+  --dg-process-bg: #fef3c7;  --dg-process-line: #d97706;
+  --dg-store-bg: #dcfce7;    --dg-store-line: #16a34a;
+  --dg-agent-bg: #ede9fe;    --dg-agent-line: #7c3aed;
+  --dg-output-bg: #ffe4e6;   --dg-output-line: #e11d48;
+  --dg-group-bg: #e0f2fe;    --dg-group-line: #0284c7;
+  --dg-decision-bg: #ffedd5; --dg-decision-line: #ea580c;
+  --dg-tool-bg: #f8fafc;     --dg-tool-line: #64748b;
+  --dg-note-bg: #f1f5f9;     --dg-note-line: #94a3b8;
+}
+
+html[data-theme="dark"] {
+  --dg-input-bg: #1e3a8a;    --dg-input-line: #93c5fd;
+  --dg-process-bg: #78350f;  --dg-process-line: #fcd34d;
+  --dg-store-bg: #14532d;    --dg-store-line: #86efac;
+  --dg-agent-bg: #4c1d95;    --dg-agent-line: #c4b5fd;
+  --dg-output-bg: #881337;   --dg-output-line: #fda4af;
+  --dg-group-bg: #0c4a6e;    --dg-group-line: #7dd3fc;
+  --dg-decision-bg: #7c2d12; --dg-decision-line: #fdba74;
+  --dg-tool-bg: #1f2937;     --dg-tool-line: #9ca3af;
+  --dg-note-bg: #1f2937;     --dg-note-line: #6b7280;
+}
+
+/* Rounded boxes, slightly bolder lines and a soft shadow for every diagram node. */
+.project-article pre.mermaid svg .node rect {
+  rx: 8px;
+  ry: 8px;
+}
+
+.project-article pre.mermaid svg .node rect,
+.project-article pre.mermaid svg .node polygon,
+.project-article pre.mermaid svg .node circle,
+.project-article pre.mermaid svg .node path {
+  stroke-width: 1.6px !important;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.12));
+}
+
+.project-article pre.mermaid svg .edgePath path,
+.project-article pre.mermaid svg .flowchart-link {
+  stroke-width: 1.6px !important;
+}
+
+/* Node colours by role: written in the diagram as  A[Label]:::input  etc. */
+.project-article pre.mermaid svg .node.input rect,    .project-article pre.mermaid svg .node.input path    { fill: var(--dg-input-bg) !important;    stroke: var(--dg-input-line) !important; }
+.project-article pre.mermaid svg .node.process rect,  .project-article pre.mermaid svg .node.process path  { fill: var(--dg-process-bg) !important;  stroke: var(--dg-process-line) !important; }
+.project-article pre.mermaid svg .node.store rect,    .project-article pre.mermaid svg .node.store path    { fill: var(--dg-store-bg) !important;    stroke: var(--dg-store-line) !important; }
+.project-article pre.mermaid svg .node.agent rect,    .project-article pre.mermaid svg .node.agent path    { fill: var(--dg-agent-bg) !important;    stroke: var(--dg-agent-line) !important; }
+.project-article pre.mermaid svg .node.output rect,   .project-article pre.mermaid svg .node.output path   { fill: var(--dg-output-bg) !important;   stroke: var(--dg-output-line) !important; }
+.project-article pre.mermaid svg .node.group rect,    .project-article pre.mermaid svg .node.group path    { fill: var(--dg-group-bg) !important;    stroke: var(--dg-group-line) !important; }
+.project-article pre.mermaid svg .node.decision polygon                                                    { fill: var(--dg-decision-bg) !important; stroke: var(--dg-decision-line) !important; }
+.project-article pre.mermaid svg .node.tool rect,     .project-article pre.mermaid svg .node.tool path     { fill: var(--dg-tool-bg) !important;     stroke: var(--dg-tool-line) !important; }
+.project-article pre.mermaid svg .node.note rect,     .project-article pre.mermaid svg .node.note path     { fill: var(--dg-note-bg) !important;     stroke: var(--dg-note-line) !important; stroke-dasharray: 5 4; }
+
+.project-article pre.mermaid svg .node.group .nodeLabel,
+.project-article pre.mermaid svg .node.agent .nodeLabel {
+  font-weight: 700;
+}
