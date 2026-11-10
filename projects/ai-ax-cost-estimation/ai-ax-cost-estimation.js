@@ -1,7 +1,7 @@
 /* AI AX Cost Estimation: card and detail-page content in both languages.
-   This folder holds everything for the project: index.html (page), ai-ce-ai-cost-estimation.js (content),
+   This folder holds everything for the project: index.html (page), ai-ax-cost-estimation.js (content),
    the thumbnail, and any case-study Markdown and images. */
-Portfolio.project("ai-ce-ai-cost-estimation", {
+Portfolio.project("ai-ax-cost-estimation", {
   en: {
     "title": "AI AX Cost Estimation",
     "description": "AI cost estimation from CAD drawings: parsing, detection, and structured models.",
