@@ -1,9 +1,9 @@
-/* AI-CE: AI Cost Estimation: card and detail-page content in both languages.
+/* AI AX Cost Estimation: card and detail-page content in both languages.
    This folder holds everything for the project: index.html (page), ai-ce-ai-cost-estimation.js (content),
    the thumbnail, and any case-study Markdown and images. */
 Portfolio.project("ai-ce-ai-cost-estimation", {
   en: {
-    "title": "AI-CE: AI Cost Estimation",
+    "title": "AI AX Cost Estimation",
     "description": "AI cost estimation from CAD drawings: parsing, detection, and structured models.",
     "image": "thumbnail.svg",
     "image_alt": "AI cost estimation from CAD drawings",
@@ -32,7 +32,7 @@ Portfolio.project("ai-ce-ai-cost-estimation", {
     ]
   },
   kr: {
-    "title": "AI-CE: AI Cost Estimation",
+    "title": "AI AX Cost Estimation",
     "description": "CAD 도면 파싱, 탐지, 구조화 모델로 이어지는 AI 견적 시스템이에요.",
     "image": "thumbnail.svg",
     "image_alt": "CAD 도면 기반 AI 견적",
