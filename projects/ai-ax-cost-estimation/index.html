@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light-vintage">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI AX Cost Estimation | Sudip Laudari</title>
+    <meta name="description" content="Project by Sudip Laudari." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Spectral:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../css/style.css?v=20261109" />
+    <link rel="stylesheet" href="../projects.css?v=20261105" />
+    <link rel="stylesheet" href="../project.css?v=20261111" />
+  </head>
+  <body>
+    <!--
+      Project detail page. This file is only the layout: all text comes from
+      ai-ax-cost-estimation.js in this folder (content), ui/ui.js (labels), and contact/ (footer),
+      rendered by projects/project.js. To add a project, copy this folder and edit its files.
+    -->
+    <header class="site-header">
+      <div class="nav-shell">
+        <a class="brand" id="brand" href="../../index.html">Sudip Laudari</a>
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="../../index.html#resume" data-ui="nav.about">About</a>
+          <a href="../../index.html#projects" data-ui="nav.projects">Projects</a>
+          <a href="../../index.html#contact" data-ui="nav.contact">Contact</a>
+          <a href="https://github.com/Laudarisd" target="_blank" rel="noopener noreferrer" data-ui="nav.github">GitHub</a>
+        </nav>
+        <div class="lang-switcher" role="group" aria-label="Language">
+          <button class="lang-toggle is-active" type="button" data-lang="en" lang="en" aria-pressed="true">
+            EN
+          </button>
+          <button class="lang-toggle" type="button" data-lang="kr" lang="ko" aria-pressed="false">
+            한국어
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="theme-switcher-shell">
+      <div class="theme-switcher" aria-label="Color modes">
+        <button
+          class="theme-toggle theme-toggle-dark"
+          type="button"
+          data-theme-target="dark"
+          data-theme-label="Midnight Archive"
+          aria-label="Switch to Midnight Archive theme"
+          title="Midnight Archive"
+        >
+          <span class="theme-swatch" aria-hidden="true"></span>
+        </button>
+        <button
+          class="theme-toggle theme-toggle-light-vintage is-active"
+          type="button"
+          data-theme-target="light-vintage"
+          data-theme-label="Paper Study"
+          aria-label="Switch to Paper Study theme"
+          title="Paper Study"
+        >
+          <span class="theme-swatch" aria-hidden="true"></span>
+        </button>
+        <button
+          class="theme-toggle theme-toggle-pure-vintage"
+          type="button"
+          data-theme-target="pure-vintage"
+          data-theme-label="Sepia Ledger"
+          aria-label="Switch to Sepia Ledger theme"
+          title="Sepia Ledger"
+        >
+          <span class="theme-swatch" aria-hidden="true"></span>
+        </button>
+        <button
+          class="theme-toggle theme-toggle-simple"
+          type="button"
+          data-theme-target="simple"
+          data-theme-label="Clean Draft"
+          aria-label="Switch to Clean Draft theme"
+          title="Clean Draft"
+        >
+          <span class="theme-swatch" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+
+    <main id="top" data-project="ai-ax-cost-estimation">
+      <!-- Title block: filled from the project entry -->
+      <section class="project-detail-hero">
+        <div class="container">
+          <a class="back-link" href="../../index.html#projects" data-ui="project_page.back">Back to projects</a>
+          <h1 id="detail-title"></h1>
+          <p class="hero-text" id="detail-subtitle"></p>
+          <div class="project-meta" id="detail-meta"></div>
+          <ul class="project-tags" id="detail-tags"></ul>
+        </div>
+      </section>
+
+      <!-- Detail panels: each one is hidden automatically when the entry has no content for it -->
+      <section class="section">
+        <div class="container detail-layout">
+          <!-- Left column: "Contents" links to the sections of this page, filled by projects/project.js -->
+          <aside class="detail-aside" id="detail-aside" hidden>
+            <nav class="article-toc-wrap">
+              <h4 data-ui="project_page.contents">Contents</h4>
+              <ol class="article-toc" id="detail-toc"></ol>
+            </nav>
+          </aside>
+          <div class="detail-grid">
+          <article class="panel detail-panel detail-panel-wide" id="panel-article">
+            <h2 data-ui="project_page.article"></h2>
+            <div class="panel-body">
+<!-- article:start -->
+<div class="project-article" data-lang="en" hidden>
+<nav class="article-toc-wrap"><h4>Contents</h4><ol class="article-toc"><li><a href="#1-introduction">1. Introduction</a></li><li><a href="#2-input-and-preprocessing">2. Input and preprocessing</a></li><li><a href="#3-models">3. Models</a></li><li><a href="#4-recognition-results">4. Recognition results</a></li><li><a href="#5-quantity-take-off">5. Quantity take-off</a></li><li><a href="#6-serving-and-operations">6. Serving and operations</a></li><li><a href="#7-monitoring">7. Monitoring</a></li><li><a href="#8-summary">8. Summary</a></li></ol></nav>
+<h1>AI AXCost Estimation - From Floor-Plan Images to Quantitative Analysis</h1>
+<p>An add-in for a CAD application that reads a floor-plan image, recognizes what is drawn on it, rebuilds it as CAD layers,
+and produces a quantity take-off that an estimator can review. Detection, segmentation and OCR models run behind a service,
+and every result is written back into the drawing and exported as a table.</p>
+<p><strong>Main Process</strong></p>
+<div class="fact-grid">
+<div class="fact"><span class="fact-label">Input</span><span class="fact-value">Floor-plan images</span></div>
+<div class="fact"><span class="fact-label">Models</span><span class="fact-value">Detection · segmentation · OCR</span></div>
+<div class="fact"><span class="fact-label">Output</span><span class="fact-value">CAD layers · quantity tables · JSON</span></div>
+<div class="fact"><span class="fact-label">Serving</span><span class="fact-value">FastAPI, batch and API</span></div>
+<div class="fact"><span class="fact-label">Operations</span><span class="fact-value">systemd · nginx · Redis</span></div>
+<div class="fact"><span class="fact-label">Monitoring</span><span class="fact-value">Prometheus · Grafana</span></div>
+</div>
+<figure class="figure-small">
+<img src="2.png" loading="lazy" alt="The AI recognition result inside the CAD application: a floor plan with recognized walls, windows, doors and spaces, beside the layer list">
+<figcaption>The add-in inside the CAD application: a recognized floor plan on the left, and the layers it was rebuilt into on the right.</figcaption>
+</figure>
+
+<hr />
+<h2 id="1-introduction">1. Introduction</h2>
+<p>Cost estimation starts from drawings, and many of those drawings arrive as images rather than as CAD files. A person has to read every wall,
+window, door and room, measure them, and type the quantities into a sheet. That takes days on a large plan and the numbers are easy to get wrong.</p>
+<p>This project does that reading automatically. The goal is the chain below: an image goes in, and a reviewable quantity table comes out,
+with every recognized item placed back on the drawing so an estimator can check it.</p>
+<pre class="mermaid">flowchart LR
+    A[Floor-plan image]:::input --> B[AI recognition<br/>objects, regions, text]:::process
+    B --> C[(Structured result<br/>JSON)]:::store
+    C --> D[Rebuilt CAD layers]:::agent
+    C --> E[Quantity take-off<br/>tables and Excel]:::output
+</pre>
+
+<hr />
+<div class="part-divider"><span>Input &amp; Data Preprocessing</span></div>
+<h2 id="2-input-and-preprocessing">2. Input and preprocessing</h2>
+<p>A drawing is added to a project inside the CAD application, either one at a time or as a batch. Before any model runs, each image is validated,
+rescaled and cleaned, which is what keeps small dimension text and thin wall lines readable at model resolution.</p>
+<figure class="figure-small">
+<img src="1.png" loading="lazy" alt="The AI recognition dialog inside the CAD application, with an empty project ready to take drawings and the scale and floor settings">
+<figcaption>Drawings are added to a project here, with their scale and floor range, then sent for recognition.</figcaption>
+</figure>
+<div class="callout callout-problem">
+<h4>What preprocessing has to solve</h4>
+<ul>
+<li><strong>Scale varies.</strong> Every drawing is exported at a different size, so results must not depend on the pixel size of the input.</li>
+<li><strong>Small text.</strong> Dimensions and room labels are tiny next to the walls, and naive downscaling destroys them.</li>
+<li><strong>Noise.</strong> Scans and exports carry speckle, compression artefacts and hatching that confuse edges.</li>
+<li><strong>Large sheets.</strong> A block plan does not fit in one pass and has to be processed in parts and reassembled.</li>
+</ul>
+</div>
+
+<hr />
+<div class="part-divider"><span>Model Training &amp; Inference</span></div>
+<h2 id="3-models">3. Models</h2>
+<p>Three model families run over the prepared image and their outputs are merged into one structured result.</p>
+<pre class="mermaid">flowchart LR
+    A[Prepared image]:::input --> D[Detection<br/>objects and classes]:::process
+    A --> S[Segmentation<br/>regions and walls]:::process
+    A --> O[OCR<br/>dimensions, marks, labels]:::process
+    D --> R[(Structured result)]:::store
+    S --> R
+    O --> R
+    R --> V[JSON · visualization<br/>· persistence]:::output
+</pre>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Model</th>
+<th>What it recovers</th>
+<th>Framework</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Detection and classification</td><td>windows, doors, fixtures, columns and their type</td><td>PyTorch</td></tr>
+<tr><td>Segmentation</td><td>rooms, slabs and wall regions, plus wall thickness</td><td>PyTorch</td></tr>
+<tr><td>OCR</td><td>dimension text, opening marks and room names</td><td>CRNN and Paddle OCR</td></tr>
+</tbody>
+</table></div>
+<p>The OCR recognizer is a CRNN: a convolutional stack reads the cropped text, a bidirectional sequence layer reads it left to right,
+and a CTC head turns that into characters. The diagram below is illustrative and does not expose the deployed configuration.</p>
+<pre class="mermaid">flowchart TB
+    A[Text crop<br/>1 x 32 x 128]:::input --> B[Convolution + ReLU<br/>32 to 64 to 128 channels]:::process
+    B --> C[Height aggregation<br/>32 time steps]:::process
+    C --> D[Bidirectional sequence<br/>256 features]:::process
+    D --> E[Character projection<br/>K class scores]:::process
+    E --> F[CTC decoding]:::agent
+    F --> G[Decoded text<br/>dimensions, marks, labels]:::output
+</pre>
+
+<hr />
+<h2 id="4-recognition-results">4. Recognition results</h2>
+<p>Recognized items are written back into the drawing as named layers, so walls, openings, fixtures and spaces can each be shown or hidden.
+Wall thickness recovered by the model fills the bearing and non-bearing values used when the drawing is rebuilt.</p>
+<div class="figure-row figure-row-small figure-row-equal">
+<figure>
+<img src="1_domain_redraw.png" loading="lazy" alt="The drawing regeneration dialog with the recognized layer list and the AI wall thickness values for bearing and non-bearing walls">
+<figcaption>Rebuilding the drawing: the recognized layers, and the AI wall thickness used for bearing and non-bearing walls.</figcaption>
+</figure>
+<figure>
+<img src="4_result.png" loading="lazy" alt="A multi-unit floor plan rebuilt from a recognized image, with its layer list">
+<figcaption>A multi-unit plan rebuilt from an image, with every recognized class on its own layer.</figcaption>
+</figure>
+</div>
+<figure class="figure-small">
+<img src="6_result.png" loading="lazy" alt="A close-up of a recognized core: hall, elevator, stairs, doors and pipe shafts outlined in their class colours">
+<figcaption>A close-up of one core: hall, elevator, stairs, doors and shafts, each recognized as its own object.</figcaption>
+</figure>
+
+<hr />
+<h2 id="5-quantity-take-off">5. Quantity take-off</h2>
+<p>From the recognized drawing the add-in produces quantity tables, grouped by type and by size, with a subtotal per group and a total per sheet.
+Walls, windows, doors, general objects, spaces and slabs each get their own tab, and the whole table exports to Excel.</p>
+<div class="figure-row figure-row-small figure-row-equal">
+<figure>
+<img src="1_result.png" loading="lazy" alt="The quantity take-off window with a wall table grouped by thickness, listing mark, bearing or non-bearing, construction type, thickness, height and length">
+<figcaption>Wall take-off: every wall with its mark, bearing or non-bearing classification, thickness, height and length, subtotalled by thickness.</figcaption>
+</figure>
+<figure>
+<img src="2_result.png" loading="lazy" alt="The window tab of the take-off table, listing mark, size, width, height and quantity for each window">
+<figcaption>Window take-off: mark, size, width, height and count for every window on the sheet.</figcaption>
+</figure>
+</div>
+<div class="figure-row figure-row-small figure-row-equal">
+<figure>
+<img src="3_result.png" loading="lazy" alt="A recognized drawing annotated with object labels, next to the same take-off table exported into Excel">
+<figcaption>The annotated drawing beside the same table exported to Excel, ready for the estimator.</figcaption>
+</figure>
+<figure>
+<img src="5_result.png" loading="lazy" alt="The take-off window for a larger block plan, with wall groups and a sheet total">
+<figcaption>The same take-off on a larger block plan, grouped by thickness with a sheet total.</figcaption>
+</figure>
+</div>
+
+<hr />
+<div class="part-divider"><span>Deployment</span></div>
+<h2 id="6-serving-and-operations">6. Serving and operations</h2>
+<p>The models run behind a FastAPI service rather than inside the CAD add-in, so the add-in sends a drawing and receives a structured result.
+The service is supervised by systemd, published through a reverse proxy, and uses Redis for shared state such as queue depth and request history.</p>
+<pre class="mermaid">flowchart LR
+    C[CAD add-in<br/>authorized client]:::input --> N[Reverse proxy<br/>nginx]:::process
+    N --> API[FastAPI service<br/>PyTorch inference]:::agent
+    MDL[(Approved model<br/>artifacts)]:::store --> API
+    SD[systemd supervisor]:::tool -.-> API
+    API --> RDS[(Redis<br/>queue and state)]:::store
+    API --> ARC[(Result archives)]:::store
+    API --> MET[Metrics endpoint]:::output
+    MET --> PRM[Prometheus]:::tool
+    PRM --> GRF[Grafana and<br/>operator dashboard]:::output
+</pre>
+<div class="table-scroll"><table class="component-table">
+<thead>
+<tr>
+<th>Component</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>FastAPI</td><td>request validation, orchestration, result packaging</td></tr>
+<tr><td>systemd</td><td>process supervision, restart and recovery</td></tr>
+<tr><td>nginx</td><td>reverse proxy in front of the service</td></tr>
+<tr><td>Redis</td><td>shared state: queue depth, request outcomes, event history</td></tr>
+</tbody>
+</table></div>
+
+<hr />
+<h2 id="7-monitoring">7. Monitoring</h2>
+<p>A long-running service needs its health to be visible, so request volume, failures, queue usage, database writes, file transfers and GPU memory
+are all exported as metrics and shown on a dashboard. Prometheus scrapes the service and Grafana reads it, alongside a custom operator dashboard.</p>
+<figure class="figure-small">
+<img src="1_monitor.png" loading="lazy" alt="The production monitoring dashboard: request count and success rate, active queue, database pipeline, transfers, CPU, memory, disk and GPU memory, with trend charts">
+<figcaption>The operator dashboard: requests and success rate, queue usage, database writes and transfers, with host and GPU pressure beside them.</figcaption>
+</figure>
+
+<hr />
+<h2 id="8-summary">8. Summary</h2>
+<p>The system turns a floor-plan image into a reviewable quantity take-off. Detection, segmentation and OCR models recover objects, regions and text,
+the result is written back into the drawing as CAD layers, and quantities are grouped into tables that export to Excel.
+The models run behind a supervised FastAPI service with Redis-backed state, and its request, database and host metrics are visible on a live dashboard.</p>
+<blockquote>
+<p>Public project overview. Infrastructure values are illustrative. Model workflows describe engineering responsibilities without exposing proprietary processing logic.</p>
+</blockquote>
+</div>
+<!-- article:end -->
+            </div>
+          </article>
+          <article class="panel detail-panel detail-panel-wide" id="panel-overview">
+            <h2 data-ui="project_page.overview"></h2>
+            <div class="panel-body"></div>
+          </article>
+          <article class="panel detail-panel" id="panel-problem">
+            <h2 data-ui="project_page.problem"></h2>
+            <div class="panel-body"></div>
+          </article>
+          <article class="panel detail-panel detail-panel-wide" id="panel-architecture">
+            <h2 data-ui="project_page.architecture"></h2>
+            <div class="panel-body"></div>
+          </article>
+          <article class="panel detail-panel detail-panel-wide" id="panel-process">
+            <h2 data-ui="project_page.process"></h2>
+            <div class="panel-body"></div>
+          </article>
+          <article class="panel detail-panel" id="panel-pipeline">
+            <h2 data-ui="project_page.pipeline"></h2>
+            <div class="panel-body"></div>
+          </article>
+          <article class="panel detail-panel" id="panel-stack">
+            <h2 data-ui="project_page.stack"></h2>
+            <div class="panel-body"></div>
+          </article>
+          <article class="panel detail-panel detail-panel-wide" id="panel-components">
+            <h2 data-ui="project_page.components"></h2>
+            <div class="panel-body"></div>
+          </article>
+          <article class="panel detail-panel detail-panel-wide" id="panel-figures">
+            <h2 data-ui="project_page.figures"></h2>
+            <div class="panel-body"></div>
+          </article>
+          <article class="panel detail-panel detail-panel-wide" id="panel-results">
+            <h2 data-ui="project_page.results"></h2>
+            <div class="panel-body"></div>
+          </article>
+          <article class="panel detail-panel detail-panel-wide" id="panel-links">
+            <h2 data-ui="project_page.links"></h2>
+            <div class="panel-body"></div>
+          </article>
+        </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Contact: same footer as the main page -->
+    <footer id="contact" class="site-footer">
+      <div data-include="../../contact/contact.html"></div>
+    </footer>
+
+    <script>
+      // Theme switcher: identical to index.html so the chosen theme carries over.
+      (function () {
+        var root = document.documentElement;
+        var toggles = document.querySelectorAll(".theme-toggle");
+        var storageKey = "portfolio-theme";
+        var defaultTheme = "light-vintage";
+        var savedTheme = localStorage.getItem(storageKey) || defaultTheme;
+
+        function applyTheme(theme) {
+          root.setAttribute("data-theme", theme);
+
+          toggles.forEach(function (toggle) {
+            var isActive = toggle.getAttribute("data-theme-target") === theme;
+            toggle.classList.toggle("is-active", isActive);
+            toggle.setAttribute("aria-pressed", isActive ? "true" : "false");
+          });
+        }
+
+        applyTheme(savedTheme);
+
+        toggles.forEach(function (toggle) {
+          toggle.addEventListener("click", function () {
+            var theme = toggle.getAttribute("data-theme-target");
+            localStorage.setItem(storageKey, theme);
+            applyTheme(theme);
+          });
+        });
+      })();
+    </script>
+    <script src="../../js/site.js?v=20261111" data-sections="../../ui/ui.js?v=20261111,../../contact/contact.js,../project.js?v=20261111c,ai-ax-cost-estimation.js"></script>
+  </body>
+</html>
