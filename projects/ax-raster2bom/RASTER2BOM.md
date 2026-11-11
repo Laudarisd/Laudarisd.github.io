@@ -2,6 +2,19 @@
 <p>An add-in for a CAD application that reads a floor-plan image, recognizes what is drawn on it, rebuilds it as CAD layers,
 and produces a quantity take-off that an estimator can review. Detection, segmentation and OCR models run behind a service,
 and every result is written back into the drawing and exported as a table.</p>
+<p><strong>Main Goal of the Project</strong></p>
+<div class="process-row">
+<figure>
+<img src="main_input.png" alt="Input: a floor-plan drawing exported as a plain image, with its dimensions and room labels">
+<figcaption>Input: a floor-plan image.</figcaption>
+</figure>
+<span class="arch-arrow" aria-hidden="true">→</span>
+<figure>
+<img src="1_result.png" alt="Output: the same plan recognized inside the CAD application, with the quantity take-off table beside it">
+<figcaption>Output: recognized CAD layers and the quantity take-off.</figcaption>
+</figure>
+</div>
+
 <p><strong>Main Process</strong></p>
 <div class="fact-grid">
 <div class="fact"><span class="fact-label">Input</span><span class="fact-value">Floor-plan images</span></div>
