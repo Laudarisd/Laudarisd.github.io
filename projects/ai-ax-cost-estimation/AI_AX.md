@@ -1,4 +1,4 @@
-# AI AX Cost Estimation - From Floor-Plan Images to Quantities
+# AI AX Cost Estimation - From Floor-Plan Images to Quantitative Analysis
 <p>An add-in for a CAD application that reads a floor-plan image, recognizes what is drawn on it, rebuilds it as CAD layers,
 and produces a quantity take-off that an estimator can review. Detection, segmentation and OCR models run behind a service,
 and every result is written back into the drawing and exported as a table.</p>
@@ -78,10 +78,14 @@ rescaled and cleaned, which is what keeps small dimension text and thin wall lin
 </table></div>
 <p>The OCR recognizer is a CRNN: a convolutional stack reads the cropped text, a bidirectional sequence layer reads it left to right,
 and a CTC head turns that into characters. The diagram below is illustrative and does not expose the deployed configuration.</p>
-<figure class="figure-small">
-<img src="ocr-architecture.svg" alt="Illustrative CRNN architecture: input crop, convolution and ReLU blocks, height aggregation, bidirectional sequence layer, and the character output">
-<figcaption>The OCR recognizer, illustrative: convolution blocks, height aggregation, a bidirectional sequence layer, then characters.</figcaption>
-</figure>
+<pre class="mermaid">flowchart LR
+    A[Text crop<br/>1 x 32 x 128]:::input --> B[Convolution + ReLU<br/>32 to 64 to 128 channels]:::process
+    B --> C[Height aggregation<br/>32 time steps]:::process
+    C --> D[Bidirectional sequence<br/>256 features]:::process
+    D --> E[Character projection<br/>K class scores]:::process
+    E --> F[CTC decoding]:::agent
+    F --> G[Decoded text<br/>dimensions, marks, labels]:::output
+</pre>
 
 ---
 
@@ -134,10 +138,18 @@ Walls, windows, doors, general objects, spaces and slabs each get their own tab,
 <h2 id="6-serving-and-operations">6. Serving and operations</h2>
 <p>The models run behind a FastAPI service rather than inside the CAD add-in, so the add-in sends a drawing and receives a structured result.
 The service is supervised by systemd, published through a reverse proxy, and uses Redis for shared state such as queue depth and request history.</p>
-<figure class="figure-small">
-<img src="deployment-flow.svg" alt="Deployment flow: reviewed release and locked dependencies into a systemd-supervised API service with PyTorch inference behind a reverse proxy, with approved model artifacts">
-<figcaption>Release and serving: a reviewed release with locked dependencies, supervised by systemd, served behind a reverse proxy.</figcaption>
-</figure>
+<pre class="mermaid">flowchart LR
+    C[CAD add-in<br/>authorized client]:::input --> N[Reverse proxy<br/>nginx]:::process
+    N --> API[FastAPI service<br/>PyTorch inference]:::agent
+    SD[systemd supervisor]:::tool -.-> API
+    REL[Reviewed release<br/>locked dependencies]:::note -.-> API
+    MDL[(Approved model<br/>artifacts)]:::store --> API
+    API --> RDS[(Redis<br/>queue and state)]:::store
+    API --> ARC[(Result archives)]:::store
+    API --> MET[Metrics endpoint]:::output
+    MET --> PRM[Prometheus]:::tool
+    PRM --> GRF[Grafana and<br/>operator dashboard]:::output
+</pre>
 <div class="table-scroll"><table class="component-table">
 <thead>
 <tr>

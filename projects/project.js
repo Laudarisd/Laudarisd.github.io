@@ -312,7 +312,6 @@
 
   function renderProject(project, ui) {
     var labels = ui.project_page || {};
-    var statusLabels = (ui.labels && ui.labels.status) || {};
 
     if (!project) {
       setText("detail-title", labels.not_found || "Project not found.");
@@ -323,19 +322,10 @@
     setText("detail-title", project.title);
     setText("detail-subtitle", project.subtitle);
 
-    // Status badge, period, role, and project context.
+    // Period, role, and project context. The status of a project is not shown.
     var meta = byId("detail-meta");
     if (meta) {
       clear(meta);
-      if (project.status) {
-        var live = project.status === "in_development" || project.status === "research";
-        meta.appendChild(
-          el("span", {
-            class: "project-status" + (live ? " project-status-live" : ""),
-            text: statusLabels[project.status] || project.status
-          })
-        );
-      }
       if (project.period) meta.appendChild(el("span", { text: project.period }));
       if (project.role) meta.appendChild(el("span", { text: labels.role + ": " + project.role }));
       if (project.context) meta.appendChild(el("span", { text: labels.context + ": " + project.context }));

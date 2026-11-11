@@ -45,13 +45,7 @@ Portfolio.ui({
       "code_link": "Code",
       "projects_note": "For other projects visit here:",
       "projects_note_link": "GitHub profile",
-      "load_error": "Content could not be loaded. Please serve this site over HTTP (for example: python3 -m http.server) and reload.",
-      "status": {
-        "completed": "Completed",
-        "in_development": "In Development",
-        "research": "Research in Progress",
-        "poc": "Proof of Concept"
-      }
+      "load_error": "Content could not be loaded. Please serve this site over HTTP (for example: python3 -m http.server) and reload."
     },
     "project_page": {
       "back": "← Back to projects",
@@ -73,7 +67,6 @@ Portfolio.ui({
       "challenges_label": "Challenges",
       "links": "Links & Publications",
       "not_found": "Project not found.",
-      "article": "Case Study",
       "contents": "Contents",
       "collapse": "Collapse or expand this section",
       "back_to_top": "Back to top"
@@ -123,13 +116,7 @@ Portfolio.ui({
       "code_link": "코드",
       "projects_note": "다른 프로젝트는 여기서 확인할 수 있어요:",
       "projects_note_link": "GitHub 프로필",
-      "load_error": "콘텐츠를 불러오지 못했어요. HTTP 서버(예: python3 -m http.server)로 사이트를 실행한 뒤 새로 고침해 주세요.",
-      "status": {
-        "completed": "완료",
-        "in_development": "개발 중",
-        "research": "연구 진행 중",
-        "poc": "개념 검증"
-      }
+      "load_error": "콘텐츠를 불러오지 못했어요. HTTP 서버(예: python3 -m http.server)로 사이트를 실행한 뒤 새로 고침해 주세요."
     },
     "project_page": {
       "back": "← 프로젝트 목록으로",
@@ -151,7 +138,6 @@ Portfolio.ui({
       "challenges_label": "해결 과제",
       "links": "관련 링크",
       "not_found": "프로젝트를 찾을 수 없어요.",
-      "article": "상세 사례",
       "contents": "목차",
       "collapse": "섹션 접기 / 펼치기",
       "back_to_top": "맨 위로"

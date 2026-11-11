@@ -369,6 +369,11 @@ html[lang="ko"] .project-status {
   display: none;
 }
 
+/* The article panel needs no heading of its own: the article starts with its title. */
+#panel-article > h2 {
+  display: none;
+}
+
 .project-article {
   max-width: none;
   font-size: 0.98rem;
