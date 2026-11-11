@@ -89,12 +89,6 @@ main[data-project] .container {
   display: none;
 }
 
-/* Keep a jumped-to heading clear of the sticky header. */
-.detail-panel,
-.project-article h2[id] {
-  scroll-margin-top: 5rem;
-}
-
 .detail-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

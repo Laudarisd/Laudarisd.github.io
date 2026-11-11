@@ -174,13 +174,41 @@
     });
   }
 
-  // A contents link into a collapsed section opens it first.
-  function expandHashTarget() {
+  // A contents link into a collapsed section opens it first, then scrolls to it.
+  function hashTarget() {
     var id = decodeURIComponent(window.location.hash.slice(1));
-    var heading = id ? document.getElementById(id) : null;
+    return id ? document.getElementById(id) : null;
+  }
+
+  function expandHashTarget() {
+    var heading = hashTarget();
     if (heading && heading.classList.contains("is-collapsed")) heading.querySelector(".section-toggle").click();
   }
   window.addEventListener("hashchange", expandHashTarget);
+
+  // The article's images load lazily, so the text above a heading can still grow after the
+  // browser has jumped to it, leaving the heading far down the screen. For a short while
+  // after a contents link is used, put the heading back at the top each time that happens.
+  function keepHashAligned(article) {
+    if (!article) return;
+    var following = false; // true while we are still following the jump the user just made
+    var realign = function () {
+      if (!following) return;
+      var target = hashTarget();
+      if (target) target.scrollIntoView({ behavior: "instant", block: "start" });
+    };
+    window.addEventListener("hashchange", function () {
+      following = true;
+      realign();
+    });
+    // As soon as the reader scrolls themselves, stop moving the page under them.
+    ["wheel", "touchstart", "keydown"].forEach(function (event) {
+      window.addEventListener(event, function () { following = false; }, { passive: true });
+    });
+    article.querySelectorAll("img").forEach(function (image) {
+      image.addEventListener("load", realign);
+    });
+  }
 
   // "Back to top" arrow at the bottom right: shows once the page is scrolled, scrolls smoothly to the top.
   function addBackToTop(label) {
@@ -397,6 +425,7 @@
       var article = renderArticle(ctx.lang);
       renderContents(article);
       makeCollapsible(article, labels.collapse || "Collapse or expand this section");
+      keepHashAligned(article);
       addBackToTop(labels.back_to_top || "Back to top");
     }
   });

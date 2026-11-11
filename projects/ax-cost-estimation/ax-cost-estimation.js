@@ -1,9 +1,9 @@
-/* AI AX Cost Estimation: card and detail-page content in both languages.
-   This folder holds everything for the project: index.html (page), ai-ax-cost-estimation.js (content),
+/* AX - Cost Estimation: card and detail-page content in both languages.
+   This folder holds everything for the project: index.html (page), ax-cost-estimation.js (content),
    the thumbnail, and any case-study Markdown and images. */
-Portfolio.project("ai-ax-cost-estimation", {
+Portfolio.project("ax-cost-estimation", {
   en: {
-    "title": "AI AX Cost Estimation",
+    "title": "AX - Cost Estimation",
     "description": "Floor-plan images to quantities: detection, segmentation, OCR, and a quantity take-off.",
     "image": "thumbnail.jpg",
     "image_alt": "A recognized floor plan in the CAD application beside its quantity take-off table in Excel",
@@ -31,7 +31,7 @@ Portfolio.project("ai-ax-cost-estimation", {
     ]
   },
   kr: {
-    "title": "AI AX Cost Estimation",
+    "title": "AX - Cost Estimation",
     "description": "평면도 이미지를 수량으로: Detection, Segmentation, OCR, 그리고 수량 산출이에요.",
     "image": "thumbnail.jpg",
     "image_alt": "CAD에서 인식된 평면도와 Excel로 내보낸 수량 산출표",

@@ -17,7 +17,7 @@
         "items": [
           "cad-parser-agent-system",
           "vectra",
-          "ai-ax-cost-estimation",
+          "ax-cost-estimation",
           "llm-vlm-fine-tuning",
           "green-energy-anomaly-detection"
         ]

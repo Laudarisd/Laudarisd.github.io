@@ -294,8 +294,31 @@
     }
   };
 
+  /* ---------- anchor links (#resume, #projects, #contact) ---------- */
+
+  // The sticky header would otherwise cover the top of the section a link jumps to,
+  // so reserve its height above every scroll target. Re-measured when the width changes.
+  function syncScrollPadding() {
+    var header = document.querySelector(".site-header");
+    if (header) root.style.scrollPaddingTop = header.offsetHeight + 12 + "px";
+  }
+
+  // Sections are rendered after the page loads, so a link arriving with #section in the
+  // URL has nothing to jump to yet. Jump again once the content is on the page.
+  function scrollToHash() {
+    var id = decodeURIComponent(window.location.hash.slice(1));
+    var target = id ? document.getElementById(id) : null;
+    if (target) target.scrollIntoView({ behavior: "instant", block: "start" });
+  }
+
+  window.addEventListener("resize", syncScrollPadding);
+
   // Load the section scripts, pull in the fragments, then render in the active language.
   Promise.all([loadSectionScripts(), includeFragments()])
     .then(function () { return applyLang(initialLang(), false); })
+    .then(function () {
+      syncScrollPadding();
+      scrollToHash();
+    })
     .catch(function (error) { showLoadError(initialLang(), error); });
 })();
