@@ -16,7 +16,6 @@ Portfolio.project("llm-vlm-fine-tuning", {
         "url": "https://github.com/Laudarisd/finetune-llm-vllm"
       }
     ],
-    "status": "in_development",
     "role": "Researcher and developer (end-to-end)",
     "context": "Industry R&D",
     "tags": [
@@ -44,7 +43,6 @@ Portfolio.project("llm-vlm-fine-tuning", {
         "url": "https://github.com/Laudarisd/finetune-llm-vllm"
       }
     ],
-    "status": "in_development",
     "role": "연구 및 개발 (End-to-End)",
     "context": "산업 R&D",
     "tags": [

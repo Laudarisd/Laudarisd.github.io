@@ -214,10 +214,6 @@ main[data-project] .container {
   }
 }
 
-html[lang="ko"] .project-status {
-  letter-spacing: 0.02em;
-}
-
 /* Detail page extras: numbered process steps, component table, and figure gallery. */
 .arch-flow + h4 {
   margin-top: 1.1rem;

@@ -1,4 +1,4 @@
-/* Project cards on the main page: tiles, category groups, status badges, tags, and buttons.
+/* Project cards on the main page: tiles, category groups, tags, and buttons.
    The detail pages use projects/project.css instead. */
 
 .project-card {
@@ -58,7 +58,7 @@
   text-decoration: underline;
 }
 
-/* Projects section: category groups, status badges, tags, and link rows on the project cards. */
+/* Projects section: category groups, tags, and link rows on the project cards. */
 .project-groups {
   display: grid;
   gap: 1.9rem;
@@ -92,24 +92,6 @@
   color: var(--muted);
   font-size: 0.8rem;
   font-weight: 600;
-}
-.project-status {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.18rem 0.6rem;
-  border: 1px solid var(--chip-border);
-  border-radius: 999px;
-  color: var(--accent);
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-/* Ongoing work (in development / research) gets a filled badge so it stands out. */
-.project-status-live {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: var(--button-text);
 }
 .project-tags {
   display: flex;

@@ -20,7 +20,6 @@ Portfolio.project("vectra", {
         "url": "https://github.com/Laudarisd/vectra"
       }
     ],
-    "status": "completed",
     "period": "v1.2.2 on VS Code Marketplace",
     "role": "Independent developer (design, implementation, release)",
     "context": "Independently developed product",
@@ -54,7 +53,6 @@ Portfolio.project("vectra", {
         "url": "https://github.com/Laudarisd/vectra"
       }
     ],
-    "status": "completed",
     "period": "VS Code Marketplace v1.2.2",
     "role": "개인 개발 (설계, 구현, 배포)",
     "context": "독립적으로 개발한 제품",

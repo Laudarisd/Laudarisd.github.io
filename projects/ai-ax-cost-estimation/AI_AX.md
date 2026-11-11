@@ -78,7 +78,7 @@ rescaled and cleaned, which is what keeps small dimension text and thin wall lin
 </table></div>
 <p>The OCR recognizer is a CRNN: a convolutional stack reads the cropped text, a bidirectional sequence layer reads it left to right,
 and a CTC head turns that into characters. The diagram below is illustrative and does not expose the deployed configuration.</p>
-<pre class="mermaid">flowchart LR
+<pre class="mermaid">flowchart TB
     A[Text crop<br/>1 x 32 x 128]:::input --> B[Convolution + ReLU<br/>32 to 64 to 128 channels]:::process
     B --> C[Height aggregation<br/>32 time steps]:::process
     C --> D[Bidirectional sequence<br/>256 features]:::process
@@ -141,9 +141,8 @@ The service is supervised by systemd, published through a reverse proxy, and use
 <pre class="mermaid">flowchart LR
     C[CAD add-in<br/>authorized client]:::input --> N[Reverse proxy<br/>nginx]:::process
     N --> API[FastAPI service<br/>PyTorch inference]:::agent
-    SD[systemd supervisor]:::tool -.-> API
-    REL[Reviewed release<br/>locked dependencies]:::note -.-> API
     MDL[(Approved model<br/>artifacts)]:::store --> API
+    SD[systemd supervisor]:::tool -.-> API
     API --> RDS[(Redis<br/>queue and state)]:::store
     API --> ARC[(Result archives)]:::store
     API --> MET[Metrics endpoint]:::output
