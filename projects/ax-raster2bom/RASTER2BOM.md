@@ -1,4 +1,4 @@
-# AX - Cost Estimation: From Floor-Plan Images to Quantitative Analysis
+# AX Raster2BOM - From Floor-Plan Images to Quantitative Analysis
 <p>An add-in for a CAD application that reads a floor-plan image, recognizes what is drawn on it, rebuilds it as CAD layers,
 and produces a quantity take-off that an estimator can review. Detection, segmentation and OCR models run behind a service,
 and every result is written back into the drawing and exported as a table.</p>

@@ -1,9 +1,9 @@
-/* AX - Cost Estimation: card and detail-page content in both languages.
-   This folder holds everything for the project: index.html (page), ax-cost-estimation.js (content),
+/* AX Raster2BOM: card and detail-page content in both languages.
+   This folder holds everything for the project: index.html (page), ax-raster2bom.js (content),
    the thumbnail, and any case-study Markdown and images. */
-Portfolio.project("ax-cost-estimation", {
+Portfolio.project("ax-raster2bom", {
   en: {
-    "title": "AX - Cost Estimation",
+    "title": "AX Raster2BOM",
     "description": "Floor-plan images to quantities: detection, segmentation, OCR, and a quantity take-off.",
     "image": "thumbnail.jpg",
     "image_alt": "A recognized floor plan in the CAD application beside its quantity take-off table in Excel",
@@ -31,7 +31,7 @@ Portfolio.project("ax-cost-estimation", {
     ]
   },
   kr: {
-    "title": "AX - Cost Estimation",
+    "title": "AX Raster2BOM",
     "description": "평면도 이미지를 수량으로: Detection, Segmentation, OCR, 그리고 수량 산출이에요.",
     "image": "thumbnail.jpg",
     "image_alt": "CAD에서 인식된 평면도와 Excel로 내보낸 수량 산출표",
