@@ -37,6 +37,28 @@ main[data-project] .container {
   font-size: 0.88rem;
 }
 
+/* Stronger technology chips for the two large CAD/AI case studies. The palette
+   repeats for long tag lists and color-mix keeps it readable in every theme. */
+main:is([data-project="ax-raster2bom"], [data-project="cad-parser-agent-system"]) .project-tags {
+  gap: 0.55rem;
+}
+
+main:is([data-project="ax-raster2bom"], [data-project="cad-parser-agent-system"]) .project-tags li {
+  --tag-color: #2563eb;
+  padding: 0.34rem 0.72rem;
+  border-color: color-mix(in srgb, var(--tag-color) 72%, var(--line));
+  background: color-mix(in srgb, var(--tag-color) 16%, var(--surface));
+  color: color-mix(in srgb, var(--tag-color) 76%, var(--text));
+  font-weight: 700;
+  box-shadow: 0 2px 7px color-mix(in srgb, var(--tag-color) 14%, transparent);
+}
+
+main:is([data-project="ax-raster2bom"], [data-project="cad-parser-agent-system"]) .project-tags li:nth-child(6n + 2) { --tag-color: #7c3aed; }
+main:is([data-project="ax-raster2bom"], [data-project="cad-parser-agent-system"]) .project-tags li:nth-child(6n + 3) { --tag-color: #0891b2; }
+main:is([data-project="ax-raster2bom"], [data-project="cad-parser-agent-system"]) .project-tags li:nth-child(6n + 4) { --tag-color: #16a34a; }
+main:is([data-project="ax-raster2bom"], [data-project="cad-parser-agent-system"]) .project-tags li:nth-child(6n + 5) { --tag-color: #d97706; }
+main:is([data-project="ax-raster2bom"], [data-project="cad-parser-agent-system"]) .project-tags li:nth-child(6n + 6) { --tag-color: #e11d48; }
+
 /* Detail layout: a "Contents" column on the left and the panels on the right.
    The column sticks while scrolling on wide screens and stacks on top on narrow ones. */
 .detail-layout {
