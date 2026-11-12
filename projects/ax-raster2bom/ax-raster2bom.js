@@ -9,20 +9,23 @@ Portfolio.project("ax-raster2bom", {
     "image_alt": "A recognized floor plan in the CAD application beside its quantity take-off table in Excel",
     "image_class": "",
     "url": "https://github.com/Laudarisd",
-    "subtitle": "A CAD add-in that reads a floor-plan image, recognizes the walls, openings, fixtures and spaces on it, rebuilds them as CAD layers, and produces a quantity take-off an estimator can review. Detection, segmentation and OCR models run behind a supervised service with live monitoring.",
+    "subtitle": "A CAD add-in that reads a floor-plan image, recognizes the objects and spaces on it, converts them in vector format, rebuilds them as CAD layers, and produces a quantity take-off an estimator can review.",
     "period": "Jan 2024 – Apr 2026",
     "role": "Researcher and developer (end-to-end)",
     "context": "Industry AI system",
     "tags": [
-      "Computer Vision",
+      "Computer Vision(Detection, Segmentation, OCR)",
       "PyTorch",
       "OpenCV",
       "CRNN / Paddle OCR",
       "FastAPI",
-      "Redis",
+      "Redis / Celery",
       "systemd / nginx",
       "Prometheus / Grafana",
-      "MLOps"
+      "MLOps",
+      "Systemctl / Supervisor",
+      "Aws S3 Bucket",
+      "Aws EC2"
     ],
     "links": [
       {
