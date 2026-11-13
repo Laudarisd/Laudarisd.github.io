@@ -494,6 +494,27 @@ main:is([data-project="ax-raster2bom"], [data-project="cad-parser-agent-system"]
   height: auto;
 }
 
+/* The full MLOps chart contains two deployment branches and an observability
+   section. Keep it at a readable canvas size instead of shrinking all labels
+   to fit the article width; readers can scroll the diagram horizontally. */
+.project-article pre.mermaid.mlops-diagram {
+  justify-content: flex-start;
+  padding: 1.25rem;
+}
+
+.project-article pre.mermaid.mlops-diagram svg {
+  width: 1400px !important;
+  min-width: 1400px;
+  max-width: none !important;
+}
+
+.project-article pre.mermaid.mlops-diagram svg text,
+.project-article pre.mermaid.mlops-diagram svg .nodeLabel,
+.project-article pre.mermaid.mlops-diagram svg .edgeLabel,
+.project-article pre.mermaid.mlops-diagram svg .label {
+  font-size: 16px !important;
+}
+
 /* Mermaid bakes colours in when it draws, so override them with the live theme variables. */
 .project-article pre.mermaid svg text,
 .project-article pre.mermaid svg .nodeLabel,
