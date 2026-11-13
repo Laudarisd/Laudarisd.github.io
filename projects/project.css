@@ -555,6 +555,19 @@ main:is([data-project="ax-raster2bom"], [data-project="cad-parser-agent-system"]
   margin: 1.2rem auto 1.5rem;
 }
 
+/* Compact paired screenshots used for the Raster2BOM input/result overview. */
+.project-article .figure-row-compact {
+  max-width: 780px;
+}
+
+.project-article .figure-row-compact img {
+  display: block;
+  width: 100%;
+  height: 210px;
+  margin-top: 0;
+  object-fit: contain;
+}
+
 /* Input -> output pair at the top of an article: two figures with an arrow between them. */
 .project-article .process-row {
   display: grid;

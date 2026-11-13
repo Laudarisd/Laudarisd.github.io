@@ -13,7 +13,7 @@
     />
     <link rel="stylesheet" href="../../css/style.css?v=20261109" />
     <link rel="stylesheet" href="../projects.css?v=20261105" />
-    <link rel="stylesheet" href="../project.css?v=20261112a" />
+    <link rel="stylesheet" href="../project.css?v=20261112b" />
   </head>
   <body>
     <!--
@@ -121,18 +121,84 @@ and produces a quantity take-off that an estimator can review.</p>
 
 
 <p><strong>Main Process</strong></p>
-<div class="fact-grid">
+<!-- <div class="fact-grid">
 <div class="fact"><span class="fact-label">Input</span><span class="fact-value">Floor-plan images</span></div>
 <div class="fact"><span class="fact-label">Models</span><span class="fact-value">Detection · segmentation · OCR</span></div>
 <div class="fact"><span class="fact-label">Output</span><span class="fact-value">CAD layers · quantity tables · JSON</span></div>
 <div class="fact"><span class="fact-label">Serving</span><span class="fact-value">FastAPI, batch and API</span></div>
 <div class="fact"><span class="fact-label">Operations</span><span class="fact-value">systemd · nginx · Redis</span></div>
 <div class="fact"><span class="fact-label">Monitoring</span><span class="fact-value">Prometheus · Grafana</span></div>
-</div>
-<figure class="figure-small">
+</div> -->
+
+<div class="figure-row figure-row-small figure-row-compact">
+<figure>
+<img src="main_input.png" loading="lazy" alt="A floor-plan image used as the input to the recognition system">
+<figcaption>Input: a floor-plan image prepared for recognition.</figcaption>
+</figure>
+<figure>
 <img src="2.png" loading="lazy" alt="The AI recognition result inside the CAD application: a floor plan with recognized walls, windows, doors and spaces, beside the layer list">
 <figcaption>The add-in inside the CAD application: a recognized floor plan on the left, and the layers it was rebuilt into on the right.</figcaption>
 </figure>
+</div>
+
+<h3>End-to-end MLOps and deployment architecture</h3>
+<pre class="mermaid">flowchart TB
+    IN[Floor-plan images<br/>single or batch input]:::input --> VAL[Validation, scaling<br/>cleanup and tiling]:::process
+    VAL --> DATA[(Versioned datasets<br/>labels and metadata)]:::store
+
+    subgraph ML[Model development and release]
+      DATA --> TRAIN[PyTorch training<br/>detection, segmentation and OCR]:::process
+      TRAIN --> EVAL[Validation<br/>quality and regression checks]:::decision
+      EVAL -->|approved| REG[(Versioned model artifacts<br/>and release metadata)]:::store
+      EVAL -->|retrain| TRAIN
+    end
+
+    REG --> PKG[Package inference service<br/>FastAPI and dependencies]:::agent
+    PKG --> GATE{Deployment target}:::decision
+
+    subgraph LOCAL[Option 1 - Local production server]
+      GATE -->|local| NGINX[nginx<br/>TLS and reverse proxy]:::tool
+      NGINX --> API1[FastAPI inference service]:::agent
+      CTL[systemctl]:::tool --> SD[systemd or Supervisor<br/>start, restart and recovery]:::tool
+      SD -. manages .-> API1
+      API1 <--> QUEUE1[(Redis and Celery<br/>queue and shared state)]:::store
+      REG -. approved artifacts .-> API1
+    end
+
+    subgraph AWS[Option 2 - AWS production]
+      GATE -->|AWS| S3[(Amazon S3<br/>models, inputs and results)]:::store
+      S3 --> EC2[Amazon EC2<br/>GPU or CPU instance]:::agent
+      ALB[Public endpoint<br/>TLS and reverse proxy]:::tool --> EC2
+      CTL2[systemctl]:::tool --> SD2[systemd or Supervisor<br/>service lifecycle]:::tool
+      SD2 -. manages .-> EC2
+      EC2 <--> QUEUE2[(Redis and Celery<br/>queue and shared state)]:::store
+    end
+
+    API1 --> RESULT[Structured JSON<br/>CAD layers and quantity tables]:::output
+    EC2 --> RESULT
+    RESULT --> CAD[CAD add-in review<br/>Excel export and approval]:::output
+
+    subgraph OBS[Observability and operations]
+      MET[Application metrics<br/>latency, throughput, errors and queue]:::note
+      HOST[Host and GPU metrics<br/>CPU, memory, disk and VRAM]:::note
+      LOG[Service and inference logs]:::note
+      PROM[Prometheus<br/>metrics collection]:::tool
+      GRAF[Grafana<br/>dashboards and alerts]:::output
+      CW[Amazon CloudWatch<br/>AWS logs and infrastructure]:::tool
+      MET --> PROM
+      HOST --> PROM
+      PROM --> GRAF
+      LOG --> GRAF
+      CW --> GRAF
+    end
+
+    API1 -. telemetry .-> MET
+    API1 -. telemetry .-> HOST
+    API1 -. logs .-> LOG
+    EC2 -. telemetry .-> MET
+    EC2 -. telemetry .-> HOST
+    EC2 -. logs and events .-> CW
+</pre>
 
 <hr />
 <h2 id="1-introduction">1. Introduction</h2>
