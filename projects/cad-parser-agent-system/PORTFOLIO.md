@@ -87,9 +87,71 @@ Nothing in it says "this is a bedroom" or "here is a piping system". For instanc
 <figcaption>What one item in the file becomes once it is read: a single line with its layer, endpoints, length and bounds. Still no meaning attached.</figcaption>
 </figure>
 
+<h3>2.2 CAD data coverage and verification</h3>
+
+The parser does not treat a CAD drawing as one flat list of visible shapes. It first inventories the entity types and database objects in the source drawing, then verifies that each supported category has been extracted with its identity, layer, geometry and references intact.
+
+| Category | CAD types | Description |
+| --- | --- | --- |
+| **1. Geometric Primitives** (기본 기하 객체) | `LINE`, `CIRCLE`, `ARC`, `POINT`, `ELLIPSE` | Basic geometric shapes |
+| **2. Complex Geometry** (복합 기하 객체) | `POLYLINE`, `LWPOLYLINE`, `SPLINE`, `HATCH` | Connected or more complex geometric representations |
+| **3. Text & Annotations** (문자 및 주석) | `TEXT`, `MTEXT`, `DIMENSION`, `LEADER`, `MULTILEADER` | Drawing descriptions, measurements and annotations |
+| **4. Block References** (블록 참조 객체) | `INSERT` | Instances referencing reusable block definitions |
+| **5. 3D Entities** (3차원 객체) | `3DSOLID`, `REGION`, `SURFACE`, `3DFACE`, `MESH` | 3D solids, surfaces and regions |
+| **6. Other Entities** (기타 객체) | `IMAGE`, `UNDERLAY`, `VIEWPORT`, proxy entities | Referenced images, external content and specialized objects |
+
+<h4>What else exists in CAD?</h4>
+
+A DWG/DXF file also contains database information that is not necessarily a visible drawing entity.
+
+| Category | Examples | Purpose |
+| --- | --- | --- |
+| **Layer Definitions** | `LAYER` | Organize entities |
+| **Block Definitions** | `BLOCK` records | Define reusable groups of entities |
+| **Style Definitions** | `TEXTSTYLE`, `DIMSTYLE`, `LTYPE` | Control appearance and formatting |
+| **Drawing Metadata** | Units, extents, variables | Describe drawing settings |
+| **External References** | `XREF` definitions and paths | Reference other drawings |
+| **Extended Data** | `XDATA`, extension dictionaries | Store additional object information |
+
+```text
+CAD Drawing (DWG / DXF)
+|
++-- CAD Entities
+|   +-- Geometric Primitives
+|   |   +-- LINE
+|   |   +-- CIRCLE
+|   |   +-- ARC
+|   +-- Complex Geometry
+|   |   +-- POLYLINE
+|   |   +-- SPLINE
+|   +-- Annotations
+|   |   +-- TEXT
+|   |   +-- DIMENSION
+|   +-- Block References
+|   |   +-- INSERT
+|   +-- 3D / Other Entities
+|
++-- CAD Database Objects
+    +-- Layer Definitions
+    +-- Block Definitions
+    +-- Styles
+    +-- External References
+    +-- Metadata
+```
+
+<div class="callout callout-note">
+<h4>How extraction is verified</h4>
+<ul>
+<li><strong>Type coverage:</strong> source entity types are inventoried and mapped to a supported category; unknown and proxy objects are reported instead of silently discarded.</li>
+<li><strong>Identity and counts:</strong> stable handles and per-type counts are compared between the source drawing and parsed records.</li>
+<li><strong>Geometry:</strong> coordinates, bounds, lengths, areas and drawing units are checked for valid values and consistent scale.</li>
+<li><strong>References:</strong> nested blocks and external references are resolved through insertion, rotation, scale and mirroring while retaining their source identity.</li>
+<li><strong>Database objects:</strong> layers, block definitions, styles, metadata and extended data are verified separately from visible entities.</li>
+</ul>
+</div>
 
 
-<h3>2.2 Why that is hard</h3>
+<h3>2.3 Why that is hard</h3>
 <div class="callout callout-problem">
 <h4>Problems in the raw drawing</h4>
 <ul>
@@ -102,7 +164,7 @@ Nothing in it says "this is a bedroom" or "here is a piping system". For instanc
 </ul>
 </div>
 
-<h3>2.3 Why the obvious approaches fail</h3>
+<h3>2.4 Why the obvious approaches fail</h3>
 
 <div class="table-scroll"><table class="component-table">
 <thead>

@@ -195,7 +195,66 @@ Nothing in it says "this is a bedroom" or "here is a piping system". For instanc
 
 
 
-<h3>2.2 Why that is hard</h3>
+<h3>2.2 CAD data coverage and verification</h3>
+<p>The parser does not treat a CAD drawing as one flat list of visible shapes. It first inventories the entity types and database objects in the source drawing, then verifies that each supported category has been extracted with its identity, layer, geometry and references intact.</p>
+<div class="table-scroll"><table class="component-table">
+<thead><tr><th>Category</th><th>CAD types</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><strong>1. Geometric Primitives</strong> (기본 기하 객체)</td><td><code>LINE</code>, <code>CIRCLE</code>, <code>ARC</code>, <code>POINT</code>, <code>ELLIPSE</code></td><td>Basic geometric shapes</td></tr>
+<tr><td><strong>2. Complex Geometry</strong> (복합 기하 객체)</td><td><code>POLYLINE</code>, <code>LWPOLYLINE</code>, <code>SPLINE</code>, <code>HATCH</code></td><td>Connected or more complex geometric representations</td></tr>
+<tr><td><strong>3. Text &amp; Annotations</strong> (문자 및 주석)</td><td><code>TEXT</code>, <code>MTEXT</code>, <code>DIMENSION</code>, <code>LEADER</code>, <code>MULTILEADER</code></td><td>Drawing descriptions, measurements and annotations</td></tr>
+<tr><td><strong>4. Block References</strong> (블록 참조 객체)</td><td><code>INSERT</code></td><td>Instances referencing reusable block definitions</td></tr>
+<tr><td><strong>5. 3D Entities</strong> (3차원 객체)</td><td><code>3DSOLID</code>, <code>REGION</code>, <code>SURFACE</code>, <code>3DFACE</code>, <code>MESH</code></td><td>3D solids, surfaces and regions</td></tr>
+<tr><td><strong>6. Other Entities</strong> (기타 객체)</td><td><code>IMAGE</code>, <code>UNDERLAY</code>, <code>VIEWPORT</code>, proxy entities</td><td>Referenced images, external content and specialized objects</td></tr>
+</tbody>
+</table></div>
+<h4>What else exists in CAD?</h4>
+<p>A DWG/DXF file also contains database information that is not necessarily a visible drawing entity.</p>
+<div class="table-scroll"><table class="component-table">
+<thead><tr><th>Category</th><th>Examples</th><th>Purpose</th></tr></thead>
+<tbody>
+<tr><td><strong>Layer Definitions</strong></td><td><code>LAYER</code></td><td>Organize entities</td></tr>
+<tr><td><strong>Block Definitions</strong></td><td><code>BLOCK</code> records</td><td>Define reusable groups of entities</td></tr>
+<tr><td><strong>Style Definitions</strong></td><td><code>TEXTSTYLE</code>, <code>DIMSTYLE</code>, <code>LTYPE</code></td><td>Control appearance and formatting</td></tr>
+<tr><td><strong>Drawing Metadata</strong></td><td>Units, extents, variables</td><td>Describe drawing settings</td></tr>
+<tr><td><strong>External References</strong></td><td><code>XREF</code> definitions and paths</td><td>Reference other drawings</td></tr>
+<tr><td><strong>Extended Data</strong></td><td><code>XDATA</code>, extension dictionaries</td><td>Store additional object information</td></tr>
+</tbody>
+</table></div>
+<pre><code class="language-plaintext">CAD Drawing (DWG / DXF)
+|
++-- CAD Entities
+|   +-- Geometric Primitives
+|   |   +-- LINE
+|   |   +-- CIRCLE
+|   |   +-- ARC
+|   +-- Complex Geometry
+|   |   +-- POLYLINE
+|   |   +-- SPLINE
+|   +-- Annotations
+|   |   +-- TEXT
+|   |   +-- DIMENSION
+|   +-- Block References
+|   |   +-- INSERT
+|   +-- 3D / Other Entities
+|
++-- CAD Database Objects
+    +-- Layer Definitions
+    +-- Block Definitions
+    +-- Styles
+    +-- External References
+    +-- Metadata</code></pre>
+<div class="callout callout-note">
+<h4>How extraction is verified</h4>
+<ul>
+<li><strong>Type coverage:</strong> source entity types are inventoried and mapped to a supported category; unknown and proxy objects are reported instead of silently discarded.</li>
+<li><strong>Identity and counts:</strong> stable handles and per-type counts are compared between the source drawing and parsed records.</li>
+<li><strong>Geometry:</strong> coordinates, bounds, lengths, areas and drawing units are checked for valid values and consistent scale.</li>
+<li><strong>References:</strong> nested blocks and external references are resolved through insertion, rotation, scale and mirroring while retaining their source identity.</li>
+<li><strong>Database objects:</strong> layers, block definitions, styles, metadata and extended data are verified separately from visible entities.</li>
+</ul>
+</div>
+<h3>2.3 Why that is hard</h3>
 <div class="callout callout-problem">
 <h4>Problems in the raw drawing</h4>
 <ul>
@@ -208,7 +267,7 @@ Nothing in it says "this is a bedroom" or "here is a piping system". For instanc
 </ul>
 </div>
 
-<h3>2.3 Why the obvious approaches fail</h3>
+<h3>2.4 Why the obvious approaches fail</h3>
 
 <div class="table-scroll"><table class="component-table">
 <thead>
