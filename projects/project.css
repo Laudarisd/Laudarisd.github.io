@@ -503,8 +503,8 @@ main:is([data-project="ax-raster2bom"], [data-project="cad-parser-agent-system"]
 }
 
 .project-article pre.mermaid.mlops-diagram svg {
-  width: 1400px !important;
-  min-width: 1400px;
+  width: 1750px !important;
+  min-width: 1750px;
   max-width: none !important;
 }
 
@@ -512,7 +512,7 @@ main:is([data-project="ax-raster2bom"], [data-project="cad-parser-agent-system"]
 .project-article pre.mermaid.mlops-diagram svg .nodeLabel,
 .project-article pre.mermaid.mlops-diagram svg .edgeLabel,
 .project-article pre.mermaid.mlops-diagram svg .label {
-  font-size: 16px !important;
+  font-size: 20px !important;
 }
 
 /* Mermaid bakes colours in when it draws, so override them with the live theme variables. */
