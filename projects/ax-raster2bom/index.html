@@ -113,7 +113,7 @@
             <div class="panel-body">
 <!-- article:start -->
 <div class="project-article" data-lang="en" hidden>
-<nav class="article-toc-wrap"><h4>Contents</h4><ol class="article-toc"><li><a href="#1-introduction">1. Introduction</a></li><li><a href="#2-input-and-preprocessing">2. Input and preprocessing</a></li><li><a href="#3-models">3. Models</a></li><li><a href="#4-results-database">4. Results database</a></li><li><a href="#5-recognition-results">5. Recognition results</a></li><li><a href="#6-quantity-take-off">6. Quantity take-off</a></li><li><a href="#7-serving-and-operations">7. Serving and operations</a></li><li><a href="#8-monitoring">8. Monitoring</a></li><li><a href="#9-summary">9. Summary</a></li></ol></nav>
+<nav class="article-toc-wrap"><h4>Contents</h4><ol class="article-toc"><li><a href="#1-introduction">1. Introduction</a></li><li><a href="#2-input-and-preprocessing">2. Input and preprocessing</a></li><li><a href="#3-models">3. Models</a></li><li><a href="#4-results-database">4. Results database</a></li><li><a href="#5-recognition-results">5. Recognition results</a></li><li><a href="#6-final-output">6. Final output</a></li><li><a href="#7-serving-and-operations">7. Serving and operations</a></li><li><a href="#8-monitoring">8. Monitoring</a></li><li><a href="#9-summary">9. Summary</a></li></ol></nav>
 <h1>AX Raster2BOM - From Floor-Plan Images to Quantitative Analysis</h1>
 <p>An add-in for a CAD application that reads a floor-plan image, recognizes what is drawn on it, rebuilds it as CAD layers,
 and produces a quantity take-off that an estimator can review.</p>
@@ -126,7 +126,7 @@ and produces a quantity take-off that an estimator can review.</p>
 <span class="arch-arrow" aria-hidden="true">→</span>
 <figure>
 <img src="images/results/1_result.png" loading="lazy" alt="Output: the same plan recognized inside the CAD application, with the quantity take-off table beside it">
-<figcaption>Output: recognized CAD layers and the quantity take-off.</figcaption>
+<figcaption>Final output: recognized CAD layers and the quantity tables.</figcaption>
 </figure>
 </div>
 
@@ -283,7 +283,7 @@ Wall thickness recovered by the model fills the bearing and non-bearing values u
 </figure>
 
 <hr />
-<h2 id="6-quantity-take-off">6. Quantity take-off</h2>
+<h2 id="6-final-output">6. Final output</h2>
 <p>From the recognized drawing the add-in produces quantity tables, grouped by type and by size, with a subtotal per group and a total per sheet.
 Walls, windows, doors, general objects, spaces and slabs each get their own tab, and the whole table exports to Excel.</p>
 <div class="figure-row figure-row-small figure-row-equal">

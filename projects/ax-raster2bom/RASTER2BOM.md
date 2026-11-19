@@ -10,7 +10,7 @@ and produces a quantity take-off that an estimator can review.</p>
 <span class="arch-arrow" aria-hidden="true">→</span>
 <figure>
 <img src="images/results/1_result.png" alt="Output: the same plan recognized inside the CAD application, with the quantity take-off table beside it">
-<figcaption>Output: recognized CAD layers and the quantity take-off.</figcaption>
+<figcaption>Final output: recognized CAD layers and the quantity tables.</figcaption>
 </figure>
 </div>
 
@@ -171,7 +171,7 @@ Wall thickness recovered by the model fills the bearing and non-bearing values u
 
 ---
 
-## 6. Quantity take-off
+## 6. Final output
 <p>From the recognized drawing the add-in produces quantity tables, grouped by type and by size, with a subtotal per group and a total per sheet.
 Walls, windows, doors, general objects, spaces and slabs each get their own tab, and the whole table exports to Excel.</p>
 <div class="figure-row figure-row-small figure-row-equal">
