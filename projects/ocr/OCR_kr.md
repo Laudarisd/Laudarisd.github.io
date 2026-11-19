@@ -8,8 +8,8 @@
 <div class="fact"><span class="fact-label">출력</span><span class="fact-value">위치가 있는 글자, JSON</span></div>
 </div>
 <figure class="figure-small">
-<img src="images/photo.jpg" alt="인쇄된 철도 환불 영수증: 회사 머리글, 한자와 숫자로 쓴 큰 금액, 빨간 일련번호, 무늬 배경 위의 빨간 직인">
-<figcaption>인쇄된 영수증이에요. 머리글, 두 가지로 쓴 금액, 일련번호, 무늬 배경 위의 직인. OCR이 칸마다 읽어야 하는 종류의 입력이에요. 이미지: public domain, Wikimedia Commons.</figcaption>
+<img src="images/photo.jpg" alt="세대 평면도 위에 가장자리의 치수 문자열, 방 안의 방 이름, 개구부 기호에 OCR 박스가 그려지고 각 박스에 읽은 글자가 적힌 모습">
+<figcaption>건축 도면의 OCR이에요. 가장자리의 치수 문자열, 방 안의 방 이름, 개구부 기호를 찾아서 읽고, 도면 위의 위치와 함께 돌려줘요.</figcaption>
 </figure>
 
 ---

@@ -8,8 +8,8 @@
 <div class="fact"><span class="fact-label">Output</span><span class="fact-value">Text with positions, as JSON</span></div>
 </div>
 <figure class="figure-small">
-<img src="images/photo.jpg" alt="A printed railway refund receipt with a company header, a large amount in Chinese numerals and digits, a red serial number and a red official stamp over a patterned background">
-<figcaption>A printed receipt: a header, an amount written two ways, a serial number and a stamp over a patterned background, which is the kind of input OCR has to read field by field. Image: public domain, via Wikimedia Commons.</figcaption>
+<img src="images/photo.jpg" alt="A unit floor plan with OCR boxes drawn over the dimension strings along its edges, the room names inside the rooms and the opening marks, each box labelled with the text it read">
+<figcaption>OCR on an architectural drawing: dimension strings along the edges, room names inside the rooms and opening marks, each found and read with its position on the plan.</figcaption>
 </figure>
 
 ---
