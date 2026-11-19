@@ -57,6 +57,7 @@ Portfolio.project("ax-raster2bom", {
       "MySQL",
       "AWS",
       "Redis",
+      "Celery",
       "systemd / nginx",
       "Prometheus / Grafana",
       "MLOps"

@@ -36,15 +36,16 @@ and produces a quantity take-off that an estimator can review.</p>
 <p>Cost estimation starts from drawings, and many of those drawings arrive as images rather than as CAD files. A person has to read every wall,
 window, door and room, measure them, and type the quantities into a sheet. That takes days on a large plan and the numbers are easy to get wrong.</p>
 <p>This project does that reading automatically. The picture below is the whole system: a user sends a floor-plan image from the CAD add-in
-to the inference server, three model branches read it, every result is kept in a database, and three outputs come back.</p>
+to one of three deployments, an on-premises Linux server, an AWS instance, or an ONNX CPU build on their own PC. The same three model branches
+read it, every result is kept in a database, and three outputs come back.</p>
 <pre class="mermaid">flowchart LR
-    U[User<br/>CAD add-in]:::input --> S[Inference server<br/>on-premises or AWS<br/>PyTorch GPU · ONNX CPU]:::agent
-    S --> D[Detection]:::process
-    S --> G[Segmentation]:::process
-    S --> O[OCR]:::process
-    D --> R[(Structured result)]:::store
-    G --> R
-    O --> R
+    U[User<br/>CAD add-in]:::input --> P1[On-premises<br/>Linux GPU server]:::agent
+    U --> P2[AWS<br/>GPU instance]:::agent
+    U --> P3[Own PC<br/>ONNX CPU]:::agent
+    P1 --> M[Detection · Segmentation · OCR]:::process
+    P2 --> M
+    P3 --> M
+    M --> R[(Structured result)]:::store
     R --> DB[(MySQL<br/>results database)]:::store
     R --> O1[CAD layers]:::output
     R --> O2[Quantity tables<br/>Excel]:::output
@@ -195,21 +196,162 @@ Walls, windows, doors, general objects, spaces and slabs each get their own tab,
 <div class="part-divider"><span>Deployment</span></div>
 
 ## 7. Serving and operations
-<p>The models run behind a FastAPI service rather than inside the CAD add-in, so the add-in sends a drawing and receives a structured result.
-The service is supervised by systemd, published through a reverse proxy, and uses Redis for shared state such as queue depth and request history.
-The same service runs on-premises or on AWS, and an ONNX-based CPU build serves where no GPU is available.</p>
+<p>The models never run inside the CAD add-in. The add-in sends a drawing over HTTP and receives a structured result, and that service is
+deployed in three ways: on an on-premises Linux GPU server, on AWS, or as an ONNX CPU build for users who want the product on their own PC
+without a remote connection. The code below is shortened to show the shape of each part, not the production source.</p>
+
+<h3>7.1 On-premises Linux server</h3>
+<p>The main deployment. A FastAPI service receives the drawing over an HTTP connection from the CADian UI, puts the job on a Redis queue,
+and a Celery worker runs the three model branches on the GPU. The add-in polls for the result and draws it. Redis manages the traffic,
+so a burst of drawings queues up instead of overloading the GPU, and Celery handles the heavy backend work outside the request cycle.</p>
 <pre class="mermaid">flowchart LR
-    C[CAD add-in<br/>authorized client]:::input --> N[Reverse proxy<br/>nginx]:::process
-    N --> API[FastAPI service<br/>PyTorch GPU · ONNX CPU]:::agent
-    MDL[(Approved model<br/>artifacts)]:::store --> API
-    SD[systemd supervisor]:::tool -.-> API
-    API --> RDS[(Redis<br/>queue and state)]:::store
-    API --> DB[(MySQL<br/>results)]:::store
-    API --> ARC[(Result archives)]:::store
-    API --> MET[Metrics endpoint]:::output
-    MET --> PRM[Prometheus]:::tool
-    PRM --> GRF[Grafana and<br/>operator dashboard]:::output
+    C[CADian UI<br/>HTTP client]:::input --> N[nginx<br/>reverse proxy]:::process
+    N --> API[FastAPI<br/>accepts the drawing]:::agent
+    API --> Q[(Redis<br/>job queue and state)]:::store
+    Q --> W[Celery worker<br/>PyTorch on GPU]:::agent
+    W --> DB[(MySQL<br/>results)]:::store
+    W --> OUT[Result JSON<br/>drawn in CADian]:::output
+    GW[GPU watchdog timer]:::note -.-> SD[systemctl<br/>restart on failure]:::tool
+    SD -.-> API
+    SD -.-> W
 </pre>
+<p>The API stays small: it validates the upload, enqueues the work and answers polls. Everything slow happens in the worker.</p>
+
+```python
+# app/main.py: the API only accepts the drawing and hands it to a worker.
+from fastapi import FastAPI, UploadFile
+from celery import Celery
+
+app = FastAPI()
+queue = Celery("ax", broker="redis://127.0.0.1:6379/0", backend="redis://127.0.0.1:6379/1")
+
+@app.post("/recognize")
+async def recognize(drawing: UploadFile, scale: float):
+    path = save_upload(drawing)                      # validated and rescaled on disk
+    job = queue.send_task("ax.recognize", args=[path, scale])
+    return {"job_id": job.id}                        # the add-in polls this id
+
+@app.get("/result/{job_id}")
+def result(job_id: str):
+    job = queue.AsyncResult(job_id)
+    return {"state": job.state, "result": job.result if job.ready() else None}
+```
+
+```python
+# worker/tasks.py: one Celery worker per GPU runs the three model branches.
+@queue.task(name="ax.recognize")
+def recognize(path, scale):
+    image = preprocess(path, scale)
+    result = merge(detect(image), segment(image), read_text(image))
+    store(result)                                    # one MySQL table per branch
+    return result.to_json()
+```
+
+<p>Both processes are systemd services, so the server never stays down: if the API or the worker exits, systemctl restarts it within seconds,
+and both start again after a reboot.</p>
+
+```ini
+# /etc/systemd/system/ax-inference.service  (ax-worker.service is the same shape, running celery)
+[Unit]
+Description=AX Raster2BOM inference API
+After=network.target redis.service
+
+[Service]
+User=ax
+WorkingDirectory=/opt/ax-inference
+ExecStart=/opt/ax-inference/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+<p>One failure mode needed its own guard: after some inferences the GPU stayed at 100% even though no job was running. A systemd timer runs a
+small watchdog every minute; if the GPU is pinned while the queue is idle, it restarts the services and the GPU is released.</p>
+
+```bash
+#!/usr/bin/env bash
+# gpu-watchdog.sh: run by a systemd timer every minute.
+util=$(nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits | head -n1)
+active=$(redis-cli llen ax:jobs:active)
+if [ "$util" -ge 100 ] && [ "$active" -eq 0 ]; then
+  systemctl restart ax-worker ax-inference
+fi
+```
+
+<h3>7.2 AWS deployment</h3>
+<p>The same service runs on AWS when a customer cannot host a GPU machine. The API and worker are installed on a GPU EC2 instance exactly as above,
+and the model weights live in an S3 bucket, one prefix per approved version. The instance reads the bucket through its instance role, so no
+keys are stored on the machine; on start the service pulls the version it is told to use, and rolling to a new model is a change of one variable
+and a restart. nginx terminates TLS and the security group only admits the CADian clients.</p>
+<pre class="mermaid">flowchart LR
+    C[CADian UI]:::input --> N[nginx · TLS<br/>EC2 security group]:::process
+    N --> API[FastAPI + Celery<br/>EC2 GPU instance]:::agent
+    S3[(S3 bucket<br/>model versions)]:::store --> API
+    IAM[Instance role<br/>read-only S3]:::tool -.-> API
+    API --> RDS[(Redis)]:::store
+    API --> DB[(MySQL)]:::store
+    API --> OUT[Result JSON<br/>to the add-in]:::output
+</pre>
+
+```python
+# model_store.py: pull the approved model version from S3 when the service starts.
+import boto3, os
+
+BUCKET = "ax-raster2bom-models"
+PREFIX = os.environ["MODEL_VERSION"]                 # e.g. "2026-03/"
+s3 = boto3.client("s3")
+
+def pull_models(dest="/opt/ax-inference/models"):
+    for obj in s3.list_objects_v2(Bucket=BUCKET, Prefix=PREFIX)["Contents"]:
+        target = os.path.join(dest, os.path.basename(obj["Key"]))
+        if not os.path.exists(target):
+            s3.download_file(BUCKET, obj["Key"], target)
+```
+
+```bash
+# Publish a new model version, then roll the server to it.
+aws s3 sync ./export/2026-03 s3://ax-raster2bom-models/2026-03/
+ssh ax-aws 'sudo systemctl set-environment MODEL_VERSION=2026-03/ \
+            && sudo systemctl restart ax-inference ax-worker'
+```
+
+<h3>7.3 ONNX CPU deployment on the user's PC</h3>
+<p>Some users want the product on their own machine with no remote connection. For them the PyTorch models are exported to ONNX and run
+under ONNX Runtime on the CPU, inside the add-in's own process: no server, no GPU and no network. It is slower than the GPU service,
+but the drawing never leaves the PC.</p>
+<pre class="mermaid">flowchart LR
+    U[User PC<br/>CADian add-in]:::input --> RT[ONNX Runtime<br/>CPU session]:::agent
+    M[(ONNX models<br/>shipped with the add-in)]:::store --> RT
+    RT --> R[Structured result]:::process
+    R --> L[CAD layers and<br/>quantity tables]:::output
+</pre>
+
+```python
+# export_onnx.py: one PyTorch model -> one .onnx file, with a dynamic batch and image size.
+import torch
+
+model = load_detector("weights/detector.pt").eval()
+dummy = torch.zeros(1, 3, 1024, 1024)
+torch.onnx.export(
+    model, dummy, "export/detector.onnx",
+    opset_version=17,
+    input_names=["image"], output_names=["boxes", "scores", "classes"],
+    dynamic_axes={"image": {0: "batch", 2: "height", 3: "width"}},
+)
+```
+
+```python
+# infer_onnx.py: the same model on the user's CPU, with no PyTorch and no server.
+import numpy as np
+import onnxruntime as ort
+
+session = ort.InferenceSession("models/detector.onnx", providers=["CPUExecutionProvider"])
+image = preprocess(path).astype(np.float32)[None]    # 1 x 3 x H x W
+boxes, scores, classes = session.run(None, {"image": image})
+```
+
 <table>
 <thead>
 <tr>
@@ -218,12 +360,14 @@ The same service runs on-premises or on AWS, and an ONNX-based CPU build serves 
 </tr>
 </thead>
 <tbody>
-<tr><td>FastAPI</td><td>request validation, orchestration, result packaging</td></tr>
-<tr><td>systemd</td><td>process supervision, restart and recovery</td></tr>
-<tr><td>nginx</td><td>reverse proxy in front of the service</td></tr>
-<tr><td>Redis</td><td>shared state: queue depth, request outcomes, event history</td></tr>
+<tr><td>FastAPI</td><td>request validation, job submission, result polling</td></tr>
+<tr><td>Celery</td><td>runs the model branches in a worker, outside the request cycle</td></tr>
+<tr><td>Redis</td><td>job queue, traffic control, request outcomes and event history</td></tr>
+<tr><td>systemd</td><td>supervises the API and worker, restarts them, runs the GPU watchdog timer</td></tr>
+<tr><td>nginx</td><td>reverse proxy and TLS in front of the service</td></tr>
 <tr><td>MySQL</td><td>results: detections, segmentations and OCR rows per input image</td></tr>
-<tr><td>ONNX Runtime</td><td>CPU build of the models for hosts without a GPU</td></tr>
+<tr><td>Amazon S3</td><td>versioned model weights for the AWS deployment</td></tr>
+<tr><td>ONNX Runtime</td><td>CPU build of the models for the user's own PC</td></tr>
 </tbody>
 </table>
 
