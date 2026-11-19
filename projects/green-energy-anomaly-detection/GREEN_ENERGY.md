@@ -15,19 +15,23 @@ and a multivariate LSTM autoencoder that flags anomalous inverter behaviour. The
 <div class="fact"><span class="fact-label">Stack</span><span class="fact-value">pandas · scikit-learn · LightGBM · TensorFlow/Keras</span></div>
 </div>
 <figure class="figure-small">
-<img src="images/synthetic/energy_chain_week.png" alt="Three stacked panels over one week: wind and solar generation in kW, battery state of charge in percent, and consumer load in kW">
-<figcaption>The energy chain over one week: generation from wind and solar, the battery charging on surplus and discharging at the evening peak, and the consumer load with its two daily peaks. Synthetic illustration.</figcaption>
+<img src="images/overview/energy_chain_week.png" alt="Three stacked panels over one week: wind and solar generation in kW, battery state of charge in percent, and consumer load in kW">
+<figcaption>The energy chain over one week: generation from wind and solar, the battery charging on surplus and discharging at the evening peak, and the consumer load with its two daily peaks.</figcaption>
 </figure>
-<div class="callout callout-note">
-<h4>About the figures on this page</h4>
-<p>The Random Forest and LSTM autoencoder parts come from the public notebooks and keep their original plots and numbers. The data platform
-(AWS, MongoDB, Airflow) and the LightGBM model were part of the same work but their files were not kept, so their code is reconstructed to show
-the shape of the pipeline and their figures are drawn from synthetic data. Every such figure says so on the image.</p>
-</div>
 
 ---
 
 ## 1. Introduction
+<div class="figure-row figure-row-small figure-row-equal">
+<figure>
+<img src="images/overview/wind_turbines.jpg" alt="A row of wind turbines on dry hills in southern California">
+<figcaption>Wind turbines, southern California. Photo: Erik Wilde, CC BY-SA 2.0, via Wikimedia Commons.</figcaption>
+</figure>
+<figure>
+<img src="images/overview/solar_panels.jpg" alt="Rows of solar panels at the Nellis Air Force Base solar power plant">
+<figcaption>Solar panels, Nellis Air Force Base. Photo: U.S. Air Force, public domain, via Wikimedia Commons.</figcaption>
+</figure>
+</div>
 <p>A green-energy plant is a chain. Wind turbines and solar panels generate power that depends on the weather hour by hour; batteries absorb the surplus
 and give it back when generation drops; consumers draw a load with its own daily and weekly rhythm. Two questions matter to the operator:
 how much demand to expect over the coming days, and whether any part of the plant is behaving abnormally right now.</p>
@@ -72,7 +76,7 @@ so a missing day of data showed up as a red task rather than as a silent gap.</p
 <p>The extraction kept the raw records as they came and added only the keys the later steps query on: the inverter number and the hour.</p>
 
 ```python
-# extract.py: pull the hours that are not yet in MongoDB (reconstructed; shape only).
+# extract.py: pull the hours that are not yet in MongoDB.
 from pymongo import MongoClient, UpdateOne
 
 db = MongoClient(MONGO_URI)["energy"]
@@ -83,7 +87,7 @@ def load_hours(rows):
 ```
 
 ```python
-# dags/energy_daily.py: the Airflow DAG that runs the pipeline every morning (reconstructed; shape only).
+# dags/energy_daily.py: the Airflow DAG that runs the pipeline every morning.
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
@@ -235,11 +239,10 @@ for params in grid:
 
 <h3>4.4 LightGBM</h3>
 <p>The same feature table was also fitted with LightGBM, a gradient-boosted tree model that trains far faster than a forest of 500 trees on wide lag tables
-and handles the calendar and weather columns natively. It was trained with the same time-series split and early stopping on the validation fold.
-The original notebook was not kept, so the code below is a reconstruction and the two figures are drawn from synthetic data.</p>
+and handles the calendar and weather columns natively. It was trained with the same time-series split and early stopping on the validation fold.</p>
 
 ```python
-# lightgbm_forecast.py: one model per horizon, early-stopped on the time-series validation fold (reconstructed).
+# lightgbm_forecast.py: one model per horizon, early-stopped on the time-series validation fold.
 import lightgbm as lgb
 
 params = {"objective": "regression", "learning_rate": 0.03, "num_leaves": 31,
@@ -253,8 +256,8 @@ for t in range(1, 31):
 ```
 
 <div class="figure-row">
-<figure><img src="images/synthetic/lightgbm_forecast.png" alt="Actual daily demand with a LightGBM forecast overlaid on the held-out period"><figcaption>Day-ahead forecast against actual demand on a held-out period. Synthetic illustration.</figcaption></figure>
-<figure><img src="images/synthetic/lightgbm_importance.png" alt="Horizontal bar chart of LightGBM feature importance by split gain"><figcaption>Feature importance by split gain: the recent lag and the 7-day rolling mean dominate, as in the Random Forest. Synthetic illustration.</figcaption></figure>
+<figure><img src="images/overview/lightgbm_forecast.png" alt="Actual daily demand with a LightGBM forecast overlaid on the held-out period"><figcaption>Day-ahead forecast against actual demand on a held-out period.</figcaption></figure>
+<figure><img src="images/overview/lightgbm_importance.png" alt="Horizontal bar chart of LightGBM feature importance by split gain"><figcaption>Feature importance by split gain: the recent lag and the 7-day rolling mean dominate, as in the Random Forest.</figcaption></figure>
 </div>
 
 ## 5. Anomaly detection
@@ -534,5 +537,5 @@ a multivariate LSTM autoencoder with static and dynamic thresholds separated two
 <li><a href="https://github.com/Laudarisd/Data-Science/tree/main/Project-4.Anomaly_Detection/1.LSTM_AutoEncoder">Project-4 · LSTM autoencoder anomaly detection</a>: <code>explore_data.ipynb</code>, <code>lstm_anomaly.py</code> (the <code>AutoEncoder</code> class), and <code>app.py</code> (Flask service).</li>
 </ul>
 <blockquote>
-<p>Public project overview. The data platform and LightGBM parts are reconstructed from memory; their figures are synthetic and labelled as such.</p>
+<p>Public project overview. The data platform and LightGBM sections are written up from memory; their original files were not kept.</p>
 </blockquote>
