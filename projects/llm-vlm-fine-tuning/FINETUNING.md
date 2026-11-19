@@ -408,10 +408,27 @@ answer = processor.batch_decode(output[:, inputs["input_ids"].shape[1]:], skip_s
 draw_polygons(image_path, json.loads(answer)["annotations"], out_path)       # the overlay saved next to the answer
 ```
 
-<figure class="figure-small">
-<img src="images/floorplan_sample.png" alt="The floor-plan image used in the examples on this page, a unit plan with three bedrooms, a living room, kitchen, two bathrooms and balconies">
-<figcaption>The plan used in the examples on this page, as the model receives it: a unit plan with three bedrooms, a living room, a kitchen and two bathrooms.</figcaption>
+<div class="figure-row figure-row-small figure-row-equal">
+<figure>
+<img src="images/floorplan_sample.png" alt="The input floor plan as the model receives it: a unit plan with three bedrooms, a living room, kitchen, two bathrooms and balconies">
+<figcaption>Input: the plan as the model receives it.</figcaption>
 </figure>
+<figure>
+<img src="images/vlm_output_bboxes.png" alt="The model's output drawn over the plan: dashed boxes around rooms, and solid boxes around doors, windows, toilets, bathtubs and the sink, each with its class">
+<figcaption>Output: every object the model returned, drawn as a box with its class. Rooms dashed in green, doors orange, windows blue, fixtures violet.</figcaption>
+</figure>
+</div>
+
+```json
+{"objects": [
+  {"class": "Bedroom", "bbox": [135, 320, 270, 435]}, {"class": "Bedroom", "bbox": [420, 345, 515, 435]},
+  {"class": "Bedroom", "bbox": [205, 185, 290, 270]}, {"class": "Living room", "bbox": [275, 310, 415, 435]},
+  {"class": "Kitchen", "bbox": [290, 185, 370, 270]}, {"class": "Bathroom", "bbox": [455, 300, 505, 345]},
+  {"class": "Door", "bbox": [268, 350, 286, 372]}, {"class": "Window", "bbox": [150, 432, 250, 441]},
+  {"class": "Toilet", "bbox": [474, 314, 492, 332]}, {"class": "Sink", "bbox": [330, 188, 352, 202]}
+]}
+```
+<p>The answer above is shortened to one box per class; the full response lists all 26 objects, and <code>inference.py</code> draws every one of them.</p>
 
 ---
 

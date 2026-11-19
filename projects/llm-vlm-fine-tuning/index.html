@@ -501,10 +501,26 @@ output = model.generate(**inputs, max_new_tokens=512, do_sample=False)      # gr
 answer = processor.batch_decode(output[:, inputs[&quot;input_ids&quot;].shape[1]:], skip_special_tokens=True)[0]
 draw_polygons(image_path, json.loads(answer)[&quot;annotations&quot;], out_path)       # the overlay saved next to the answer
 </code></pre>
-<figure class="figure-small">
-<img src="images/floorplan_sample.png" loading="lazy" alt="The floor-plan image used in the examples on this page, a unit plan with three bedrooms, a living room, kitchen, two bathrooms and balconies">
-<figcaption>The plan used in the examples on this page, as the model receives it: a unit plan with three bedrooms, a living room, a kitchen and two bathrooms.</figcaption>
+<div class="figure-row figure-row-small figure-row-equal">
+<figure>
+<img src="images/floorplan_sample.png" loading="lazy" alt="The input floor plan as the model receives it: a unit plan with three bedrooms, a living room, kitchen, two bathrooms and balconies">
+<figcaption>Input: the plan as the model receives it.</figcaption>
 </figure>
+<figure>
+<img src="images/vlm_output_bboxes.png" loading="lazy" alt="The model's output drawn over the plan: dashed boxes around rooms, and solid boxes around doors, windows, toilets, bathtubs and the sink, each with its class">
+<figcaption>Output: every object the model returned, drawn as a box with its class. Rooms dashed in green, doors orange, windows blue, fixtures violet.</figcaption>
+</figure>
+</div>
+
+<pre><code class="language-json">{&quot;objects&quot;: [
+  {&quot;class&quot;: &quot;Bedroom&quot;, &quot;bbox&quot;: [135, 320, 270, 435]}, {&quot;class&quot;: &quot;Bedroom&quot;, &quot;bbox&quot;: [420, 345, 515, 435]},
+  {&quot;class&quot;: &quot;Bedroom&quot;, &quot;bbox&quot;: [205, 185, 290, 270]}, {&quot;class&quot;: &quot;Living room&quot;, &quot;bbox&quot;: [275, 310, 415, 435]},
+  {&quot;class&quot;: &quot;Kitchen&quot;, &quot;bbox&quot;: [290, 185, 370, 270]}, {&quot;class&quot;: &quot;Bathroom&quot;, &quot;bbox&quot;: [455, 300, 505, 345]},
+  {&quot;class&quot;: &quot;Door&quot;, &quot;bbox&quot;: [268, 350, 286, 372]}, {&quot;class&quot;: &quot;Window&quot;, &quot;bbox&quot;: [150, 432, 250, 441]},
+  {&quot;class&quot;: &quot;Toilet&quot;, &quot;bbox&quot;: [474, 314, 492, 332]}, {&quot;class&quot;: &quot;Sink&quot;, &quot;bbox&quot;: [330, 188, 352, 202]}
+]}
+</code></pre>
+<p>The answer above is shortened to one box per class; the full response lists all 26 objects, and <code>inference.py</code> draws every one of them.</p>
 
 <hr />
 <h2 id="7-repository">7. Repository</h2>
@@ -910,10 +926,26 @@ output = model.generate(**inputs, max_new_tokens=512, do_sample=False)      # gr
 answer = processor.batch_decode(output[:, inputs[&quot;input_ids&quot;].shape[1]:], skip_special_tokens=True)[0]
 draw_polygons(image_path, json.loads(answer)[&quot;annotations&quot;], out_path)       # the overlay saved next to the answer
 </code></pre>
-<figure class="figure-small">
-<img src="images/floorplan_sample.png" loading="lazy" alt="이 페이지의 예제에 쓴 평면도 이미지. 침실 셋, 거실, 주방, 욕실 둘, 발코니가 있는 세대 평면도">
-<figcaption>이 페이지의 예제에 쓴 평면도예요. 모델이 받는 그대로의 모습이고, 침실 셋, 거실, 주방, 욕실 둘이 있는 세대 평면도예요.</figcaption>
+<div class="figure-row figure-row-small figure-row-equal">
+<figure>
+<img src="images/floorplan_sample.png" loading="lazy" alt="모델이 받는 입력 평면도: 침실 셋, 거실, 주방, 욕실 둘, 발코니가 있는 세대 평면도">
+<figcaption>입력: 모델이 받는 그대로의 평면도예요.</figcaption>
 </figure>
+<figure>
+<img src="images/vlm_output_bboxes.png" loading="lazy" alt="평면도 위에 그린 모델 출력: 방은 점선 박스, 문·창·변기·욕조·싱크는 실선 박스이고 각각 종류가 적혀 있음">
+<figcaption>출력: 모델이 돌려준 모든 객체를 박스와 종류로 그린 모습이에요. 방은 초록 점선, 문은 주황, 창은 파랑, 기구는 보라예요.</figcaption>
+</figure>
+</div>
+
+<pre><code class="language-json">{&quot;objects&quot;: [
+  {&quot;class&quot;: &quot;Bedroom&quot;, &quot;bbox&quot;: [135, 320, 270, 435]}, {&quot;class&quot;: &quot;Bedroom&quot;, &quot;bbox&quot;: [420, 345, 515, 435]},
+  {&quot;class&quot;: &quot;Bedroom&quot;, &quot;bbox&quot;: [205, 185, 290, 270]}, {&quot;class&quot;: &quot;Living room&quot;, &quot;bbox&quot;: [275, 310, 415, 435]},
+  {&quot;class&quot;: &quot;Kitchen&quot;, &quot;bbox&quot;: [290, 185, 370, 270]}, {&quot;class&quot;: &quot;Bathroom&quot;, &quot;bbox&quot;: [455, 300, 505, 345]},
+  {&quot;class&quot;: &quot;Door&quot;, &quot;bbox&quot;: [268, 350, 286, 372]}, {&quot;class&quot;: &quot;Window&quot;, &quot;bbox&quot;: [150, 432, 250, 441]},
+  {&quot;class&quot;: &quot;Toilet&quot;, &quot;bbox&quot;: [474, 314, 492, 332]}, {&quot;class&quot;: &quot;Sink&quot;, &quot;bbox&quot;: [330, 188, 352, 202]}
+]}
+</code></pre>
+<p>위 답은 종류마다 박스 하나로 줄인 거예요. 실제 응답에는 26개 객체가 전부 들어 있고, <code>inference.py</code>가 그걸 다 그려요.</p>
 
 <hr />
 <h2 id="7-저장소">7. 저장소</h2>
