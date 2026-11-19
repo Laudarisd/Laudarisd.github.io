@@ -11,7 +11,7 @@
 <div class="fact"><span class="fact-label">플랫폼</span><span class="fact-value">C# / .NET, CAD 프로그램 내부</span></div>
 </div>
 <figure class="figure-small">
-<img src="1_main_view.png" alt="CAD 프로그램 안의 시스템: 평면도, Entity 브라우저, Chat, AI Log, 검사 보고서 창">
+<img src="images/1_main_view.png" alt="CAD 프로그램 안의 시스템: 평면도, Entity 브라우저, Chat, AI Log, 검사 보고서 창">
 <figcaption>CAD 프로그램 안에서 실행되는 시스템: 왼쪽은 도면, 오른쪽은 Entity 브라우저·Chat·AI Log, 아래는 검사 보고서 창이에요.</figcaption>
 </figure>
 
@@ -37,11 +37,11 @@
 파일 어디에도 "여기는 침실", "여기는 배관"이라고 적혀 있지 않아요. 아래 이미지를 보세요.</p>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="1_dwg_example.png" alt="DWG 샘플: CAD 캔버스가 그려 주는 세대 평면도, 벽, 문, 기구, Mark, 치수">
+<img src="images/1_dwg_example.png" alt="DWG 샘플: CAD 캔버스가 그려 주는 세대 평면도, 벽, 문, 기구, Mark, 치수">
 <figcaption>DWG 샘플: CAD 캔버스가 그려 주는 세대 평면도.</figcaption>
 </figure>
 <figure>
-<img src="1_vector_data.png" alt="같은 DWG 파일을 텍스트로 연 모습: 읽을 수 없는 Binary">
+<img src="images/1_vector_data.png" alt="같은 DWG 파일을 텍스트로 연 모습: 읽을 수 없는 Binary">
 <figcaption>Vector 데이터 샘플: 같은 파일을 텍스트로 연 모습. Binary라서 바로 읽을 수 있는 것이 없어요.</figcaption>
 </figure>
 </div>
@@ -57,7 +57,7 @@
 └── Marks          문이나 창을 가리키는 코드
 </code></pre>
 <figure class="figure-xsmall">
-<img src="1_cad_data_all.png" alt="Parsing된 Line Entity 하나의 JSON: id, handle, type, layer, 시작점과 끝점, 길이, 각도, bounds">
+<img src="images/1_cad_data_all.png" alt="Parsing된 Line Entity 하나의 JSON: id, handle, type, layer, 시작점과 끝점, 길이, 각도, bounds">
 <figcaption>파일 안의 항목 하나를 읽으면 이렇게 돼요: Line 하나의 Layer, 양 끝점, 길이, Bounds. 아직 의미는 없어요.</figcaption>
 </figure>
 
@@ -107,11 +107,11 @@
 </table></div>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="2_cad_data_line.png" alt="CAD 캔버스가 보여 주는 원본 DWG 평면도: 의미가 없는 선, 텍스트, 기호">
+<img src="images/2_cad_data_line.png" alt="CAD 캔버스가 보여 주는 원본 DWG 평면도: 의미가 없는 선, 텍스트, 기호">
 <figcaption>CAD 캔버스가 보여 주는 도면: 선, 텍스트, 기호뿐이고, 무엇인지 말해 주는 정보는 없어요.</figcaption>
 </figure>
 <figure>
-<img src="1_cad_data_all.png" alt="추출된 Line Entity 하나의 JSON: id, handle, type, layer, 시작점과 끝점, 길이, 각도, bounds">
+<img src="images/1_cad_data_all.png" alt="추출된 Line Entity 하나의 JSON: id, handle, type, layer, 시작점과 끝점, 길이, 각도, bounds">
 <figcaption>같은 도면을 데이터로 본 모습: Line Entity 하나의 Layer, 양 끝점, 길이, Bounds. 이런 것이 수천 개 모여 평면이 되지만, 어느 것도 "벽"이라고 말하지 않아요.</figcaption>
 </figure>
 </div>
@@ -136,7 +136,7 @@
 </code></pre>
 <p>Database에 저장된 예:</p>
 <figure class="figure-short">
-<img src="db.png" alt="Database 브라우저: Parsing한 도면 목록과 Entity 수, 종류별 Entity 수, 한 Layer의 Entity 목록, Polyline 하나의 전체 Record">
+<img src="images/db.png" alt="Database 브라우저: Parsing한 도면 목록과 Entity 수, 종류별 Entity 수, 한 Layer의 Entity 목록, Polyline 하나의 전체 Record">
 <figcaption>Database 브라우저. 왼쪽: Parsing한 도면과 Entity 수. 가운데: 종류별 Entity 수. 오른쪽: 한 Layer의 Polyline 목록과, 그중 하나의 전체 Record인 id, Layer, 외형, 소속 Block, Geometry.</figcaption>
 </figure>
 
@@ -159,11 +159,11 @@
 <p>벽 Polygon을 두께와 길이와 함께 찾고, 각 공간을 그 공간을 둘러싼 벽과 연결해요.</p>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="2_semantic_info_extraction.png" alt="평면 위에 클래스 색으로 그린 Room과 Wall Mask, Chat 패널의 Assistant 설명">
+<img src="images/2_semantic_info_extraction.png" alt="평면 위에 클래스 색으로 그린 Room과 Wall Mask, Chat 패널의 Assistant 설명">
 <figcaption>공간: 도면에서 찾은 Room과 Wall Mask를 클래스 색으로 평면 위에 그린 모습.</figcaption>
 </figure>
 <figure>
-<img src="3_inspecting_walls.png" alt="보고서 창의 Wall Polygon 요약: 개수, 두께 범위, 길이 범위">
+<img src="images/3_inspecting_walls.png" alt="보고서 창의 Wall Polygon 요약: 개수, 두께 범위, 길이 범위">
 <figcaption>벽: 도면에서 찾은 Wall Polygon의 개수, 두께 범위, 길이 범위 요약.</figcaption>
 </figure>
 </div>
@@ -172,7 +172,7 @@
 <p>찾아낸 항목을 Ontology로 연결해요. Room, Wall, WallLine, Door, Window, Fixture, Mark 클래스와
 hasWall, hasDoor, hasWindow, adjacent, sharesWall, markedBy 같은 관계예요. 도면에 대한 질문은 이 관계를 따라가며 답해요.</p>
 <figure class="figure-small">
-<img src="ontology.png" alt="Ontology 그래프: Room, Wall, WallLine, Door, Window, Fixture, Mark 클래스와 속성, 그 사이의 관계">
+<img src="images/ontology.png" alt="Ontology 그래프: Room, Wall, WallLine, Door, Window, Fixture, Mark 클래스와 속성, 그 사이의 관계">
 <figcaption>Graph Database 뒤에 있는 Ontology: 각 클래스의 속성과, 클래스를 잇는 관계.</figcaption>
 </figure>
 
@@ -284,21 +284,21 @@ flowchart LR
 </div>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="4_inspecting_doors.png" alt="Chat의 문 표: 코드, 너비, 높이, 출처, 연결된 방, 그리고 도면에 하이라이트된 해당 문">
+<img src="images/4_inspecting_doors.png" alt="Chat의 문 표: 코드, 너비, 높이, 출처, 연결된 방, 그리고 도면에 하이라이트된 해당 문">
 <figcaption>문 검사: 모든 문의 코드, 크기, 연결된 방을 정리하고 도면에 하이라이트해요.</figcaption>
 </figure>
 <figure>
-<img src="5_more_results.png" alt="다른 도면에서 침실1 Room Mask만 하이라이트하고 면적을 Chat에 나열한 모습">
+<img src="images/5_more_results.png" alt="다른 도면에서 침실1 Room Mask만 하이라이트하고 면적을 Chat에 나열한 모습">
 <figcaption>다른 도면에서의 후속 질문: 침실1 공간만 하이라이트하고 각 면적을 보여 줘요.</figcaption>
 </figure>
 </div>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="3_inspecting_walls.png" alt="Assistant가 검사 보고서에 Wall Polygon 요약을 추가하고, 보고서 창에 한국어로 표시된 모습">
+<img src="images/3_inspecting_walls.png" alt="Assistant가 검사 보고서에 Wall Polygon 요약을 추가하고, 보고서 창에 한국어로 표시된 모습">
 <figcaption>벽 검사: Wall Polygon 요약을 한국어와 영어로 보고서에 추가해요.</figcaption>
 </figure>
 <figure>
-<img src="non_load_bearing_walls.png" alt="내력벽과 비내력벽을 두께, 길이, 종류, 관련 방과 함께 정리한 검사 보고서와 도면에 하이라이트된 벽">
+<img src="images/non_load_bearing_walls.png" alt="내력벽과 비내력벽을 두께, 길이, 종류, 관련 방과 함께 정리한 검사 보고서와 도면에 하이라이트된 벽">
 <figcaption>벽 분류: 보고서가 내력벽과 비내력벽을 두께, 길이, 종류, 관련 방과 함께 정리하고, 해당 벽을 도면에 하이라이트해요.</figcaption>
 </figure>
 </div>
@@ -319,16 +319,16 @@ flowchart LR
 </pre>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="ontology_1.png" alt="한 도면의 Ontology 뷰: 19개 Instance가 있는 Room 클래스, 선택한 방의 속성, 클래스 다이어그램">
+<img src="images/ontology_1.png" alt="한 도면의 Ontology 뷰: 19개 Instance가 있는 Room 클래스, 선택한 방의 속성, 클래스 다이어그램">
 <figcaption>한 도면의 Ontology 뷰: Room 클래스에 19개 Instance가 있어요. 방을 선택하면 속성이 나오고, 그 방과 연결된 것이 CAD에 하이라이트돼요.</figcaption>
 </figure>
 <figure>
-<img src="ontology_2.png" alt="Room 클래스의 속성과 hasWall, hasWallLine, adjacent, sharesWall 관계 확대">
+<img src="images/ontology_2.png" alt="Room 클래스의 속성과 hasWall, hasWallLine, adjacent, sharesWall 관계 확대">
 <figcaption>Room 주변의 관계: hasWall, hasWallLine, adjacent, sharesWall과 이 도면에서의 개수.</figcaption>
 </figure>
 </div>
 <figure class="figure-small">
-<img src="ontology_3_instances.png" alt="Instances 뷰: 도면의 방, 문, 창, Mark, Fixture를 Node로 보여 주고 관계를 그린 모습, 선택한 방은 CAD 캔버스에 하이라이트">
+<img src="images/ontology_3_instances.png" alt="Instances 뷰: 도면의 방, 문, 창, Mark, Fixture를 Node로 보여 주고 관계를 그린 모습, 선택한 방은 CAD 캔버스에 하이라이트">
 <figcaption>Instances 뷰: 도면의 모든 방, 문, 창, Mark, Fixture를 Node로 보여 주고, 그 사이의 관계를 그려요. 선택한 방은 캔버스에 하이라이트돼요.</figcaption>
 </figure>
 

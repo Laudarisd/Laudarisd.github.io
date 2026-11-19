@@ -129,7 +129,7 @@ and answers questions about it. It inspects the whole drawing and prepares repor
 </div>
 
 <figure class="figure-small">
-<img src="1_main_view.png" loading="lazy" alt="The system inside the CAD application: floor plan, entity browser, chat, AI log, and the inspection report window">
+<img src="images/1_main_view.png" loading="lazy" alt="The system inside the CAD application: floor plan, entity browser, chat, AI log, and the inspection report window">
 <figcaption>The system inside the CAD application: the drawing on the left, the entity browser, chat and AI log on the right, and the inspection report window below.</figcaption>
 </figure>
 
@@ -166,11 +166,11 @@ Nothing in it says "this is a bedroom" or "here is a piping system". For instanc
 
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="1_dwg_example.png" loading="lazy" alt="A DWG sample: a unit floor plan with walls, doors, fixtures, marks and dimensions as the CAD canvas draws it">
+<img src="images/1_dwg_example.png" loading="lazy" alt="A DWG sample: a unit floor plan with walls, doors, fixtures, marks and dimensions as the CAD canvas draws it">
 <figcaption>DWG sample: a unit floor plan as the CAD canvas draws it.</figcaption>
 </figure>
 <figure>
-<img src="1_vector_data.png" loading="lazy" alt="The same DWG file opened as text: unreadable binary bytes">
+<img src="images/1_vector_data.png" loading="lazy" alt="The same DWG file opened as text: unreadable binary bytes">
 <figcaption>Vector data sample: the same file opened as text. The data is binary, so nothing in it can be read directly.</figcaption>
 </figure>
 </div>
@@ -189,7 +189,7 @@ Nothing in it says "this is a bedroom" or "here is a piping system". For instanc
 └── Marks           codes that refer to a door or a window
 </code></pre>
 <figure class="figure-xsmall">
-<img src="1_cad_data_all.png" loading="lazy" alt="One parsed line entity as JSON: id, handle, type, layer, start and end points, length, angle and bounds">
+<img src="images/1_cad_data_all.png" loading="lazy" alt="One parsed line entity as JSON: id, handle, type, layer, start and end points, length, angle and bounds">
 <figcaption>What one item in the file becomes once it is read: a single line with its layer, endpoints, length and bounds. Still no meaning attached.</figcaption>
 </figure>
 
@@ -330,11 +330,11 @@ Nothing in it says "this is a bedroom" or "here is a piping system". For instanc
 treats the language model as a reader of that structure rather than of the file.</p> -->
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="2_cad_data_line.png" loading="lazy" alt="A raw DWG floor plan as the CAD canvas shows it: lines, text and symbols with no meaning attached">
+<img src="images/2_cad_data_line.png" loading="lazy" alt="A raw DWG floor plan as the CAD canvas shows it: lines, text and symbols with no meaning attached">
 <figcaption>The drawing as the CAD canvas shows it: lines, text and symbols, with nothing saying what any of them is.</figcaption>
 </figure>
 <figure>
-<img src="1_cad_data_all.png" loading="lazy" alt="One extracted line entity as JSON: id, handle, type, layer, start and end points, length, angle and bounds">
+<img src="images/1_cad_data_all.png" loading="lazy" alt="One extracted line entity as JSON: id, handle, type, layer, start and end points, length, angle and bounds">
 <figcaption>The same drawing as data: one line entity with its layer, endpoints, length and bounds. Thousands of these make a plan, and none of them says "wall".</figcaption>
 </figure>
 </div>
@@ -372,7 +372,7 @@ Every entity is read, symbols and external references are resolved to real-world
 
 <p>An example of what is stored in the database:</p>
 <figure class="figure-short">
-<img src="db.png" loading="lazy" alt="The database browser: a list of parsed drawings with their entity counts, the count of each entity type, the entities on one layer, and the full record of one polyline">
+<img src="images/db.png" loading="lazy" alt="The database browser: a list of parsed drawings with their entity counts, the count of each entity type, the entities on one layer, and the full record of one polyline">
 <figcaption>The database browser. Left: parsed drawings and their entity counts. Middle: how many entities of each type. Right: the polylines on one layer, and the full record of one of them with its id, layer, appearance, owner block and geometry.</figcaption>
 </figure>
 
@@ -406,11 +406,11 @@ and how spaces, walls, doors and marks relate to each other. The result is store
 <p>Wall polygons are found with their thickness and length, and each space is linked to the walls that bound it.</p>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="2_semantic_info_extraction.png" loading="lazy" alt="Room and wall masks drawn over the floor plan in their class colours, with the assistant's explanation in the chat panel">
+<img src="images/2_semantic_info_extraction.png" loading="lazy" alt="Room and wall masks drawn over the floor plan in their class colours, with the assistant's explanation in the chat panel">
 <figcaption>Spaces: the room and wall masks found in a drawing, drawn over the plan in their class colours.</figcaption>
 </figure>
 <figure>
-<img src="3_inspecting_walls.png" loading="lazy" alt="The wall polygon summary in the report window: count, thickness range and length range">
+<img src="images/3_inspecting_walls.png" loading="lazy" alt="The wall polygon summary in the report window: count, thickness range and length range">
 <figcaption>Walls: the wall polygons found in a drawing, summarised with their count, thickness range and length range.</figcaption>
 </figure>
 </div>
@@ -419,7 +419,7 @@ and how spaces, walls, doors and marks relate to each other. The result is store
 <p>The recovered items are connected in an ontology: Room, Wall, WallLine, Door, Window, Fixture and Mark, with relations such as
 hasWall, hasDoor, hasWindow, adjacent, sharesWall and markedBy. Questions about the drawing are answered by walking these relations.</p>
 <figure class="figure-small">
-<img src="ontology.png" loading="lazy" alt="The ontology graph: Room, Wall, WallLine, Door, Window, Fixture and Mark classes with their properties and the relations between them">
+<img src="images/ontology.png" loading="lazy" alt="The ontology graph: Room, Wall, WallLine, Door, Window, Fixture and Mark classes with their properties and the relations between them">
 <figcaption>The ontology behind the graph database: each class with its properties, and the relations that connect them.</figcaption>
 </figure>
 
@@ -530,21 +530,21 @@ checks that every claim is backed by drawing evidence, records cost and timing, 
 </div>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="4_inspecting_doors.png" loading="lazy" alt="A door table in chat with code, width, height, source and connected rooms, and the matching doors highlighted on the drawing">
+<img src="images/4_inspecting_doors.png" loading="lazy" alt="A door table in chat with code, width, height, source and connected rooms, and the matching doors highlighted on the drawing">
 <figcaption>Door inspection: every door with its code, size and the rooms it connects, highlighted on the drawing.</figcaption>
 </figure>
 <figure>
-<img src="5_more_results.png" loading="lazy" alt="Only the Bedroom 1 room masks highlighted on a different drawing, with their areas listed in chat">
+<img src="images/5_more_results.png" loading="lazy" alt="Only the Bedroom 1 room masks highlighted on a different drawing, with their areas listed in chat">
 <figcaption>A follow-up question on another drawing: only the Bedroom 1 spaces are highlighted, with the area of each.</figcaption>
 </figure>
 </div>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="3_inspecting_walls.png" loading="lazy" alt="The assistant adds a wall polygon summary to the inspection report, shown in Korean in the report window">
+<img src="images/3_inspecting_walls.png" loading="lazy" alt="The assistant adds a wall polygon summary to the inspection report, shown in Korean in the report window">
 <figcaption>Wall inspection: a wall polygon summary added to the report, in Korean and English.</figcaption>
 </figure>
 <figure>
-<img src="non_load_bearing_walls.png" loading="lazy" alt="The inspection report listing load-bearing and non-load-bearing walls with thickness, length, type and rooms involved, with the walls highlighted on the drawing">
+<img src="images/non_load_bearing_walls.png" loading="lazy" alt="The inspection report listing load-bearing and non-load-bearing walls with thickness, length, type and rooms involved, with the walls highlighted on the drawing">
 <figcaption>Wall classification: the report lists load-bearing and non-load-bearing walls with their thickness, length, type and the rooms involved, and highlights them on the drawing.</figcaption>
 </figure>
 </div>
@@ -564,16 +564,16 @@ Questions about how things connect are answered by walking this graph, and selec
 </pre>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="ontology_1.png" loading="lazy" alt="The ontology view for one drawing: the Room class with 19 instances, the selected room's properties, and the class diagram">
+<img src="images/ontology_1.png" loading="lazy" alt="The ontology view for one drawing: the Room class with 19 instances, the selected room's properties, and the class diagram">
 <figcaption>Ontology view for one drawing: the Room class has 19 instances. Selecting a room lists its properties and highlights it and its connections in CAD.</figcaption>
 </figure>
 <figure>
-<img src="ontology_2.png" loading="lazy" alt="Close-up of the Room class with its properties and the relations hasWall, hasWallLine, adjacent and sharesWall">
+<img src="images/ontology_2.png" loading="lazy" alt="Close-up of the Room class with its properties and the relations hasWall, hasWallLine, adjacent and sharesWall">
 <figcaption>Relations around Room: hasWall, hasWallLine, adjacent and sharesWall, each with its count in this drawing.</figcaption>
 </figure>
 </div>
 <figure class="figure-small">
-<img src="ontology_3_instances.png" loading="lazy" alt="The Instances view: rooms, doors, windows, marks and fixtures of a drawing as nodes with relations drawn between them, and the selected room highlighted on the CAD canvas">
+<img src="images/ontology_3_instances.png" loading="lazy" alt="The Instances view: rooms, doors, windows, marks and fixtures of a drawing as nodes with relations drawn between them, and the selected room highlighted on the CAD canvas">
 <figcaption>Instances view: every room, door, window, mark and fixture of the drawing as a node, with the relations drawn between them. The selected room is highlighted on the canvas.</figcaption>
 </figure>
 
@@ -599,7 +599,7 @@ It is tested on real residential drawings, from a single flat to a whole block.<
 <div class="fact"><span class="fact-label">플랫폼</span><span class="fact-value">C# / .NET, CAD 프로그램 내부</span></div>
 </div>
 <figure class="figure-small">
-<img src="1_main_view.png" loading="lazy" alt="CAD 프로그램 안의 시스템: 평면도, Entity 브라우저, Chat, AI Log, 검사 보고서 창">
+<img src="images/1_main_view.png" loading="lazy" alt="CAD 프로그램 안의 시스템: 평면도, Entity 브라우저, Chat, AI Log, 검사 보고서 창">
 <figcaption>CAD 프로그램 안에서 실행되는 시스템: 왼쪽은 도면, 오른쪽은 Entity 브라우저·Chat·AI Log, 아래는 검사 보고서 창이에요.</figcaption>
 </figure>
 
@@ -624,11 +624,11 @@ It is tested on real residential drawings, from a single flat to a whole block.<
 파일 어디에도 "여기는 침실", "여기는 배관"이라고 적혀 있지 않아요. 아래 이미지를 보세요.</p>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="1_dwg_example.png" loading="lazy" alt="DWG 샘플: CAD 캔버스가 그려 주는 세대 평면도, 벽, 문, 기구, Mark, 치수">
+<img src="images/1_dwg_example.png" loading="lazy" alt="DWG 샘플: CAD 캔버스가 그려 주는 세대 평면도, 벽, 문, 기구, Mark, 치수">
 <figcaption>DWG 샘플: CAD 캔버스가 그려 주는 세대 평면도.</figcaption>
 </figure>
 <figure>
-<img src="1_vector_data.png" loading="lazy" alt="같은 DWG 파일을 텍스트로 연 모습: 읽을 수 없는 Binary">
+<img src="images/1_vector_data.png" loading="lazy" alt="같은 DWG 파일을 텍스트로 연 모습: 읽을 수 없는 Binary">
 <figcaption>Vector 데이터 샘플: 같은 파일을 텍스트로 연 모습. Binary라서 바로 읽을 수 있는 것이 없어요.</figcaption>
 </figure>
 </div>
@@ -644,7 +644,7 @@ It is tested on real residential drawings, from a single flat to a whole block.<
 └── Marks          문이나 창을 가리키는 코드
 </code></pre>
 <figure class="figure-xsmall">
-<img src="1_cad_data_all.png" loading="lazy" alt="Parsing된 Line Entity 하나의 JSON: id, handle, type, layer, 시작점과 끝점, 길이, 각도, bounds">
+<img src="images/1_cad_data_all.png" loading="lazy" alt="Parsing된 Line Entity 하나의 JSON: id, handle, type, layer, 시작점과 끝점, 길이, 각도, bounds">
 <figcaption>파일 안의 항목 하나를 읽으면 이렇게 돼요: Line 하나의 Layer, 양 끝점, 길이, Bounds. 아직 의미는 없어요.</figcaption>
 </figure>
 
@@ -694,11 +694,11 @@ It is tested on real residential drawings, from a single flat to a whole block.<
 </table></div>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="2_cad_data_line.png" loading="lazy" alt="CAD 캔버스가 보여 주는 원본 DWG 평면도: 의미가 없는 선, 텍스트, 기호">
+<img src="images/2_cad_data_line.png" loading="lazy" alt="CAD 캔버스가 보여 주는 원본 DWG 평면도: 의미가 없는 선, 텍스트, 기호">
 <figcaption>CAD 캔버스가 보여 주는 도면: 선, 텍스트, 기호뿐이고, 무엇인지 말해 주는 정보는 없어요.</figcaption>
 </figure>
 <figure>
-<img src="1_cad_data_all.png" loading="lazy" alt="추출된 Line Entity 하나의 JSON: id, handle, type, layer, 시작점과 끝점, 길이, 각도, bounds">
+<img src="images/1_cad_data_all.png" loading="lazy" alt="추출된 Line Entity 하나의 JSON: id, handle, type, layer, 시작점과 끝점, 길이, 각도, bounds">
 <figcaption>같은 도면을 데이터로 본 모습: Line Entity 하나의 Layer, 양 끝점, 길이, Bounds. 이런 것이 수천 개 모여 평면이 되지만, 어느 것도 "벽"이라고 말하지 않아요.</figcaption>
 </figure>
 </div>
@@ -722,7 +722,7 @@ It is tested on real residential drawings, from a single flat to a whole block.<
 </code></pre>
 <p>Database에 저장된 예:</p>
 <figure class="figure-short">
-<img src="db.png" loading="lazy" alt="Database 브라우저: Parsing한 도면 목록과 Entity 수, 종류별 Entity 수, 한 Layer의 Entity 목록, Polyline 하나의 전체 Record">
+<img src="images/db.png" loading="lazy" alt="Database 브라우저: Parsing한 도면 목록과 Entity 수, 종류별 Entity 수, 한 Layer의 Entity 목록, Polyline 하나의 전체 Record">
 <figcaption>Database 브라우저. 왼쪽: Parsing한 도면과 Entity 수. 가운데: 종류별 Entity 수. 오른쪽: 한 Layer의 Polyline 목록과, 그중 하나의 전체 Record인 id, Layer, 외형, 소속 Block, Geometry.</figcaption>
 </figure>
 
@@ -744,11 +744,11 @@ It is tested on real residential drawings, from a single flat to a whole block.<
 <p>벽 Polygon을 두께와 길이와 함께 찾고, 각 공간을 그 공간을 둘러싼 벽과 연결해요.</p>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="2_semantic_info_extraction.png" loading="lazy" alt="평면 위에 클래스 색으로 그린 Room과 Wall Mask, Chat 패널의 Assistant 설명">
+<img src="images/2_semantic_info_extraction.png" loading="lazy" alt="평면 위에 클래스 색으로 그린 Room과 Wall Mask, Chat 패널의 Assistant 설명">
 <figcaption>공간: 도면에서 찾은 Room과 Wall Mask를 클래스 색으로 평면 위에 그린 모습.</figcaption>
 </figure>
 <figure>
-<img src="3_inspecting_walls.png" loading="lazy" alt="보고서 창의 Wall Polygon 요약: 개수, 두께 범위, 길이 범위">
+<img src="images/3_inspecting_walls.png" loading="lazy" alt="보고서 창의 Wall Polygon 요약: 개수, 두께 범위, 길이 범위">
 <figcaption>벽: 도면에서 찾은 Wall Polygon의 개수, 두께 범위, 길이 범위 요약.</figcaption>
 </figure>
 </div>
@@ -757,7 +757,7 @@ It is tested on real residential drawings, from a single flat to a whole block.<
 <p>찾아낸 항목을 Ontology로 연결해요. Room, Wall, WallLine, Door, Window, Fixture, Mark 클래스와
 hasWall, hasDoor, hasWindow, adjacent, sharesWall, markedBy 같은 관계예요. 도면에 대한 질문은 이 관계를 따라가며 답해요.</p>
 <figure class="figure-small">
-<img src="ontology.png" loading="lazy" alt="Ontology 그래프: Room, Wall, WallLine, Door, Window, Fixture, Mark 클래스와 속성, 그 사이의 관계">
+<img src="images/ontology.png" loading="lazy" alt="Ontology 그래프: Room, Wall, WallLine, Door, Window, Fixture, Mark 클래스와 속성, 그 사이의 관계">
 <figcaption>Graph Database 뒤에 있는 Ontology: 각 클래스의 속성과, 클래스를 잇는 관계.</figcaption>
 </figure>
 
@@ -866,21 +866,21 @@ flowchart LR
 </div>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="4_inspecting_doors.png" loading="lazy" alt="Chat의 문 표: 코드, 너비, 높이, 출처, 연결된 방, 그리고 도면에 하이라이트된 해당 문">
+<img src="images/4_inspecting_doors.png" loading="lazy" alt="Chat의 문 표: 코드, 너비, 높이, 출처, 연결된 방, 그리고 도면에 하이라이트된 해당 문">
 <figcaption>문 검사: 모든 문의 코드, 크기, 연결된 방을 정리하고 도면에 하이라이트해요.</figcaption>
 </figure>
 <figure>
-<img src="5_more_results.png" loading="lazy" alt="다른 도면에서 침실1 Room Mask만 하이라이트하고 면적을 Chat에 나열한 모습">
+<img src="images/5_more_results.png" loading="lazy" alt="다른 도면에서 침실1 Room Mask만 하이라이트하고 면적을 Chat에 나열한 모습">
 <figcaption>다른 도면에서의 후속 질문: 침실1 공간만 하이라이트하고 각 면적을 보여 줘요.</figcaption>
 </figure>
 </div>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="3_inspecting_walls.png" loading="lazy" alt="Assistant가 검사 보고서에 Wall Polygon 요약을 추가하고, 보고서 창에 한국어로 표시된 모습">
+<img src="images/3_inspecting_walls.png" loading="lazy" alt="Assistant가 검사 보고서에 Wall Polygon 요약을 추가하고, 보고서 창에 한국어로 표시된 모습">
 <figcaption>벽 검사: Wall Polygon 요약을 한국어와 영어로 보고서에 추가해요.</figcaption>
 </figure>
 <figure>
-<img src="non_load_bearing_walls.png" loading="lazy" alt="내력벽과 비내력벽을 두께, 길이, 종류, 관련 방과 함께 정리한 검사 보고서와 도면에 하이라이트된 벽">
+<img src="images/non_load_bearing_walls.png" loading="lazy" alt="내력벽과 비내력벽을 두께, 길이, 종류, 관련 방과 함께 정리한 검사 보고서와 도면에 하이라이트된 벽">
 <figcaption>벽 분류: 보고서가 내력벽과 비내력벽을 두께, 길이, 종류, 관련 방과 함께 정리하고, 해당 벽을 도면에 하이라이트해요.</figcaption>
 </figure>
 </div>
@@ -900,16 +900,16 @@ flowchart LR
 </pre>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="ontology_1.png" loading="lazy" alt="한 도면의 Ontology 뷰: 19개 Instance가 있는 Room 클래스, 선택한 방의 속성, 클래스 다이어그램">
+<img src="images/ontology_1.png" loading="lazy" alt="한 도면의 Ontology 뷰: 19개 Instance가 있는 Room 클래스, 선택한 방의 속성, 클래스 다이어그램">
 <figcaption>한 도면의 Ontology 뷰: Room 클래스에 19개 Instance가 있어요. 방을 선택하면 속성이 나오고, 그 방과 연결된 것이 CAD에 하이라이트돼요.</figcaption>
 </figure>
 <figure>
-<img src="ontology_2.png" loading="lazy" alt="Room 클래스의 속성과 hasWall, hasWallLine, adjacent, sharesWall 관계 확대">
+<img src="images/ontology_2.png" loading="lazy" alt="Room 클래스의 속성과 hasWall, hasWallLine, adjacent, sharesWall 관계 확대">
 <figcaption>Room 주변의 관계: hasWall, hasWallLine, adjacent, sharesWall과 이 도면에서의 개수.</figcaption>
 </figure>
 </div>
 <figure class="figure-small">
-<img src="ontology_3_instances.png" loading="lazy" alt="Instances 뷰: 도면의 방, 문, 창, Mark, Fixture를 Node로 보여 주고 관계를 그린 모습, 선택한 방은 CAD 캔버스에 하이라이트">
+<img src="images/ontology_3_instances.png" loading="lazy" alt="Instances 뷰: 도면의 방, 문, 창, Mark, Fixture를 Node로 보여 주고 관계를 그린 모습, 선택한 방은 CAD 캔버스에 하이라이트">
 <figcaption>Instances 뷰: 도면의 모든 방, 문, 창, Mark, Fixture를 Node로 보여 주고, 그 사이의 관계를 그려요. 선택한 방은 캔버스에 하이라이트돼요.</figcaption>
 </figure>
 

@@ -17,7 +17,7 @@ and answers questions about it. It inspects the whole drawing and prepares repor
 </div>
 
 <figure class="figure-small">
-<img src="1_main_view.png" alt="The system inside the CAD application: floor plan, entity browser, chat, AI log, and the inspection report window">
+<img src="images/1_main_view.png" alt="The system inside the CAD application: floor plan, entity browser, chat, AI log, and the inspection report window">
 <figcaption>The system inside the CAD application: the drawing on the left, the entity browser, chat and AI log on the right, and the inspection report window below.</figcaption>
 </figure>
 
@@ -60,11 +60,11 @@ Nothing in it says "this is a bedroom" or "here is a piping system". For instanc
 
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="1_dwg_example.png" alt="A DWG sample: a unit floor plan with walls, doors, fixtures, marks and dimensions as the CAD canvas draws it">
+<img src="images/1_dwg_example.png" alt="A DWG sample: a unit floor plan with walls, doors, fixtures, marks and dimensions as the CAD canvas draws it">
 <figcaption>DWG sample: a unit floor plan as the CAD canvas draws it.</figcaption>
 </figure>
 <figure>
-<img src="1_vector_data.png" alt="The same DWG file opened as text: unreadable binary bytes">
+<img src="images/1_vector_data.png" alt="The same DWG file opened as text: unreadable binary bytes">
 <figcaption>Vector data sample: the same file opened as text. The data is binary, so nothing in it can be read directly.</figcaption>
 </figure>
 </div>
@@ -83,7 +83,7 @@ Nothing in it says "this is a bedroom" or "here is a piping system". For instanc
 └── Marks           codes that refer to a door or a window
 </code></pre>
 <figure class="figure-xsmall">
-<img src="1_cad_data_all.png" alt="One parsed line entity as JSON: id, handle, type, layer, start and end points, length, angle and bounds">
+<img src="images/1_cad_data_all.png" alt="One parsed line entity as JSON: id, handle, type, layer, start and end points, length, angle and bounds">
 <figcaption>What one item in the file becomes once it is read: a single line with its layer, endpoints, length and bounds. Still no meaning attached.</figcaption>
 </figure>
 
@@ -227,11 +227,11 @@ CAD Drawing (DWG / DXF)
 treats the language model as a reader of that structure rather than of the file.</p> -->
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="2_cad_data_line.png" alt="A raw DWG floor plan as the CAD canvas shows it: lines, text and symbols with no meaning attached">
+<img src="images/2_cad_data_line.png" alt="A raw DWG floor plan as the CAD canvas shows it: lines, text and symbols with no meaning attached">
 <figcaption>The drawing as the CAD canvas shows it: lines, text and symbols, with nothing saying what any of them is.</figcaption>
 </figure>
 <figure>
-<img src="1_cad_data_all.png" alt="One extracted line entity as JSON: id, handle, type, layer, start and end points, length, angle and bounds">
+<img src="images/1_cad_data_all.png" alt="One extracted line entity as JSON: id, handle, type, layer, start and end points, length, angle and bounds">
 <figcaption>The same drawing as data: one line entity with its layer, endpoints, length and bounds. Thousands of these make a plan, and none of them says "wall".</figcaption>
 </figure>
 </div>
@@ -268,7 +268,7 @@ Every entity is read, symbols and external references are resolved to real-world
 
 <p>An example of what is stored in the database:</p>
 <figure class="figure-short">
-<img src="db.png" alt="The database browser: a list of parsed drawings with their entity counts, the count of each entity type, the entities on one layer, and the full record of one polyline">
+<img src="images/db.png" alt="The database browser: a list of parsed drawings with their entity counts, the count of each entity type, the entities on one layer, and the full record of one polyline">
 <figcaption>The database browser. Left: parsed drawings and their entity counts. Middle: how many entities of each type. Right: the polylines on one layer, and the full record of one of them with its id, layer, appearance, owner block and geometry.</figcaption>
 </figure>
 
@@ -303,11 +303,11 @@ and how spaces, walls, doors and marks relate to each other. The result is store
 <p>Wall polygons are found with their thickness and length, and each space is linked to the walls that bound it.</p>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="2_semantic_info_extraction.png" alt="Room and wall masks drawn over the floor plan in their class colours, with the assistant's explanation in the chat panel">
+<img src="images/2_semantic_info_extraction.png" alt="Room and wall masks drawn over the floor plan in their class colours, with the assistant's explanation in the chat panel">
 <figcaption>Spaces: the room and wall masks found in a drawing, drawn over the plan in their class colours.</figcaption>
 </figure>
 <figure>
-<img src="3_inspecting_walls.png" alt="The wall polygon summary in the report window: count, thickness range and length range">
+<img src="images/3_inspecting_walls.png" alt="The wall polygon summary in the report window: count, thickness range and length range">
 <figcaption>Walls: the wall polygons found in a drawing, summarised with their count, thickness range and length range.</figcaption>
 </figure>
 </div>
@@ -316,7 +316,7 @@ and how spaces, walls, doors and marks relate to each other. The result is store
 <p>The recovered items are connected in an ontology: Room, Wall, WallLine, Door, Window, Fixture and Mark, with relations such as
 hasWall, hasDoor, hasWindow, adjacent, sharesWall and markedBy. Questions about the drawing are answered by walking these relations.</p>
 <figure class="figure-small">
-<img src="ontology.png" alt="The ontology graph: Room, Wall, WallLine, Door, Window, Fixture and Mark classes with their properties and the relations between them">
+<img src="images/ontology.png" alt="The ontology graph: Room, Wall, WallLine, Door, Window, Fixture and Mark classes with their properties and the relations between them">
 <figcaption>The ontology behind the graph database: each class with its properties, and the relations that connect them.</figcaption>
 </figure>
 
@@ -431,21 +431,21 @@ checks that every claim is backed by drawing evidence, records cost and timing, 
 </div>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="4_inspecting_doors.png" alt="A door table in chat with code, width, height, source and connected rooms, and the matching doors highlighted on the drawing">
+<img src="images/4_inspecting_doors.png" alt="A door table in chat with code, width, height, source and connected rooms, and the matching doors highlighted on the drawing">
 <figcaption>Door inspection: every door with its code, size and the rooms it connects, highlighted on the drawing.</figcaption>
 </figure>
 <figure>
-<img src="5_more_results.png" alt="Only the Bedroom 1 room masks highlighted on a different drawing, with their areas listed in chat">
+<img src="images/5_more_results.png" alt="Only the Bedroom 1 room masks highlighted on a different drawing, with their areas listed in chat">
 <figcaption>A follow-up question on another drawing: only the Bedroom 1 spaces are highlighted, with the area of each.</figcaption>
 </figure>
 </div>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="3_inspecting_walls.png" alt="The assistant adds a wall polygon summary to the inspection report, shown in Korean in the report window">
+<img src="images/3_inspecting_walls.png" alt="The assistant adds a wall polygon summary to the inspection report, shown in Korean in the report window">
 <figcaption>Wall inspection: a wall polygon summary added to the report, in Korean and English.</figcaption>
 </figure>
 <figure>
-<img src="non_load_bearing_walls.png" alt="The inspection report listing load-bearing and non-load-bearing walls with thickness, length, type and rooms involved, with the walls highlighted on the drawing">
+<img src="images/non_load_bearing_walls.png" alt="The inspection report listing load-bearing and non-load-bearing walls with thickness, length, type and rooms involved, with the walls highlighted on the drawing">
 <figcaption>Wall classification: the report lists load-bearing and non-load-bearing walls with their thickness, length, type and the rooms involved, and highlights them on the drawing.</figcaption>
 </figure>
 </div>
@@ -466,16 +466,16 @@ Questions about how things connect are answered by walking this graph, and selec
 </pre>
 <div class="figure-row figure-row-small figure-row-equal">
 <figure>
-<img src="ontology_1.png" alt="The ontology view for one drawing: the Room class with 19 instances, the selected room's properties, and the class diagram">
+<img src="images/ontology_1.png" alt="The ontology view for one drawing: the Room class with 19 instances, the selected room's properties, and the class diagram">
 <figcaption>Ontology view for one drawing: the Room class has 19 instances. Selecting a room lists its properties and highlights it and its connections in CAD.</figcaption>
 </figure>
 <figure>
-<img src="ontology_2.png" alt="Close-up of the Room class with its properties and the relations hasWall, hasWallLine, adjacent and sharesWall">
+<img src="images/ontology_2.png" alt="Close-up of the Room class with its properties and the relations hasWall, hasWallLine, adjacent and sharesWall">
 <figcaption>Relations around Room: hasWall, hasWallLine, adjacent and sharesWall, each with its count in this drawing.</figcaption>
 </figure>
 </div>
 <figure class="figure-small">
-<img src="ontology_3_instances.png" alt="The Instances view: rooms, doors, windows, marks and fixtures of a drawing as nodes with relations drawn between them, and the selected room highlighted on the CAD canvas">
+<img src="images/ontology_3_instances.png" alt="The Instances view: rooms, doors, windows, marks and fixtures of a drawing as nodes with relations drawn between them, and the selected room highlighted on the CAD canvas">
 <figcaption>Instances view: every room, door, window, mark and fixture of the drawing as a node, with the relations drawn between them. The selected room is highlighted on the canvas.</figcaption>
 </figure>
 
