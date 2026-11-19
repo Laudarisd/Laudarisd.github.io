@@ -36,16 +36,19 @@ and produces a quantity take-off that an estimator can review.</p>
 <p>Cost estimation starts from drawings, and many of those drawings arrive as images rather than as CAD files. A person has to read every wall,
 window, door and room, measure them, and type the quantities into a sheet. That takes days on a large plan and the numbers are easy to get wrong.</p>
 <p>This project does that reading automatically. The picture below is the whole system: a user sends a floor-plan image from the CAD add-in
-to one of three deployments, an on-premises Linux server, an AWS instance, or an ONNX CPU build on their own PC. The same three model branches
-read it, every result is kept in a database, and three outputs come back.</p>
+to one of three deployments, an on-premises Linux server, an AWS instance, or an ONNX CPU build on their own PC. Each one runs the same
+AI engine, the detection, segmentation and OCR models plus the rules that turn their output into quantities. Every result is kept in a database,
+and three outputs come back.</p>
 <pre class="mermaid">flowchart LR
     U[User<br/>CAD add-in]:::input --> P1[On-premises<br/>Linux GPU server]:::agent
     U --> P2[AWS<br/>GPU instance]:::agent
     U --> P3[Own PC<br/>ONNX CPU]:::agent
-    P1 --> M[Detection · Segmentation · OCR]:::process
-    P2 --> M
-    P3 --> M
-    M --> R[(Structured result)]:::store
+    P1 --> E1[AI engine<br/>Detection · Segmentation · OCR<br/>+ rules]:::process
+    P2 --> E2[AI engine<br/>Detection · Segmentation · OCR<br/>+ rules]:::process
+    P3 --> E3[AI engine<br/>Detection · Segmentation · OCR<br/>+ rules]:::process
+    E1 --> R[(Structured result)]:::store
+    E2 --> R
+    E3 --> R
     R --> DB[(MySQL<br/>results database)]:::store
     R --> O1[CAD layers]:::output
     R --> O2[Quantity tables<br/>Excel]:::output
