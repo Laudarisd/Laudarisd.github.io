@@ -114,32 +114,33 @@
 <!-- article:start -->
 <div class="project-article" data-lang="en" hidden>
 <nav class="article-toc-wrap"><h4>Contents</h4><ol class="article-toc"><li><a href="#1-introduction">1. Introduction</a></li><li><a href="#2-goal">2. Goal</a></li><li><a href="#3-code-and-details-on-github">3. Code and details on GitHub</a></li></ol></nav>
-<h1>DMP - Dynamical Movement Primitives with Reservoir Computing</h1>
-<p>Research on teaching robots motions: dynamical movement primitives (DMP) that store a demonstrated movement as a stable dynamical system, driven by an echo state network, and a pruning method that removes the parts of the network that do not contribute.</p>
+<h1>Rethinking Reservoir Pruning: A Dynamical Perspective for Echo State Networks</h1>
+<p>A research paper on making echo state networks smaller without breaking them. Instead of ranking reservoir neurons by weight size or by graph statistics, the method looks at the dynamics the reservoir actually produces on its input, scores every neuron by how much of that dynamics passes through it, and removes the rest in one shot.</p>
 <p><strong>Keywords</strong></p>
 <div class="fact-grid">
-<div class="fact"><span class="fact-label">Domain</span><span class="fact-value">Robot motion learning</span></div>
-<div class="fact"><span class="fact-label">Method</span><span class="fact-value">DMP + echo state network</span></div>
-<div class="fact"><span class="fact-label">Research</span><span class="fact-value">Centrality-based network pruning</span></div>
+<div class="fact"><span class="fact-label">Domain</span><span class="fact-value">Reservoir computing · echo state networks</span></div>
+<div class="fact"><span class="fact-label">Idea</span><span class="fact-value">Prune by the reservoir's dynamics, not by weights</span></div>
+<div class="fact"><span class="fact-label">Scoring</span><span class="fact-value">Jacobian Gram matrix along the driven trajectory</span></div>
+<div class="fact"><span class="fact-label">Selection</span><span class="fact-value">One shot: keep the top N′ neurons, rescale, retrain the readout</span></div>
 <div class="fact"><span class="fact-label">Output</span><span class="fact-value">Paper and code</span></div>
 </div>
 <figure class="figure-small">
 <img src="images/esn_pruning.png" loading="lazy" alt="Method figure from the paper: the reservoir W driven by the input, the Jacobian and Gram matrix over the trajectory, neurons ranked by their score with the top ones kept and the rest pruned, one-shot selection, spectral rescaling and the readout W_out">
-<figcaption>The pruning method from the paper. The reservoir is driven along a trajectory, a Gram matrix of its Jacobians scores every neuron, the top-scoring neurons are kept in one shot, the pruned reservoir is spectrally rescaled, and only the readout is retrained.</figcaption>
+<figcaption>The method. The reservoir is driven along a trajectory, a Gram matrix of its Jacobians scores every neuron, the top-scoring neurons are kept in one shot, the pruned reservoir is spectrally rescaled, and only the readout is retrained.</figcaption>
 </figure>
 
 <hr />
 <h2 id="1-introduction">1. Introduction</h2>
-<p>A dynamical movement primitive takes one demonstrated motion and turns it into a differential equation that always converges to its goal, so the same motion can be replayed to a new target, at a new speed, without breaking. The shaping term of that equation has to be learned, and in this work an echo state network, a reservoir of fixed random neurons with one trained readout, does the learning. Reservoirs are large and most of their neurons are redundant, so the second part of the research prunes them by centrality and measures how much can be removed before the motion degrades.</p>
+<p>An echo state network is a large reservoir of fixed, randomly connected neurons with a single trained readout. The reservoir is usually far bigger than the task needs, and most of its neurons contribute little, but existing pruning rules decide which ones to drop from static properties such as weight magnitude or connectivity. Those properties say nothing about what the reservoir does once an input drives it. This paper takes the dynamical view: drive the reservoir along a trajectory, form the Jacobian at each step, and build a Gram matrix over the trajectory. Its leading modes are the directions in which the reservoir's state actually moves. Each neuron gets a score from how much it participates in those modes, the top N′ neurons are kept in a single pass, the pruned reservoir's spectral radius is rescaled back to its target, and only the readout is retrained.</p>
 
 <hr />
 <h2 id="2-goal">2. Goal</h2>
 <div class="callout callout-goal">
 <h4>Goal</h4>
 <ul>
-<li>Learn a demonstrated robot motion as a DMP and reproduce it reliably to new goals and durations.</li>
-<li>Use an echo state network as the DMP's function approximator and study how its size affects accuracy.</li>
-<li>Prune the reservoir by node centrality and quantify the trade-off between network size and motion error.</li>
+<li>Score reservoir neurons by their role in the reservoir's dynamics on real inputs rather than by weight size or graph statistics.</li>
+<li>Prune in one shot, with no iterative retraining of the reservoir, and keep the echo state property through spectral rescaling.</li>
+<li>Show how far a reservoir can be shrunk before readout accuracy drops, against the usual magnitude-based baselines.</li>
 </ul>
 </div>
 
@@ -150,32 +151,33 @@
 </div>
 <div class="project-article" data-lang="kr" hidden>
 <nav class="article-toc-wrap"><h4>목차</h4><ol class="article-toc"><li><a href="#1-소개">1. 소개</a></li><li><a href="#2-목표">2. 목표</a></li><li><a href="#3-코드와-자세한-내용은-github에">3. 코드와 자세한 내용은 GitHub에</a></li></ol></nav>
-<h1>DMP - Reservoir Computing과 Dynamical Movement Primitives</h1>
-<p>로봇에게 동작을 가르치는 연구예요. 시연한 동작을 안정된 동역학계로 저장하는 Dynamical Movement Primitives(DMP)를 Echo State Network로 구동하고, 기여하지 않는 네트워크 부분을 잘라내는 Pruning 방법을 다뤄요.</p>
+<h1>Rethinking Reservoir Pruning: A Dynamical Perspective for Echo State Networks</h1>
+<p>Echo State Network를 망가뜨리지 않고 작게 만드는 연구 논문이에요. Reservoir 뉴런을 가중치 크기나 그래프 통계로 순위 매기는 대신, Reservoir가 입력에 대해 실제로 만들어 내는 동역학을 보고, 그 동역학이 각 뉴런을 얼마나 지나가는지로 점수를 매기고, 나머지를 한 번에 잘라내요.</p>
 <p><strong>키워드</strong></p>
 <div class="fact-grid">
-<div class="fact"><span class="fact-label">분야</span><span class="fact-value">로봇 동작 학습</span></div>
-<div class="fact"><span class="fact-label">방법</span><span class="fact-value">DMP + Echo State Network</span></div>
-<div class="fact"><span class="fact-label">연구</span><span class="fact-value">Centrality 기반 Network Pruning</span></div>
+<div class="fact"><span class="fact-label">분야</span><span class="fact-value">Reservoir Computing · Echo State Network</span></div>
+<div class="fact"><span class="fact-label">아이디어</span><span class="fact-value">가중치가 아니라 Reservoir의 동역학으로 Pruning</span></div>
+<div class="fact"><span class="fact-label">점수</span><span class="fact-value">구동 궤적에 대한 Jacobian Gram 행렬</span></div>
+<div class="fact"><span class="fact-label">선택</span><span class="fact-value">One shot: 상위 N′개 유지, Rescaling, Readout 재학습</span></div>
 <div class="fact"><span class="fact-label">출력</span><span class="fact-value">논문과 코드</span></div>
 </div>
 <figure class="figure-small">
 <img src="images/esn_pruning.png" loading="lazy" alt="논문의 방법 그림: 입력으로 구동되는 Reservoir W, 궤적에 대한 Jacobian과 Gram 행렬, 점수로 순위를 매겨 상위 뉴런은 남기고 나머지는 잘라내는 과정, One-shot 선택, Spectral Rescaling, Readout W_out">
-<figcaption>논문의 Pruning 방법이에요. Reservoir를 궤적을 따라 구동하고, Jacobian의 Gram 행렬로 뉴런마다 점수를 매기고, 점수가 높은 뉴런을 한 번에 남기고, 잘라낸 Reservoir를 Spectral Rescaling 한 뒤 Readout만 다시 학습해요.</figcaption>
+<figcaption>방법이에요. Reservoir를 궤적을 따라 구동하고, Jacobian의 Gram 행렬로 뉴런마다 점수를 매기고, 점수가 높은 뉴런을 한 번에 남기고, 잘라낸 Reservoir를 Spectral Rescaling 한 뒤 Readout만 다시 학습해요.</figcaption>
 </figure>
 
 <hr />
 <h2 id="1-소개">1. 소개</h2>
-<p>DMP는 시연한 동작 하나를 항상 목표로 수렴하는 미분방정식으로 바꿔요. 그래서 같은 동작을 새 목표로, 새 속도로, 망가지지 않게 다시 재생할 수 있어요. 그 방정식의 형태 항은 학습해야 하는데, 이 연구에서는 Echo State Network가 그 학습을 해요. 고정된 무작위 뉴런의 Reservoir에 학습된 Readout 하나가 있는 구조예요. Reservoir는 크고 뉴런 대부분이 중복이라서, 연구의 두 번째 부분은 Centrality로 뉴런을 잘라내고 동작이 나빠지기 전까지 얼마나 뺄 수 있는지 재요.</p>
+<p>Echo State Network는 고정된 무작위 연결 뉴런의 큰 Reservoir에 학습된 Readout 하나가 있는 구조예요. Reservoir는 보통 과제에 필요한 것보다 훨씬 크고 뉴런 대부분은 기여가 작아요. 그런데 기존 Pruning 규칙은 가중치 크기나 연결성 같은 정적인 성질로 무엇을 뺄지 정해요. 그 성질은 입력이 Reservoir를 구동했을 때 Reservoir가 무엇을 하는지는 말해 주지 않아요. 이 논문은 동역학의 관점을 취해요. Reservoir를 궤적을 따라 구동하고, 단계마다 Jacobian을 만들고, 궤적 전체에 대한 Gram 행렬을 만들어요. 그 주요 모드가 Reservoir의 상태가 실제로 움직이는 방향이에요. 뉴런마다 그 모드에 얼마나 참여하는지로 점수를 받고, 상위 N′개를 한 번에 남기고, 잘라낸 Reservoir의 Spectral Radius를 목표값으로 다시 맞추고, Readout만 다시 학습해요.</p>
 
 <hr />
 <h2 id="2-목표">2. 목표</h2>
 <div class="callout callout-goal">
 <h4>목표</h4>
 <ul>
-<li>시연한 로봇 동작을 DMP로 배우고, 새 목표와 시간으로 안정적으로 재현해요.</li>
-<li>DMP의 함수 근사기로 Echo State Network를 쓰고, 그 크기가 정확도에 어떻게 영향을 주는지 봐요.</li>
-<li>노드 Centrality로 Reservoir를 Pruning 하고, 네트워크 크기와 동작 오차 사이의 트레이드오프를 숫자로 재요.</li>
+<li>가중치 크기나 그래프 통계가 아니라, 실제 입력에 대한 Reservoir 동역학에서의 역할로 뉴런에 점수를 매겨요.</li>
+<li>Reservoir를 반복 재학습하지 않고 한 번에 Pruning 하고, Spectral Rescaling으로 Echo State 성질을 지켜요.</li>
+<li>Readout 정확도가 떨어지기 전까지 Reservoir를 얼마나 줄일 수 있는지, 흔한 가중치 크기 기준과 비교해서 보여 줘요.</li>
 </ul>
 </div>
 
