@@ -8,8 +8,8 @@
 <div class="fact"><span class="fact-label">Output</span><span class="fact-value">Paper and code</span></div>
 </div>
 <figure class="figure-small">
-<img src="images/photo.jpg" alt="A large white industrial robot arm drawing in a bed of sand">
-<figcaption>An industrial arm reproducing a movement: the kind of motion a DMP stores and replays with new goals and speeds. Photo: Oleg Yunakov, CC BY-SA 4.0, via Wikimedia Commons.</figcaption>
+<img src="images/esn_pruning.png" alt="Method figure from the paper: the reservoir W driven by the input, the Jacobian and Gram matrix over the trajectory, neurons ranked by their score with the top ones kept and the rest pruned, one-shot selection, spectral rescaling and the readout W_out">
+<figcaption>The pruning method from the paper. The reservoir is driven along a trajectory, a Gram matrix of its Jacobians scores every neuron, the top-scoring neurons are kept in one shot, the pruned reservoir is spectrally rescaled, and only the readout is retrained.</figcaption>
 </figure>
 
 ---

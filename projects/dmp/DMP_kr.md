@@ -8,8 +8,8 @@
 <div class="fact"><span class="fact-label">출력</span><span class="fact-value">논문과 코드</span></div>
 </div>
 <figure class="figure-small">
-<img src="images/photo.jpg" alt="모래 위에 그림을 그리는 큰 흰색 산업용 로봇 팔">
-<figcaption>동작을 재현하는 산업용 로봇 팔이에요. DMP가 저장했다가 새 목표와 속도로 다시 재생하는 종류의 동작이에요. 사진: Oleg Yunakov, CC BY-SA 4.0, Wikimedia Commons.</figcaption>
+<img src="images/esn_pruning.png" alt="논문의 방법 그림: 입력으로 구동되는 Reservoir W, 궤적에 대한 Jacobian과 Gram 행렬, 점수로 순위를 매겨 상위 뉴런은 남기고 나머지는 잘라내는 과정, One-shot 선택, Spectral Rescaling, Readout W_out">
+<figcaption>논문의 Pruning 방법이에요. Reservoir를 궤적을 따라 구동하고, Jacobian의 Gram 행렬로 뉴런마다 점수를 매기고, 점수가 높은 뉴런을 한 번에 남기고, 잘라낸 Reservoir를 Spectral Rescaling 한 뒤 Readout만 다시 학습해요.</figcaption>
 </figure>
 
 ---
