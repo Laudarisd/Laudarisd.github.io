@@ -1,468 +1,293 @@
 # Fine-Tuning a Vision-Language Model for Floor-Plan Understanding
-
-> The project fine-tunes Qwen3.5-9B to answer questions about architectural floor-plan images. The current data includes room/object questions, counts and comparisons, junction detection, and polygon-style annotations. This is a visual understanding task; it does not generate new architectural plans.
-
+<p>Qwen3.5-9B, a 9-billion-parameter vision-language model, fine-tuned with QLoRA so that it can look at an architectural floor-plan image and answer
+questions about it as structured JSON: which rooms and objects are present, how many of each, where the X-junctions are, and the polygon of every
+object in image coordinates. The model reads plans; it does not draw new ones.</p>
+<p><strong>Main Process</strong></p>
 <div class="fact-grid">
 <div class="fact"><span class="fact-label">Base model</span><span class="fact-value">Qwen3.5-9B (VLM)</span></div>
 <div class="fact"><span class="fact-label">Method</span><span class="fact-value">QLoRA: 4-bit base + LoRA r16</span></div>
-<div class="fact"><span class="fact-label">Data</span><span class="fact-value">1.04M train / 239k val (JSONL)</span></div>
-<div class="fact"><span class="fact-label">Tasks</span><span class="fact-value">Rooms, counts, junctions, polygons</span></div>
-<div class="fact"><span class="fact-label">Stack</span><span class="fact-value">Unsloth, TRL, PEFT, PyTorch</span></div>
-<div class="fact"><span class="fact-label">Output</span><span class="fact-value">Merged model for inference</span></div>
+<div class="fact"><span class="fact-label">Data</span><span class="fact-value">1,037,246 train · 238,685 val (JSONL)</span></div>
+<div class="fact"><span class="fact-label">Tasks</span><span class="fact-value">Rooms · counts · junctions · polygons</span></div>
+<div class="fact"><span class="fact-label">Stack</span><span class="fact-value">Unsloth · TRL · PEFT · PyTorch</span></div>
+<div class="fact"><span class="fact-label">Training</span><span class="fact-value">3 GPUs, Accelerate, bf16</span></div>
+<div class="fact"><span class="fact-label">Best checkpoint</span><span class="fact-value">step 3,000 · eval loss 0.4158</span></div>
+<div class="fact"><span class="fact-label">Output</span><span class="fact-value">Merged model + JSON / overlay inference</span></div>
 </div>
-
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>A floor-plan image, a question, and the model's JSON answer side by side.</figcaption>
+<figure class="figure-small">
+<img src="images/dataset_example.png" alt="A floor-plan image on the left and, on the right, a user question with the expected assistant JSON answer, as one training record">
+<figcaption>One training record: a floor-plan image, the user's question, and the assistant's expected answer as JSON.</figcaption>
 </figure>
 
-## 1. Introduction
+---
 
+## 1. Introduction
+<p>A floor plan is a picture that carries structured facts: rooms with names, openings with sizes, fixtures with positions. Software that works on
+plans needs those facts as data, not as prose. A general vision-language model can describe a plan in words, but it has never seen architectural
+drawings in volume, it answers inconsistently, and it does not return the counts, classes and coordinates a program can use.</p>
 <div class="callout callout-problem">
 <h4>Problems this project addresses</h4>
 <ul>
-<li>A pretrained vision-language model has never seen architectural floor plans and answers inconsistently about them.</li>
-<li>Answers must be usable by software: counts, classes, and polygon coordinates as valid JSON, not free prose.</li>
-<li>A 9-billion-parameter model cannot be fully fine-tuned on a single workstation GPU, so training has to be parameter-efficient.</li>
-<li>Checkpoints, evaluation, and the final merged model need to be reproducible from one script.</li>
+<li>A pretrained VLM answers questions about floor plans inconsistently and in free prose.</li>
+<li>Answers must be machine-readable: counts, classes and polygon coordinates as valid JSON.</li>
+<li>A 9B model cannot be fully fine-tuned on workstation GPUs; only a small set of parameters can be trained.</li>
+<li>Over a million examples have to be fed through an image processor fast enough to keep three GPUs busy.</li>
+<li>Checkpoints, evaluation and the final merged model must be reproducible from one script.</li>
 </ul>
 </div>
+<p>The answer is supervised fine-tuning on floor-plan question-answer pairs, with a parameter-efficient method so that the whole thing fits on a
+small multi-GPU box. The pipeline below is what the repository does end to end.</p>
+<pre class="mermaid">flowchart LR
+    R[(Floor-plan images<br/>+ LabelMe JSON)]:::store --> G[generate_data.py<br/>questions and answers]:::process
+    G --> J[(JSONL<br/>train · val)]:::store
+    J --> P[Resize, cache,<br/>chat template]:::process
+    P --> M[Qwen3.5-9B 4-bit<br/>+ LoRA r16]:::agent
+    M --> T[SFTTrainer<br/>eval every 1k steps]:::process
+    T --> B[(Best checkpoint<br/>by eval loss)]:::store
+    B --> MG[Merge adapter<br/>into base]:::process
+    MG --> I[inference.py<br/>JSON answer · overlay]:::output
+</pre>
 
+<hr />
+<div class="part-divider"><span>Dataset</span></div>
 
-This repository adapts a pretrained vision-language model (VLM) to interpret architectural floor plans. Each example pairs a plan image and a natural-language question with a target answer. Answers can be short text or JSON containing counts, comparisons, object classes, or polygon coordinates.
+## 2. Dataset
+<p>Every example is a chat: a user turn with one image and one question, and an assistant turn with the expected answer. The source material is a set
+of floor-plan images, each with a LabelMe-style JSON file whose <code>shapes</code> list holds a label and the polygon points of every object.
+<code>generate_data.py</code> turns each annotated plan into many question-answer records: a room list, a count per class, comparisons between classes,
+junction questions and polygon requests. That is how one annotated image becomes dozens of training lines, and how the set reaches a million records.</p>
 
-The main training script loads a local Qwen3.5-9B model, prepares image/text examples, adds LoRA adapters, and runs supervised fine-tuning (SFT). It evaluates and saves checkpoints during training, selects the best checkpoint by validation loss, and merges the adapter into the base model for inference.
+<h3>2.1 Size and split</h3>
+<table>
+<thead>
+<tr><th>Item</th><th>Value</th><th>Why</th></tr>
+</thead>
+<tbody>
+<tr><td>Training records</td><td>1,037,246 lines in <code>vlm_train.jsonl</code></td><td>Many questions per plan, so the model sees each plan from several angles.</td></tr>
+<tr><td>Validation records</td><td>238,685 lines in <code>vlm_val.jsonl</code>; 20 % (47,737) used per evaluation</td><td>A full pass over 239k records every 1,000 steps would cost more than the training between evaluations.</td></tr>
+<tr><td>Split</td><td>By source image, deterministic seed</td><td>Questions about the same plan are near-duplicates; splitting by record would leak plans into validation.</td></tr>
+<tr><td>Answer formats</td><td>Short text, or JSON with counts, classes, polygons</td><td>JSON is what the calling software needs; the format is part of what the model learns.</td></tr>
+<tr><td>Image size</td><td>Longest side capped at 1,024 px</td><td>Vision tokens grow with image area; 1,024 px keeps a plan readable within the 1,024-token sequence budget.</td></tr>
+</tbody>
+</table>
 
-## 2. Project contents
-
-<div class="callout callout-problem">
-<h4>Problems this section addresses</h4>
-<ul>
-<li>Data, images, scripts, the base model, and outputs have to stay organised so the project can be moved or reproduced.</li>
-<li>Mixed relative and absolute image paths break when the repository changes location.</li>
-</ul>
-</div>
-
-
-| Path | Purpose |
-| --- | --- |
-| `train_data/vlm_train.jsonl` | Chat-style training examples |
-| `train_data/vlm_val.jsonl` | Validation examples |
-| `raw_data/images/` | Floor-plan images referenced by examples |
-| `train_qwen35_vlm_unsloth.py` | Main Unsloth/TRL SFT pipeline |
-| `train_qwen35_vlm_lora.py` | Alternate LoRA entry point used by the shell launcher |
-| `fine_tune.sh` | Example launcher for the alternate script |
-| `requirements.txt` | Python package requirements |
-| `models/Qwen3.5-9B/` | Local base model and processor files |
-| `outputs/qwen35-floorplan-lora/` | Logs, checkpoints, adapter, and merged model |
-| `inference_test.py` | Inference-related script |
-
-The JSONL data currently contains both relative and absolute image paths. Relative paths (such as `raw_data/images/plan.png`) make the project easier to move; ensure the data loader resolves them against the repository or data root.
-
-## 3. Requirements
-
-<div class="callout callout-problem">
-<h4>Problems this section addresses</h4>
-<ul>
-<li>PyTorch, CUDA, Transformers, and Unsloth builds must match each other and the host GPU driver.</li>
-<li>GPU memory is the limiting resource: image size, sequence length, batch size, and quantisation all compete for it.</li>
-<li>The base model weights are subject to access terms and are not redistributed with the project.</li>
-</ul>
-</div>
-
-
-### Software and hardware
-
-- Python 3.10 or newer is a practical baseline. Select a version supported by the installed PyTorch, Transformers, and Unsloth builds.
-- A CUDA-capable NVIDIA GPU is needed for practical fine-tuning. Memory use depends on image size, sequence length, batch size, and GPU count.
-- Install CUDA-enabled PyTorch for the host's CUDA runtime. `requirements.txt` includes a CUDA 12.1 example; choose a compatible PyTorch build.
-
-### Main libraries
-
-Package ranges are listed in `requirements.txt`.
-
-- PyTorch (`torch`, `torchvision`, `torchaudio`) — tensor and GPU computation; install separately as noted in requirements.
-- Hugging Face Transformers, Hub, and Tokenizers — model, processor, and tokenizer loading.
-- `datasets` — JSONL dataset loading.
-- `trl` — supervised fine-tuning trainer and config.
-- `peft` — LoRA adapters and merging.
-- `unsloth` — optimized vision-language loading and training helpers.
-- `accelerate` — distributed and multi-GPU launch.
-- `bitsandbytes` — low-bit model loading.
-- `qwen-vl-utils`, Pillow, and OpenCV — vision utilities and image processing.
-- `tensorboard` — training metrics.
-
-Install PyTorch first, followed by the project requirements:
-
-```bash
-# Example only; choose a wheel compatible with your CUDA setup.
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-pip install -r requirements.txt
-```
-
-The model is stored locally under `models/Qwen3.5-9B/`. On a fresh machine, obtain it from its authorized Hugging Face repository and update `MODEL_DIR` if storing it elsewhere. Check the model's access terms before redistributing weights.
-
-## 4. Goal
-
-<div class="callout callout-goal">
-<h4>Goal</h4>
-<ul>
-<li>Adapt a pretrained VLM to inspect an architectural floor-plan image and answer questions consistently.</li>
-<li>Identify rooms and architectural objects.</li>
-<li>Count or compare classes such as bedrooms, sinks, basins, doors, and windows.</li>
-<li>Detect geometric features such as X-junctions.</li>
-<li>Return object annotations as polygons in image coordinates, as structured JSON where appropriate.</li>
-</ul>
-</div>
-
-
-**Goal:** adapt a pretrained VLM to inspect an architectural floor-plan image and answer questions consistently, using structured JSON where appropriate.
-
-Example tasks represented by the data:
-
-- Identify rooms and architectural objects.
-- Count or compare classes such as bedrooms, sinks, basins, doors, and windows.
-- Detect geometric features such as X-junctions.
-- Return object annotations as polygons in image coordinates.
-
-This project does not produce CAD/BIM geometry or provide building-code determinations. Results depend on dataset coverage and label quality.
-
-## 5. Dataset preparation
-
-<div class="callout callout-problem">
-<h4>Problems this section addresses</h4>
-<ul>
-<li>Every example must point at an image that exists and is readable.</li>
-<li>Polygon coordinates, class names, and answer formats must be consistent, or the model learns the inconsistency.</li>
-<li>Near-duplicate plans leak between training and validation unless the split is done by source image.</li>
-<li>Malformed records, missing images, duplicates, empty labels, and class imbalance all distort training.</li>
-</ul>
-</div>
-
-
-Each line in the train and validation files is a standalone JSON object. Its `messages` array has a user message with an image and question, followed by an assistant message with the expected answer.
-
-### Example JSONL record
-
-This illustrative record follows the repository schema. Replace the filename with an existing image.
+<h3>2.2 Record format</h3>
+<p>Each line is one JSON object with a <code>messages</code> array. The plan below is a real unit plan; the two records are the question types asked about it.</p>
 
 ```json
 {"messages":[
   {"role":"user","content":[
-    {"type":"image","image":"raw_data/images/example_floor_plan.png"},
+    {"type":"image","image":"raw_data/images/unit_84a.png"},
     {"type":"text","text":"How many bedrooms are shown? Reply as JSON."}
   ]},
   {"role":"assistant","content":[
-    {"type":"text","text":"{\"bedroom_count\":2}"}
+    {"type":"text","text":"{\"bedroom_count\":3}"}
   ]}
 ]}
 ```
-
-A polygon annotation example:
 
 ```json
 {"messages":[
   {"role":"user","content":[
-    {"type":"image","image":"raw_data/images/example_floor_plan.png"},
-    {"type":"text","text":"List the doors visible in this plan as class and polygon."}
+    {"type":"image","image":"raw_data/images/unit_84a.png"},
+    {"type":"text","text":"List the bedrooms as class and polygon."}
   ]},
   {"role":"assistant","content":[
-    {"type":"text","text":"{\"annotations\":[{\"class\":\"Door\",\"polygon\":[[120,80],[160,80],[160,140],[120,140]]}]}"}
+    {"type":"text","text":"{\"annotations\":[{\"class\":\"Bedroom\",\"polygon\":[[135,320],[270,320],[270,435],[135,435]]},{\"class\":\"Bedroom\",\"polygon\":[[420,345],[515,345],[515,435],[420,435]]},{\"class\":\"Bedroom\",\"polygon\":[[205,185],[290,185],[290,270],[205,270]]}]}"}
   ]}
 ]}
 ```
 
-### Preparation checklist
+<figure class="figure-small">
+<img src="images/annotation_overlay.png" alt="The same floor plan with coloured polygons drawn over the three bedrooms, the living room and the kitchen, each labelled with its class">
+<figcaption>The polygons of the second record, drawn over the plan in image coordinates. Bedrooms in orange, living room in blue, kitchen in green.</figcaption>
+</figure>
 
-1. Confirm every referenced image exists and is readable.
-2. Keep image labels aligned; define polygon coordinates consistently (the examples use image pixel coordinates).
-3. Use consistent class names and answer formats; return valid JSON when JSON is requested.
-4. Split by source floor plan/image to reduce near-duplicate leakage into validation.
-5. Check malformed records, missing images, duplicates, empty labels, and class imbalance.
-6. Keep validation data out of training and use it for evaluation/checkpoint selection.
+<h3>2.3 Source annotation</h3>
+<p>The LabelMe-style file for a plan is the single source of truth; questions, counts and polygons are all derived from it, so a label fixed once is fixed in every record.</p>
 
-The checked-in JSONL files contain 1,037,246 training lines and 238,685 validation lines. The recorded run summary reports 1,037,246 training samples and a 20% validation selection (47,737 samples). The shell launcher has separate percentage arguments and invokes a different script, so check the entry point and run configuration before quoting dataset counts.
-
-## 6. Model preparation and fine-tuning concepts
-
-<div class="callout callout-problem">
-<h4>Problems this section addresses</h4>
-<ul>
-<li>Updating all weights of a 9B model needs far more optimizer memory than is available, so only a small set of parameters can be trained.</li>
-<li>Memory has to be reduced further by loading the frozen base in 4-bit without losing the ability to train adapters.</li>
-<li>Dense and Mixture-of-Experts are properties of the checkpoint; fine-tuning must not be mistaken for changing the architecture.</li>
-</ul>
-</div>
-
-
-### Dense and Mixture-of-Experts models
-
-- **Dense model:** each token passes through the same feed-forward blocks in each transformer layer; the full model participates in each forward pass.
-- **Mixture of Experts (MoE):** a router selects one or more feed-forward experts for each token. A model can have many total parameters while activating only a subset per token.
-
-Dense and MoE describe model architectures. Fine-tuning does not change one architecture into the other. The training script loads the architecture defined by the selected Qwen checkpoint; check that checkpoint's config/model card before labeling it dense or MoE.
-
-### PEFT, LoRA, and QLoRA
-
-- **PEFT (Parameter-Efficient Fine-Tuning):** methods that update a smaller set of parameters while most pretrained weights remain frozen, reducing optimizer state and adapter checkpoint size.
-- **LoRA:** adds trainable low-rank matrices to selected projections. The base weights stay frozen during adapter training; the adapter can later be saved separately or merged.
-- **QLoRA:** combines LoRA adapters with a quantized frozen base model, commonly 4-bit, to reduce memory requirements further.
-
-### What this repository does
-
-The Unsloth pipeline loads Qwen3.5-9B with 4-bit loading, attaches PEFT LoRA adapters, and enables training for vision and language layers, attention modules, and MLP modules. It passes `target_modules="all-linear"`, with rank 16, alpha 32, dropout 0.05, and no LoRA bias. A quantized base plus trainable adapters is a QLoRA-style setup. Gradient checkpointing is also enabled to reduce activation memory. The best adapter is merged with the base model after training.
-
-## 7. Training files and setup
-
-<div class="callout callout-problem">
-<h4>Problems this section addresses</h4>
-<ul>
-<li>Image and text examples must be formatted with the model's chat template before training.</li>
-<li>Training must evaluate periodically, save checkpoints, stop early, and resume after an interruption.</li>
-<li>The best adapter has to be selected by validation loss and merged into the base model for inference.</li>
-</ul>
-</div>
-
-
-### Imports
-
-The primary script imports these central components:
-
-```python
-import torch
-from datasets import load_dataset
-from peft import PeftModel
-from transformers import AutoModelForImageTextToText, AutoProcessor, EarlyStoppingCallback
-from trl import SFTConfig, SFTTrainer
-from unsloth import FastVisionModel
+```json
+{"imagePath": "unit_84a.png", "imageWidth": 791, "imageHeight": 599,
+ "shapes": [
+   {"label": "Bedroom", "shape_type": "polygon", "points": [[135,320],[270,320],[270,435],[135,435]]},
+   {"label": "Door",    "shape_type": "polygon", "points": [[268,352],[286,352],[286,370],[268,370]]},
+   {"label": "Window",  "shape_type": "polygon", "points": [[150,432],[250,432],[250,440],[150,440]]}
+ ]}
 ```
 
-### Configured values
+<div class="callout callout-note">
+<h4>What the data preparation checks</h4>
+<ul>
+<li>Every referenced image exists and opens; a missing file would crash a worker mid-epoch.</li>
+<li>Polygon coordinates are image pixels, class names are one spelling, and JSON answers are valid JSON.</li>
+<li>Near-duplicate plans are kept on one side of the split.</li>
+<li>Malformed records, empty labels, duplicates and class imbalance are counted before training, because the model learns whatever inconsistency is left in.</li>
+</ul>
+</div>
 
-In `train_qwen35_vlm_unsloth.py`, the main settings are:
+<hr />
+<div class="part-divider"><span>Method</span></div>
 
-| Setting | Value |
-| --- | --- |
-| Base model | `models/Qwen3.5-9B` |
-| Data | `train_data/vlm_train.jsonl`, `train_data/vlm_val.jsonl` |
-| Output | `outputs/qwen35-floorplan-lora` |
-| 4-bit loading | Enabled |
-| Per-device train/eval batch | 4 / 4 |
-| Gradient accumulation | 3 |
-| Learning rate | `1e-4` |
-| Epoch limit | 10 |
-| Image longest side | 1024 pixels |
-| Maximum sequence length | 1024 |
-| LoRA | rank 16, alpha 32, dropout 0.05 |
-| LoRA targets | All linear layers via Unsloth's `target_modules="all-linear"` |
-| Save/evaluation interval | Every 1,000 steps |
-| Best model metric | `eval_loss` (lower is better) |
-| Logging | TensorBoard and `training.log` |
+## 3. Method
+<p>Full fine-tuning of a 9B model needs the weights, their gradients and two optimizer moments in memory: on the order of 16 bytes per parameter,
+well over 100 GB. The training box has three GPUs with a fraction of that. Every choice below exists to fit the job on that hardware
+without giving up the vision layers.</p>
+<table>
+<thead>
+<tr><th>Choice</th><th>What it is</th><th>Why it was used here</th></tr>
+</thead>
+<tbody>
+<tr><td>Qwen3.5-9B</td><td>A dense decoder VLM with a vision encoder and a language model</td><td>Strong document and diagram reading out of the box, local weights, a size that fits one GPU in 4-bit with room for activations. A 32B variant was tried but did not fit the same budget.</td></tr>
+<tr><td>PEFT</td><td>Train a small set of added parameters, keep the base frozen</td><td>Removes the optimizer state for 9B weights; the trainable set is a few tens of millions of parameters.</td></tr>
+<tr><td>LoRA, rank 16, alpha 32</td><td>Low-rank update matrices on the linear projections</td><td>Rank 16 is enough capacity for a new output format and domain; alpha at 2× rank keeps the update scale stable. Dropout 0.05 against overfitting a million near-duplicate questions.</td></tr>
+<tr><td><code>target_modules="all-linear"</code></td><td>Adapters on every linear layer, vision and language, attention and MLP</td><td>The vision side has never seen plans, so adapting only the language projections leaves the hard part frozen.</td></tr>
+<tr><td>4-bit base (QLoRA)</td><td>Frozen base weights stored in 4-bit NF4, dequantised per layer on the fly</td><td>Cuts the base from 18 GB to under 6 GB, which is what makes batch 4 at 1,024 px possible per GPU.</td></tr>
+<tr><td>Unsloth</td><td>Fused kernels and patched vision-model loading</td><td>Faster forward and backward passes and lower activation memory than stock Transformers for the same model.</td></tr>
+<tr><td>Gradient checkpointing</td><td>Recompute activations in the backward pass</td><td>Trades compute for memory; without it, 1,024-token sequences with image tokens do not fit at batch 4.</td></tr>
+<tr><td>TRL SFTTrainer</td><td>Supervised fine-tuning loop with evaluation, checkpoints and callbacks</td><td>Periodic eval, best-model tracking, early stopping and resume come built in; only the collator is custom.</td></tr>
+</tbody>
+</table>
+<pre class="mermaid">flowchart LR
+    B[Qwen3.5-9B<br/>frozen, 4-bit NF4]:::tool --> V[Vision encoder<br/>+ LoRA]:::process
+    B --> L[Language model<br/>+ LoRA]:::process
+    V --> O[Trainable: LoRA A·B on all linear layers<br/>r=16, α=32, dropout 0.05]:::agent
+    L --> O
+    O --> C[(Adapter checkpoint<br/>every 1,000 steps)]:::store
+    C --> M[Merged model<br/>base + best adapter]:::output
+</pre>
 
-The source also declares a `LORA_TARGET_MODULES` list, but the model setup actually passes `target_modules="all-linear"`; that is the effective setting.
+<h3>3.1 Configuration</h3>
+<table>
+<thead>
+<tr><th>Setting</th><th>Value</th><th>Why</th></tr>
+</thead>
+<tbody>
+<tr><td>Per-device batch, train / eval</td><td>4 / 4</td><td>The largest that fits with 1,024-px images and gradient checkpointing.</td></tr>
+<tr><td>Gradient accumulation</td><td>3</td><td>Effective batch 4 × 3 × 3 GPUs = 36 records per optimizer step.</td></tr>
+<tr><td>Learning rate</td><td>1e-4, cosine, 100 warm-up steps</td><td>A standard LoRA rate; warm-up protects the fresh adapters from the first noisy gradients, cosine lets the end of training settle.</td></tr>
+<tr><td>Epoch limit</td><td>10</td><td>An upper bound; early stopping decides the real length.</td></tr>
+<tr><td>Image longest side / sequence</td><td>1,024 px / 1,024 tokens</td><td>Enough resolution for dimension text and thin walls, within memory.</td></tr>
+<tr><td>Precision</td><td>bf16 where supported</td><td>No loss scaling needed and the same range as fp32.</td></tr>
+<tr><td>Evaluate and save</td><td>Every 1,000 steps, keep 2 checkpoints</td><td>Frequent enough to catch the minimum of the validation loss; two checkpoints keep the disk bounded.</td></tr>
+<tr><td>Best model</td><td><code>eval_loss</code>, lower is better</td><td>The only metric available on every evaluation; task metrics come after training.</td></tr>
+<tr><td>Early stopping</td><td>Patience 15 evaluations, threshold 1e-4</td><td>Stops a run that has stopped improving without a person watching it.</td></tr>
+<tr><td>Data loading</td><td>8 workers, pinned memory, persistent</td><td>Image decoding is the bottleneck, not the GPU; the cache and workers keep the GPUs fed.</td></tr>
+<tr><td>Logging</td><td>TensorBoard every 10 steps, <code>training.log</code>, <code>run_summary.json</code></td><td>Curves during the run; a summary file after it.</td></tr>
+</tbody>
+</table>
 
-### Simplified model and trainer setup
+<hr />
+<div class="part-divider"><span>Training Pipeline</span></div>
 
-The following code blocks document the main stages from the repository's training script. Configuration values are repeated in code so this README can be read as a walkthrough; `train_qwen35_vlm_unsloth.py` remains the source of truth.
+## 4. Training pipeline
+<p>The stages below are the main script, <code>train_qwen35_vlm_unsloth.py</code>, with the configuration values repeated in place so the page reads as a walkthrough.</p>
 
-#### 1. Imports and project configuration
+<h3>4.1 Configuration and data</h3>
 
 ```python
-import hashlib
-import json
-import os
-import sys
-from datetime import datetime, timezone
-from pathlib import Path
-
 import torch
-import torch.distributed as dist
 from datasets import load_dataset
-from PIL import Image
 from peft import PeftModel
 from transformers import AutoModelForImageTextToText, EarlyStoppingCallback
 from trl import SFTConfig, SFTTrainer
 from unsloth import FastVisionModel
 
-MODEL_DIR = Path("models/Qwen3.5-9B")
-TRAIN_FILE = Path("train_data/vlm_train.jsonl")
-VAL_FILE = Path("train_data/vlm_val.jsonl")
-OUTPUT_DIR = Path("outputs/qwen35-floorplan-lora")
-IMAGE_CACHE_DIR = Path("train_data/image_cache")
+MODEL_DIR, OUTPUT_DIR = Path("models/Qwen3.5-9B"), Path("outputs/qwen35-floorplan-lora")
+TRAIN_FILE, VAL_FILE = Path("train_data/vlm_train.jsonl"), Path("train_data/vlm_val.jsonl")
+TRAIN_PERCENTAGE, VALIDATION_PERCENTAGE = 100, 20
+NUM_TRAIN_EPOCHS, LEARNING_RATE = 10, 1e-4
+PER_DEVICE_TRAIN_BATCH_SIZE, PER_DEVICE_EVAL_BATCH_SIZE, GRADIENT_ACCUMULATION_STEPS = 4, 4, 3
+MAX_IMAGE_SIDE, MAX_SEQ_LENGTH, LOAD_IN_4BIT, SEED = 1024, 1024, True, 42
 
-TRAIN_PERCENTAGE = 100
-VALIDATION_PERCENTAGE = 20
-NUM_TRAIN_EPOCHS = 10
-PER_DEVICE_TRAIN_BATCH_SIZE = 4
-PER_DEVICE_EVAL_BATCH_SIZE = 4
-GRADIENT_ACCUMULATION_STEPS = 3
-LEARNING_RATE = 1e-4
-MAX_IMAGE_SIDE = 1024
-MAX_SEQ_LENGTH = 1024
-LOAD_IN_4BIT = True
-SEED = 42
-```
+dataset = load_dataset("json", data_files={"train": str(TRAIN_FILE), "validation": str(VAL_FILE)})
 
-#### 2. Load and select JSONL data
+def limit_dataset_by_percentage(split, percentage):
+    n = max(1, int(len(split) * percentage / 100.0))
+    return split.shuffle(seed=SEED).select(range(n))          # same subset on every run
 
-Hugging Face Datasets reads one JSON record per line. The script shuffles with a fixed seed before selecting the requested percentage.
-
-```python
-def load_jsonl_dataset(train_file: Path, val_file: Path):
-    return load_dataset(
-        "json",
-        data_files={
-            "train": str(train_file),
-            "validation": str(val_file),
-        },
-    )
-
-
-def limit_dataset_by_percentage(dataset_split, percentage: float):
-    sample_count = max(1, int(len(dataset_split) * percentage / 100.0))
-    return dataset_split.shuffle(seed=SEED).select(range(sample_count))
-
-
-dataset = load_jsonl_dataset(TRAIN_FILE, VAL_FILE)
 train_dataset = limit_dataset_by_percentage(dataset["train"], TRAIN_PERCENTAGE)
 val_dataset = limit_dataset_by_percentage(dataset["validation"], VALIDATION_PERCENTAGE)
 ```
 
-#### 3. Resize and cache images; format chat messages
-
-Images are converted to RGB, resized only when their longest side exceeds the configured limit, and cached to avoid repeating image decoding/resizing on later runs. The processor formats the messages using the model's chat template.
+<h3>4.2 Image cache and chat template</h3>
+<p>Decoding and resizing a million PNGs every epoch would starve the GPUs, so each image is resized once, written to a cache keyed by the hash of its
+path, and read from there on every later pass. The processor then renders the messages with the model's own chat template, so the training text is
+byte-for-byte what the model will see at inference.</p>
 
 ```python
-def resize_and_cache_image(image_path: str, cache_dir: Path, max_image_side: int) -> str:
-    cache_dir.mkdir(parents=True, exist_ok=True)
+def resize_and_cache_image(image_path, cache_dir, max_image_side):
     source = Path(image_path)
-    suffix = source.suffix.lower() or ".jpg"
-    cache_key = hashlib.md5(str(source.resolve()).encode("utf-8")).hexdigest()
-    cached_path = cache_dir / f"{cache_key}{suffix}"
-
-    if cached_path.exists():
-        return str(cached_path)
-
+    cached = cache_dir / (hashlib.md5(str(source.resolve()).encode()).hexdigest() + (source.suffix.lower() or ".jpg"))
+    if cached.exists():
+        return str(cached)
     image = Image.open(source).convert("RGB")
-    width, height = image.size
-    longest_side = max(width, height)
-    if longest_side > max_image_side:
-        scale = max_image_side / longest_side
-        image = image.resize(
-            (max(1, int(width * scale)), max(1, int(height * scale))),
-            Image.Resampling.BICUBIC,
-        )
+    longest = max(image.size)
+    if longest > max_image_side:                                   # shrink only, never upscale
+        scale = max_image_side / longest
+        image = image.resize((max(1, int(image.width * scale)), max(1, int(image.height * scale))), Image.Resampling.BICUBIC)
+    image.save(cached, quality=95)
+    return str(cached)
 
-    image.save(cached_path, quality=95)
-    return str(cached_path)
-
-
-def preprocess_example(example, processor, cache_dir: Path):
-    formatted_messages = []
-    image_paths = []
+def preprocess_example(example, processor, cache_dir):
+    messages, image_paths = [], []
     for message in example["messages"]:
         content = []
         for item in message["content"]:
             if item["type"] == "image":
-                image_paths.append(
-                    resize_and_cache_image(item["image"], cache_dir, MAX_IMAGE_SIDE)
-                )
+                image_paths.append(resize_and_cache_image(item["image"], cache_dir, MAX_IMAGE_SIDE))
                 content.append({"type": "image"})
-            elif item["type"] == "text":
+            else:
                 content.append({"type": "text", "text": item["text"]})
-        formatted_messages.append({"role": message["role"], "content": content})
-
-    prompt = processor.apply_chat_template(
-        formatted_messages,
-        tokenize=False,
-        add_generation_prompt=False,
-    ).strip()
+        messages.append({"role": message["role"], "content": content})
+    prompt = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=False).strip()
     return {"text": prompt, "image_paths": image_paths}
+
+train_dataset = train_dataset.map(lambda r: preprocess_example(r, processor, IMAGE_CACHE_DIR / "train"),
+                                  remove_columns=train_dataset.column_names, desc="Preprocessing train")
 ```
 
-Apply the preprocessing function to both splits (the full script also sets separate train and validation cache directories):
+<h3>4.3 Model and adapters</h3>
 
 ```python
-train_dataset = train_dataset.map(
-    lambda row: preprocess_example(row, processor, IMAGE_CACHE_DIR / "train"),
-    remove_columns=train_dataset.column_names,
-    desc="Preprocessing train",
-)
-val_dataset = val_dataset.map(
-    lambda row: preprocess_example(row, processor, IMAGE_CACHE_DIR / "validation"),
-    remove_columns=val_dataset.column_names,
-    desc="Preprocessing validation",
-)
-```
-
-#### 4. Load the model and attach LoRA adapters
-
-The actual script also checks/fixes EOS and padding token metadata before trainer setup. This excerpt focuses on model loading and adapter configuration.
-
-```python
-model, processor = FastVisionModel.from_pretrained(
-    model_name=str(MODEL_DIR),
-    load_in_4bit=LOAD_IN_4BIT,
-)
+model, processor = FastVisionModel.from_pretrained(model_name=str(MODEL_DIR), load_in_4bit=LOAD_IN_4BIT)
 
 model = FastVisionModel.get_peft_model(
     model,
-    finetune_vision_layers=True,
+    finetune_vision_layers=True,      # the vision side has never seen floor plans
     finetune_language_layers=True,
     finetune_attention_modules=True,
     finetune_mlp_modules=True,
-    r=16,
-    lora_alpha=32,
-    lora_dropout=0.05,
-    bias="none",
+    r=16, lora_alpha=32, lora_dropout=0.05, bias="none",
     target_modules="all-linear",
 )
-
 FastVisionModel.for_training(model)
-model.config.use_cache = False
+model.config.use_cache = False        # the KV cache is for generation, not for training
 ```
 
-#### 5. Collate multimodal batches and mask non-target tokens
-
-The project collator opens each cached image, calls the processor for the text/image batch, then masks padding and image placeholder tokens from the language-model loss.
+<h3>4.4 Collator: what the loss is computed on</h3>
+<p>The language-model loss must only count the tokens the model is supposed to produce. Padding tokens and the image placeholder tokens are set to
+<code>-100</code> so that they are ignored; otherwise the model would spend its capacity learning to predict padding and image markers.</p>
 
 ```python
-def build_collate_fn(processor, max_seq_length: int):
+def build_collate_fn(processor, max_seq_length):
     pad_token_id = processor.tokenizer.pad_token_id
-    image_token_ids = []
-    for name in ("boi_token", "image_token"):
-        token = processor.tokenizer.special_tokens_map.get(name)
-        if token is not None:
-            image_token_ids.append(processor.tokenizer.convert_tokens_to_ids(token))
+    image_token_ids = [processor.tokenizer.convert_tokens_to_ids(t)
+                       for t in (processor.tokenizer.special_tokens_map.get(n) for n in ("boi_token", "image_token")) if t]
 
     def collate_fn(examples):
-        texts = [example["text"] for example in examples]
-        images = [
-            [Image.open(path).convert("RGB") for path in example["image_paths"]]
-            for example in examples
-        ]
-        batch = processor(
-            text=texts,
-            images=images,
-            padding=True,
-            truncation=True,
-            max_length=max_seq_length,
-            return_tensors="pt",
-        )
+        texts = [e["text"] for e in examples]
+        images = [[Image.open(p).convert("RGB") for p in e["image_paths"]] for e in examples]
+        batch = processor(text=texts, images=images, padding=True, truncation=True,
+                          max_length=max_seq_length, return_tensors="pt")
         labels = batch["input_ids"].clone()
         labels[labels == pad_token_id] = -100
         for token_id in image_token_ids:
             labels[labels == token_id] = -100
         batch["labels"] = labels
         return batch
-
     return collate_fn
-
-
-collate_fn = build_collate_fn(processor, max_seq_length=MAX_SEQ_LENGTH)
 ```
 
-#### 6. Configure supervised fine-tuning
+<h3>4.5 Trainer, early stopping, launch</h3>
 
 ```python
 training_args = SFTConfig(
@@ -471,152 +296,101 @@ training_args = SFTConfig(
     per_device_train_batch_size=PER_DEVICE_TRAIN_BATCH_SIZE,
     per_device_eval_batch_size=PER_DEVICE_EVAL_BATCH_SIZE,
     gradient_accumulation_steps=GRADIENT_ACCUMULATION_STEPS,
-    learning_rate=LEARNING_RATE,
-    lr_scheduler_type="cosine",
-    warmup_steps=100,
-    gradient_checkpointing=True,
-    gradient_checkpointing_kwargs={"use_reentrant": False},
-    save_strategy="steps",
-    save_steps=1000,
-    eval_strategy="steps",
-    eval_steps=1000,
-    logging_steps=10,
-    bf16=torch.cuda.is_available() and torch.cuda.is_bf16_supported(),
-    fp16=torch.cuda.is_available() and not torch.cuda.is_bf16_supported(),
-    remove_unused_columns=False,
-    dataset_kwargs={"skip_prepare_dataset": True},
-    report_to="tensorboard",
-    save_total_limit=2,
-    load_best_model_at_end=True,
-    metric_for_best_model="eval_loss",
-    greater_is_better=False,
+    learning_rate=LEARNING_RATE, lr_scheduler_type="cosine", warmup_steps=100,
+    gradient_checkpointing=True, gradient_checkpointing_kwargs={"use_reentrant": False},
+    save_strategy="steps", save_steps=1000, eval_strategy="steps", eval_steps=1000, logging_steps=10,
+    bf16=torch.cuda.is_bf16_supported(), fp16=not torch.cuda.is_bf16_supported(),
+    remove_unused_columns=False, dataset_kwargs={"skip_prepare_dataset": True},
+    report_to="tensorboard", save_total_limit=2,
+    load_best_model_at_end=True, metric_for_best_model="eval_loss", greater_is_better=False,
     ddp_find_unused_parameters=False,
-    dataloader_num_workers=8,
-    dataloader_pin_memory=True,
-    dataloader_persistent_workers=True,
-    eos_token=processor.eos_token,
-    pad_token=processor.tokenizer.pad_token,
+    dataloader_num_workers=8, dataloader_pin_memory=True, dataloader_persistent_workers=True,
 )
-```
 
-#### 7. Train, evaluate, and resume
-
-```python
 trainer = SFTTrainer(
-    model=model,
-    args=training_args,
-    train_dataset=train_dataset,
-    eval_dataset=val_dataset,
-    data_collator=collate_fn,
-    processing_class=processor,
-    callbacks=[
-        EarlyStoppingCallback(
-            early_stopping_patience=15,
-            early_stopping_threshold=1e-4,
-        ),
-        SaveAliasCallback(),  # project callback updates best/latest aliases
-    ],
+    model=model, args=training_args,
+    train_dataset=train_dataset, eval_dataset=val_dataset,
+    data_collator=build_collate_fn(processor, MAX_SEQ_LENGTH), processing_class=processor,
+    callbacks=[EarlyStoppingCallback(early_stopping_patience=15, early_stopping_threshold=1e-4),
+               SaveAliasCallback()],              # keeps best-checkpoint/ and latest/ aliases up to date
 )
-
-# Fresh run:
-trainer.train()
-
-# To resume instead, point this at an existing checkpoint:
-# trainer.train(resume_from_checkpoint="outputs/qwen35-floorplan-lora/checkpoint-3000")
+trainer.train()                                    # or trainer.train(resume_from_checkpoint="outputs/.../checkpoint-3000")
 ```
-
-The full script automatically starts `accelerate` across the GPU IDs in `GPU_IDS` when it is run directly. To launch explicitly, use a command such as:
 
 ```bash
 CUDA_VISIBLE_DEVICES=0,1,2 accelerate launch --multi_gpu --num_processes 3 train_qwen35_vlm_unsloth.py
+tensorboard --logdir outputs/tensorboard/qwen35-floorplan-lora
 ```
 
-#### 8. Save the best adapter and merge it into the base model
-
-After training, the main process selects the best adapter checkpoint, loads the base model, applies the adapter, and merges the weights for simpler inference deployment.
+<h3>4.6 Merge the best adapter</h3>
+<p>An adapter on its own needs the base model, PEFT and the right loading code at inference time. Merging the LoRA matrices into the base weights
+gives one ordinary Transformers model that <code>AutoModelForImageTextToText.from_pretrained</code> can load anywhere.</p>
 
 ```python
-best_checkpoint = OUTPUT_DIR / "best-checkpoint"
-merged_dir = OUTPUT_DIR / "merged-best"
-
-base_model = AutoModelForImageTextToText.from_pretrained(
-    MODEL_DIR,
-    torch_dtype=(
-        torch.bfloat16
-        if torch.cuda.is_available() and torch.cuda.is_bf16_supported()
-        else torch.float16
-    ),
-)
-if torch.cuda.is_available():
-    base_model = base_model.to("cuda")
-
-adapted_model = PeftModel.from_pretrained(base_model, best_checkpoint)
-merged_model = adapted_model.merge_and_unload()
-merged_model.save_pretrained(merged_dir)
-processor.save_pretrained(merged_dir)
+base = AutoModelForImageTextToText.from_pretrained(MODEL_DIR, torch_dtype=torch.bfloat16).to("cuda")
+merged = PeftModel.from_pretrained(base, OUTPUT_DIR / "best-checkpoint").merge_and_unload()
+merged.save_pretrained(OUTPUT_DIR / "merged-best")
+processor.save_pretrained(OUTPUT_DIR / "merged-best")
 ```
 
-The complete script includes distributed-process handling, log mirroring, special-token checks, checkpoint alias management, and a `run_summary.json` writer. Refer to `train_qwen35_vlm_unsloth.py` for those production details.
+<hr />
+<div class="part-divider"><span>Results</span></div>
 
-#### 9. Run and monitor training
-
-```bash
-python train_qwen35_vlm_unsloth.py
-tensorboard --logdir outputs/tensorboard/qwen35-floorplan-lora
-```
-
-The short excerpts above explain all main stages, but are not a standalone replacement for the repository script: some names, callbacks, and runtime safeguards are defined there.
-
-## 8. Training log
-
+## 5. Training results
+<p>The run went to global step 18,000, 0.62 of the first epoch, before early stopping ended it: the validation loss reached its minimum at step 3,000
+and then rose for fifteen evaluations in a row while the training loss kept falling. That is the classic shape of a model that has learned the task and
+is starting to memorise the training questions, and it is exactly what the patience rule is there to catch.</p>
+<figure class="figure-small">
+<img src="images/train_eval_loss.png" alt="Training loss falling from about 2 to 0.19 over 18,000 steps, with the validation loss reaching a minimum of 0.4158 at step 3,000 and then rising to 0.8158">
+<figcaption>Training loss (every 10 steps) and validation loss (every 1,000 steps). The best checkpoint is the validation minimum at step 3,000; the run was stopped at 18,000 by early stopping.</figcaption>
+</figure>
+<div class="figure-row figure-row-small figure-row-equal">
+<figure>
+<img src="images/eval_token_accuracy.png" alt="Validation mean token accuracy rising quickly to about 0.8 by step 3,000 and flattening at 0.8437 by step 18,000">
+<figcaption>Validation mean token accuracy: most of the gain comes before the best checkpoint; afterwards it flattens while the loss rises.</figcaption>
+</figure>
+<figure>
+<img src="images/lr_schedule.png" alt="The learning-rate schedule: a short warm-up to 1e-4 then a cosine decay over the ten planned epochs, with the first 18,000 steps shaded as the part that actually ran">
+<figcaption>The planned schedule against the steps actually run: early stopping ended training while the rate was still near its peak.</figcaption>
+</figure>
+</div>
+<table>
+<thead>
+<tr><th>Recorded in <code>run_summary.json</code> / <code>training.log</code></th><th>Value</th></tr>
+</thead>
+<tbody>
+<tr><td>Global steps run</td><td>18,000 (epoch 0.6247 of 10)</td></tr>
+<tr><td>Training loss at the end</td><td>0.1924</td></tr>
+<tr><td>Best validation loss</td><td>0.4158 at <code>checkpoint-3000</code></td></tr>
+<tr><td>Validation loss at the end</td><td>0.8158</td></tr>
+<tr><td>Validation mean token accuracy at the end</td><td>0.8437</td></tr>
+<tr><td>Selected adapter</td><td><code>best-checkpoint</code> → <code>checkpoint-3000</code></td></tr>
+<tr><td>Merged model</td><td><code>outputs/qwen35-floorplan-lora/merged-best</code></td></tr>
+</tbody>
+</table>
 <div class="callout callout-result">
-<h4>Recorded run summary</h4>
+<h4>What the curves say</h4>
 <ul>
-<li>Global step 18,000; training loss 0.1924.</li>
-<li>Best validation loss 0.4158 at checkpoint 3000, selected by early stopping.</li>
-<li>Final log evaluation: eval loss 0.8158, mean token accuracy 0.8437 at epoch 0.62 (a different evaluation point from the best checkpoint).</li>
-<li>Merged model written to <code>outputs/qwen35-floorplan-lora/merged-best</code>.</li>
+<li>Three thousand steps, about 108,000 records, were enough to teach the output format and the domain; the rest of the run only fitted the training set better.</li>
+<li>Token accuracy keeps creeping up after the loss minimum because the model becomes more confident on the tokens it already gets right; the loss rises because it also becomes more confident on the ones it gets wrong.</li>
+<li>Loss and token accuracy are training diagnostics. Whether counts, junctions and polygons are right is checked on held-out plans with <code>inference.py</code>, record by record.</li>
 </ul>
 </div>
 
+<hr />
+<div class="part-divider"><span>Inference</span></div>
 
-The main script writes `outputs/qwen35-floorplan-lora/training.log` and TensorBoard events to `outputs/tensorboard/qwen35-floorplan-lora/`. It periodically evaluates and saves checkpoints, uses early stopping, and selects the best checkpoint by validation loss.
-
-The checked-in `run_summary.json` records:
-
-- Global step: 18,000
-- Training loss: 0.1924
-- Best validation loss: 0.4157557
-- Best checkpoint: `outputs/qwen35-floorplan-lora/checkpoint-3000`
-- Merged model: `outputs/qwen35-floorplan-lora/merged-best`
-
-The final evaluation shown in the log reports `eval_loss = 0.8158` and `eval_mean_token_accuracy = 0.8437` at epoch 0.6247. The summary's best validation loss (0.4157557) is from checkpoint 3000, so these are different evaluation points. Loss and token accuracy are training diagnostics; include held-out examples to show counting, detection, polygon, and generalization quality.
-
-View TensorBoard with:
-
-```bash
-tensorboard --logdir outputs/tensorboard/qwen35-floorplan-lora
-```
-
-## 9. Output and inference
-
-<div class="callout callout-problem">
-<h4>Problems this section addresses</h4>
-<ul>
-<li>Adapters alone are inconvenient to serve; inference needs one merged model with its processor.</li>
-<li>Loss and token accuracy are training diagnostics, so quality has to be shown on held-out floor plans with sample predictions.</li>
-</ul>
-</div>
-
-
-Artifacts are under `outputs/qwen35-floorplan-lora/`:
-
-- `checkpoint-*/` — intermediate adapter checkpoints and trainer state.
-- `best-checkpoint/` — stable alias for the selected adapter.
-- `merged-best/` — merged base model and adapter for inference.
-- `training.log`, `run_summary.json` — recorded run details.
-
-A minimal loading outline for the merged model:
+## 6. Inference and output
+<p>Artifacts live under <code>outputs/qwen35-floorplan-lora/</code>: the intermediate <code>checkpoint-*/</code> adapters with trainer state, the
+<code>best-checkpoint/</code> alias, the <code>merged-best/</code> model with its processor, and <code>training.log</code> and <code>run_summary.json</code>.
+<code>inference.py</code> takes an image path and a question, formats them with the same chat template as training, generates the answer, and when the
+answer contains polygons draws them over the plan and saves the overlay.</p>
+<pre class="mermaid">flowchart LR
+    I[Floor-plan image<br/>+ question]:::input --> P[Processor<br/>chat template]:::process
+    P --> M[merged-best<br/>Qwen3.5-9B + LoRA]:::agent
+    M --> J[JSON answer<br/>counts · classes · polygons]:::output
+    J --> O[Overlay image<br/>polygons on the plan]:::output
+</pre>
 
 ```python
 from transformers import AutoModelForImageTextToText, AutoProcessor
@@ -624,32 +398,38 @@ from transformers import AutoModelForImageTextToText, AutoProcessor
 model_path = "outputs/qwen35-floorplan-lora/merged-best"
 processor = AutoProcessor.from_pretrained(model_path)
 model = AutoModelForImageTextToText.from_pretrained(model_path, device_map="auto")
-# Build a user message with image and question using the model chat template,
-# process it with processor, then call model.generate(...).
+
+messages = [{"role": "user", "content": [{"type": "image", "image": image_path},
+                                         {"type": "text", "text": "List the bedrooms as class and polygon."}]}]
+prompt = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+inputs = processor(text=[prompt], images=[[Image.open(image_path).convert("RGB")]], return_tensors="pt").to(model.device)
+output = model.generate(**inputs, max_new_tokens=512, do_sample=False)      # greedy: JSON must be exact
+answer = processor.batch_decode(output[:, inputs["input_ids"].shape[1]:], skip_special_tokens=True)[0]
+draw_polygons(image_path, json.loads(answer)["annotations"], out_path)       # the overlay saved next to the answer
 ```
 
-Use the project's inference script/notebook for the full image and chat-template flow. Evaluate on held-out floor plans and show sample predictions alongside aggregate measures.
+<figure class="figure-small">
+<img src="images/floorplan_sample.png" alt="The floor-plan image used in the examples on this page, a unit plan with three bedrooms, a living room, kitchen, two bathrooms and balconies">
+<figcaption>The plan used in the examples on this page, as the model receives it: a unit plan with three bedrooms, a living room, a kitchen and two bathrooms.</figcaption>
+</figure>
 
-## 10. Gallery
+---
 
-<div class="figure-row">
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>Dataset example: a floor-plan image with its question and expected JSON answer.</figcaption>
-</figure>
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>Training and validation curves from TensorBoard.</figcaption>
-</figure>
-</div>
-
-<div class="figure-row">
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>Input and prediction: a held-out floor plan, the question asked, and the model's answer.</figcaption>
-</figure>
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>Annotated output: predicted polygons drawn over the plan.</figcaption>
-</figure>
-</div>
+## 7. Repository
+<p>The training script, data generator and inference script are public: <a href="https://github.com/Laudarisd/finetune-llm-vllm">github.com/Laudarisd/finetune-llm-vllm</a>.
+The base weights and the JSONL data are not redistributed; the weights come from the model's own Hugging Face repository under its access terms.</p>
+<table>
+<thead>
+<tr><th>Path</th><th>Purpose</th></tr>
+</thead>
+<tbody>
+<tr><td><code>train.py</code>, <code>train_qwen35_vlm_unsloth.py</code></td><td>Unsloth / TRL supervised fine-tuning pipeline</td></tr>
+<tr><td><code>generate_data.py</code></td><td>LabelMe JSON → question-answer JSONL records</td></tr>
+<tr><td><code>inference.py</code></td><td>Image + question → JSON answer and polygon overlay</td></tr>
+<tr><td><code>config.yaml</code>, <code>finetune_run.sh</code>, <code>tensorboard.sh</code></td><td>Run configuration, launcher, metrics viewer</td></tr>
+<tr><td><code>train_data/</code></td><td><code>vlm_train.jsonl</code>, <code>vlm_val.jsonl</code>, <code>image_cache/</code></td></tr>
+<tr><td><code>raw_data/images/</code>, <code>raw_data/json/</code></td><td>Floor-plan images and their LabelMe annotations</td></tr>
+<tr><td><code>models/Qwen3.5-9B/</code></td><td>Local base model and processor files</td></tr>
+<tr><td><code>outputs/qwen35-floorplan-lora/</code></td><td>Checkpoints, best adapter, merged model, logs</td></tr>
+</tbody>
+</table>

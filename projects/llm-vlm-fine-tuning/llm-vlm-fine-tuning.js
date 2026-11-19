@@ -5,8 +5,8 @@ Portfolio.project("llm-vlm-fine-tuning", {
   en: {
     "title": "LLM/VLM Fine-Tuning",
     "description": "QLoRA fine-tuning of a 9B vision-language model to answer questions about floor-plan images in structured JSON.",
-    "image": "thumbnail.svg",
-    "image_alt": "LLM and VLM fine-tuning",
+    "image": "thumbnail.jpg",
+    "image_alt": "A floor plan with polygon annotations drawn over its rooms",
     "image_class": "",
     "url": "https://github.com/Laudarisd/finetune-llm-vllm",
     "subtitle": "Fine-tuning Qwen3.5-9B with QLoRA (Unsloth, TRL, PEFT) so it can read an architectural floor-plan image and answer questions about rooms, counts, junctions, and polygon annotations as structured JSON.",
@@ -26,14 +26,16 @@ Portfolio.project("llm-vlm-fine-tuning", {
       "TRL",
       "PEFT",
       "PyTorch",
+      "Accelerate",
+      "TensorBoard",
       "Floor-plan understanding"
     ]
   },
   kr: {
     "title": "LLM/VLM Fine-Tuning",
     "description": "9B Vision-Language 모델을 QLoRA로 Fine-Tuning 해 평면도 이미지 질문에 구조화된 JSON으로 답하게 해요.",
-    "image": "thumbnail.svg",
-    "image_alt": "LLM과 VLM Fine-Tuning",
+    "image": "thumbnail.jpg",
+    "image_alt": "방마다 폴리곤 주석이 그려진 평면도",
     "image_class": "",
     "url": "https://github.com/Laudarisd/finetune-llm-vllm",
     "subtitle": "Qwen3.5-9B를 QLoRA(Unsloth, TRL, PEFT)로 Fine-Tuning 해서 건축 평면도 이미지를 읽고 방, 개수, 교차점, 폴리곤 주석에 대한 질문에 구조화된 JSON으로 답하게 하는 프로젝트예요.",
@@ -53,6 +55,8 @@ Portfolio.project("llm-vlm-fine-tuning", {
       "TRL",
       "PEFT",
       "PyTorch",
+      "Accelerate",
+      "TensorBoard",
       "Floor-plan understanding"
     ]
   }
