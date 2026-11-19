@@ -110,7 +110,82 @@
           <div class="detail-grid">
           <article class="panel detail-panel detail-panel-wide" id="panel-article">
             <h2 data-ui="project_page.article"></h2>
-            <div class="panel-body"></div>
+            <div class="panel-body">
+<!-- article:start -->
+<div class="project-article" data-lang="en" hidden>
+<nav class="article-toc-wrap"><h4>Contents</h4><ol class="article-toc"><li><a href="#1-introduction">1. Introduction</a></li><li><a href="#2-goal">2. Goal</a></li><li><a href="#3-code-and-details-on-github">3. Code and details on GitHub</a></li></ol></nav>
+<h1>PDF-to-CAD Text Processing - Carrying Drawing Text into Editable CAD</h1>
+<p>Extracting the text from PDF drawings, dimensions, labels, room names and notes, and processing it so that it lands in the right place, at the right size and angle, as editable text in the CAD drawing produced by PDF-to-CAD conversion.</p>
+<p><strong>Keywords</strong></p>
+<div class="fact-grid">
+<div class="fact"><span class="fact-label">Domain</span><span class="fact-value">CAD conversion</span></div>
+<div class="fact"><span class="fact-label">Input</span><span class="fact-value">PDF drawings, vector and scanned</span></div>
+<div class="fact"><span class="fact-label">Output</span><span class="fact-value">Editable CAD text, placed and sized</span></div>
+<div class="fact"><span class="fact-label">Period</span><span class="fact-value">Dec 2025 · Jul 2026</span></div>
+</div>
+<figure class="figure-small">
+<img src="images/drawing_sample.png" loading="lazy" alt="A unit floor plan with dimension strings, room names and notes, the kind of drawing text the conversion has to carry over">
+<figcaption>A floor plan as it arrives in a PDF: every dimension, room name and note on it has to become editable CAD text.</figcaption>
+</figure>
+
+<hr />
+<h2 id="1-introduction">1. Introduction</h2>
+<p>When a PDF drawing is converted to CAD, the lines come across but the text is the hard part. In a vector PDF the characters are there but scattered, rotated and split into fragments; in a scanned PDF they are only pixels. This project reads the text either way, joins fragments back into whole strings, works out each string's position, height and rotation, and writes it into the CAD drawing as real text entities on the right layers, so the result can be edited rather than redrawn.</p>
+
+<hr />
+<h2 id="2-goal">2. Goal</h2>
+<div class="callout callout-goal">
+<h4>Goal</h4>
+<ul>
+<li>Extract text from both vector and scanned PDF drawings, with position, height and rotation.</li>
+<li>Rebuild split and rotated fragments into whole dimension strings, labels and notes.</li>
+<li>Write the text into the converted CAD drawing as editable entities on sensible layers.</li>
+</ul>
+</div>
+
+<hr />
+<h2 id="3-code-and-details-on-github">3. Code and details on GitHub</h2>
+<p>The main project and its technical details are uploaded to GitHub, so please refer to the repository to understand the work in detail.</p>
+<p><a href="https://github.com/Laudarisd" target="_blank" rel="noopener noreferrer">GitHub: https://github.com/Laudarisd</a></p>
+</div>
+<div class="project-article" data-lang="kr" hidden>
+<nav class="article-toc-wrap"><h4>목차</h4><ol class="article-toc"><li><a href="#1-소개">1. 소개</a></li><li><a href="#2-목표">2. 목표</a></li><li><a href="#3-코드와-자세한-내용은-github에">3. 코드와 자세한 내용은 GitHub에</a></li></ol></nav>
+<h1>PDF-to-CAD Text Processing - 도면 글자를 편집 가능한 CAD로</h1>
+<p>PDF 도면의 글자, 치수, 라벨, 방 이름, 주석을 추출하고 처리해서, PDF-to-CAD 변환으로 만든 CAD 도면 안에 편집 가능한 글자로, 맞는 위치와 크기와 각도로 들어가게 해요.</p>
+<p><strong>키워드</strong></p>
+<div class="fact-grid">
+<div class="fact"><span class="fact-label">분야</span><span class="fact-value">CAD 변환</span></div>
+<div class="fact"><span class="fact-label">입력</span><span class="fact-value">PDF 도면, 벡터와 스캔</span></div>
+<div class="fact"><span class="fact-label">출력</span><span class="fact-value">위치와 크기가 맞는 편집 가능한 CAD 글자</span></div>
+<div class="fact"><span class="fact-label">기간</span><span class="fact-value">2025년 12월 · 2026년 7월</span></div>
+</div>
+<figure class="figure-small">
+<img src="images/drawing_sample.png" loading="lazy" alt="치수, 방 이름, 주석이 있는 세대 평면도. 변환이 옮겨야 하는 종류의 도면 글자">
+<figcaption>PDF로 들어온 평면도예요. 그 위의 모든 치수, 방 이름, 주석이 편집 가능한 CAD 글자가 돼야 해요.</figcaption>
+</figure>
+
+<hr />
+<h2 id="1-소개">1. 소개</h2>
+<p>PDF 도면을 CAD로 변환하면 선은 넘어오지만 글자가 어려운 부분이에요. 벡터 PDF에는 글자가 있지만 흩어져 있고, 기울어 있고, 조각으로 쪼개져 있어요. 스캔 PDF에는 픽셀뿐이에요. 이 프로젝트는 어느 쪽이든 글자를 읽고, 조각을 다시 온전한 문자열로 잇고, 문자열마다 위치와 높이와 회전을 알아내고, CAD 도면에 맞는 Layer의 진짜 글자 개체로 써요. 그래서 결과를 다시 그리는 게 아니라 편집할 수 있어요.</p>
+
+<hr />
+<h2 id="2-목표">2. 목표</h2>
+<div class="callout callout-goal">
+<h4>목표</h4>
+<ul>
+<li>벡터와 스캔 PDF 도면 둘 다에서 글자를 위치, 높이, 회전과 함께 추출해요.</li>
+<li>쪼개지고 기울어진 조각을 온전한 치수 문자열, 라벨, 주석으로 다시 만들어요.</li>
+<li>변환된 CAD 도면에 글자를 알맞은 Layer의 편집 가능한 개체로 써요.</li>
+</ul>
+</div>
+
+<hr />
+<h2 id="3-코드와-자세한-내용은-github에">3. 코드와 자세한 내용은 GitHub에</h2>
+<p>메인 프로젝트와 기술적인 세부 내용은 GitHub에 올려 두었어요. 작업을 자세히 이해하시려면 저장소를 참고해 주세요.</p>
+<p><a href="https://github.com/Laudarisd" target="_blank" rel="noopener noreferrer">GitHub: https://github.com/Laudarisd</a></p>
+</div>
+<!-- article:end -->
+            </div>
           </article>
           <article class="panel detail-panel detail-panel-wide" id="panel-overview">
             <h2 data-ui="project_page.overview"></h2>

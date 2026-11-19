@@ -5,12 +5,12 @@ Portfolio.project("research", {
   en: {
     "title": "Research",
     "description": "Centrality-aware pruning, augmentation methods, and reproducible experiments.",
-    "image": "thumbnail.svg",
+    "image": "thumbnail.jpg",
     "image_alt": "Scientific machine learning research",
     "image_class": "",
     "url": "https://github.com/Laudarisd/research",
-    "overview": "Centrality-aware pruning, augmentation methods, graph analysis, and reproducible experiments for efficient learning systems.",
     "subtitle": "Centrality-aware pruning, augmentation methods, and reproducible experiments.",
+    "tags": ["Network Pruning", "Graph Centrality", "Data Augmentation", "Reproducible Experiments", "NetworkX", "PyTorch"],
     "links": [
       {
         "label": "GitHub",
@@ -21,12 +21,12 @@ Portfolio.project("research", {
   kr: {
     "title": "Research",
     "description": "Centrality 기반 Pruning, Augmentation 기법, 재현 가능한 실험이에요.",
-    "image": "thumbnail.svg",
+    "image": "thumbnail.jpg",
     "image_alt": "Scientific Machine Learning 연구",
     "image_class": "",
     "url": "https://github.com/Laudarisd/research",
-    "overview": "Centrality 기반 Pruning, Augmentation 기법, Graph 분석, 효율적인 학습 시스템을 위한 재현 가능한 실험들이에요.",
     "subtitle": "Centrality 기반 Pruning, Augmentation 기법, 재현 가능한 실험이에요.",
+    "tags": ["Network Pruning", "Graph Centrality", "Data Augmentation", "Reproducible Experiments", "NetworkX", "PyTorch"],
     "links": [
       {
         "label": "GitHub",

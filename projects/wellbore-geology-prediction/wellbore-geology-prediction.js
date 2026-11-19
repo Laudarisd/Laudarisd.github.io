@@ -5,7 +5,7 @@ Portfolio.project("wellbore-geology-prediction", {
   en: {
     "title": "Wellbore Geology Prediction",
     "description": "Automated geosteering: predicting where a horizontal well sits inside the rock from gamma-ray logs, with a particle-filter, beam-search and spatial-geology ensemble.",
-    "image": "thumbnail.svg",
+    "image": "thumbnail.jpg",
     "image_alt": "Wellbore geology prediction",
     "image_class": "",
     "url": "https://www.kaggle.com/laudari",
@@ -21,7 +21,7 @@ Portfolio.project("wellbore-geology-prediction", {
   kr: {
     "title": "시추공 지질 예측",
     "description": "자동 지오스티어링이에요. 감마선 로그로 수평정이 암층 어디에 있는지 예측해요. 파티클 필터, 빔 서치, 공간 지질 추정을 앙상블했어요.",
-    "image": "thumbnail.svg",
+    "image": "thumbnail.jpg",
     "image_alt": "시추공 지질 예측",
     "image_class": "",
     "url": "https://www.kaggle.com/laudari",

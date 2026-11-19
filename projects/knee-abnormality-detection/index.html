@@ -113,224 +113,80 @@
             <div class="panel-body">
 <!-- article:start -->
 <div class="project-article" data-lang="en" hidden>
-<nav class="article-toc-wrap"><h4>Contents</h4><ol class="article-toc"><li><a href="#1-overview">1. Overview</a></li><li><a href="#2-data">2. Data</a></li><li><a href="#3-evaluation-and-submission">3. Evaluation and submission</a></li><li><a href="#4-approach">4. Approach</a></li><li><a href="#5-results">5. Results</a></li><li><a href="#6-links">6. Links</a></li></ol></nav>
-<h1>RSNA Knee Abnormality Detection</h1>
-<blockquote>
-<p>Multimodal detection of twelve clinically important abnormalities on knee MRI examinations, developed for the RSNA Knee Abnormality Detection code competition on Kaggle (Radiological Society of North America, 2026).</p>
-</blockquote>
+<nav class="article-toc-wrap"><h4>Contents</h4><ol class="article-toc"><li><a href="#1-introduction">1. Introduction</a></li><li><a href="#2-goal">2. Goal</a></li><li><a href="#3-code-and-details-on-github">3. Code and details on GitHub</a></li></ol></nav>
+<h1>Knee Abnormality Detection - Twelve MRI Findings with One CoAtNet Model</h1>
+<p>A solution for the RSNA Knee Abnormality Detection competition on Kaggle: one CoAtNet model reads a knee MRI study, DICOM series in three planes, and scores twelve clinically important findings at once. 0.924 macro-averaged ROC AUC on the public leaderboard, single model, no ensembling or test-time augmentation.</p>
+<p><strong>Keywords</strong></p>
 <div class="fact-grid">
-<div class="fact"><span class="fact-label">Host</span><span class="fact-value">RSNA · Kaggle research code competition</span></div>
-<div class="fact"><span class="fact-label">Task</span><span class="fact-value">12 per-study probabilities per knee MRI</span></div>
-<div class="fact"><span class="fact-label">Data</span><span class="fact-value">DICOM series + radiology reports, 570 GB</span></div>
-<div class="fact"><span class="fact-label">Metric</span><span class="fact-value">Macro-averaged ROC AUC over 12 labels</span></div>
-<div class="fact"><span class="fact-label">Constraints</span><span class="fact-value">Notebook only · no internet · ≤ 9 h GPU</span></div>
-<div class="fact"><span class="fact-label">Timeline</span><span class="fact-value">Jul 30 – Oct 22, 2026</span></div>
+<div class="fact"><span class="fact-label">Host</span><span class="fact-value">RSNA · Kaggle code competition</span></div>
+<div class="fact"><span class="fact-label">Task</span><span class="fact-value">12 findings per knee MRI study</span></div>
+<div class="fact"><span class="fact-label">Data</span><span class="fact-value">DICOM series + reports, 570 GB</span></div>
+<div class="fact"><span class="fact-label">Model</span><span class="fact-value">CoAtNet, per-finding attention</span></div>
+<div class="fact"><span class="fact-label">Result</span><span class="fact-value">0.924 public macro-AUC, single model</span></div>
+<div class="fact"><span class="fact-label">Limits</span><span class="fact-value">Notebook only · no internet · ≤ 9 h GPU</span></div>
 </div>
-
-<figure class="figure-placeholder">
-<div class="placeholder-box"><span>Image</span></div>
-<figcaption>Sagittal, coronal, and axial knee MRI slices from one study, with the twelve target findings listed beside them.</figcaption>
+<figure class="figure-small">
+<img src="images/photo.jpg" loading="lazy" alt="A sagittal knee MRI slice: the femur above, the tibia below, the patella at the front and the ligaments and cartilage between them">
+<figcaption>A sagittal knee MRI slice. The model reads slices like this from three planes and scores twelve findings on the whole study. Photo: Ptrump16, CC BY-SA 4.0, via Wikimedia Commons.</figcaption>
 </figure>
 
-<h2 id="1-overview">1. Overview</h2>
-<div class="callout callout-problem">
-<h4>Problems this competition addresses</h4>
+<hr />
+<h2 id="1-introduction">1. Introduction</h2>
+<p>The knee is the most imaged joint, and one MRI study can hold a dozen different problems: ligament tears, meniscal damage, cartilage loss, fractures, effusion. Radiologists are scarce and do not always agree, so the competition asks for a model that scores every finding at once. My entry reads each study's DICOM series in three planes, fixes them into a five-slot slice stack so every study has the same shape, and passes the stack through one CoAtNet backbone with a separate attention head per finding. It had to run inside a Kaggle notebook with no internet and under nine GPU hours.</p>
+
+<hr />
+<h2 id="2-goal">2. Goal</h2>
+<div class="callout callout-goal">
+<h4>Goal</h4>
 <ul>
-<li>The knee is the most commonly injured and imaged joint; osteoarthritis alone affects an estimated 654 million people, and acute knee injuries account for 15 to 40 percent of sports-related trauma.</li>
-<li>ACL and MCL tears, meniscal damage, cartilage loss, fractures, and other findings can be subtle on MRI, and radiologists do not always interpret them the same way.</li>
-<li>Musculoskeletal radiologists are scarce outside major medical centres, so diagnoses are delayed or inconsistent.</li>
-<li>A single scan can hold a dozen different problems, so a model must score every finding at once rather than answer one question.</li>
+<li>Score all twelve findings from one model and one forward pass per study.</li>
+<li>Handle the real data as it comes: mixed DICOM transfer syntaxes, varying slice counts and resolutions, several scanner sites.</li>
+<li>Stay inside the competition limits of a single notebook, no internet and nine GPU hours, with no ensembling.</li>
 </ul>
 </div>
 
-<p>The competition asks for machine learning models that detect a defined set of clinically important abnormalities on knee MRI examinations. It is the first RSNA AI Challenge dataset that pairs every imaging study with its original radiology report, so models can learn from both the scans and the written diagnostic text. High-performing models are intended as decision-support tools that bring expert-level knee MRI interpretation to clinics without specialist access.</p>
-<h2 id="2-data">2. Data</h2>
-<div class="callout callout-problem">
-<h4>Problems in the data</h4>
+<hr />
+<h2 id="3-code-and-details-on-github">3. Code and details on GitHub</h2>
+<p>The main project and its technical details are uploaded to GitHub, so please refer to the repository to understand the work in detail.</p>
+<p><a href="https://www.kaggle.com/code/laudari/notebook247d4dbb42" target="_blank" rel="noopener noreferrer">Kaggle notebook: https://www.kaggle.com/code/laudari/notebook247d4dbb42</a></p>
+</div>
+<div class="project-article" data-lang="kr" hidden>
+<nav class="article-toc-wrap"><h4>목차</h4><ol class="article-toc"><li><a href="#1-소개">1. 소개</a></li><li><a href="#2-목표">2. 목표</a></li><li><a href="#3-코드와-자세한-내용은-github에">3. 코드와 자세한 내용은 GitHub에</a></li></ol></nav>
+<h1>무릎 이상 탐지 - CoAtNet 모델 하나로 MRI 소견 12가지</h1>
+<p>Kaggle의 RSNA 무릎 이상 탐지 대회 솔루션이에요. CoAtNet 모델 하나가 무릎 MRI 검사, 세 평면의 DICOM 시리즈를 읽고 임상적으로 중요한 소견 12가지를 한 번에 점수화해요. Public Leaderboard 매크로 ROC AUC 0.924, 단일 모델, 앙상블과 TTA 없이요.</p>
+<p><strong>키워드</strong></p>
+<div class="fact-grid">
+<div class="fact"><span class="fact-label">주최</span><span class="fact-value">RSNA · Kaggle 코드 대회</span></div>
+<div class="fact"><span class="fact-label">과제</span><span class="fact-value">무릎 MRI 검사당 소견 12가지</span></div>
+<div class="fact"><span class="fact-label">데이터</span><span class="fact-value">DICOM 시리즈 + 판독문, 570 GB</span></div>
+<div class="fact"><span class="fact-label">모델</span><span class="fact-value">CoAtNet, 소견별 Attention</span></div>
+<div class="fact"><span class="fact-label">결과</span><span class="fact-value">Public 매크로 AUC 0.924, 단일 모델</span></div>
+<div class="fact"><span class="fact-label">제한</span><span class="fact-value">노트북만 · 인터넷 없음 · GPU 9시간 이하</span></div>
+</div>
+<figure class="figure-small">
+<img src="images/photo.jpg" loading="lazy" alt="시상면 무릎 MRI 슬라이스. 위에 대퇴골, 아래에 경골, 앞에 슬개골, 그 사이에 인대와 연골">
+<figcaption>시상면 무릎 MRI 슬라이스예요. 모델은 이런 슬라이스를 세 평면에서 읽고 검사 전체에 대해 12가지 소견을 점수화해요. 사진: Ptrump16, CC BY-SA 4.0, Wikimedia Commons.</figcaption>
+</figure>
+
+<hr />
+<h2 id="1-소개">1. 소개</h2>
+<p>무릎은 가장 많이 촬영하는 관절이고, MRI 검사 하나에 다른 문제가 열두 가지씩 들어 있을 수 있어요. 인대 파열, 반월상연골 손상, 연골 소실, 골절, 삼출이요. 영상의학과 의사는 부족하고 판독이 늘 일치하지도 않아서, 대회는 모든 소견을 한 번에 점수화하는 모델을 요구해요. 제 출품작은 검사마다 세 평면의 DICOM 시리즈를 읽고, 모든 검사가 같은 모양이 되도록 5개 슬롯의 슬라이스 스택으로 고정한 뒤, 소견마다 Attention Head가 따로 있는 CoAtNet Backbone 하나에 넣어요. 인터넷 없이, GPU 9시간 안에, Kaggle 노트북 안에서 돌아가야 했어요.</p>
+
+<hr />
+<h2 id="2-목표">2. 목표</h2>
+<div class="callout callout-goal">
+<h4>목표</h4>
 <ul>
-<li>Only a small subset of training studies carry per-condition labels; for the rest, labels have to be derived from the free-text report, which may be in any of several languages.</li>
-<li>Studies come from a diverse international mix of imaging sites, scanners, protocols, and populations; intensities, orientations, and resolutions vary across series.</li>
-<li>Each study is a collection of MRI sequences (typically 20–45 slices per series, with a long tail to a few hundred), so a model has to aggregate many slices and several planes into one prediction per study.</li>
-<li>DICOMs arrive in a mix of transfer syntaxes (uncompressed Explicit VR Little Endian, JPEG Lossless, JPEG 2000, Implicit VR Little Endian), stripped to an allow-listed set of 86 metadata tags.</li>
-<li>The report is not provided at test time, so text can only help during training.</li>
+<li>검사마다 모델 하나, 순전파 한 번으로 소견 12가지를 모두 점수화해요.</li>
+<li>실제 데이터를 오는 그대로 다뤄요. 섞인 DICOM 전송 구문, 다른 슬라이스 수와 해상도, 여러 촬영 기관이요.</li>
+<li>노트북 하나, 인터넷 없음, GPU 9시간이라는 대회 제한 안에서, 앙상블 없이 해요.</li>
 </ul>
 </div>
 
-<p>Each study comprises the MRI sequences from a single scanning session, stored as DICOM series. The dataset holds about 820,000 files (570 GB). Around 1,300 studies form the test set.</p>
-<h3>2.1 Files</h3>
-<div class="table-scroll"><table class="component-table">
-<thead>
-<tr>
-<th>File</th>
-<th>Contents</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>train.csv</code></td>
-<td>One row per training study: <code>StudyInstanceUID</code>, the free-text <code>Report</code>, and the twelve binary labels</td>
-</tr>
-<tr>
-<td><code>train_series.csv</code></td>
-<td>One row per training series: <code>StudyInstanceUID</code>, <code>SeriesInstanceUID</code>, <code>Fluid_Sensitive</code> (1 for T2, PD, STIR and similar), <code>Fat_Suppression</code> (0/1), <code>Anatomical_Plane</code> (Sagittal, Coronal, Axial)</td>
-</tr>
-<tr>
-<td><code>train_series/</code></td>
-<td>Training DICOMs as <code>&lt;StudyInstanceUID&gt;/&lt;SeriesInstanceUID&gt;/&lt;SOPInstanceUID&gt;.dcm</code>, one slice per file</td>
-</tr>
-<tr>
-<td><code>test.csv</code>, <code>test_series.csv</code>, <code>test_series/</code></td>
-<td>Same layout for the test studies; replaced with the real test data during scoring, without the report</td>
-</tr>
-<tr>
-<td><code>sample_submission.csv</code></td>
-<td>A valid submission with every label set to 0.5</td>
-</tr>
-</tbody>
-</table></div>
-<h3>2.2 The twelve targets</h3>
-<div class="table-scroll"><table class="component-table">
-<thead>
-<tr>
-<th>Label</th>
-<th>Finding</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>ACL</code></td>
-<td>Anterior cruciate ligament injury</td>
-</tr>
-<tr>
-<td><code>MCL</code></td>
-<td>Medial collateral ligament injury</td>
-</tr>
-<tr>
-<td><code>Medial Meniscus</code></td>
-<td>Medial meniscus tear</td>
-</tr>
-<tr>
-<td><code>Lateral Meniscus</code></td>
-<td>Lateral meniscus tear</td>
-</tr>
-<tr>
-<td><code>Medial OA</code></td>
-<td>Osteoarthritis of the medial tibiofemoral compartment</td>
-</tr>
-<tr>
-<td><code>Lateral OA</code></td>
-<td>Osteoarthritis of the lateral tibiofemoral compartment</td>
-</tr>
-<tr>
-<td><code>PF OA</code></td>
-<td>Patellofemoral osteoarthritis</td>
-</tr>
-<tr>
-<td><code>Effusion</code></td>
-<td>Joint effusion / excess fluid</td>
-</tr>
-<tr>
-<td><code>Synovitis</code></td>
-<td>Inflammation of the joint lining</td>
-</tr>
-<tr>
-<td><code>Baker's</code></td>
-<td>Baker's cyst</td>
-</tr>
-<tr>
-<td><code>Contusion</code></td>
-<td>Bone contusion / bone bruise</td>
-</tr>
-<tr>
-<td><code>Fracture</code></td>
-<td>Fracture</td>
-</tr>
-</tbody>
-</table></div>
-<p>Although every abnormality is represented in each split, its prevalence is not guaranteed to match across the training, public leaderboard, and final evaluation sets.</p>
-<h2 id="3-evaluation-and-submission">3. Evaluation and submission</h2>
-<p>Submissions are scored by the macro-averaged area under the ROC curve across the twelve targets:</p>
-<pre><code class="language-text">Final Score = (1 / 12) · Σ AUC_i   for i = 0 … 11
-</code></pre>
-<p>For each test study, the submission gives a confidence score for every label:</p>
-<pre><code class="language-text">StudyInstanceUID,ACL,MCL,Medial Meniscus,Lateral Meniscus,Medial OA,Lateral OA,PF OA,Effusion,Synovitis,Baker's,Contusion,Fracture
-&lt;uid_1&gt;,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-&lt;uid_2&gt;,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-</code></pre>
-<div class="callout callout-note">
-<h4>Code-competition constraints</h4>
-<ul>
-<li>Submissions run as Kaggle notebooks: at most 9 hours on CPU or GPU, with internet access disabled.</li>
-<li>Freely and publicly available external data and pre-trained models are allowed.</li>
-<li>The output file must be named <code>submission.csv</code>.</li>
-<li>A separate efficiency track scores runtime together with predictive performance.</li>
-</ul>
-</div>
-
-<h2 id="4-approach">4. Approach</h2>
-<div class="callout callout-problem">
-<h4>Problems the solution has to solve</h4>
-<ul>
-<li>The competition gives 4,407 studies but structured labels for only 58 of them; every other study arrives with a free-text radiology report and nothing more.</li>
-<li>No two studies look alike: a study holds several DICOM series shot in different planes, the number of series varies, and the number of slices per series varies more, yet the network needs a fixed-size input.</li>
-<li>Different sequences show different things, and the twelve findings are split across them: fluid-sensitive sequences show swelling, effusion and acute injury; the others show anatomy and cartilage.</li>
-<li>Half a million slices in several transfer syntaxes have to be read fast enough to infer within the nine-hour limit, with no internet.</li>
-</ul>
-</div>
-
-<p>The solution scores <strong>0.924 on the public leaderboard with a single model</strong>, no ensembling and no test-time augmentation. The model is trained separately; this notebook is the inference half, which loads the attached weights and predicts.</p>
-<h3>4.1 Labels from the radiology reports</h3>
-<p>Because only 58 studies carry structured labels, the labels behind the weights were made by reading the free-text reports with a language model and turning each into twelve probabilities rather than twelve yes/no answers. A report that says a tear is <em>suspected</em> becomes a number near 0.8, not a 1, which is a fairer target than forcing every hedged sentence into a hard label. That yields <strong>4,349 studies to train on</strong>. The 58 real-labelled studies are never trained on and are used to check the result honestly; the model reaches <strong>0.9167 macro-AUC</strong> on them.</p>
-<h3>4.2 A fixed input from studies that are all shaped differently</h3>
-<p>The hard part is not the network, it is that no two studies look alike. The approach fills five fixed slots per study, always in the same order, into one slice stack. Preferring a fluid-sensitive series for some slots and not for others is deliberate: the twelve findings are split across both kinds of sequence. If a study has no series for a slot, the slot is left as zeros and the model is told to skip it rather than being fed something misleading.</p>
-<pre><code class="language-python"># Five fixed slots per study, always in the same order (plane, prefer-fluid-sensitive, slice count).
-# A missing slot stays zeros and is masked out so the model skips it.
-SLOTS = [
-    (&quot;Sagittal&quot;,  1, 26),   # fluid-sensitive sagittal (T2 / PD / STIR): swelling, effusion, acute injury
-    (&quot;Sagittal&quot;,  0, 22),   # non-fluid sagittal:        anatomy and cartilage
-    (&quot;Coronal&quot;,   1, 18),   # fluid-sensitive coronal
-    (&quot;Coronal&quot;,   0, 12),   # non-fluid coronal
-    (&quot;Axial&quot;,    -1, 18),   # axial (either sequence)
-]
-</code></pre>
-<p>Within a series, slices are taken evenly across the stack rather than from the middle, because the collateral ligaments and the lateral meniscus sit in the outer slices and cutting them was measurably costing accuracy on exactly those findings. Every slice is cropped to a 140 mm box using the pixel spacing from the DICOM header, then resized, so a knee occupies the same fraction of the frame whether the scan was acquired at 0.3 or 0.5 mm per pixel.</p>
-<pre><code class="language-python"># Even span across the series (not the middle): peripheral slices hold the collateral
-# ligaments and the lateral meniscus.
-n = len(files)
-lo, hi = int(n * 0.02), int(n * 0.98) - 1
-picks = np.linspace(lo, hi, k).round().astype(int)
-
-# Crop a fixed 140 mm box using the DICOM pixel spacing, then resize — so scale carries
-# no medical information the model has to learn.
-cpx = int(round(CROP_MM / pixel_spacing))          # CROP_MM = 140.0
-a = a[y0:y0 + cpx, x0:x0 + cpx]
-a = cv2.resize(a, (IMG, IMG), interpolation=cv2.INTER_AREA)
-</code></pre>
-<h3>4.3 How the model reads the stack</h3>
-<p>Three neighbouring slices are stacked into the three channels of one image, so the network sees a little of what lies above and below the middle slice, most of the benefit of a 3D model at the cost of a 2D one. Each three-slice window is passed through a <strong>CoAtNet backbone at 384 pixels</strong>. The windows are combined with an attention layer that has <strong>separate weights for each of the twelve findings</strong> — the part that matters most. A cruciate tear may be visible on two sagittal slices while osteoarthritis is spread across many coronal ones, and a single pooled score forces those two to share one notion of which slices matter; per-finding attention lets each one draw on the slices that actually show it.</p>
-<h3>4.4 Running it</h3>
-<p>Scoring uses 42 windows per study. Inference runs in half precision and automatically retries a study in full precision if it fails, so no study is ever dropped from the submission. The notebook needs no internet: the backbone is loaded from the attached weights rather than downloaded, and a fast DICOM reader decodes the common uncompressed little-endian sequences directly, falling back to pydicom for anything unusual.</p>
-<pre><code class="language-python"># Scored run: verify the exact checkpoint, require a GPU, keep internet off.
-assert torch.cuda.is_available(), &quot;this scored pipeline requires CUDA&quot;
-assert sha256(weights) == &quot;7e5315dad125b99fc65b340b3de41de628e9be51ff5835355dd61c86472244ef&quot;
-</code></pre>
-<h2 id="5-results">5. Results</h2>
-<div class="callout callout-result">
-<h4>Outcome</h4>
-<ul>
-<li><strong>0.924 macro-averaged ROC AUC</strong> on the public leaderboard, from a single model with no ensembling and no test-time augmentation.</li>
-<li><strong>0.9167 macro-AUC</strong> on the 58 studies that carry real structured labels, which were held out of training entirely.</li>
-<li>Labels for the other 4,349 studies were derived from their radiology reports as soft probabilities, not hard 0/1 targets.</li>
-<li>One CoAtNet model over a fixed five-slot slice stack, with per-finding attention across 42 windows per study, inside the nine-hour offline notebook limit.</li>
-</ul>
-</div>
-
-<h2 id="6-links">6. Links</h2>
-<ul>
-<li><a href="https://www.kaggle.com/competitions/rsna-knee-abnormality-detection">Competition page</a>: overview, data description, evaluation, and timeline.</li>
-<li><a href="https://www.kaggle.com/code/laudari/notebook247d4dbb42">Notebook</a>: the inference notebook on Kaggle.</li>
-<li><a href="https://www.kaggle.com/datasets/dreaddevelopment/raptor-knee-widedense">Model weights</a>: the trained weights the notebook loads.</li>
-</ul>
+<hr />
+<h2 id="3-코드와-자세한-내용은-github에">3. 코드와 자세한 내용은 GitHub에</h2>
+<p>메인 프로젝트와 기술적인 세부 내용은 GitHub에 올려 두었어요. 작업을 자세히 이해하시려면 저장소를 참고해 주세요.</p>
+<p><a href="https://www.kaggle.com/code/laudari/notebook247d4dbb42" target="_blank" rel="noopener noreferrer">Kaggle notebook: https://www.kaggle.com/code/laudari/notebook247d4dbb42</a></p>
 </div>
 <!-- article:end -->
             </div>

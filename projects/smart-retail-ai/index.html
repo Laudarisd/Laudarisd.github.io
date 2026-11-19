@@ -110,7 +110,82 @@
           <div class="detail-grid">
           <article class="panel detail-panel detail-panel-wide" id="panel-article">
             <h2 data-ui="project_page.article"></h2>
-            <div class="panel-body"></div>
+            <div class="panel-body">
+<!-- article:start -->
+<div class="project-article" data-lang="en" hidden>
+<nav class="article-toc-wrap"><h4>Contents</h4><ol class="article-toc"><li><a href="#1-introduction">1. Introduction</a></li><li><a href="#2-goal">2. Goal</a></li><li><a href="#3-code-and-details-on-github">3. Code and details on GitHub</a></li></ol></nav>
+<h1>Smart Retail AI - Computer Vision for Real-Time Store Analytics</h1>
+<p>Computer-vision prototypes for retail spaces: cameras that count people, follow movement through the aisles and watch shelf stock, with the models served behind REST endpoints so a dashboard or a store system can read the numbers as they happen.</p>
+<p><strong>Keywords</strong></p>
+<div class="fact-grid">
+<div class="fact"><span class="fact-label">Domain</span><span class="fact-value">Retail analytics</span></div>
+<div class="fact"><span class="fact-label">Signals</span><span class="fact-value">People counts · movement · shelf state</span></div>
+<div class="fact"><span class="fact-label">Serving</span><span class="fact-value">REST inference services</span></div>
+<div class="fact"><span class="fact-label">Latency</span><span class="fact-value">Real time, per camera frame</span></div>
+</div>
+<figure class="figure-small">
+<img src="images/photo.jpg" loading="lazy" alt="A grocery store aisle with stocked shelves on both sides and a shopper with a cart at the far end">
+<figcaption>A store aisle is the input: shelves to watch, people to count, and movement to follow, all from one camera. Photo: Tessa Bury, CC BY 4.0, via Wikimedia Commons.</figcaption>
+</figure>
+
+<hr />
+<h2 id="1-introduction">1. Introduction</h2>
+<p>A store already has cameras; what it lacks is the numbers. How many people came in this hour, where did they slow down, which shelf ran empty and when. These prototypes put detection and tracking models on the camera feeds to produce those numbers continuously, and wrap each model in a small REST service so the result is one HTTP call away for whatever system needs it.</p>
+
+<hr />
+<h2 id="2-goal">2. Goal</h2>
+<div class="callout callout-goal">
+<h4>Goal</h4>
+<ul>
+<li>Count and track people in a store from ordinary camera feeds, in real time.</li>
+<li>Detect shelf state such as empty slots so restocking can be triggered by the picture rather than by a walk-through.</li>
+<li>Serve every model as a REST endpoint with a stable schema, so analytics and store systems integrate without touching the model code.</li>
+</ul>
+</div>
+
+<hr />
+<h2 id="3-code-and-details-on-github">3. Code and details on GitHub</h2>
+<p>The main project and its technical details are uploaded to GitHub, so please refer to the repository to understand the work in detail.</p>
+<p><a href="https://github.com/Laudarisd" target="_blank" rel="noopener noreferrer">GitHub: https://github.com/Laudarisd</a></p>
+</div>
+<div class="project-article" data-lang="kr" hidden>
+<nav class="article-toc-wrap"><h4>목차</h4><ol class="article-toc"><li><a href="#1-소개">1. 소개</a></li><li><a href="#2-목표">2. 목표</a></li><li><a href="#3-코드와-자세한-내용은-github에">3. 코드와 자세한 내용은 GitHub에</a></li></ol></nav>
+<h1>Smart Retail AI - 실시간 매장 분석을 위한 Computer Vision</h1>
+<p>매장을 위한 Computer Vision 프로토타입이에요. 카메라로 사람을 세고, 통로에서의 움직임을 따라가고, 진열대 재고를 지켜봐요. 모델은 REST 엔드포인트 뒤에서 서빙되어서 대시보드나 매장 시스템이 숫자를 실시간으로 읽어요.</p>
+<p><strong>키워드</strong></p>
+<div class="fact-grid">
+<div class="fact"><span class="fact-label">분야</span><span class="fact-value">리테일 분석</span></div>
+<div class="fact"><span class="fact-label">신호</span><span class="fact-value">사람 수 · 움직임 · 진열대 상태</span></div>
+<div class="fact"><span class="fact-label">서빙</span><span class="fact-value">REST 추론 서비스</span></div>
+<div class="fact"><span class="fact-label">지연</span><span class="fact-value">실시간, 카메라 프레임 단위</span></div>
+</div>
+<figure class="figure-small">
+<img src="images/photo.jpg" loading="lazy" alt="양쪽에 물건이 채워진 진열대가 있고 끝에 카트를 끄는 손님이 있는 식료품점 통로">
+<figcaption>매장 통로가 입력이에요. 지켜볼 진열대, 셀 사람, 따라갈 움직임이 카메라 하나에 다 있어요. 사진: Tessa Bury, CC BY 4.0, Wikimedia Commons.</figcaption>
+</figure>
+
+<hr />
+<h2 id="1-소개">1. 소개</h2>
+<p>매장에는 이미 카메라가 있어요. 없는 건 숫자예요. 이번 시간에 몇 명이 들어왔는지, 어디서 느려졌는지, 어느 진열대가 언제 비었는지요. 이 프로토타입은 카메라 영상에 Detection과 Tracking 모델을 올려서 그 숫자를 계속 만들고, 모델마다 작은 REST 서비스로 감싸서 필요한 시스템이 HTTP 호출 한 번으로 결과를 받게 해요.</p>
+
+<hr />
+<h2 id="2-목표">2. 목표</h2>
+<div class="callout callout-goal">
+<h4>목표</h4>
+<ul>
+<li>보통의 카메라 영상으로 매장 안의 사람을 실시간으로 세고 따라가요.</li>
+<li>빈 칸 같은 진열대 상태를 찾아서, 돌아다니며 확인하는 대신 화면으로 재입고를 시작하게 해요.</li>
+<li>모델마다 안정된 스키마의 REST 엔드포인트로 서빙해서, 분석과 매장 시스템이 모델 코드를 건드리지 않고 붙게 해요.</li>
+</ul>
+</div>
+
+<hr />
+<h2 id="3-코드와-자세한-내용은-github에">3. 코드와 자세한 내용은 GitHub에</h2>
+<p>메인 프로젝트와 기술적인 세부 내용은 GitHub에 올려 두었어요. 작업을 자세히 이해하시려면 저장소를 참고해 주세요.</p>
+<p><a href="https://github.com/Laudarisd" target="_blank" rel="noopener noreferrer">GitHub: https://github.com/Laudarisd</a></p>
+</div>
+<!-- article:end -->
+            </div>
           </article>
           <article class="panel detail-panel detail-panel-wide" id="panel-overview">
             <h2 data-ui="project_page.overview"></h2>

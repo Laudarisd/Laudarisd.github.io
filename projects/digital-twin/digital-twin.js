@@ -5,12 +5,12 @@ Portfolio.project("digital-twin", {
   en: {
     "title": "Digital Twin",
     "description": "Floorplan reconstruction and spatial intelligence linking physical assets to digital models.",
-    "image": "thumbnail.svg",
+    "image": "thumbnail.jpg",
     "image_alt": "Digital twin and floorplan reconstruction",
     "image_class": "",
     "url": "https://github.com/Laudarisd/digital-twin-and-spatial-ai",
-    "overview": "Floorplan reconstruction and spatial intelligence connecting physical assets with interactive digital representations.",
     "subtitle": "Floorplan reconstruction and spatial intelligence linking physical assets to digital models.",
+    "tags": ["Digital Twin", "Floor-plan Reconstruction", "Point Cloud", "Spatial AI", "3D", "Python"],
     "links": [
       {
         "label": "GitHub",
@@ -21,12 +21,12 @@ Portfolio.project("digital-twin", {
   kr: {
     "title": "Digital Twin",
     "description": "Floorplan 재구성과 Spatial Intelligence로 실제 자산과 디지털 모델을 연결해요.",
-    "image": "thumbnail.svg",
+    "image": "thumbnail.jpg",
     "image_alt": "Digital Twin과 Floorplan 재구성",
     "image_class": "",
     "url": "https://github.com/Laudarisd/digital-twin-and-spatial-ai",
-    "overview": "Floorplan 재구성과 Spatial Intelligence로 실제 자산과 인터랙티브한 디지털 모델을 연결하는 프로젝트예요.",
     "subtitle": "Floorplan 재구성과 Spatial Intelligence로 실제 자산과 디지털 모델을 연결해요.",
+    "tags": ["Digital Twin", "Floor-plan Reconstruction", "Point Cloud", "Spatial AI", "3D", "Python"],
     "links": [
       {
         "label": "GitHub",

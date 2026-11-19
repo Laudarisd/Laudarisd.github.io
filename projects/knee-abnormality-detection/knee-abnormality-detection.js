@@ -5,7 +5,7 @@ Portfolio.project("knee-abnormality-detection", {
   en: {
     "title": "Knee Abnormality Detection",
     "description": "Single CoAtNet model detecting twelve knee MRI findings: 0.924 public-leaderboard macro-AUC in the RSNA Kaggle competition.",
-    "image": "thumbnail.svg",
+    "image": "thumbnail.jpg",
     "image_alt": "Knee abnormality detection",
     "image_class": "",
     "url": "https://www.kaggle.com/code/laudari/notebook247d4dbb42",
@@ -22,7 +22,7 @@ Portfolio.project("knee-abnormality-detection", {
   kr: {
     "title": "무릎 이상 탐지",
     "description": "무릎 MRI 12가지 소견을 하나의 CoAtNet 모델로 탐지해요. RSNA Kaggle 대회 Public LB 매크로 AUC 0.924.",
-    "image": "thumbnail.svg",
+    "image": "thumbnail.jpg",
     "image_alt": "무릎 이상 탐지",
     "image_class": "",
     "url": "https://www.kaggle.com/code/laudari/notebook247d4dbb42",
