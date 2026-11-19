@@ -8,8 +8,8 @@
 <div class="fact"><span class="fact-label">출력</span><span class="fact-value">위치가 있는 글자, JSON</span></div>
 </div>
 <figure class="figure-small">
-<img src="images/photo.jpg" alt="인쇄된 우표, 손으로 쓴 주소, 숫자 칸에 적힌 우편번호가 있는 우편 봉투">
-<figcaption>봉투 하나에 OCR이 다뤄야 하는 것이 다 있어요. 인쇄 글자, 손글씨, 우표, 칸에 적힌 우편번호요. 사진: Anizotropia, public domain, Wikimedia Commons.</figcaption>
+<img src="images/photo.jpg" alt="인쇄된 철도 환불 영수증: 회사 머리글, 한자와 숫자로 쓴 큰 금액, 빨간 일련번호, 무늬 배경 위의 빨간 직인">
+<figcaption>인쇄된 영수증이에요. 머리글, 두 가지로 쓴 금액, 일련번호, 무늬 배경 위의 직인. OCR이 칸마다 읽어야 하는 종류의 입력이에요. 이미지: public domain, Wikimedia Commons.</figcaption>
 </figure>
 
 ---

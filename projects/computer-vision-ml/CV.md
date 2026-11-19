@@ -8,8 +8,8 @@
 <div class="fact"><span class="fact-label">Output</span><span class="fact-value">Trained models + inference scripts</span></div>
 </div>
 <figure class="figure-small">
-<img src="images/photo.jpg" alt="A desk photographed with object-detection boxes drawn around the laptop, bottles, a bowl, a bag and the chairs, each with its class">
-<figcaption>Object detection: every object on the desk found and named by a detector. Photo: (MTheiler), CC BY-SA 4.0, via Wikimedia Commons.</figcaption>
+<img src="images/photo.jpg" alt="A city crossing with detection boxes and confidence scores drawn around a pedestrian, two scooter riders, their scooters, four cars, parked bicycles and a traffic light">
+<figcaption>Object detection on a street scene: every person, car, scooter, bicycle and traffic light found by a detector, with its class and confidence. Photo: 玄史生, CC0, via Wikimedia Commons.</figcaption>
 </figure>
 
 ---

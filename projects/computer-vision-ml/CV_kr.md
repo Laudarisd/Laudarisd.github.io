@@ -8,8 +8,8 @@
 <div class="fact"><span class="fact-label">출력</span><span class="fact-value">학습된 모델 + 추론 스크립트</span></div>
 </div>
 <figure class="figure-small">
-<img src="images/photo.jpg" alt="책상을 찍은 사진 위에 노트북, 병, 그릇, 가방, 의자에 Detection 박스와 종류가 그려진 모습">
-<figcaption>Object Detection: 책상 위의 모든 객체를 Detector가 찾아서 이름을 붙인 모습이에요. 사진: (MTheiler), CC BY-SA 4.0, Wikimedia Commons.</figcaption>
+<img src="images/photo.jpg" alt="도시 횡단보도 사진 위에 보행자, 스쿠터 운전자 둘과 스쿠터, 차 네 대, 세워 둔 자전거, 신호등에 Detection 박스와 신뢰도가 그려진 모습">
+<figcaption>거리 장면의 Object Detection이에요. Detector가 찾은 모든 사람, 차, 스쿠터, 자전거, 신호등에 종류와 신뢰도가 붙어 있어요. 사진: 玄史生, CC0, Wikimedia Commons.</figcaption>
 </figure>
 
 ---

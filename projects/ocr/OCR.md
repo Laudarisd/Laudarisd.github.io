@@ -8,8 +8,8 @@
 <div class="fact"><span class="fact-label">Output</span><span class="fact-value">Text with positions, as JSON</span></div>
 </div>
 <figure class="figure-small">
-<img src="images/photo.jpg" alt="A postal envelope with printed stamps, a handwritten address and a machine-readable postcode in a digit grid">
-<figcaption>An envelope mixes everything OCR has to handle: printed text, handwriting, stamps and a postcode written into boxes. Photo: Anizotropia, public domain, via Wikimedia Commons.</figcaption>
+<img src="images/photo.jpg" alt="A printed railway refund receipt with a company header, a large amount in Chinese numerals and digits, a red serial number and a red official stamp over a patterned background">
+<figcaption>A printed receipt: a header, an amount written two ways, a serial number and a stamp over a patterned background, which is the kind of input OCR has to read field by field. Image: public domain, via Wikimedia Commons.</figcaption>
 </figure>
 
 ---
