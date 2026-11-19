@@ -59,6 +59,35 @@ main[data-project] .project-tags li:nth-child(6n + 4) { --tag-color: #16a34a; }
 main[data-project] .project-tags li:nth-child(6n + 5) { --tag-color: #d97706; }
 main[data-project] .project-tags li:nth-child(6n + 6) { --tag-color: #e11d48; }
 
+/* Phones: every column, panel and article is capped at the viewport; code, tables and
+   diagrams scroll inside their own box instead of stretching the page. */
+.detail-layout > *,
+.detail-grid > *,
+.panel-body,
+.project-article {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 720px) {
+  .project-article pre.mermaid {
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+
+  .project-article pre.mermaid svg {
+    min-width: 640px; /* keep diagrams readable; the block scrolls sideways */
+    max-width: none;
+  }
+
+  /* Paired screenshots stack on phones, so let each keep its own height instead of a fixed box. */
+  .project-article .figure-row-equal img,
+  .project-article .process-row img {
+    height: auto;
+    background: none;
+  }
+}
+
 /* Detail layout: a "Contents" column on the left and the panels on the right.
    The column sticks while scrolling on wide screens and stacks on top on narrow ones. */
 .detail-layout {
@@ -210,7 +239,7 @@ main[data-project] .project-tags li:nth-child(6n + 6) { --tag-color: #e11d48; }
 
 @media (max-width: 920px) {
   .detail-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -613,7 +642,7 @@ main[data-project] .project-tags li:nth-child(6n + 6) { --tag-color: #e11d48; }
 
 @media (max-width: 720px) {
   .project-article .process-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .project-article .process-row .arch-arrow {
@@ -838,7 +867,7 @@ main[data-project] .project-tags li:nth-child(6n + 6) { --tag-color: #e11d48; }
 
 @media (max-width: 720px) {
   .figure-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .project-article h2 {
